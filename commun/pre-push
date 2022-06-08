@@ -1,0 +1,54 @@
+#!/usr/bin/env python3
+
+# Selfmade hook to check the compilation status and the norm status before
+# executing a push request.
+
+from subprocess import Popen, DEVNULL, PIPE
+
+PASS_MSG = "\x1b[1;32mPASS\x1b[0m"
+FAIL_MSG = "\x1b[1;31mFAIL\x1b[0m"
+
+print("Testing the next push...")
+print("--------------------------------------")
+
+# Wait for the execution of the compilation:
+#   - If it fails, it will print all the failures.
+#   - else showes success
+
+print("Compilation test:")
+with Popen(["make", "-k"], stdout=DEVNULL) as proc:
+    status1 = proc.wait()
+    print("Compilation status: ", end='')
+    if (status1 == 0):
+        print(PASS_MSG)
+    else:
+        print(FAIL_MSG)
+
+# Then clean the repo.
+with Popen(["make", "fclean"], stdout=DEVNULL) as proc:
+    status2 = proc.wait()
+    if (status2 != 0):
+        print("Failed to clean-up the repository.")
+print("--------------------------------------")
+
+
+# Check for the norm of the given push and and print all the errors.
+print("Norminette test:")
+with Popen(["norminette"], stdout=PIPE, encoding='utf-8') as proc:
+    for line in proc.stdout.readlines():
+        if 'Error' in line:
+            print(line, end='')
+    status3 = proc.wait()
+    print("Norm status: ", end='')
+    if (status3 == 0):
+        print(PASS_MSG)
+    else:
+        print(FAIL_MSG)
+print("--------------------------------------")
+
+
+# In case you want to add an exit code (to block the push if the compilation /
+# norm is not correct), just add the following lines:
+# import sys
+# exit_code = status1 | status2 | status3
+# sys.exit(exit_code)
