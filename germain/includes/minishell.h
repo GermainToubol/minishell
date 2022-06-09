@@ -1,0 +1,38 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/06/08 17:14:28 by gtoubol           #+#    #+#             */
+/*   Updated: 2022/06/08 17:46:39 by gtoubol          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#ifndef MINISHELL_H
+# define MINISHELL_H
+
+/*
+  no input or pipe: NULL
+  no output or pipe: NULL
+  no errput: NULL
+  bad cmd : ->path_exec=NULL and ->cmd=cmd
+*/
+
+typedef struct s_cmd
+{
+	char	*input;
+	char	*output;
+	char	*errput;
+	char	*path_exec;
+	char	**cmd;
+	int		heredoc;
+	int		append;
+}	t_cmd;
+
+# define IS_HEREDOC 1
+# define NO_HEREDOC 0
+# define IS_APPEND 1
+# define NO_APPEND 0
+
+#endif
