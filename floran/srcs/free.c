@@ -1,32 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   debug.c                                            :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/09 15:13:53 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/09 16:03:24 by fmauguin         ###   ########.fr       */
+/*   Created: 2022/06/09 15:20:17 by fmauguin          #+#    #+#             */
+/*   Updated: 2022/06/09 15:59:57 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "floran.h"
 
-void	print_node(void *data)
+void	free_tab(char **tab)
+{
+	int	i;
+
+	i = -1;
+	if (!tab)
+		return ;
+	while (tab[++i] != NULL)
+		free(tab[i]);
+	free(tab);
+}
+
+void	free_node(void *data)
 {
 	t_cmd	*tmp;
-	int		i;
 
 	tmp = NULL;
 	tmp = (struct s_cmd *)data;
 	if (!tmp)
 		return ;
-	ft_printf("Path_exec : %s\n\ncmd :\n", tmp->path_exec);
-	i = -1;
-	while (tmp->cmd[++i])
-		ft_printf("%s\n", tmp->cmd[i]);
-	ft_printf("\ninput : %s\noutput : %s\nerrput : \
-%s\n\n", tmp->input, tmp->output, tmp->errput);
-	ft_printf("heredoc : %i\nappend : %i\n",
-		tmp->heredoc, tmp->append);
+	if (tmp->path_exec)
+		free(tmp->path_exec);
+	if (tmp->input)
+		free(tmp->input);
+	if (tmp->output)
+		free(tmp->output);
+	if (tmp->errput)
+		free(tmp->errput);
+	free_tab(tmp->cmd);
+	free (tmp);
 }
