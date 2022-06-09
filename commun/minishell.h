@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:14:28 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/09 18:37:54 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/09 19:15:48 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,6 @@
   out : stdout ou stderr 1 ou 2
 */
 
-typedef struct s_cmd
-{
-	char		*input;
-	char		*path_exec;
-	char		**cmd;
-	t_redirect	**outputs;
-}	t_cmd;
-
 typedef struct s_redirect
 {
 	char	*file;
@@ -36,6 +28,14 @@ typedef struct s_redirect
 	int		heredoc;
 	int		append;
 }	t_redirect;
+
+typedef struct s_cmd
+{
+	char		*input;
+	char		*path_exec;
+	char		**cmd;
+	t_redirect	**outputs;
+}	t_cmd;
 
 # define IS_HEREDOC 1
 # define NO_HEREDOC 0
