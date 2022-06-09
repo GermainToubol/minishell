@@ -6,11 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:14:28 by gtoubol           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/06/09 21:41:42 by fmauguin         ###   ########.fr       */
-=======
-/*   Updated: 2022/06/09 19:15:48 by gtoubol          ###   ########.fr       */
->>>>>>> refs/remotes/origin/master
+/*   Updated: 2022/06/09 23:50:15 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +20,6 @@
   bad cmd : ->path_exec=NULL and ->cmd=cmd
   out : stdout ou stderr 1 ou 2
 */
-typedef struct s_redirect
-{
-	char	*file;
-	int		out;
-	int		heredoc;
-	int		append;
-}	t_redirect;
 
 typedef struct s_redirect
 {
