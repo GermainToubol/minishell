@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:14:32 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/09 15:57:57 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/09 16:24:01 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,28 @@ static char	**get_path(char **env)
 	return (ret);
 }
 
+char	*check_path(char **path, char *cmd)
+{
+	int		i;
+	char	*path_cmd;
+
+	i = -1;
+	if (access(cmd, X_OK) != -1)
+		return (cmd);
+	if (ft_strchr(cmd, '/') != NULL)
+		return (NULL);
+	while (path[++i])
+	{
+		path_cmd = ft_join3(path[i], "/", cmd);
+		if (!path_cmd)
+			return (0);
+		if (access(path_cmd, X_OK) != -1)
+			return (path_cmd);
+		free(path_cmd);
+	}
+	return (NULL);
+}
+
 t_cmd	*fill_cmd_strct(char **path, char *cmd)
 {
 	t_cmd	*data;
@@ -43,8 +65,8 @@ t_cmd	*fill_cmd_strct(char **path, char *cmd)
 	data = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!data)
 		return (NULL);
-	data->cmd = path;
-	data->path_exec = ft_strdup(cmd);
+	data->cmd = ft_split(cmd, ' ');
+	data->path_exec = check_path(path, data->cmd[0]);
 	data->append = NO_APPEND;
 	data->heredoc = NO_HEREDOC;
 	data->input = NULL;
@@ -64,6 +86,9 @@ int	get_cmd(char **av, char **envp, t_list **l_cmd)
 	i = 0;
 	*l_cmd = ft_lstnew((void *)fill_cmd_strct(path, av[i]));
 	if (!*l_cmd)
-		return (0);
+		return (free_tab(path), 0);
+	while (av[++i])
+		ft_lstadd_back(l_cmd, ft_lstnew((void *)fill_cmd_strct(path, av[i])));
+	free_tab(path);
 	return (1);
 }

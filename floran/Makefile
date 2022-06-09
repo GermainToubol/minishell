@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/09 15:33:04 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/09 16:18:25 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ RM			=	rm -rf
 INCLUDE		=	../commun
 SRC_DIR		=	srcs/
 OBJ_DIR		=	obj/
-SRC_FILES	=	main debug free parse
+SRC_FILES	=	main debug free parse utils
 SRC			=	$(addsuffix .c, $(addprefix $(SRC_DIR), $(SRC_FILES)))
 OBJ			=	$(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 
@@ -34,13 +34,13 @@ NONE = \033[0m
 
 $(NAME):	$(OBJ)
 			@make -C $(LIBFT_DIR)
-			@$(CC) $(NOFLAGS) $(OBJ) -L$(LIBFT_DIR) -lft -o $@
+			@$(CC) $(CFLAGS) $(OBJ) -L$(LIBFT_DIR) -lft -o $@
 			@printf "\t[ $(GREEN)✔$(NONE) ] "$@" done\n\n"
 			@printf "$(GREEN)Compiled "$@" successfully!\n $(NONE)\n"
 
 $(OBJ):		$(OBJ_DIR)%.o : $(SRC_DIR)%.c
 			@mkdir -p ${OBJ_DIR}
-			@$(CC) $(NOFLAGS) -c $< -o $@
+			@$(CC) $(CFLAGS) -c $< -o $@
 			@printf "\t[ $(GREEN)✔$(NONE) ] "$@" done\n"
 
 all:		$(NAME)
