@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 09:52:45 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/09 14:18:55 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/09 15:33:53 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -18,7 +18,7 @@
 t_list	*tmp_init_exec(void)
 {
 	t_cmd	*tmp;
-	int i;
+	int		i;
 	t_list	*list;
 
 	list = NULL;
