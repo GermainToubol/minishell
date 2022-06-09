@@ -6,12 +6,11 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 11:51:48 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/09 15:33:32 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/09 17:33:15 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <sys/wait.h>
 #include <unistd.h>
-#include "libft.h"
 #include "minishell.h"
 #include "g_minishell.h"
 
@@ -32,7 +31,6 @@ int	g_wait_all(int n_processes, pid_t last_pid)
 	{
 		status = 0;
 		pid = wait(&status);
-		ft_printf("%d -- %d\n", pid, last_pid);
 		if (WIFEXITED(status))
 		{
 			g_wait_exited(status, pid, &exit_status, last_pid);

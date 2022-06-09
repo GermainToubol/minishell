@@ -6,14 +6,16 @@
 #    By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 10:59:36 by gtoubol           #+#    #+#              #
-#    Updated: 2022/06/09 13:53:08 by gtoubol          ###   ########.fr        #
+#    Updated: 2022/06/09 18:30:31 by gtoubol          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 # List of all the sources (.c)
 # -------------------------------------------------------------------------
-SRCS = 	g_main.c g_exec_process.c g_wait_all.c g_set_pipe.c
-TMP_ =	tmp_exec.c ft_lstpop.c
+SRCS = 		g_exec_process.c g_wait_all.c g_set_pipe.c			\
+			g_run_pipe_series.c g_clear_exec.c
+TMP_ =		tmp_exec.c ft_lstpop.c
+BACK =		g_back_main.c
 
 # List of the related directories
 # -------------------------------------------------------------------------
@@ -36,11 +38,11 @@ NAME =		g_minishell
 # -------------------------------------------------------------------------
 LIBFT_DIR = libft
 LIBFT =		libft/libft.a
-LIB =		-Llibft -lft
+LIB =		-Llibft -lft -lreadline
 
 # General rules on makefile
 # -------------------------------------------------------------------------
-OBJS = 		$(addprefix $(SRCS_DIR)/,$(SRCS:.c=.o) $(TMP_:.c=.o))
+OBJS = 		$(addprefix $(SRCS_DIR)/,$(SRCS:.c=.o) $(TMP_:.c=.o) $(BACK:.c=.o))
 DEPS =		$(OBJS:.o=.d)
 
 INCLUDES =	$(addprefix -I,$(HEAD_DIR))
