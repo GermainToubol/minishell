@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   g_main.c                                           :+:      :+:    :+:   */
+/*   g_clear_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/09 09:48:12 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/09 17:32:28 by gtoubol          ###   ########.fr       */
+/*   Created: 2022/06/09 17:37:58 by gtoubol           #+#    #+#             */
+/*   Updated: 2022/06/09 18:14:50 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include <unistd.h>
 #include "libft.h"
 #include "minishell.h"
 #include "g_minishell.h"
 
-int	main(int argc, char **argv, char **env)
-{
-	t_list	*execline;
+/*
+ * g_clear_exec:
+ *
+ * The execline is used as a virtual stack-like * structure containing
+ * each single process to execute. So once it has been executed, the
+ * correspondig node is freed.
+ */
 
-	(void)argc;
-	(void)argv;
-	execline = tmp_init_exec();
-	return (g_run_pipe_series(execline, env));
+void	g_clear_exec(t_list **execline, pid_t pid)
+{
+	if (pid > 0)
+	{
+		ft_lstpop(execline, tmp_free_cmd);
+	}
+	else
+	{
+		ft_lstclear(execline, tmp_free_cmd);
+	}
 }
