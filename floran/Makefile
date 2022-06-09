@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/09 16:18:25 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/09 23:22:48 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ RM			=	rm -rf
 INCLUDE		=	../commun
 SRC_DIR		=	srcs/
 OBJ_DIR		=	obj/
-SRC_FILES	=	main debug free parse utils
+SRC_FILES	=	main debug free parse utils split_bash error split_redirect \
+				fill_struct
 SRC			=	$(addsuffix .c, $(addprefix $(SRC_DIR), $(SRC_FILES)))
 OBJ			=	$(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 

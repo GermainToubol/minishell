@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:14:32 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/09 16:24:01 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/09 23:21:43 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,24 +58,7 @@ char	*check_path(char **path, char *cmd)
 	return (NULL);
 }
 
-t_cmd	*fill_cmd_strct(char **path, char *cmd)
-{
-	t_cmd	*data;
-
-	data = (t_cmd *)malloc(sizeof(t_cmd));
-	if (!data)
-		return (NULL);
-	data->cmd = ft_split(cmd, ' ');
-	data->path_exec = check_path(path, data->cmd[0]);
-	data->append = NO_APPEND;
-	data->heredoc = NO_HEREDOC;
-	data->input = NULL;
-	data->output = NULL;
-	data->errput = NULL;
-	return (data);
-}
-
-int	get_cmd(char **av, char **envp, t_list **l_cmd)
+int	get_cmd(char **cmd, char **envp, t_list **l_cmd)
 {
 	char	**path;
 	int		i;
@@ -84,11 +67,12 @@ int	get_cmd(char **av, char **envp, t_list **l_cmd)
 	if (!path)
 		return (0);
 	i = 0;
-	*l_cmd = ft_lstnew((void *)fill_cmd_strct(path, av[i]));
+	*l_cmd = ft_lstnew((void *)fill_cmd_strct(path, cmd[i]));
 	if (!*l_cmd)
 		return (free_tab(path), 0);
-	while (av[++i])
-		ft_lstadd_back(l_cmd, ft_lstnew((void *)fill_cmd_strct(path, av[i])));
+	while (cmd[++i])
+		ft_lstadd_back(l_cmd, ft_lstnew((void *)fill_cmd_strct(path, cmd[i])));
 	free_tab(path);
+	free_tab(cmd);
 	return (1);
 }
