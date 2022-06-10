@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:08:39 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/09 23:29:46 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/10 11:26:59 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,11 @@ int			ft_iswhitspaces(char c);
 
 //Error
 void		error_msg(char *err, int do_exit, int signal);
+int			check_line(char *str);
 
 //debug
 void		print_node(void *data);
+void		show_red(t_redirect **red, int type);
+void		show_redline(t_redirect *red, int type);
 
 #endif

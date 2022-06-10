@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:20:17 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/09 23:23:19 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/10 11:53:27 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,8 @@ void	free_node(void *data)
 		return ;
 	if (tmp->path_exec)
 		free(tmp->path_exec);
-	if (tmp->input)
-		free(tmp->input);
 	free_tab(tmp->cmd);
 	free_red(tmp->outputs);
+	free_red(tmp->inputs);
 	free (tmp);
 }

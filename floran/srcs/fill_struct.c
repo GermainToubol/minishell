@@ -6,31 +6,11 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 23:20:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/09 23:41:21 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/10 11:43:00 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "floran.h"
-
-static char	*redirect_c(char *cmd, char c)
-{
-	int	i;
-	int	j;
-
-	i = ft_strlen(cmd) - 1;
-	while (i > 0 && cmd[i] != c)
-		i--;
-	if (cmd[i++] == c)
-	{
-		while (ft_iswhitspaces(cmd[i]))
-			i++;
-		j = 0;
-		while (!ft_iswhitspaces(cmd[i + j]) && cmd[i + j])
-			j++;
-		return (ft_strndup(&cmd[i], j));
-	}
-	return (NULL);
-}
 
 static unsigned int	first_cmd(char *cmd, unsigned int i, size_t *len)
 {
@@ -65,7 +45,7 @@ static char	*check_cmd(t_cmd *data, char *cmd)
 	size_t			len;
 	char			*ret;
 
-	data->input = redirect_c(cmd, '<');
+	data->inputs = split_red(cmd, "<");
 	data->outputs = split_red(cmd, ">");
 	i = first_cmd(cmd, 0, &len);
 	ret = ft_substr(cmd, i, len);
@@ -78,18 +58,39 @@ t_cmd	*fill_cmd_strct(char **path, char *cmd)
 {
 	t_cmd	*data;
 	char	*trim_cmd;
+
 	data = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!data)
 		return (NULL);
 	trim_cmd = check_cmd(data, cmd);
-	if (!trim_cmd)
-		return (NULL);
 	data->cmd = ft_split(trim_cmd, ' ');
-	free(trim_cmd);
-	if (!data->cmd)
-		return (NULL);
+	if (trim_cmd)
+		free(trim_cmd);
 	data->path_exec = check_path(path, data->cmd[0]);
 	return (data);
+}
+
+static char	*fill_red(char *str, char *sep, t_redirect *ret)
+{
+	if (is_sep(*str, sep) && sep[0] == '>')
+	{
+		ret->append = IS_APPEND;
+		str++;
+	}
+	else
+		ret->append = NO_APPEND;
+	if (is_sep(*str, sep) && sep[0] == '<')
+	{
+		ret->heredoc = IS_HEREDOC;
+		str++;
+	}
+	else
+		ret->heredoc = NO_HEREDOC;
+	if (sep[0] == '<' && *str == '>')
+		str++;
+	while (ft_iswhitspaces(*str))
+		str++;
+	return (str);
 }
 
 t_redirect	*fill_redirect(char *str, char *sep, char *out)
@@ -99,24 +100,16 @@ t_redirect	*fill_redirect(char *str, char *sep, char *out)
 
 	ret = (t_redirect *)ft_calloc(1, sizeof(t_redirect));
 	if (!ret)
-		return (NULL);
+		return (free(out), NULL);
 	ret->out = ft_atoi(out);
 	free(out);
-	if (is_sep(*str, sep))
-	{
-		ret->append = IS_APPEND;
-		str++;
-	}
-	else
-		ret->append = NO_APPEND;
-	ret->heredoc = NO_HEREDOC;
-	while (ft_iswhitspaces(*str))
-		str++;
+	str = fill_red(str, sep, ret);
 	j = 0;
-	while (!ft_iswhitspaces(str[j]) && str[j] != '<' && !is_sep(str[j], sep))
+	while (str[j] && !ft_iswhitspaces(str[j])
+		&& str[j] != '<' && str[j] != '>')
 		j++;
 	ret->file = ft_strndup(str, j);
-	if (!ret)
-		return (NULL);
+	if (!ret->file)
+		return (free(ret), NULL);
 	return (ret);
 }

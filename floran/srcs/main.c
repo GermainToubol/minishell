@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:41:37 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/09 23:41:31 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/10 11:43:24 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	main(int ac, char **av, char **envp)
 	if (!arg)
 		return (1);
 	l_cmd = NULL;
+	if (!check_line(arg))
+		return (free(arg), 2);
 	cmd_tab = split_sep(arg, "|", 2);
 	free(arg);
 	if (!cmd_tab)
