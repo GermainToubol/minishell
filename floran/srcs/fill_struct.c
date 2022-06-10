@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 23:20:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/10 17:38:49 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/10 18:22:55 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static char	*check_cmd(t_cmd *data, char *cmd)
 {
 	unsigned int	i;
-	size_t			len;
+	unsigned int	len;
 	char			*ret;
 
 	data->inputs = split_red(cmd, "<");

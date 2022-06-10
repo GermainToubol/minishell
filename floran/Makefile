@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/10 17:12:08 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/10 17:53:11 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ NONE = \033[0m
 
 $(NAME):	$(OBJ)
 			@make -C $(LIBFT_DIR)
-			@$(CC) $(NOFLAGS) $(OBJ) -L$(LIBFT_DIR) -lft -o $@
+			@$(CC) $(NOFLAGS) $(OBJ) -L$(LIBFT_DIR) -lft -lreadline -o $@
 			@printf "\t[ $(GREEN)✔$(NONE) ] "$@" done\n\n"
 			@printf "$(GREEN)Compiled "$@" successfully!\n $(NONE)\n"
 

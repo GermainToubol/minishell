@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 09:00:40 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/10 17:28:53 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/10 17:42:08 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	has_word(char *str)
 		i++;
 	if (i == 0)
 	{
-		while (ft_isalnum(str[i]))
+		while (ft_isdigit(str[i]))
 			i++;
 		if (str[i] == '<' || str[i] == '>')
 			return (error_msg(ft_substr(str, 0, i), NO_EXIT, 2), 0);

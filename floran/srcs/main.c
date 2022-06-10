@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:41:37 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/10 14:15:13 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/10 18:01:41 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ int	main(int ac, char **av, char **envp)
 	char	*arg;
 	int		signal;
 
-	if (ac == 1)
-		return (0);
-	arg = arg_join(&av[1]);
+	arg = readline("$> ");
 	if (!arg)
 		return (1);
 	l_cmd = NULL;

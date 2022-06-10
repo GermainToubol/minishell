@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:08:39 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/10 17:23:58 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/10 18:20:18 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include "minishell.h"
 # include "libft.h"
 # include <stdlib.h>
+# include <stdio.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include <fcntl.h>
 # include <unistd.h>
 
@@ -43,7 +46,7 @@ char			*ft_join3(char *s1, char *s2, char *s3);
 char			*ft_strndup(char *src, int len);
 char			**split_sep(char *str, char *sep);
 int				ft_iswhitspaces(char c);
-unsigned int	first_cmd(char *cmd, unsigned int i, size_t *len);
+unsigned int	first_cmd(char *cmd, unsigned int i, unsigned int *len);
 int				is_empty(char *str);
 long long		ft_atoll(char *str);
 
