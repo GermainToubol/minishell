@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:14:28 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/09 19:15:02 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/10 10:00:05 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ typedef struct s_redirect
 
 typedef struct s_cmd
 {
-	char		*input;
 	char		*path_exec;
 	char		**cmd;
 	t_redirect	**outputs;
+	t_redirect	**inputs;
 }	t_cmd;
 
 # define IS_HEREDOC 1
