@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:14:32 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/10 13:59:50 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/10 16:12:43 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ int	get_cmd(char **cmd, char **envp, t_list **l_cmd)
 	if (!*l_cmd)
 		return (free_tab(path), 0);
 	while (cmd[++i])
-		ft_lstadd_back(l_cmd, ft_lstnew((void *)fill_cmd_strct(path, cmd[i])));
+	{
+		ft_lstadd_back(l_cmd,
+			ft_lstnew((void *)fill_cmd_strct(path, cmd[i])));
+	}
 	free_tab(path);
 	free_tab(cmd);
 	return (1);

@@ -6,11 +6,23 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 16:14:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/10 14:17:38 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/10 16:07:31 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "floran.h"
+
+int	is_empty(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && ft_iswhitspaces(str[i]))
+		i++;
+	if (!str[i])
+		return (1);
+	return (0);
+}
 
 int	ft_iswhitspaces(char c)
 {

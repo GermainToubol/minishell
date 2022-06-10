@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:13:53 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/10 14:08:14 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/10 16:31:44 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,17 @@ void	show_red(t_redirect **red, int type)
 
 	i = -1;
 	if (type == 0)
-		ft_printf("input :");
+		ft_printf("input:");
 	else if (type == 1)
-		ft_printf("output :");
+		ft_printf("output:");
 	if (!red[++i])
-		ft_printf("(null)\n");
+		ft_printf("\t\t(null)\n");
 	else
 	{
 		if (type == 0)
-			ft_printf("file\tfd\tHere\n");
+			ft_printf(" file\tfd\tHere\n");
 		else if (type == 1)
-			ft_printf("file\tfd\tApp\n");
+			ft_printf(" file\tfd\tApp\n");
 		while (red[i])
 		{
 			show_redline(red[i], type);
@@ -69,11 +69,11 @@ void	print_node(void *data)
 	tmp = (struct s_cmd *)data;
 	if (!tmp)
 		return ;
-	ft_printf("\nPath_exec : %s\ncmd :", tmp->path_exec);
+	ft_printf("\nPath_exec:\t%s\n", tmp->path_exec);
 	i = -1;
 	while (tmp->cmd[++i])
-		ft_printf("\t%s\n", tmp->cmd[i]);
-	ft_printf("\t%s\n", tmp->cmd[i]);
+		ft_printf("cmd%i:\t\t%s\n", i, tmp->cmd[i]);
+	ft_printf("cmd%i:\t\t%s\n", i, tmp->cmd[i]);
 	show_red(tmp->inputs, 0);
 	show_red(tmp->outputs, 1);
 }

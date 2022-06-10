@@ -6,13 +6,13 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 23:20:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/10 14:06:21 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/10 16:31:51 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "floran.h"
 
-static char	*check_cmd(t_cmd *data, char *cmd, int *empty)
+static char	*check_cmd(t_cmd *data, char *cmd)
 {
 	unsigned int	i;
 	size_t			len;
@@ -20,43 +20,50 @@ static char	*check_cmd(t_cmd *data, char *cmd, int *empty)
 
 	data->inputs = split_red(cmd, "<");
 	data->outputs = split_red(cmd, ">");
-	i = 0;
-	while (ft_iswhitspaces(cmd[i]))
-		i++;
-	if (!cmd[i])
-	{
-		*empty = 1;
-		ret = ft_strdup(cmd);
-		return (ret);
-	}
 	i = first_cmd(cmd, 0, &len);
-	ret = ft_substr(cmd, i, len);
+	if (i == ft_strlen(cmd))
+		ret = ft_strdup("");
+	else
+		ret = ft_substr(cmd, i, len);
 	return (ret);
+}
+
+static void	fill_cmd_strct2(t_cmd **data, char **path, char *cmd, char **tmp)
+{
+	if (is_empty(cmd))
+	{
+		*tmp = check_cmd(*data, cmd);
+		(*data)->cmd = ft_split(*tmp, '\0');
+		(*data)->path_exec = NULL;
+	}
+	else
+	{
+		*tmp = check_cmd(*data, cmd);
+		if (*tmp[0] == '\0')
+		{
+			(*data)->cmd = ft_split(*tmp, '\0');
+			(*data)->path_exec = NULL;
+		}
+		else
+		{
+			(*data)->cmd = ft_split(*tmp, ' ');
+			(*data)->path_exec = check_path(path, (*data)->cmd[0]);
+		}
+	}
 }
 
 t_cmd	*fill_cmd_strct(char **path, char *cmd)
 {
 	t_cmd	*data;
 	char	*trim_cmd;
-	int		empty;
 
 	data = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!data)
 		return (NULL);
-	empty = 0;
-	trim_cmd = check_cmd(data, cmd, &empty);
-	if (empty == 1)
-	{
-		data->cmd = ft_split(trim_cmd, '\0');
-		data->path_exec = NULL;
-	}
-	else
-	{
-		data->cmd = ft_split(trim_cmd, ' ');
-		data->path_exec = check_path(path, data->cmd[0]);
-	}
+	fill_cmd_strct2(&data, path, cmd, &trim_cmd);
 	if (trim_cmd)
 		free(trim_cmd);
+	print_node(data);
 	return (data);
 }
 

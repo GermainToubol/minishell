@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:08:39 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/10 13:00:29 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/10 16:07:50 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char			*ft_strndup(char *src, int len);
 char			**split_sep(char *str, char *sep);
 int				ft_iswhitspaces(char c);
 unsigned int	first_cmd(char *cmd, unsigned int i, size_t *len);
-
+int				is_empty(char *str);
 //Error
 void			error_msg(char *err, int do_exit, int signal);
 int				check_line(char *str);
@@ -53,5 +53,6 @@ void			print_node(void *data);
 void			show_red(t_redirect **red, int type);
 void			show_redline(t_redirect *red, int type);
 void			show_tab(char **tab);
+int				is_empty(char *str);
 
 #endif
