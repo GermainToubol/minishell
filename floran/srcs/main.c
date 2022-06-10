@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:41:37 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/10 11:43:24 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/10 14:15:13 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int	main(int ac, char **av, char **envp)
 	t_list	*l_cmd;
 	char	**cmd_tab;
 	char	*arg;
+	int		signal;
 
 	if (ac == 1)
 		return (0);
@@ -24,9 +25,10 @@ int	main(int ac, char **av, char **envp)
 	if (!arg)
 		return (1);
 	l_cmd = NULL;
-	if (!check_line(arg))
-		return (free(arg), 2);
-	cmd_tab = split_sep(arg, "|", 2);
+	signal = check_line(arg);
+	if (signal != 1)
+		return (free(arg), signal);
+	cmd_tab = split_sep(arg, "|");
 	free(arg);
 	if (!cmd_tab)
 		return (1);

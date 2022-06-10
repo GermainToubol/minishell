@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 16:14:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/09 23:23:02 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/10 14:17:38 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,10 @@ char	*arg_join(char **arg)
 	char	*ret;
 	char	*tmp;
 
-	ret = (char *)malloc(sizeof(1));
+	ret = ft_strdup(arg[0]);
 	if (!ret)
 		return (NULL);
-	ret[0] = '\0';
-	i = -1;
+	i = 0;
 	while (arg[++i])
 	{
 		tmp = ft_join3(ret, " ", arg[i]);

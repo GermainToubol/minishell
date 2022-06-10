@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 16:32:15 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/10 11:53:08 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/10 13:35:15 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,15 @@ static int	do_split2(t_redirect **tab, char *str, char *sep, int i)
 	j = 1;
 	while (i - j >= 0 && ft_isdigit(str[i - j]))
 		j++;
+	if (i - j >= 0 && j > 1 && !ft_iswhitspaces(str[i - j]))
+		j = 1;
 	if (j > 1)
 		*tab = fill_redirect(&str[i + 1], sep,
 				ft_substr(str, i - j, j));
-	else
-	{
+	else if (sep[0] == '>')
 		*tab = fill_redirect(&str[i + 1], sep, ft_strdup("1"));
-	}
+	else if (sep[0] == '<')
+		*tab = fill_redirect(&str[i + 1], sep, ft_strdup("0"));
 	if (!(*tab))
 		return (0);
 	return (1);

@@ -6,11 +6,20 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 15:13:53 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/10 11:54:39 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/10 14:08:14 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "floran.h"
+
+void	show_tab(char **tab)
+{
+	int	i;
+
+	i = -1;
+	while (tab[++i])
+		ft_printf("%s\n", tab[i]);
+}
 
 void	show_redline(t_redirect *red, int type)
 {
@@ -64,6 +73,7 @@ void	print_node(void *data)
 	i = -1;
 	while (tmp->cmd[++i])
 		ft_printf("\t%s\n", tmp->cmd[i]);
+	ft_printf("\t%s\n", tmp->cmd[i]);
 	show_red(tmp->inputs, 0);
 	show_red(tmp->outputs, 1);
 }

@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 16:32:15 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/09 23:29:36 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/10 14:27:09 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	is_sep(char c, char *sep)
 	return (0);
 }
 
-static int	count_w(char *str, char *sep, int limit)
+static int	count_w(char *str, char *sep)
 {
 	int	w;
 	int	i;
@@ -43,12 +43,22 @@ static int	count_w(char *str, char *sep, int limit)
 			if (!*str)
 				break ;
 		}
-		if (++i == limit && *str == '|')
-			return (error_msg("syntax error near unexpected token `|'"
-					, NO_EXIT, 2), -1);
 		str++;
+		if (!*str)
+			w++;
 	}
 	return (w);
+}
+
+static int	do_split2(char **tab, int *i, char *str)
+{
+	if (!*str)
+	{
+		tab[*i] = ft_strdup("");
+		if (!tab[(*i)++])
+			return (0);
+	}
+	return (1);
 }
 
 static void	do_split(char **tab, char *str, char *sep)
@@ -72,16 +82,18 @@ static void	do_split(char **tab, char *str, char *sep)
 				break ;
 		}
 		str++;
+		if (!do_split2(tab, &i, str))
+			return (free_tab(tab));
 	}
 	tab[i] = NULL;
 }
 
-char	**split_sep(char *str, char *sep, int limit)
+char	**split_sep(char *str, char *sep)
 {
 	int		words;
 	char	**tab;
 
-	words = count_w(str, sep, limit);
+	words = count_w(str, sep);
 	if (words == -1)
 		return (NULL);
 	tab = (char **)malloc((words + 1) * sizeof(char *));

@@ -6,40 +6,13 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 23:20:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/10 11:43:00 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/10 14:06:21 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "floran.h"
 
-static unsigned int	first_cmd(char *cmd, unsigned int i, size_t *len)
-{
-	*len = 0;
-	while (ft_iswhitspaces(cmd[i]))
-		i++;
-	while (ft_isdigit(cmd[i]))
-		i++;
-	if (cmd[i] == '<' || cmd[i] == '>')
-	{
-		i++;
-		while (ft_iswhitspaces(cmd[i]))
-			i++;
-		while (cmd[i] && !ft_iswhitspaces(cmd[i]) && cmd[i] != '<'
-			&& cmd[i] != '>')
-			i++;
-		return (first_cmd(cmd, i, len));
-	}
-	else
-	{
-		while (i > 0 && ft_isdigit(cmd[i]))
-			i--;
-		while (cmd[i + *len] && cmd[i + *len] != '<' && cmd[i + *len] != '>')
-			(*len)++;
-		return (i);
-	}
-}
-
-static char	*check_cmd(t_cmd *data, char *cmd)
+static char	*check_cmd(t_cmd *data, char *cmd, int *empty)
 {
 	unsigned int	i;
 	size_t			len;
@@ -47,10 +20,17 @@ static char	*check_cmd(t_cmd *data, char *cmd)
 
 	data->inputs = split_red(cmd, "<");
 	data->outputs = split_red(cmd, ">");
+	i = 0;
+	while (ft_iswhitspaces(cmd[i]))
+		i++;
+	if (!cmd[i])
+	{
+		*empty = 1;
+		ret = ft_strdup(cmd);
+		return (ret);
+	}
 	i = first_cmd(cmd, 0, &len);
 	ret = ft_substr(cmd, i, len);
-	if (!ret)
-		return (NULL);
 	return (ret);
 }
 
@@ -58,15 +38,25 @@ t_cmd	*fill_cmd_strct(char **path, char *cmd)
 {
 	t_cmd	*data;
 	char	*trim_cmd;
+	int		empty;
 
 	data = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!data)
 		return (NULL);
-	trim_cmd = check_cmd(data, cmd);
-	data->cmd = ft_split(trim_cmd, ' ');
+	empty = 0;
+	trim_cmd = check_cmd(data, cmd, &empty);
+	if (empty == 1)
+	{
+		data->cmd = ft_split(trim_cmd, '\0');
+		data->path_exec = NULL;
+	}
+	else
+	{
+		data->cmd = ft_split(trim_cmd, ' ');
+		data->path_exec = check_path(path, data->cmd[0]);
+	}
 	if (trim_cmd)
 		free(trim_cmd);
-	data->path_exec = check_path(path, data->cmd[0]);
 	return (data);
 }
 
