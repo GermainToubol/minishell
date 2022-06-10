@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 09:52:45 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/09 15:33:53 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/10 14:53:58 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -25,14 +25,11 @@ t_list	*tmp_init_exec(void)
 	i = 0;
 	while (i < 5)
 	{
-		tmp = malloc(sizeof(*tmp));
-		tmp->input = NULL;
-		tmp->output = NULL;
-		tmp->errput = NULL;
+		tmp = (t_cmd *)malloc(sizeof(*tmp));
+		tmp->inputs = NULL;
+		tmp->outputs = NULL;
 		tmp->path_exec = ft_strdup("/usr/bin/cat");
 		tmp->cmd = ft_split("cat -e", ' ');
-		tmp->heredoc = NO_HEREDOC;
-		tmp->append = NO_APPEND;
 		ft_lstadd_back(&list, ft_lstnew(tmp));
 		i++;
 	}
