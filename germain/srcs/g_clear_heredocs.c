@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 12:43:10 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/10 14:00:18 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/10 18:11:47 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdlib.h>
@@ -24,10 +24,8 @@ void	g_clear_heredocs(t_list	**heredoc_list)
 
 static void	clear_pipes(void *content)
 {
-	int	*pipe_fds;
+	char	*filename;
 
-	pipe_fds = (int *)content;
-	close(pipe_fds[0]);
-	close(pipe_fds[1]);
-	free(pipe_fds);
+	filename = (char *)content;
+	free(filename);
 }

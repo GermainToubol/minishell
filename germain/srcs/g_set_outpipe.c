@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 13:53:00 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/10 13:26:52 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/10 16:07:05 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -20,7 +20,7 @@
  * If it is the last command or an output is set, does not create a new pipe.
  */
 
-int	g_set_pipe(t_list *execline, int *pipe_fds)
+int	g_set_outpipe(t_list *execline, int *pipe_fds)
 {
 	int		n;
 	t_cmd	*cmd;

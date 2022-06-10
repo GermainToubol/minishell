@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 10:59:03 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/10 14:55:31 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/10 18:55:36 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -42,7 +42,8 @@ t_list	*g_init_heredocs(t_list *execline)
 		{
 			if (command->inputs[i]->heredoc == IS_HEREDOC)
 			{
-				tmp = ft_lstnew(g_init_heredoc_pipe(command->inputs[i]->file,
+				ft_printf("heredoc /%s/>", command->inputs[i]->file);
+				tmp = ft_lstnew(g_init_heredoc_document(command->inputs[i]->file,
 							heredoc_list));
 				ft_lstadd_back(&heredoc_list, tmp);
 			}
@@ -53,43 +54,45 @@ t_list	*g_init_heredocs(t_list *execline)
 	return (heredoc_list);
 }
 
-static int	*g_init_heredoc_pipe(char *end_name, t_list *heredoc_list)
+static char	*g_init_heredoc_document(char *end_name, t_list *heredoc_list)
 {
-	int	*pipe_fds;
+	char *filename;
 
-	pipe_fds = ft_calloc(2, sizeof(*pipe_fds));
-	if (pipe_fds == NULL)
-		return (NULL);
-	if (pipe(pipe_fds) != 0)
-	{
-		free(pipe_fds);
-		return (NULL);
-	}
-	g_put_heredoc_pipe(pipe_fds, end_name, heredoc_list);
-	return (pipe_fds);
+
 }
 
-static int	g_put_heredoc_pipe(int *pipe_fds, char *end_name,
-				t_list *heredoc_list)
+static char *g_nbr_to_chr(int nbr)
 {
-	pid_t	pid;
-	int		status;
+	char	*str;
+	int		i;
 
-	pid = fork();
-	if (pid < 0)
+	i = 0;
+	str = ft_calloc(11, sizeof(*nbr));
+	if (str == NULL)
+		return (NULL);
+	while (nbr != 0)
 	{
-		perror("fork");
-		return (-1);
+		str[i] = nbr % 10  + '0';
+		i++;
+		nbr /= 10;
 	}
-	if (pid > 0)
+	str[i] = 0;
+}
+
+static char *g_gene_heredoc_name(void)
+{
+	int		i;
+	char	*name;
+	char	*nbr;
+
+	i = 0;
+	while (i >= 0)
 	{
-		wait(&status);
-		return (0);
+		nbr = g_nbr_to_str(i);
+		if (nbr == NULL)
+			return (NULL);
+		name = ft_strjoin("/tmp/.mns.", nbr);
+		free(nbr);
+		if (name == NULL)
 	}
-	close(pipe_fds[0]);
-	dup2(pipe_fds[1], STDOUT_FILENO);
-	close(pipe_fds[1]);
-	g_set_heredoc_content(end_name);
-	g_clear_heredocs(&heredoc_list);
-	exit(0);
 }

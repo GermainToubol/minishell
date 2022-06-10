@@ -6,14 +6,14 @@
 #    By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 10:59:36 by gtoubol           #+#    #+#              #
-#    Updated: 2022/06/10 13:15:43 by gtoubol          ###   ########.fr        #
+#    Updated: 2022/06/10 16:38:30 by gtoubol          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 # List of all the sources (.c)
 # -------------------------------------------------------------------------
-SRCS = 		g_exec_process.c g_wait_all.c g_set_pipe.c			\
-			g_run_pipe_series.c g_clear_exec.c g_init_heredocs.c g_clear_heredocs.c g_set_heredoc_content.c
+SRCS = 		g_exec_process.c g_wait_all.c g_set_outpipe.c			\
+			g_run_pipe_series.c g_clear_exec.c g_init_heredocs.c g_clear_heredocs.c g_set_heredoc_content.c g_set_inpipe.c
 TMP_ =		g_main.c tmp_exec.c ft_lstpop.c
 BACK =		# g_back_main.c
 

@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/10 11:25:54 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/10 13:24:47 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/10 18:25:06 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <errno.h>
@@ -20,7 +20,7 @@
 static int	g_d_update_count(char *line, char *end_name, int *count);
 static int	g_read_heredoc_return(char *line);
 
-int	g_set_heredoc_content(char *end_name)
+int	g_set_heredoc_content(char *end_name, int fd)
 {
 	int		len;
 	int		count;
@@ -39,9 +39,9 @@ int	g_set_heredoc_content(char *end_name)
 			free(line);
 			break ;
 		}
-		if (g_d_update_count(line, end_name, &count) != 0)
+		if (g_d_update_count(line, end_name, &count, fd) != 0)
 			continue ;
-		ft_printf("%s", line);
+		ft_fprintf(fd, "%s", line);
 		free(line);
 	}
 	return (g_read_heredoc_return(line));
@@ -57,7 +57,7 @@ static int	g_read_heredoc_return(char *line)
 	return (0);
 }
 
-static int	g_d_update_count(char *line, char *end_name, int *count)
+static int	g_d_update_count(char *line, char *end_name, int *count, int fd)
 {
 	if (ft_strncmp(line, end_name + *count, ft_strlen(line)) == 0)
 	{
@@ -65,7 +65,7 @@ static int	g_d_update_count(char *line, char *end_name, int *count)
 		free(line);
 		return (1);
 	}
-	write(1, end_name, *count);
+	write(fd, end_name, *count);
 	*count = 0;
 	return (0);
 }

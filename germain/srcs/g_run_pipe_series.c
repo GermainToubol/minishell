@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 17:28:17 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/10 14:50:56 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/10 16:28:06 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
@@ -16,7 +16,7 @@
 
 static void	g_init_pipe_0(int (*pipe_fds)[2]);
 
-int	g_run_pipe_series(t_list *execline, char **env)
+int	g_run_pipe_series(t_list *execline, t_list **heredoc_list, char **env)
 {
 	int		n_processes;
 	pid_t	pid;
@@ -27,7 +27,8 @@ int	g_run_pipe_series(t_list *execline, char **env)
 	g_init_pipe_0(pipe_fds);
 	while (execline != NULL && pid != 0)
 	{
-		g_set_pipe(execline, pipe_fds[(n_processes + 1) % 2]);
+		g_set_outpipe(execline, pipe_fds[(n_processes + 1) % 2]);
+		g_set_inpipe(execline, pipe_fds[(n_processes + 1) % 2], heredoc_list);
 		pid = g_exec_process(execline, env, pipe_fds[n_processes % 2],
 				pipe_fds[(n_processes + 1) % 2]);
 		n_processes++;

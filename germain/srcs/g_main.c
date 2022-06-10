@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 09:48:12 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/10 14:53:20 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/10 16:03:35 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -32,7 +32,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	execline = tmp_init_exec();
 	heredoc_list = g_init_heredocs(execline);
-	exit_status = g_run_pipe_series(execline, env);
+	exit_status = g_run_pipe_series(execline, &heredoc_list, env);
 	g_clear_heredocs(&heredoc_list);
 	return (exit_status);
 }
