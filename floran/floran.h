@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:08:39 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/10 16:07:50 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/10 17:23:58 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define L_PATH 5
 # define EXIT 1
 # define NO_EXIT 0
+# define MAX_INT 2147483647
 
 //parse
 int				get_cmd(char **av, char **envp, t_list **l_cmd);
@@ -44,8 +45,11 @@ char			**split_sep(char *str, char *sep);
 int				ft_iswhitspaces(char c);
 unsigned int	first_cmd(char *cmd, unsigned int i, size_t *len);
 int				is_empty(char *str);
+long long		ft_atoll(char *str);
+
 //Error
 void			error_msg(char *err, int do_exit, int signal);
+void			error_msg2(char *err, int do_exit, int signal);
 int				check_line(char *str);
 
 //debug

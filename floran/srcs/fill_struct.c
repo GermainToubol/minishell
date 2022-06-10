@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 23:20:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/10 16:31:51 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/10 17:38:49 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ t_cmd	*fill_cmd_strct(char **path, char *cmd)
 	fill_cmd_strct2(&data, path, cmd, &trim_cmd);
 	if (trim_cmd)
 		free(trim_cmd);
-	print_node(data);
 	return (data);
 }
 
@@ -83,8 +82,6 @@ static char	*fill_red(char *str, char *sep, t_redirect *ret)
 	}
 	else
 		ret->heredoc = NO_HEREDOC;
-	if (sep[0] == '<' && *str == '>')
-		str++;
 	while (ft_iswhitspaces(*str))
 		str++;
 	return (str);
@@ -102,6 +99,12 @@ t_redirect	*fill_redirect(char *str, char *sep, char *out)
 	free(out);
 	str = fill_red(str, sep, ret);
 	j = 0;
+	if (sep[0] == '<' && *str == '>')
+	{
+		j++;
+		while (ft_iswhitspaces(str[j]))
+			j++;
+	}
 	while (str[j] && !ft_iswhitspaces(str[j])
 		&& str[j] != '<' && str[j] != '>')
 		j++;
