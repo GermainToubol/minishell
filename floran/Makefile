@@ -3,74 +3,93 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
+#    By: fmauguin <fmauguin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/10 17:53:11 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/13 07:41:12 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	parse
+SHELL				=	/bin/sh
 
-CC			=	cc
-CFLAGS	=	-Wall -Wextra -Werror -g3 -I./ -I$(INCLUDE) -I$(LIBFT_DIR)/includes
-NOFLAGS	=	-I./ -I$(INCLUDE) -I$(LIBFT_DIR)/includes
+PROGNAME			:=	lexing
 
-RM			=	rm -rf
+LIBFT				:=	../commun/libft/libft.a
+LIBFTDIR			:=	../commun/libft/includes
 
-INCLUDE		=	../commun
-SRC_DIR		=	srcs/
-OBJ_DIR		=	obj/
-SRC_FILES	=	main debug free parse utils split_bash error split_redirect \
-				fill_struct check_line cmd_utils utils2
-SRC			=	$(addsuffix .c, $(addprefix $(SRC_DIR), $(SRC_FILES)))
-OBJ			=	$(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
+INCLUDEDIR			:=	lexer
+SRCDIR				:=	.
 
-LIBFT_DIR	=	../commun/libft/
+OBJDIR				:=	./obj
+DEBUGDIR			:=	./debugobj
 
-RED = \033[0;31m
-GREEN = \033[0;32m
-NONE = \033[0m
+LEXERSRC			:=	lexer/lexer.c							
+
+CC					:=	cc
+RM					:=	rm
+
+CCFLAGS				:=	-Wall -Wextra -Werror
+LIBFLAGS			:=	
+OPTFLAG				:=
+
+NAME				:=	$(PROGNAME)
+
+OUTDIR				:=	$(OBJDIR)
+
+DEBUGNAME			:= $(addsuffix .debug,$(PROGNAME))
+
+ifdef DEBUG
+	OPTFLAG 		:=	-g
+	LIBFT			:=	$(addsuffix .debug,$(LIBFT))
+	NAME			:=	$(DEBUGNAME)
+	BONUSNAME		:=	$(BONUSDEBUGNAME)
+	OUTDIR			:=	$(DEBUGDIR)
+endif
+
+$(OUTDIR)/%.o		:	$(SRCDIR)/%.c | $(OUTDIR)
+	@mkdir -p $(dir $@)
+	$(CC) -c -MMD -MP $(CCFLAGS) $(OPTFLAG) $(addprefix -I ,$(INCLUDEDIR)) $(addprefix -I ,$(LIBFTDIR)) $< -o $@
+
+$(NAME)				:	$(addprefix $(OUTDIR)/,$(LEXERSRC:.c=.o)) $(LIBFT)
+	$(CC) $(CCFLAGS) $(OPTFLAG) -o $(NAME) $(addprefix $(OUTDIR)/,$(LEXERSRC:.c=.o)) $(LIBFT) $(LIBFLAGS)
+
+all					:	$(NAME)
+
+$(DEBUGNAME)		:
+ifndef DEBUG
+	$(MAKE) $(DEBUGNAME) DEBUG=1
+endif
 
 
-$(NAME):	$(OBJ)
-			@make -C $(LIBFT_DIR)
-			@$(CC) $(NOFLAGS) $(OBJ) -L$(LIBFT_DIR) -lft -lreadline -o $@
-			@printf "\t[ $(GREEN)✔$(NONE) ] "$@" done\n\n"
-			@printf "$(GREEN)Compiled "$@" successfully!\n $(NONE)\n"
+ifdef DEBUG
+$(PROGNAME)			:	$(NAME)
+endif
 
-$(OBJ):		$(OBJ_DIR)%.o : $(SRC_DIR)%.c
-			@mkdir -p ${OBJ_DIR}
-			@$(CC) $(NOFLAGS) -c $< -o $@
-			@printf "\t[ $(GREEN)✔$(NONE) ] "$@" done\n"
+debug				:
+ifndef DEBUG
+	$(MAKE) DEBUG=1
+endif
 
-all:		$(NAME)
+ifdef LIBFT
+$(LIBFT)			:
+	$(MAKE) -C $(dir $(LIBFT)) $(notdir $(LIBFT))
+endif
 
-bonus:		$(BONUS_NAME)
+$(OUTDIR)			:
+	mkdir $(OUTDIR)
 
-clean:
-			@if \
-			test -d "./$(OBJ_DIR)"; \
-			then \
-			${RM} $(OBJ_DIR); \
-			printf "\t[ $(RED)✗$(NONE) ] ./$(OBJ_DIR) deleted\n"; \
-			fi
+clean				:
+ifdef LIBFT
+	$(MAKE) -j -C $(dir $(LIBFT)) fclean
+endif
+	$(RM) -rf $(OBJDIR) $(DEBUGDIR)
 
-fclean:		clean
-			@if \
-			test -f "./$(NAME)"; \
-			then \
-			${RM} $(NAME); \
-			printf "\t[ $(RED)✗$(NONE) ] ./$(NAME) deleted\n\n"; \
-			fi
-			@printf "$(RED)"$@" successful!\n $(NONE)\n"
+fclean				:	clean
+	$(RM) -f $(PROGNAME) $(DEBUGNAME)
 
-libft_clean:
-			make clean -C $(LIBFT_DIR)
+re					:	fclean
+	$(MAKE) $(NAME)
 
-libft_fclean:	libft_clean
-			make fclean -C $(LIBFT_DIR)
+.PHONY				:	all bonus clean fclean re
 
-re: 		fclean all
-
-.PHONY: 	clean fclean all re NAME
+-include	$(addprefix $(OUTDIR)/,$(LEXERSRC:.c=.d))
