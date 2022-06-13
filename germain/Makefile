@@ -6,13 +6,13 @@
 #    By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 10:59:36 by gtoubol           #+#    #+#              #
-#    Updated: 2022/06/13 15:09:22 by gtoubol          ###   ########.fr        #
+#    Updated: 2022/06/13 15:45:37 by gtoubol          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 # List of all the sources (.c)
 # -------------------------------------------------------------------------
-SRCS =
+SRCS =		g_main.c interactive_session.c non_interactive_session.c
 
 # List of the related directories
 # -------------------------------------------------------------------------
