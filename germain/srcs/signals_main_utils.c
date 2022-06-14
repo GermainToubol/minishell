@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   non_interactive_session.c                          :+:      :+:    :+:   */
+/*   signals_main_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/13 15:43:20 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/14 13:04:11 by gtoubol          ###   ########.fr       */
+/*   Created: 2022/06/14 10:07:07 by gtoubol           #+#    #+#             */
+/*   Updated: 2022/06/14 17:17:19 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <signal.h>
 #include <unistd.h>
 #include "minishell.h"
 #include "g_minishell.h"
 
-int	non_interactive_session(char *arg, char **env)
+void	kill_from_lst(void *content)
 {
-	(void)arg;
-	(void)env;
-	sleep(2);
-	return (0);
+	pid_t	pid;
+
+	pid = (pid_t)(long int)content;
+	kill(pid, SIGINT);
 }

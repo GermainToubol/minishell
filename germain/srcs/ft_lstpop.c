@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   non_interactive_session.c                          :+:      :+:    :+:   */
+/*   ft_lstpop.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/13 15:43:20 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/14 13:04:11 by gtoubol          ###   ########.fr       */
+/*   Created: 2022/06/09 12:58:04 by gtoubol           #+#    #+#             */
+/*   Updated: 2022/06/09 13:02:39 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <unistd.h>
-#include "minishell.h"
+#include <stddef.h>
+#include "libft.h"
 #include "g_minishell.h"
 
-int	non_interactive_session(char *arg, char **env)
+void	ft_lstpop(t_list **lst, void (*del)(void *))
 {
-	(void)arg;
-	(void)env;
-	sleep(2);
-	return (0);
+	t_list	*tmp;
+
+	if (*lst == NULL)
+		return ;
+	tmp = (*lst)->next;
+	ft_lstdelone(*lst, del);
+	*lst = tmp;
 }

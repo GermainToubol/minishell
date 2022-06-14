@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   non_interactive_session.c                          :+:      :+:    :+:   */
+/*   run_line.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/13 15:43:20 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/14 13:04:11 by gtoubol          ###   ########.fr       */
+/*   Created: 2022/06/14 15:33:43 by gtoubol           #+#    #+#             */
+/*   Updated: 2022/06/14 16:40:14 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <unistd.h>
+#include "libft.h"
 #include "minishell.h"
 #include "g_minishell.h"
 
-int	non_interactive_session(char *arg, char **env)
+void	run_line(char *line, char **env)
 {
-	(void)arg;
-	(void)env;
-	sleep(2);
-	return (0);
+	t_list	*execline;
+
+	(void)line;
+	execline = tmp_init_exec();
+	run_pipe_series(execline, env);
 }
