@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:40:11 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/14 18:16:42 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/14 19:47:56 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ void	display_error(char *err, char c)
 {
 	if (err)
 		ft_putstr_fd(err, 2);
-	else if (c != 0)
+	else if (c != 0 && c == '\n')
+		ft_fprintf(2, "minishell: syntax error"
+			" near unexpected token `newline'\n");
+	else
 		ft_fprintf(2, "minishell: syntax error"
 			" near unexpected token `%c'\n", c);
 }
