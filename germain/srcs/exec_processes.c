@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   non_interactive_session.c                          :+:      :+:    :+:   */
+/*   exec_processes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/13 15:43:20 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/14 13:04:11 by gtoubol          ###   ########.fr       */
+/*   Created: 2022/06/14 13:36:20 by gtoubol           #+#    #+#             */
+/*   Updated: 2022/06/14 14:14:43 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <unistd.h>
+#include "libft.h"
 #include "minishell.h"
 #include "g_minishell.h"
 
-int	non_interactive_session(char *arg, char **env)
+int	exec_processes(char *line, char **env)
 {
-	(void)arg;
-	(void)env;
-	sleep(2);
-	return (0);
+	t_list	*execute;
+	pid_t	pid;
+	int		status;
+
+	pid = fork();
+	if (pid < 0)
+	{
+		perror()
+	}
 }
