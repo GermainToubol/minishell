@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:33:07 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/14 13:35:59 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/14 15:32:51 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <readline/readline.h>
@@ -51,8 +51,8 @@ static int	do_execution(char **env)
 		return (1);
 	}
 	add_history(line);
-	exec_processes(line);
 	rl_redisplay();
+	run_line(line, env);
 	rl_on_new_line();
 	free(line);
 	return (0);

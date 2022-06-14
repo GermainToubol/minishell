@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 09:52:45 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/10 17:27:41 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/14 17:55:56 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -15,7 +15,7 @@
 #include "minishell.h"
 #include "g_minishell.h"
 
-t_redirect **tmp_input(int i, char *filename);
+t_redirect	**tmp_input(int i, char *filename);
 
 t_list	*tmp_init_exec(void)
 {
@@ -25,10 +25,10 @@ t_list	*tmp_init_exec(void)
 
 	list = NULL;
 	i = 0;
-	while (i < 17)
+	while (i < 3)
 	{
 		tmp = (t_cmd *)malloc(sizeof(*tmp));
-		tmp->inputs = tmp_input(i, "FIN");
+		tmp->inputs = NULL;
 		tmp->outputs = NULL;
 		tmp->path_exec = ft_strdup("/usr/bin/cat");
 		tmp->cmd = ft_split("cat -e", ' ');
@@ -38,9 +38,9 @@ t_list	*tmp_init_exec(void)
 	return (list);
 }
 
-t_redirect **tmp_input(int i, char *filename)
+t_redirect	**tmp_input(int i, char *filename)
 {
-	t_redirect **inputs;
+	t_redirect	**inputs;
 
 	if (i % 2 == 0)
 		return (NULL);

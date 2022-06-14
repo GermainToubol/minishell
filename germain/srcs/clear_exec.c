@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals_main_utils.c                               :+:      :+:    :+:   */
+/*   clear_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/14 10:07:07 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/14 17:17:19 by gtoubol          ###   ########.fr       */
+/*   Created: 2022/06/14 16:32:38 by gtoubol           #+#    #+#             */
+/*   Updated: 2022/06/14 16:34:36 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <signal.h>
 #include <unistd.h>
+#include "libft.h"
 #include "minishell.h"
 #include "g_minishell.h"
 
-void	kill_from_lst(void *content)
+void	clear_exec(t_list **execline, pid_t pid)
 {
-	pid_t	pid;
-
-	pid = (pid_t)(long int)content;
-	kill(pid, SIGINT);
+	if (pid > 0)
+		ft_lstpop(execline, tmp_free_cmd);
+	else
+		ft_lstclear(execline, tmp_free_cmd);
 }

@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals_main_utils.c                               :+:      :+:    :+:   */
+/*   run_line.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/14 10:07:07 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/14 17:17:19 by gtoubol          ###   ########.fr       */
+/*   Created: 2022/06/14 15:33:43 by gtoubol           #+#    #+#             */
+/*   Updated: 2022/06/14 16:40:14 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <signal.h>
-#include <unistd.h>
+#include "libft.h"
 #include "minishell.h"
 #include "g_minishell.h"
 
-void	kill_from_lst(void *content)
+void	run_line(char *line, char **env)
 {
-	pid_t	pid;
+	t_list	*execline;
 
-	pid = (pid_t)(long int)content;
-	kill(pid, SIGINT);
+	(void)line;
+	execline = tmp_init_exec();
+	run_pipe_series(execline, env);
 }

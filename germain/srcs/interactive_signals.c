@@ -6,9 +6,12 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 10:13:48 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/14 13:20:58 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/14 17:57:19 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <stdio.h>
 #include <signal.h>
 #include <stddef.h>
 #include <stdlib.h>
@@ -16,8 +19,7 @@
 #include "minishell.h"
 #include "g_minishell.h"
 
-static void signal_handler(int signum, siginfo_t *siginfo,
-				void *context);
+static void	signal_handler(int signum, siginfo_t *siginfo, void *context);
 
 /**
  * Set the signal handler of the minishell in interactive session.
@@ -34,11 +36,11 @@ int	init_signal_interactive(struct sigaction *sa)
 	sigemptyset(&sa->sa_mask);
 	sa->sa_flags = SA_SIGINFO;
 	sa->sa_sigaction = signal_handler;
-	return (sigaction(SIGINT, sa, NULL));
+	sigaction(SIGINT, sa, NULL);
+	return (0);
 }
 
-static void signal_handler(int signum, siginfo_t *siginfo,
-				void *context)
+static void	signal_handler(int signum, siginfo_t *siginfo, void *context)
 {
 	(void)context;
 	if (signum != SIGINT)
@@ -46,15 +48,12 @@ static void signal_handler(int signum, siginfo_t *siginfo,
 		ft_fprintf(2, "%s %d\n", "unexpected signal catch:", signum);
 		return ;
 	}
-	ft_printf("%d\n", siginfo->si_pid);
-	if (siginfo->si_pid == 0)
+	send_sig_list();
+	write(1, "\n", 1);
+	if (siginfo->si_pid != 0)
 	{
-		write(1, "Ui\n", 3);
-	}
-	else
-	{
-		write(1, "Ok\n", 3);
-		//kill(siginfo->si_pid, SIGUSR1);
-		exit(EXIT_SUCCESS);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
 	}
 }

@@ -6,10 +6,11 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:07:07 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/14 13:22:14 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/14 17:56:15 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
+#include <sys/wait.h>
 #include <unistd.h>
 #include "minishell.h"
 #include "g_minishell.h"
@@ -30,7 +31,7 @@
  *
  */
 
-int main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **env)
 {
 	(void)argv;
 	if (argc != 1)
