@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fmauguin <fmauguin@student.42.fr>          +#+  +:+       +#+         #
+#    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/13 07:41:12 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/14 17:36:11 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,13 +23,17 @@ SRCDIR				:=	.
 OBJDIR				:=	./obj
 DEBUGDIR			:=	./debugobj
 
-LEXERSRC			:=	lexer/lexer.c							
+LEXERSRC			:=	lexer/lexer.c				\
+						lexer/utils.c				\
+						lexer/is_separator.c		\
+						lexer/is_redirect.c			\
+						lexer/is_word.c
 
 CC					:=	cc
 RM					:=	rm
 
 CCFLAGS				:=	-Wall -Wextra -Werror
-LIBFLAGS			:=	
+LIBFLAGS			:=	-lreadline
 OPTFLAG				:=
 
 NAME				:=	$(PROGNAME)
