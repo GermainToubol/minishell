@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:40:11 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/14 19:47:56 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/15 00:59:33 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,27 @@ void	print_tokens(t_tokens *tokens)
 		ft_printf("type: %i\n", tokens->tokens[i].type);
 		i++;
 	}
+}
+
+void	print_lexer(char *line, t_tokens *tokens)
+{
+	size_t		i;
+	const char	*e_type[] = {"WORD", "IO_IN", "IO_OUT",
+		"IO_HDOC", "IO_APP", "PIPE", "OR", "AND"};
+	const char	*e_colors[] = {"\x1b[32m", "\x1b[34m", "\x1b[94m",
+		"\x1b[35m", "\x1b[95m", "\x1b[93m", "\x1b[91m", "\x1b[31m"};
+
+	i = 0;
+	ft_printf("\nOrigine:\n%s\n", line);
+	ft_printf("Lexer:\n");
+	while (i < tokens->size)
+	{
+		ft_printf("%s", e_colors[tokens->tokens[i].type]);
+		ft_printf("%s", e_type[tokens->tokens[i].type]);
+		ft_printf("\x1b[0m ");
+		i++;
+	}
+	ft_printf("\n\n");
 }
 
 char	*ft_strndup(char *src, size_t len)

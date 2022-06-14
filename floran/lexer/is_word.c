@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 17:18:36 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/14 19:42:59 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/14 21:29:08 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ static int	is_word_basic(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i)
 {
 	if (!ft_isalnum(*line) && *line != '-' && *line != '"' && *line != '\'')
 		return (0);
-	*i = 0;
 	while (ft_isalnum(line[*i]) || line[*i] == '-')
 		(*i)++;
 	if (line[*i] == '\0' || line[*i] == ' ' || line[*i] == '\t'
@@ -98,9 +97,10 @@ int	is_word(char *line, t_lxm *lxm, t_tokens *tokens)
 {
 	size_t	i;
 
+	i = 0;
 	if (is_word_basic(line, lxm, tokens, &i) == -1)
 		return (-1);
-	else if (line[i] == '>' || line[i] == '<')
+	if (i > 0 && (line[i] == '>' || line[i] == '<'))
 	{
 		if (word_redirect(line, lxm, tokens, &i))
 			return (-1);

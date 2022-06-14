@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 07:13:19 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/14 19:49:49 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/15 00:58:54 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-# define BUFFER_LXM 4096
+# define BUFFER_LXM 2
 
 typedef enum e_token
 {
@@ -28,7 +28,6 @@ typedef enum e_token
 	IO_HDOC,
 	IO_APP,
 	PIPE,
-	AMPERSAND,
 	OR,
 	AND
 }	t_token;
@@ -41,7 +40,7 @@ typedef struct s_lxm
 
 typedef struct s_tokens
 {
-	t_lxm	tokens[BUFFER_LXM];
+	t_lxm	*tokens;
 	size_t	size;
 	size_t	max;
 }	t_tokens;
@@ -50,9 +49,17 @@ typedef struct s_tokens
 int			is_redirect(char *line, t_lxm *lxm, t_tokens *tokens);
 int			is_separator(char *line, t_lxm *lxm, t_tokens *tokens);
 int			is_word(char *line, t_lxm *lxm, t_tokens *tokens);
+int			lexer(char *line, t_tokens *tokens);
+
+//ALLOC
+int			tokens_alloc(t_tokens *tokens);
 
 //DEBUG
 void		print_tokens(t_tokens *tokens);
+void		print_lexer(char *line, t_tokens *tokens);
+
+//FREE
+void		free_lxm(t_lxm *lxm, size_t size);
 
 //UTILS
 char		*ft_strndup(char *src, size_t len);
