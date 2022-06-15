@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:51:57 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/14 18:18:53 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/15 12:36:36 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,11 @@
 
 static int	is_pipe(char *line, t_lxm *lxm, t_tokens *tokens, int *i)
 {
-	if (tokens->size > 0 && tokens->tokens[tokens->size - 1].type != WORD)
+	if (tokens->size > 0 && tokens->tokens[tokens->size - 1].type == P_START
+		&& line[1] == '|')
+		return (display_error_red(line, 2), -1);
+	if (tokens->size > 0 && tokens->tokens[tokens->size - 1].type != WORD
+		&& tokens->tokens[tokens->size - 1].type != P_END)
 		return (display_error(NULL, *line), -1);
 	if (line[1] == '|')
 	{
@@ -38,7 +42,11 @@ static int	is_pipe(char *line, t_lxm *lxm, t_tokens *tokens, int *i)
 
 static int	is_ampersand(char *line, t_lxm *lxm, t_tokens *tokens, int *i)
 {
-	if (tokens->size > 0 && tokens->tokens[tokens->size - 1].type != WORD)
+	if (tokens->size > 0 && tokens->tokens[tokens->size - 1].type == P_START
+		&& line[1] == '&')
+		return (display_error_red(line, 2), -1);
+	if (tokens->size > 0 && tokens->tokens[tokens->size - 1].type != WORD
+		&& tokens->tokens[tokens->size - 1].type != P_END)
 		return (display_error(NULL, *line), -1);
 	if (line[1] == '&')
 	{

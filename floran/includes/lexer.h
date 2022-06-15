@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 07:13:19 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 00:58:54 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/15 12:26:04 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ typedef enum e_token
 	IO_APP,
 	PIPE,
 	OR,
-	AND
+	AND,
+	P_START,
+	P_END
 }	t_token;
 
 typedef struct s_lxm
@@ -50,6 +52,7 @@ int			is_redirect(char *line, t_lxm *lxm, t_tokens *tokens);
 int			is_separator(char *line, t_lxm *lxm, t_tokens *tokens);
 int			is_word(char *line, t_lxm *lxm, t_tokens *tokens);
 int			lexer(char *line, t_tokens *tokens);
+int			is_prio(char *line, t_lxm *lxm, t_tokens *tokens);
 
 //ALLOC
 int			tokens_alloc(t_tokens *tokens);
@@ -65,5 +68,6 @@ void		free_lxm(t_lxm *lxm, size_t size);
 char		*ft_strndup(char *src, size_t len);
 void		display_error(char *err, char c);
 long long	ft_atoll(char *s);
+void		display_error_red(char *err, int i);
 
 #endif

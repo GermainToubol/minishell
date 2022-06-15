@@ -1,23 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/15 00:38:09 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 12:26:10 by fmauguin         ###   ########.fr       */
+/*   Created: 2022/06/15 11:50:43 by fmauguin          #+#    #+#             */
+/*   Updated: 2022/06/15 11:51:09 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#ifndef PARSING_H
+# define PARSING_H
 
-void	free_lxm(t_lxm *lxm, size_t size)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < size)
-		free(lxm[i++].data);
-	free(lxm);
-}
+#endif

@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 15:40:11 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 00:59:33 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/15 12:39:17 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,10 @@ void	print_lexer(char *line, t_tokens *tokens)
 {
 	size_t		i;
 	const char	*e_type[] = {"WORD", "IO_IN", "IO_OUT",
-		"IO_HDOC", "IO_APP", "PIPE", "OR", "AND"};
+		"IO_HDOC", "IO_APP", "PIPE", "OR", "AND", "P_START", "P_END"};
 	const char	*e_colors[] = {"\x1b[32m", "\x1b[34m", "\x1b[94m",
-		"\x1b[35m", "\x1b[95m", "\x1b[93m", "\x1b[91m", "\x1b[31m"};
+		"\x1b[35m", "\x1b[95m", "\x1b[33m", "\x1b[93m", "\x1b[93m",
+		"\x1b[31m", "\x1b[91m"};
 
 	i = 0;
 	ft_printf("\nOrigine:\n%s\n", line);

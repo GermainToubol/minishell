@@ -6,14 +6,14 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:50:22 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/14 21:40:15 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/15 12:13:09 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "libft.h"
 
-static void	display_error_red(char *err, int i)
+void	display_error_red(char *err, int i)
 {
 	char	*err_n;
 
