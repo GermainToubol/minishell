@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:50:22 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 12:13:09 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/15 13:32:23 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ void	display_error_red(char *err, int i)
 
 	if (err)
 	{
-		if (i > 1)
+		if (i > 1 && ft_isdigit(err[0]))
 			i--;
 		err_n = ft_substr(err, 0, i);
+		ft_printf("err : %s\n\n", err_n);
 		if (!err_n)
 			return (display_error("Error allocation\n", 0));
 		ft_fprintf(2, "minishell: syntax error"

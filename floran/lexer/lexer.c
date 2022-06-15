@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 07:13:55 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 12:59:39 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/15 13:26:21 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,6 @@ int	lexer(char *line, t_tokens *tokens)
 	if (tokens_alloc(tokens))
 		return (1);
 	if (convert_tokens(line, tokens))
-		return (free_lxm(tokens->tokens, tokens->size), 1);
+		return (1);
 	return (0);
 }
