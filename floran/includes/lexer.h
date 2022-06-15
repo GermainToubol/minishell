@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 07:13:19 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 12:26:04 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/15 12:52:53 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-# define BUFFER_LXM 2
+# define BUFFER_LXM 4096
 
 typedef enum e_token
 {
