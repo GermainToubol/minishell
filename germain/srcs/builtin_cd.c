@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 10:19:43 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/15 18:22:40 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/15 18:53:52 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <errno.h>
@@ -56,7 +56,7 @@ static int	cd_errors(int argc, char **env)
 		&& environment_get(env, "HOME") == NULL)
 	{
 		ft_fprintf(2, "minishell: cd: HOME not set\n");
-		return (1)
+		return (1);
 	}
 	return (0);
 }
