@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 07:13:19 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 16:51:14 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/15 17:05:16 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,6 @@ int			is_prio(char *line, t_lxm *lxm, t_tokens *tokens);
 
 //ALLOC
 int			tokens_alloc(t_tokens *tokens);
-
-//DEBUG
-void		print_tokens(t_tokens *tokens);
-void		print_lexer(char *line, t_tokens *tokens);
 
 //FREE
 void		free_lxm(t_lxm *lxm, size_t size);
