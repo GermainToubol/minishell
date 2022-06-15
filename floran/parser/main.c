@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 00:58:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 15:41:58 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/15 16:26:43 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 #include "parser.h"
 #include "libft.h"
 
-int	main(void)
+int	main(int ac, char **av, char **envp)
 {
 	char		*line;
 	t_tokens	tokens;
 
+	if (ac > 1)
+		return (display_error("Error\nusage: ./minishell\n", 0), 1);
+	(void)av;
 	ft_printf("\x1b[32mWelcome to lexer\n\x1b[0m");
 	while (1)
 	{
@@ -29,7 +32,7 @@ int	main(void)
 			return (free(line), 1);
 		print_lexer(line, &tokens);
 		free(line);
-		if (parser(&tokens))
+		if (parser(&tokens, envp))
 			return (free_lxm(tokens.tokens, tokens.size), 1);
 		free_lxm(tokens.tokens, tokens.size);
 	}

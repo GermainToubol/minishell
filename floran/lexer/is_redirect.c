@@ -6,29 +6,12 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:50:22 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 12:13:09 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/15 16:13:49 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "libft.h"
-
-void	display_error_red(char *err, int i)
-{
-	char	*err_n;
-
-	if (err)
-	{
-		if (i > 1)
-			i--;
-		err_n = ft_substr(err, 0, i);
-		if (!err_n)
-			return (display_error("Error allocation\n", 0));
-		ft_fprintf(2, "minishell: syntax error"
-			" near unexpected token `%s'\n", err_n);
-		free(err_n);
-	}
-}
 
 static int	is_redirect_out(char *line, t_lxm *lxm, t_tokens *tokens, int *i)
 {

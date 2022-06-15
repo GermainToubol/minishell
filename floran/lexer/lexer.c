@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 07:13:55 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 12:59:39 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/15 16:36:08 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ static int	is_forbidden(char line)
 	if (ft_isalnum(line) || line == ' ' || line == '\t' || line == '\n'
 		|| line == '$' || line == '>' || line == '<' || line == '|'
 		|| line == '&' || line == '*' || line == '-' || line == '\0'
-		|| line == '"' || line == '\'' || line == '(' || line == ')')
+		|| line == '"' || line == '\'' || line == '(' || line == ')'
+		|| line == '.')
 		return (1);
 	display_error(NULL, line);
 	return (0);
