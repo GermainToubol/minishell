@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter.c                                       :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/05 10:12:15 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/05/05 10:13:31 by gtoubol          ###   ########.fr       */
+/*   Created: 2022/06/15 14:49:47 by fmauguin          #+#    #+#             */
+/*   Updated: 2022/06/15 14:51:19 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "lexer.h"
+#include "parser.h"
 #include "libft.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(void *))
+int	parser(t_tokens *tokens)
 {
-	while (lst != NULL)
-	{
-		(*f)(lst->content);
-		lst = lst->next;
-	}
+	return (0);
 }

@@ -1,28 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_split.c                                    :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/31 14:50:01 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/05/31 14:52:18 by gtoubol          ###   ########.fr       */
+/*   Created: 2022/06/15 11:50:43 by fmauguin          #+#    #+#             */
+/*   Updated: 2022/06/15 14:50:31 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdlib.h>
-#include "libft.h"
 
-void	ft_free_split(char **strs)
-{
-	int	i;
+#ifndef PARSER_H
+# define PARSER_H
 
-	if (strs == NULL)
-		return ;
-	i = 0;
-	while (strs[i] != NULL)
-	{
-		free(strs[i]);
-		i++;
-	}
-	free(strs);
-}
+#endif
