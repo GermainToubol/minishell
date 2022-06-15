@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:03:29 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/15 15:31:25 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/15 18:25:51 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -33,7 +33,8 @@ char	**environment_set(char **env, char *name, char *value)
 	}
 	while (env[i] != NULL)
 	{
-		if (ft_strncmp(name, env[i], name_len) == 0 && env[i][name_len] == '=')
+		if (ft_strncmp(name, env[i], name_len) == 0
+			&& (env[i][name_len] == '=' || env[i][name_len] == '\0'))
 		{
 			free(env[i]);
 			env[i] = new;

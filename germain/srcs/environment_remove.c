@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:51:50 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/15 13:54:35 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/15 18:27:34 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -26,7 +26,7 @@ char	**environment_remove(char **env, char *name)
 	while (env[i] != NULL)
 	{
 		if (name_found_flag == 0 && ft_strncmp(name, env[i], name_len) == 0
-			&& env[i][name_len] == '=')
+			&& (env[i][name_len] == '=' || env[i][name_len] == '\0'))
 		{
 			name_found_flag = 1;
 			free(env[i]);
