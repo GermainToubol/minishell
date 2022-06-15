@@ -1,23 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   ft_atoll.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/15 00:38:09 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 12:26:10 by fmauguin         ###   ########.fr       */
+/*   Created: 2022/06/15 16:14:08 by fmauguin          #+#    #+#             */
+/*   Updated: 2022/06/15 16:52:34 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "utils.h"
 
-void	free_lxm(t_lxm *lxm, size_t size)
+long long	ft_atoll(char *s)
 {
-	size_t	i;
+	long long	n;
+	int			minus;
 
-	i = 0;
-	while (i < size)
-		free(lxm[i++].data);
-	free(lxm);
+	minus = 1;
+	n = 0;
+	if (!s)
+		return (0);
+	if (*s == '+' || *s == '-')
+	{
+		if (*s == '-')
+			minus = -1;
+		s++;
+	}
+	while (ft_isdigit(*s))
+	{
+		n += *s - '0';
+		n *= 10;
+		s++;
+	}
+	return (n * minus);
 }

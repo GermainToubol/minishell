@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/15 00:38:09 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 12:26:10 by fmauguin         ###   ########.fr       */
+/*   Created: 2022/06/15 16:11:58 by fmauguin          #+#    #+#             */
+/*   Updated: 2022/06/15 16:52:44 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "utils.h"
 
-void	free_lxm(t_lxm *lxm, size_t size)
+char	*ft_strndup(char *src, size_t len)
 {
+	char	*r;
 	size_t	i;
 
+	if (!src)
+		return (NULL);
+	r = (char *)malloc((len + 1) * sizeof(char));
+	if (!r)
+		return (NULL);
 	i = 0;
-	while (i < size)
-		free(lxm[i++].data);
-	free(lxm);
+	while (src[i] && i < len)
+	{
+		r[i] = src[i];
+		i++;
+	}
+	r[i] = '\0';
+	return (r);
 }

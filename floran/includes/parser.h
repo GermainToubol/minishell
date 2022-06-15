@@ -1,34 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/15 00:58:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 01:01:28 by fmauguin         ###   ########.fr       */
+/*   Created: 2022/06/15 11:50:43 by fmauguin          #+#    #+#             */
+/*   Updated: 2022/06/15 16:51:26 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
-#include "libft.h"
+#ifndef PARSER_H
+# define PARSER_H
 
-int	main(void)
-{
-	char		*line;
-	t_tokens	tokens;
+# include <unistd.h>
+# include <stdlib.h>
+# include "lexer.h"
+# include "utils.h"
 
-	ft_printf("\x1b[32mWelcome to lexer\n\x1b[0m");
-	while (1)
-	{
-		line = readline("\x1b[33mMINISHELL$> \x1b[0m");
-		if (!line)
-			return (1);
-		if (lexer(line, &tokens))
-			return (free(line), 1);
-		print_lexer(line, &tokens);
-		free(line);
-		free_lxm(tokens.tokens, tokens.size);
-	}
-	return (0);
-}
+# define L_PATH 5
+
+//PARSE
+int		parser(t_tokens *tokens, char **env);
+char	*check_path(char **path, char *cmd);
+
+//PATH
+char	**get_path(char **env);
+
+//FREE
+
+//DEBUG
+
+#endif

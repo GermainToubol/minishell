@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/15 00:38:09 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 12:26:10 by fmauguin         ###   ########.fr       */
+/*   Created: 2022/06/15 14:49:47 by fmauguin          #+#    #+#             */
+/*   Updated: 2022/06/15 16:24:36 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+#include "parser.h"
+#include "libft.h"
 
-void	free_lxm(t_lxm *lxm, size_t size)
+int	parser(t_tokens *tokens, char **env)
 {
-	size_t	i;
+	char	**path;
 
-	i = 0;
-	while (i < size)
-		free(lxm[i++].data);
-	free(lxm);
+	path = get_path(env);
+	if (!path)
+		return (1);
+	(void)tokens;
+	return (0);
 }

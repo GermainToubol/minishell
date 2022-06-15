@@ -6,31 +6,40 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/15 01:00:47 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/15 16:21:07 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SHELL				=	/bin/sh
 
-PROGNAME			:=	lexing
+PROGNAME			:=	minishell
 
 LIBFT				:=	../commun/libft/libft.a
 LIBFTDIR			:=	../commun/libft/includes
 
-INCLUDEDIR			:=	lexer
+INCLUDEDIR			:=	./includes ../commun/
 SRCDIR				:=	.
 
 OBJDIR				:=	./obj
 DEBUGDIR			:=	./debugobj
 
-LEXERSRC			:=	lexer/main.c				\
-						lexer/lexer.c				\
-						lexer/utils.c				\
+LEXERSRC			:=	lexer/lexer.c				\
 						lexer/is_separator.c		\
 						lexer/is_redirect.c			\
 						lexer/is_word.c				\
+						lexer/is_prio.c				\
 						lexer/tokens_alloc.c		\
 						lexer/free.c				\
+
+PARSERSRC			:=	parser/main.c				\
+						parser/parser.c				\
+						parser/path.c				\
+
+UTILSSRC			:=	utils/ft_atoll.c			\
+						utils/ft_strndup.c			\
+						utils/print.c				\
+						utils/display_msg.c			\
+						utils/ft_join3.c			\
 
 CC					:=	cc
 RM					:=	rm
@@ -57,8 +66,8 @@ $(OUTDIR)/%.o		:	$(SRCDIR)/%.c | $(OUTDIR)
 	@mkdir -p $(dir $@)
 	$(CC) -c -MMD -MP $(CCFLAGS) $(OPTFLAG) $(addprefix -I ,$(INCLUDEDIR)) $(addprefix -I ,$(LIBFTDIR)) $< -o $@
 
-$(NAME)				:	$(addprefix $(OUTDIR)/,$(LEXERSRC:.c=.o)) $(LIBFT)
-	$(CC) $(CCFLAGS) $(OPTFLAG) -o $(NAME) $(addprefix $(OUTDIR)/,$(LEXERSRC:.c=.o)) $(LIBFT) $(LIBFLAGS)
+$(NAME)				:	$(addprefix $(OUTDIR)/,$(LEXERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(PARSERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(LIBFT)
+	$(CC) $(CCFLAGS) $(OPTFLAG) -o $(NAME) $(addprefix $(OUTDIR)/,$(LEXERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(PARSERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(LIBFT) $(LIBFLAGS)
 
 all					:	$(NAME)
 

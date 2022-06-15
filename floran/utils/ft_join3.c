@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free.c                                             :+:      :+:    :+:   */
+/*   ft_join3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/15 00:38:09 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 12:26:10 by fmauguin         ###   ########.fr       */
+/*   Created: 2022/06/15 16:20:16 by fmauguin          #+#    #+#             */
+/*   Updated: 2022/06/15 16:52:41 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lexer.h"
+#include "utils.h"
 
-void	free_lxm(t_lxm *lxm, size_t size)
+char	*ft_join3(char *s1, char *s2, char *s3)
 {
-	size_t	i;
+	char	*tmp;
+	char	*ret;
 
-	i = 0;
-	while (i < size)
-		free(lxm[i++].data);
-	free(lxm);
+	if (!s1 || !s2 || !s3)
+		return (NULL);
+	tmp = ft_strjoin(s1, s2);
+	if (!tmp)
+		return (NULL);
+	ret = ft_strjoin(tmp, s3);
+	free(tmp);
+	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 17:18:36 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/14 21:29:08 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/15 16:37:43 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,20 @@ static int	word_redirect(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i)
 
 static int	is_word_basic(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i)
 {
-	if (!ft_isalnum(*line) && *line != '-' && *line != '"' && *line != '\'')
+	if (!ft_isalnum(*line) && *line != '-' && *line != '"' && *line != '\''
+		&& *line != '$' && *line != '*' && *line != '/' && *line != '.')
 		return (0);
-	while (ft_isalnum(line[*i]) || line[*i] == '-')
+	if (*line == '$')
 		(*i)++;
-	if (line[*i] == '\0' || line[*i] == ' ' || line[*i] == '\t'
-		|| line[*i] == '|' || line[*i] == '&')
+	while (ft_isalnum(line[*i]) || ((line[*i] == '-' || line[*i] == '*'
+				|| line[*i] == '/' || line[*i] == '.') && *line != '$'))
+		(*i)++;
+	if ((line[*i] == '\0' || line[*i] == ' ' || line[*i] == '\t'
+			|| line[*i] == '|' || line[*i] == '&' || line[*i] == '('
+			|| line[*i] == ')' || line[*i] == '$') || line[0] == '$')
 	{
+		if (*line == '$' && line[1] == '?')
+			(*i) = 2;
 		lxm->data = ft_strndup(line, *i);
 		if (!lxm->data)
 			return (display_error("Error allocation\n", 0), -1);
