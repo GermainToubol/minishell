@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 07:13:19 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 12:52:53 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/15 16:51:14 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include "utils.h"
 
 # define BUFFER_LXM 4096
 
@@ -63,11 +64,5 @@ void		print_lexer(char *line, t_tokens *tokens);
 
 //FREE
 void		free_lxm(t_lxm *lxm, size_t size);
-
-//UTILS
-char		*ft_strndup(char *src, size_t len);
-void		display_error(char *err, char c);
-long long	ft_atoll(char *s);
-void		display_error_red(char *err, int i);
 
 #endif

@@ -6,12 +6,12 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:11:19 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 16:11:51 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/15 16:52:59 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "utils.h"
 #include "lexer.h"
-#include "libft.h"
 
 void	print_tokens(t_tokens *tokens)
 {

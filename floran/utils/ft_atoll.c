@@ -6,11 +6,11 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:14:08 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 16:14:27 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/15 16:52:34 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "utils.h"
 
 long long	ft_atoll(char *s)
 {

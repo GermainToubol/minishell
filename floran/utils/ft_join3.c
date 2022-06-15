@@ -6,12 +6,11 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:20:16 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 16:23:36 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/15 16:52:41 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdlib.h>
+#include "utils.h"
 
 char	*ft_join3(char *s1, char *s2, char *s3)
 {

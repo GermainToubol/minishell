@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/15 11:50:43 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 16:51:26 by fmauguin         ###   ########.fr       */
+/*   Created: 2022/06/15 16:50:17 by fmauguin          #+#    #+#             */
+/*   Updated: 2022/06/15 16:52:10 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#ifndef UTILS_H
+# define UTILS_H
 
-# include <unistd.h>
 # include <stdlib.h>
-# include "lexer.h"
-# include "utils.h"
+# include "libft.h"
 
-# define L_PATH 5
+void		display_error_red(char *err, int i);
+void		display_error(char *err, char c);
 
-//PARSE
-int		parser(t_tokens *tokens, char **env);
-char	*check_path(char **path, char *cmd);
+char		*ft_strndup(char *src, size_t len);
+char		*ft_join3(char *s1, char *s2, char *s3);
 
-//PATH
-char	**get_path(char **env);
-
-//FREE
-
-//DEBUG
+long long	ft_atoll(char *s);
 
 #endif

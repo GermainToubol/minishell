@@ -6,11 +6,11 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:11:58 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 16:12:56 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/15 16:52:44 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "utils.h"
 
 char	*ft_strndup(char *src, size_t len)
 {
