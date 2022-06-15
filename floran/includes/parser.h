@@ -6,11 +6,13 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:50:43 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 14:50:31 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/15 15:36:27 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
+
+int		parser(t_tokens *tokens);
 
 #endif

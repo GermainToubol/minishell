@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/15 12:04:33 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/15 15:41:12 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ LEXERSRC			:=	lexer/lexer.c				\
 						lexer/free.c				\
 
 PARSERSRC			:=	parser/main.c				\
+						parser/parser.c				\
 
 CC					:=	cc
 RM					:=	rm
