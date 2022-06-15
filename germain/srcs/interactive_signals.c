@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 10:13:48 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/14 17:57:19 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/15 18:16:59 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <readline/readline.h>
@@ -37,12 +37,15 @@ int	init_signal_interactive(struct sigaction *sa)
 	sa->sa_flags = SA_SIGINFO;
 	sa->sa_sigaction = signal_handler;
 	sigaction(SIGINT, sa, NULL);
+	sigaction(SIGQUIT, sa, NULL);
 	return (0);
 }
 
 static void	signal_handler(int signum, siginfo_t *siginfo, void *context)
 {
 	(void)context;
+	if (signum == SIGQUIT)
+		return ;
 	if (signum != SIGINT)
 	{
 		ft_fprintf(2, "%s %d\n", "unexpected signal catch:", signum);
