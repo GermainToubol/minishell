@@ -6,16 +6,18 @@
 #    By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 10:59:36 by gtoubol           #+#    #+#              #
-#    Updated: 2022/06/16 16:28:04 by gtoubol          ###   ########.fr        #
+#    Updated: 2022/06/16 18:53:23 by gtoubol          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 # List of all the sources (.c)
 # -------------------------------------------------------------------------
-SRCS = 		ft_newdico.c ft_freedico.c\
-			environment_copy.c environment_add.c environment_remove.c environment_get.c environment_format.c \
-			builtin_cd.c \
-			builtin_pwd.c
+SRCS = 		ft_newdico.c ft_freedico.c										\
+			environment_copy.c environment_add.c environment_remove.c		\
+			environment_get.c environment_format.c environment_set.c		\
+			builtin_cd.c 													\
+			builtin_pwd.c 													\
+			builtin_export.c
 
 TMP =		#tmp_exec.c ft_lstpop.c
 
@@ -53,6 +55,8 @@ ifeq (debug, $(filter debug,$(MAKECMDGOALS)))
 	CFLAGS += $(CDEBUG)
 else ifeq (profile, $(filter profile,$(MAKECMDGOALS)))
 	CFLAGS += $(CPROFILE) $(CRELEASE)
+else ifeq (test, $(filter test,$(MAKECMDGOALS)))
+	CFLAGS = -Wall -Wextra -Werror -fPIC
 else
 	CFLAGS += $(CRELEASE)
 endif

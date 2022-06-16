@@ -6,10 +6,11 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 15:03:29 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/16 16:04:59 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/16 18:53:47 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
+#include <stdlib.h>
 #include "libft.h"
 #include "minishell.h"
 #include "g_minishell.h"
