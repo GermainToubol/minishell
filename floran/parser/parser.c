@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 14:49:47 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/16 01:44:47 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/16 03:50:44 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,27 @@ size_t	get_n_sep(t_tokens *tokens)
 	return (r);
 }
 
-static t_cmd	*fill_cmd(t_tokens *tokens, size_t start)
+static t_cmd	*fill_cmd(t_tokens *tokens, size_t *start)
 {
 	t_cmd	*cmd;
 	size_t	max;
 
-	cmd = ft_calloc(1, sizeof(cmd));
+	cmd = ft_calloc(1, sizeof(t_cmd));
 	if (!cmd)
 		return (NULL);
-	max = start;
-	while (max < tokens->size || (tokens->tokens[start].type >= PIPE
-			&& tokens->tokens[start].type <= P_END))
+	max = *start;
+	while (max < tokens->size && tokens->tokens[max].type < PIPE)
 		max++;
-	cmd->redirect = fill_redirect(tokens, start, max);
+	cmd->redirect = fill_redirect(tokens, *start, max);
 	if (!cmd->redirect)
 		return (free(cmd), NULL);
-	cmd->cmd = fill_cmdn(tokens, start, max);
+	cmd->cmd = fill_cmdn(tokens, *start, max);
 	if (!cmd->redirect)
 	{
 		free_red(cmd->redirect);
 		return (free(cmd), NULL);
 	}
+	*start = max;
 	return (cmd);
 }
 
@@ -73,19 +73,21 @@ int	fill_cmd_line(t_tokens *tokens, t_parse **cmd_line)
 	k = 0;
 	while (i < tokens->size)
 	{
+		cmd_line[k] = ft_calloc(1, sizeof(t_parse));
+		if (!cmd_line[k])
+			return (display_error("Error allocation\n", 0), 1);
 		if (tokens->tokens[i].type >= PIPE && tokens->tokens[i].type <= P_END)
 		{
 			cmd_line[k]->cmd = NULL;
-			cmd_line[k++]->type = tokens->tokens[i].type;
+			cmd_line[k++]->type = tokens->tokens[i++].type;
 		}
 		else
 		{
 			cmd_line[k]->type = CMD;
-			cmd_line[k]->cmd = fill_cmd(tokens, i);
+			cmd_line[k]->cmd = fill_cmd(tokens, &i);
 			if (!cmd_line[k++]->cmd)
 				return (1);
 		}
-		i++;
 	}
 	cmd_line[k] = NULL;
 	return (0);
@@ -116,5 +118,6 @@ int	parser(t_tokens *tokens, char **env)
 	cmd_line = create_cmd_line(tokens);
 	if (!cmd_line)
 		return (free_tab(path), 1);
+	print_cmd_line(cmd_line);
 	return (0);
 }

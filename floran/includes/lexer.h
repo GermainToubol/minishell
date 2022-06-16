@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 07:13:19 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 22:19:39 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/16 03:49:08 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ typedef struct s_tokens
 	size_t	size;
 	size_t	max;
 }	t_tokens;
-
 
 //LEXER
 int			is_redirect(char *line, t_lxm *lxm, t_tokens *tokens);

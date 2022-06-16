@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:04:22 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/16 02:28:22 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/16 03:49:21 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static int	check_next_token(char *line)
 	i = 0;
 	while (*line == ' ' || *line == '\t' || *line == '\n')
 		line++;
-	if (*line == '|' || *line == '&' || *line == '\0' || *line == '(')
+	if (*line == '|' || *line == '&' || *line == '\0' || *line == '('
+		|| *line == ')')
 		return (0);
 	else
 	{
@@ -32,26 +33,35 @@ static int	check_next_token(char *line)
 	}
 }
 
+static int	is_p_end(char *line, t_lxm *lxm, t_tokens *tokens, int is_open)
+{
+	if (is_open <= 0)
+		return (display_error(NULL, *line), 1);
+	if (tokens->size > 0 && tokens->tokens[tokens->size - 1].type == P_START)
+		return (display_error(NULL, *line), 1);
+	lxm->data = ft_strndup(")", 1);
+	if (!lxm->data)
+		return (display_error("Error allocation\n", 0), 1);
+	lxm->type = P_END;
+	tokens->size++;
+	if (check_next_token(&line[1]))
+		return (1);
+	return (0);
+}
+
 static int	is_prio_content(char *line, t_lxm *lxm,
 	t_tokens *tokens, int is_open)
 {
 	if (*line == ')')
 	{
-		if (is_open <= 0)
-			return (display_error(NULL, *line), 1);
-		if (tokens->size > 0 && tokens->tokens[tokens->size].type == P_START)
-			return (display_error(NULL, *line), 1);
-		lxm->data = ft_strndup(")", 1);
-		if (!lxm->data)
-			return (display_error("Error allocation\n", 0), 1);
-		lxm->type = P_END;
-		tokens->size++;
-		if (check_next_token(&line[1]))
+		if (is_p_end(line, lxm, tokens, is_open))
 			return (1);
 	}
 	else
 	{
-		if (tokens->size > 0 && tokens->tokens[tokens->size - 1].type == P_END)
+		if (tokens->size > 0 && (tokens->tokens[tokens->size - 1].type == P_END
+				|| (tokens->tokens[tokens->size - 1].type >= WORD
+					&& tokens->tokens[tokens->size - 1].type <= IO_APP)))
 			return (display_error(NULL, *line), 1);
 		lxm->data = ft_strndup("(", 1);
 		if (!lxm->data)

@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 23:11:07 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/16 01:19:44 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/16 03:54:59 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	get_fd(t_lxm *lxm)
 	while (lxm->data[i])
 	{
 		if (lxm->data[i] == '<' || lxm->data[i] == '>')
-			break;
+			break ;
 		i++;
 	}
 	if (i > 0)
@@ -57,11 +57,29 @@ static int	get_fd(t_lxm *lxm)
 	return (i);
 }
 
+static int	fill_red2(t_tokens *tokens, size_t start,
+		size_t *i, t_redirect **red)
+{
+	int	type;
+
+	red[*i] = ft_calloc(1, sizeof(t_redirect));
+	if (!red[*i])
+		return (display_error("Error allocation\n", 0), 1);
+	type = tokens->tokens[start].type;
+	red[*i]->io_r = type - 1;
+	red[*i]->fd = get_fd(&tokens->tokens[start++]);
+	if (red[*i]->fd == -1)
+		return (1);
+	red[*i]->file = ft_strdup(tokens->tokens[start].data);
+	if (!red[*i]->file)
+		return (display_error("Error allocation\n", 0), 1);
+	return (0);
+}
+
 static int	fill_red(t_tokens *tokens, size_t start,
 		size_t max, t_redirect **red)
 {
 	size_t	i;
-	int		type;
 
 	i = 0;
 	while (start < max)
@@ -69,14 +87,8 @@ static int	fill_red(t_tokens *tokens, size_t start,
 		if (tokens->tokens[start].type >= IO_IN
 			&& tokens->tokens[start].type <= IO_APP)
 		{
-			type = tokens->tokens[start].type;
-			red[i]->io_r = type - 1;
-			red[i]->fd = get_fd(&tokens->tokens[start++]);
-			if (red[i]->fd == -1)
+			if (fill_red2(tokens, start, &i, red))
 				return (1);
-			red[i]->file = ft_strdup(tokens->tokens[start].data);
-			if (!red[i]->file)
-				return (display_error("Error allocation\n", 0), 1);
 			i++;
 		}
 		start++;
