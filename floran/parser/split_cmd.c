@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 00:55:31 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/16 13:51:05 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/16 15:05:08 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static size_t	count_arg(t_tokens *tokens, size_t start, size_t max)
 	while (start < max)
 	{
 		if (tokens->tokens[start].type == WORD
-			&& (start == 0 || tokens->tokens[start - 1].type == WORD))
+			&& (start == 0 || (tokens->tokens[start - 1].type < IO_IN
+					|| tokens->tokens[start - 1].type > IO_APP)))
 				i++;
 		start++;
 	}

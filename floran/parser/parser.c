@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 14:49:47 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/16 13:59:45 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/16 15:18:54 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ size_t	get_n_sep(t_tokens *tokens)
 		if (type == PIPE || type == OR || type == AND)
 			r++;
 	}
-	r = 1 - (r % 2) + r * 2;
+	if (i > 0 && tokens->tokens[i - 1].type >= PIPE
+		&& tokens->tokens[i - 1].type <= AND)
+		r = (r * 2);
+	else if (i > 0)
+		r = 1 + (r * 2);
 	i = 0;
 	while (i < tokens->size)
 	{
@@ -97,6 +101,7 @@ t_parse	**create_cmd_line(t_tokens *tokens, char **env)
 	size_t	size;
 
 	size = get_n_sep(tokens);
+	ft_printf("size %i\n", size);
 	ret = ft_calloc(size + 1, sizeof(t_parse *));
 	if (!ret)
 		return (display_error("Error allocation\n", 0), NULL);
@@ -116,6 +121,9 @@ int	parser(t_tokens *tokens, char **env)
 	cmd_line = create_cmd_line(tokens, path);
 	if (!cmd_line)
 		return (free_tab(path), 1);
+	free_tab(path);
 	print_cmd_line(cmd_line);
+	print_cmd_line_detail(cmd_line);
+	free_parse(cmd_line);
 	return (0);
 }

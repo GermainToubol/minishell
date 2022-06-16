@@ -6,33 +6,36 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 14:03:08 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/16 14:10:05 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/16 14:30:52 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "libft.h"
 
-static void	print_cmd_line2(t_parse **parse, const char *e_colors[],
-		const char *e_type[])
+void	print_cmd_line_detail(t_parse **parse)
 {
-	int	i;
-	int	type;
+	int			i;
+	int			type;
+	const char	*e_type[] = {"CMD", "PIPE", "OR", "AND", "P_START", "P_END"};
+	const char	*e_colors[] = {"\x1b[32m", "\x1b[33m", "\x1b[36m", "\x1b[34m",
+		"\x1b[35m", "\x1b[31m"};
 
 	i = -1;
-	ft_printf("\n");
 	while (parse[++i])
 	{
-		ft_printf("\ncmd %i:\t", i);
+		ft_printf("\nnode %i:\t", i);
 		type = parse[i]->type;
 		if (type == CMD)
+		{
+			type = 0;
+			ft_printf("%s%s\x1b[0m",  e_colors[type], e_type[type]);
 			print_node(parse[i]->cmd);
+		}
 		else
 		{
 			type -= 4;
-			ft_printf("%s", e_colors[type]);
-			ft_printf("%s", e_type[type]);
-			ft_printf("\x1b[0m\n");
+			ft_printf("%s%s\x1b[0m\n",  e_colors[type], e_type[type]);
 		}
 	}
 }
@@ -54,9 +57,7 @@ void	print_cmd_line(t_parse **parse)
 			type = 0;
 		if (type >= PIPE)
 			type -= 4;
-		ft_printf("%s", e_colors[type]);
-		ft_printf("%s", e_type[type]);
-		ft_printf("\x1b[0m ");
+		ft_printf("%s%s\x1b[0m ",  e_colors[type], e_type[type]);
 	}
-	print_cmd_line2(parse, e_colors, e_type);
+	ft_printf("\n");
 }

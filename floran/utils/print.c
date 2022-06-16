@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:11:19 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/16 14:03:16 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/16 14:17:42 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ void	show_red(t_redirect **red)
 			i++;
 		}
 	}
-	ft_printf("\n");
 }
 
 void	print_node(t_cmd *data)

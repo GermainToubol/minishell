@@ -6,12 +6,13 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 00:38:09 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/16 03:56:00 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/16 14:52:50 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "parser.h"
+#include "libft.h"
 
 void	free_lxm(t_lxm *lxm, size_t size)
 {
@@ -31,7 +32,9 @@ void	free_tab(char **tab)
 	if (!tab)
 		return ;
 	while (tab[i])
+	{
 		free(tab[i++]);
+	}
 	free(tab);
 }
 
