@@ -6,18 +6,17 @@
 #    By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 10:59:36 by gtoubol           #+#    #+#              #
-#    Updated: 2022/06/14 17:22:17 by gtoubol          ###   ########.fr        #
+#    Updated: 2022/06/16 15:55:32 by gtoubol          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 # List of all the sources (.c)
 # -------------------------------------------------------------------------
-SRCS = 		g_main.c interactive_session.c non_interactive_session.c 		\
-			interactive_signals.c signals_main_utils.c run_line.c 			\
-			run_pipe_series.c set_outpipe.c wait_all.c exec_processes.c		\
-			pid_memory_management.c clear_exec.c
+SRCS = 		ft_newdico.c ft_freedico.c\
+			environment_copy.c environment_add.c environment_remove.c environment_get.c environment_format.c \
+			builtin_cd.c
 
-TMP =		tmp_exec.c ft_lstpop.c
+TMP =		#tmp_exec.c ft_lstpop.c
 
 # List of the related directories
 # -------------------------------------------------------------------------

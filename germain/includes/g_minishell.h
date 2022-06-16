@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:07:25 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/15 18:54:22 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/16 15:56:12 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef G_MINISHELL_H
@@ -16,6 +16,12 @@
 # include "libft.h"
 
 # define PROMPT_NAME "MINISHELL$> "
+
+typedef struct s_dictionnary
+{
+	char	*key;
+	char	*value;
+}	t_dico;
 
 /* TMP */
 t_list	*tmp_init_exec(void);
@@ -27,14 +33,20 @@ int		interactive_session(char **env);
 int		non_interactive_session(char *arg, char **env);
 
 /* ENVIRONMENT MANAGEMENT */
-char	**environment_copy(char **env);
-char	**environment_add(char **old_env, char *var);
-char	**environment_remove(char **env, char *name);
-char	*environment_get(char **env, char *name);
-char	**environment_set(char **env, char *name, char *value);
+/** DICTIONNARY **/
+t_dico	*ft_newdico(char *entry);
+void	ft_freedico(void *dico);
+
+/** ENVIRONMENT UTILITIES **/
+t_list	*environment_copy(char **env);
+t_list	*environment_add(t_list **old_env, char *var);
+void	environment_remove(t_list **env, char *name);
+int		environment_set(t_list *env, char *name, char *value);
+char	*environment_get(t_list *env, char *name);
+char	**environment_format(t_list *env);
 
 /* MEMORY MANAGEMENT */
-int	local_memory_manager(void *ptr, int action, int flag);
+int		local_memory_manager(void *ptr, int action, int flag);
 
 /* SIGNALS INTERACTIONS */
 int		init_signal_interactive(struct sigaction *sa);
@@ -56,6 +68,6 @@ void	extend_pid_list(pid_t pid);
 void	free_pid_list(pid_t	pid);
 
 /* BUILTIN */
-int		builtin_cd(int argc, char **argv, char **env);
+int	builtin_cd(int argc, char **argv, t_list **env);
 
 #endif

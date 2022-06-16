@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 14:53:35 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/15 18:26:27 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/16 11:15:01 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -20,19 +20,16 @@
    @return: the content if NAME is in env, NULL otherwise.
 */
 
-char	*environment_get(char **env, char *name)
+char	*environment_get(t_list *env, char *name)
 {
-	size_t	i;
-	size_t	name_len;
+	t_dico	*tmp_dico;
 
-	i = 0;
-	name_len = ft_strlen(name);
-	while (env[i] != NULL)
+	while (env != NULL)
 	{
-		if (ft_strncmp(name, env[i], name_len) == 0
-			&& (env[i][name_len] == '=' || env[i][name_len] == '\0'))
-			return (env[i] + name_len + 1);
-		i++;
+		tmp_dico = (t_dico *)env->content;
+		if (ft_strcmp(tmp_dico->key, name) == 0)
+			return (tmp_dico->value);
+		env = env->next;
 	}
 	return (NULL);
 }

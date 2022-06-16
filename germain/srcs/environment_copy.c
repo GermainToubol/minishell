@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:01:15 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/15 12:28:45 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/16 10:55:03 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -16,31 +16,42 @@
 
 /**
    Duplicate the environment to be able to add/modify/remove variable.
- */
+*/
 
-char	**environment_copy(char **env)
+static void	tmp_free(t_list *tmp, t_list **lst, t_dico *dico);
+
+t_list	*environment_copy(char **env)
 {
 	size_t	i;
-	char	**new_env;
-	char	*new_var;
+	t_list	*lst;
+	t_list	*tmp;
+	t_dico	*dico;
 
-	i = 0;
-	while (env[i] != NULL)
-		i++;
-	new_env = ft_calloc(i + 1, sizeof(*new_env));
-	if (new_env == NULL)
-		return (NULL);
+	lst = NULL;
 	i = 0;
 	while (env[i] != NULL)
 	{
-		new_var = ft_strdup(env[i]);
-		if (new_var == NULL)
-		{
-			ft_free_split(new_env);
-			return (NULL);
-		}
-		new_env[i] = new_var;
+		tmp = NULL;
+		dico = ft_newdico(env[i]);
+		if (dico == NULL)
+			break ;
+		tmp = ft_lstnew(dico);
+		if (tmp == NULL)
+			break ;
+		ft_lstadd_front(&lst, tmp);
 		i++;
 	}
-	return (new_env);
+	tmp_free(tmp, &lst, dico);
+	return (lst);
+}
+
+static void	tmp_free(t_list *tmp, t_list **lst, t_dico *dico)
+{
+	if (tmp == NULL)
+	{
+		if (dico != NULL)
+			ft_freedico(dico);
+		ft_lstclear(lst, ft_freedico);
+		*lst = NULL;
+	}
 }

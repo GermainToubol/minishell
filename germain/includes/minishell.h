@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:14:28 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/10 10:00:05 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/16 11:08:56 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,26 @@
   out : stdout ou stderr 1 ou 2
 */
 
+typedef enum e_io
+{
+	IN,
+	OUT,
+	HDOC,
+	APP
+}	t_eio;
+
 typedef struct s_redirect
 {
 	char	*file;
-	int		out;
-	int		heredoc;
-	int		append;
+	int		fd;
+	t_eio	io_r;
 }	t_redirect;
 
 typedef struct s_cmd
 {
 	char		*path_exec;
 	char		**cmd;
-	t_redirect	**outputs;
-	t_redirect	**inputs;
+	t_redirect	**redirect;
 }	t_cmd;
 
 # define IS_HEREDOC 1
