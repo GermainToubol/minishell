@@ -6,12 +6,13 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 22:53:12 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 00:59:01 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/15 21:50:16 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "libft.h"
+#include "utils.h"
 
 static t_lxm	*transfer_tokens(t_lxm *from, size_t len, size_t max)
 {

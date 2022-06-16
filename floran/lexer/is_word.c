@@ -6,12 +6,13 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 17:18:36 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 16:37:43 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/15 21:50:03 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "libft.h"
+#include "utils.h"
 
 static int	is_quote_content(char *line, int sq_open, int dq_open, size_t *i)
 {

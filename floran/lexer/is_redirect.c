@@ -6,12 +6,13 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:50:22 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 16:13:49 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/15 21:49:54 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "libft.h"
+#include "utils.h"
 
 static int	is_redirect_out(char *line, t_lxm *lxm, t_tokens *tokens, int *i)
 {

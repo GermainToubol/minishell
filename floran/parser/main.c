@@ -6,13 +6,14 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 00:58:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 16:26:43 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/16 02:28:39 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "parser.h"
 #include "libft.h"
+#include "utils.h"
 
 int	main(int ac, char **av, char **envp)
 {
@@ -22,6 +23,7 @@ int	main(int ac, char **av, char **envp)
 	if (ac > 1)
 		return (display_error("Error\nusage: ./minishell\n", 0), 1);
 	(void)av;
+	(void)envp;
 	ft_printf("\x1b[32mWelcome to lexer\n\x1b[0m");
 	while (1)
 	{

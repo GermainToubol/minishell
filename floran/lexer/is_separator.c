@@ -6,11 +6,12 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:51:57 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 12:36:36 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/15 21:49:42 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+#include "utils.h"
 
 static int	is_pipe(char *line, t_lxm *lxm, t_tokens *tokens, int *i)
 {

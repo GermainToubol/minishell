@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 07:13:19 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 17:05:16 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/15 22:19:39 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include "utils.h"
 
 # define BUFFER_LXM 4096
 
@@ -32,7 +31,8 @@ typedef enum e_token
 	OR,
 	AND,
 	P_START,
-	P_END
+	P_END,
+	CMD
 }	t_token;
 
 typedef struct s_lxm
@@ -48,6 +48,7 @@ typedef struct s_tokens
 	size_t	max;
 }	t_tokens;
 
+
 //LEXER
 int			is_redirect(char *line, t_lxm *lxm, t_tokens *tokens);
 int			is_separator(char *line, t_lxm *lxm, t_tokens *tokens);
@@ -57,8 +58,5 @@ int			is_prio(char *line, t_lxm *lxm, t_tokens *tokens);
 
 //ALLOC
 int			tokens_alloc(t_tokens *tokens);
-
-//FREE
-void		free_lxm(t_lxm *lxm, size_t size);
 
 #endif

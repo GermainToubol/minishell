@@ -6,12 +6,13 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 07:13:55 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 16:36:08 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/15 21:49:47 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "libft.h"
+#include "utils.h"
 
 static int	is_forbidden(char line)
 {

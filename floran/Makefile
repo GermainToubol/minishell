@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/15 16:21:07 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/16 01:45:06 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,17 +29,19 @@ LEXERSRC			:=	lexer/lexer.c				\
 						lexer/is_word.c				\
 						lexer/is_prio.c				\
 						lexer/tokens_alloc.c		\
-						lexer/free.c				\
 
 PARSERSRC			:=	parser/main.c				\
 						parser/parser.c				\
 						parser/path.c				\
+						parser/split_redirect.c		\
+						parser/split_cmd.c			\
 
 UTILSSRC			:=	utils/ft_atoll.c			\
 						utils/ft_strndup.c			\
 						utils/print.c				\
 						utils/display_msg.c			\
 						utils/ft_join3.c			\
+						utils/free.c				\
 
 CC					:=	cc
 RM					:=	rm
