@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 14:03:08 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/16 14:30:52 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/16 16:22:31 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ void	print_cmd_line_detail(t_parse **parse)
 		if (type == CMD)
 		{
 			type = 0;
-			ft_printf("%s%s\x1b[0m",  e_colors[type], e_type[type]);
+			ft_printf("%s%s\x1b[0m", e_colors[type], e_type[type]);
 			print_node(parse[i]->cmd);
 		}
 		else
 		{
 			type -= 4;
-			ft_printf("%s%s\x1b[0m\n",  e_colors[type], e_type[type]);
+			ft_printf("%s%s\x1b[0m\n", e_colors[type], e_type[type]);
 		}
 	}
 }
@@ -57,7 +57,7 @@ void	print_cmd_line(t_parse **parse)
 			type = 0;
 		if (type >= PIPE)
 			type -= 4;
-		ft_printf("%s%s\x1b[0m ",  e_colors[type], e_type[type]);
+		ft_printf("%s%s\x1b[0m ", e_colors[type], e_type[type]);
 	}
 	ft_printf("\n");
 }
