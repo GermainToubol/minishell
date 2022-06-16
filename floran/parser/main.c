@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 00:58:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/16 15:24:08 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/16 15:50:10 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ int	main(int ac, char **av, char **envp)
 		print_lexer(line, &tokens);
 		//free(line);
 		if (parser(&tokens, envp))
-			return (free_lxm(tokens.tokens, tokens.size), 1);
-		free_lxm(tokens.tokens, tokens.size);
+			return (1);
 	// }
 	return (0);
 }

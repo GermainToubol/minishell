@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/16 14:06:10 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/16 16:16:39 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ RM					:=	rm
 
 CCFLAGS				:=	-Wall -Wextra -Werror
 LIBFLAGS			:=	-lreadline
-OPTFLAG				:=
+OPTFLAG				:=	-g
 
 NAME				:=	$(PROGNAME)
 
@@ -73,6 +73,9 @@ $(NAME)				:	$(addprefix $(OUTDIR)/,$(LEXERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(
 	$(CC) $(CCFLAGS) $(OPTFLAG) -o $(NAME) $(addprefix $(OUTDIR)/,$(LEXERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(PARSERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(LIBFT) $(LIBFLAGS)
 
 all					:	$(NAME)
+
+malloc_test			:	$(addprefix $(OUTDIR)/,$(LEXERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(PARSERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(LIBFT)
+	$(CC) $(CFLAGS) $(OPTFLAG) -fsanitize=undefined -rdynamic -o $@ $(addprefix $(OUTDIR)/,$(LEXERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(PARSERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(LIBFT) $(LIBFLAGS) -L. -lmallocator
 
 $(DEBUGNAME)		:
 ifndef DEBUG

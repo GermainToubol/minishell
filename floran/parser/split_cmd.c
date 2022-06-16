@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 00:55:31 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/16 15:05:08 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/16 16:11:30 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ char	**fill_cmdn(t_tokens *tokens, size_t start, size_t max, int *err)
 	size_t	count;
 
 	count = count_arg(tokens, start, max);
-	cmdn = ft_calloc(count + 1, sizeof(char *));
 	*err = 0;
+	cmdn = ft_calloc(count + 1, sizeof(char *));
 	if (!cmdn)
 	{
 		*err = -1;
