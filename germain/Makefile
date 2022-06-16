@@ -6,7 +6,7 @@
 #    By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 10:59:36 by gtoubol           #+#    #+#              #
-#    Updated: 2022/06/16 15:55:32 by gtoubol          ###   ########.fr        #
+#    Updated: 2022/06/16 16:28:04 by gtoubol          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -14,7 +14,8 @@
 # -------------------------------------------------------------------------
 SRCS = 		ft_newdico.c ft_freedico.c\
 			environment_copy.c environment_add.c environment_remove.c environment_get.c environment_format.c \
-			builtin_cd.c
+			builtin_cd.c \
+			builtin_pwd.c
 
 TMP =		#tmp_exec.c ft_lstpop.c
 

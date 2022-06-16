@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:07:25 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/16 15:56:12 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/16 16:28:43 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef G_MINISHELL_H
@@ -68,6 +68,7 @@ void	extend_pid_list(pid_t pid);
 void	free_pid_list(pid_t	pid);
 
 /* BUILTIN */
-int	builtin_cd(int argc, char **argv, t_list **env);
+int		builtin_cd(int argc, char **argv, t_list **env);
+int		builtin_pwd(int argc, char **argv, t_list **env);
 
 #endif
