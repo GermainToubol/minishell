@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 14:49:47 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/16 03:50:44 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/16 13:59:45 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,11 @@ size_t	get_n_sep(t_tokens *tokens)
 	return (r);
 }
 
-static t_cmd	*fill_cmd(t_tokens *tokens, size_t *start)
+static t_cmd	*fill_cmd(t_tokens *tokens, size_t *start, char **env)
 {
 	t_cmd	*cmd;
 	size_t	max;
+	int		err;
 
 	cmd = ft_calloc(1, sizeof(t_cmd));
 	if (!cmd)
@@ -51,20 +52,17 @@ static t_cmd	*fill_cmd(t_tokens *tokens, size_t *start)
 	max = *start;
 	while (max < tokens->size && tokens->tokens[max].type < PIPE)
 		max++;
-	cmd->redirect = fill_redirect(tokens, *start, max);
-	if (!cmd->redirect)
-		return (free(cmd), NULL);
-	cmd->cmd = fill_cmdn(tokens, *start, max);
-	if (!cmd->redirect)
-	{
-		free_red(cmd->redirect);
-		return (free(cmd), NULL);
-	}
+	cmd->redirect = fill_redirect(tokens, *start, max, &err);
+	cmd->cmd = fill_cmdn(tokens, *start, max, &err);
+	if (err == -1)
+		return (NULL);
+	if (check_path(env, cmd->cmd[0], &cmd->path_exec) == -1)
+		return (NULL);
 	*start = max;
 	return (cmd);
 }
 
-int	fill_cmd_line(t_tokens *tokens, t_parse **cmd_line)
+int	fill_cmd_line(t_tokens *tokens, t_parse **cmd_line, char **env)
 {
 	size_t	i;
 	size_t	k;
@@ -84,7 +82,7 @@ int	fill_cmd_line(t_tokens *tokens, t_parse **cmd_line)
 		else
 		{
 			cmd_line[k]->type = CMD;
-			cmd_line[k]->cmd = fill_cmd(tokens, &i);
+			cmd_line[k]->cmd = fill_cmd(tokens, &i, env);
 			if (!cmd_line[k++]->cmd)
 				return (1);
 		}
@@ -93,7 +91,7 @@ int	fill_cmd_line(t_tokens *tokens, t_parse **cmd_line)
 	return (0);
 }
 
-t_parse	**create_cmd_line(t_tokens *tokens)
+t_parse	**create_cmd_line(t_tokens *tokens, char **env)
 {
 	t_parse	**ret;
 	size_t	size;
@@ -102,7 +100,7 @@ t_parse	**create_cmd_line(t_tokens *tokens)
 	ret = ft_calloc(size + 1, sizeof(t_parse *));
 	if (!ret)
 		return (display_error("Error allocation\n", 0), NULL);
-	if (fill_cmd_line(tokens, ret))
+	if (fill_cmd_line(tokens, ret, env))
 		return (NULL);
 	return (ret);
 }
@@ -115,7 +113,7 @@ int	parser(t_tokens *tokens, char **env)
 	path = get_path(env);
 	if (!path)
 		return (1);
-	cmd_line = create_cmd_line(tokens);
+	cmd_line = create_cmd_line(tokens, path);
 	if (!cmd_line)
 		return (free_tab(path), 1);
 	print_cmd_line(cmd_line);

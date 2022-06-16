@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/16 01:45:06 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/16 14:06:10 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ PARSERSRC			:=	parser/main.c				\
 UTILSSRC			:=	utils/ft_atoll.c			\
 						utils/ft_strndup.c			\
 						utils/print.c				\
+						utils/print2.c				\
 						utils/display_msg.c			\
 						utils/ft_join3.c			\
 						utils/free.c				\

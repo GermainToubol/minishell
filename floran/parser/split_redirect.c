@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 23:11:07 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/16 03:54:59 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/16 13:51:17 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,16 +97,24 @@ static int	fill_red(t_tokens *tokens, size_t start,
 	return (0);
 }
 
-t_redirect	**fill_redirect(t_tokens *tokens, size_t start, size_t max)
+t_redirect	**fill_redirect(t_tokens *tokens, size_t start,
+	size_t max, int *err)
 {
 	t_redirect	**red;
 	size_t		count;
 
 	count = count_red(tokens, start, max);
 	red = ft_calloc(count + 1, sizeof(t_redirect *));
+	*err = 0;
 	if (!red)
+	{
+		*err = -1;
 		return (display_error("Error allocation\n", 0), NULL);
+	}
 	if (fill_red(tokens, start, max, red))
+	{
+		*err = -1;
 		return (free_red(red), NULL);
+	}
 	return (red);
 }

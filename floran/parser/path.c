@@ -6,13 +6,14 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:04:40 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 16:19:28 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/16 13:22:58 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include "minishell.h"
 #include "libft.h"
+#include "utils.h"
 
 char	**get_path(char **env)
 {
@@ -38,24 +39,31 @@ char	**get_path(char **env)
 	return (ret);
 }
 
-char	*check_path(char **path, char *cmd)
+int	check_path(char **path, char *cmd, char **dest)
 {
 	int		i;
-	char	*path_cmd;
 
 	i = -1;
-	if (access(cmd, X_OK) != -1)
-		return (cmd);
-	if (ft_strchr(cmd, '/') != NULL)
-		return (NULL);
+	*dest = ft_strdup(cmd);
+	if (!*dest)
+		return (display_error("Error allocation\n", 0), -1);
+	if (access(*dest, X_OK) != -1)
+		return (0);
+	if (ft_strchr(*dest, '/') != NULL)
+	{
+		free(*dest);
+		return (*dest = NULL, 1);
+	}
+	free(*dest);
 	while (path[++i])
 	{
-		path_cmd = ft_join3(path[i], "/", cmd);
-		if (!path_cmd)
+		*dest = ft_join3(path[i], "/", cmd);
+		if (!*dest)
+			return (display_error("Error allocation\n", 0), -1);
+		if (access(*dest, X_OK) != -1)
 			return (0);
-		if (access(path_cmd, X_OK) != -1)
-			return (path_cmd);
-		free(path_cmd);
+		free(*dest);
 	}
-	return (NULL);
+	*dest = NULL;
+	return (1);
 }
