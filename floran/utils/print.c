@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:11:19 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/16 14:17:42 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/16 16:28:47 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,5 @@ void	print_node(t_cmd *data)
 	i = -1;
 	while (data->cmd[++i])
 		ft_printf("cmd%i:\t\t%s\n", i, data->cmd[i]);
-	ft_printf("cmd%i:\t\t%s\n", i, data->cmd[i]);
 	show_red(data->redirect);
 }

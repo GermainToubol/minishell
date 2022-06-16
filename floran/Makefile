@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/16 16:16:39 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/16 16:32:54 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,7 +94,7 @@ endif
 
 ifdef LIBFT
 $(LIBFT)			:
-	$(MAKE) -C $(dir $(LIBFT)) $(notdir $(LIBFT))
+	$(MAKE) -j -C $(dir $(LIBFT)) $(notdir $(LIBFT))
 endif
 
 $(OUTDIR)			:
@@ -115,3 +115,5 @@ re					:	fclean
 .PHONY				:	all bonus clean fclean re
 
 -include	$(addprefix $(OUTDIR)/,$(LEXERSRC:.c=.d))
+-include	$(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.d))
+-include	$(addprefix $(OUTDIR)/,$(PARSERSRC:.c=.d))
