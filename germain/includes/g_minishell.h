@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:07:25 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/14 17:57:50 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/15 18:54:22 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef G_MINISHELL_H
@@ -14,6 +14,8 @@
 # include <signal.h>
 # include <unistd.h>
 # include "libft.h"
+
+# define PROMPT_NAME "MINISHELL$> "
 
 /* TMP */
 t_list	*tmp_init_exec(void);
@@ -23,6 +25,16 @@ void	ft_lstpop(t_list **lst, void (*del)(void *));
 /* SESSION MANAGEMENT */
 int		interactive_session(char **env);
 int		non_interactive_session(char *arg, char **env);
+
+/* ENVIRONMENT MANAGEMENT */
+char	**environment_copy(char **env);
+char	**environment_add(char **old_env, char *var);
+char	**environment_remove(char **env, char *name);
+char	*environment_get(char **env, char *name);
+char	**environment_set(char **env, char *name, char *value);
+
+/* MEMORY MANAGEMENT */
+int	local_memory_manager(void *ptr, int action, int flag);
 
 /* SIGNALS INTERACTIONS */
 int		init_signal_interactive(struct sigaction *sa);
@@ -42,4 +54,8 @@ int		set_outpipe(t_list *execline, int *pipe_fds);
 /* PID AND RELATED MEMORY */
 void	extend_pid_list(pid_t pid);
 void	free_pid_list(pid_t	pid);
+
+/* BUILTIN */
+int		builtin_cd(int argc, char **argv, char **env);
+
 #endif

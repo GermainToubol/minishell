@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:33:07 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/14 15:32:51 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/15 09:54:20 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <readline/readline.h>
@@ -43,7 +43,7 @@ static int	do_execution(char **env)
 {
 	char	*line;
 
-	line = readline("gms> ");
+	line = readline(PROMPT_NAME);
 	if (line == NULL || ft_strcmp(line, "exit") == 0)
 	{
 		free(line);
