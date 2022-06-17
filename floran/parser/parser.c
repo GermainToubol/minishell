@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
+/*   By: fmauguin <fmauguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 14:49:47 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/16 16:19:49 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/17 12:36:59 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ size_t	get_n_sep(t_tokens *tokens)
 	return (r);
 }
 
-static t_cmd	*fill_cmd(t_tokens *tokens, size_t *start, char **env)
+static t_cmd	*fill_cmd(t_tokens *tokens, size_t *start)
 {
 	t_cmd	*cmd;
 	size_t	max;
@@ -60,13 +60,12 @@ static t_cmd	*fill_cmd(t_tokens *tokens, size_t *start, char **env)
 	cmd->cmd = fill_cmdn(tokens, *start, max, &err);
 	if (err == -1)
 		return (free_cmd(cmd), NULL);
-	if (check_path(env, cmd->cmd[0], &cmd->path_exec) == -1)
-		return (free_cmd(cmd), NULL);
+	cmd->path_exec = NULL;
 	*start = max;
 	return (cmd);
 }
 
-int	fill_cmd_line(t_tokens *tokens, t_parse **cmd_line, char **env)
+int	fill_cmd_line(t_tokens *tokens, t_parse **cmd_line)
 {
 	size_t	i;
 	size_t	k;
@@ -86,7 +85,7 @@ int	fill_cmd_line(t_tokens *tokens, t_parse **cmd_line, char **env)
 		else
 		{
 			cmd_line[k]->type = CMD;
-			cmd_line[k]->cmd = fill_cmd(tokens, &i, env);
+			cmd_line[k]->cmd = fill_cmd(tokens, &i);
 			if (!cmd_line[k++]->cmd)
 				return (1);
 		}
@@ -95,7 +94,7 @@ int	fill_cmd_line(t_tokens *tokens, t_parse **cmd_line, char **env)
 	return (0);
 }
 
-t_parse	**create_cmd_line(t_tokens *tokens, char **env)
+t_parse	**create_cmd_line(t_tokens *tokens)
 {
 	t_parse	**ret;
 	size_t	size;
@@ -104,26 +103,20 @@ t_parse	**create_cmd_line(t_tokens *tokens, char **env)
 	ret = ft_calloc(size + 1, sizeof(t_parse *));
 	if (!ret)
 		return (display_error("Error allocation\n", 0), NULL);
-	if (fill_cmd_line(tokens, ret, env))
+	if (fill_cmd_line(tokens, ret))
 		return (free_parse(ret), NULL);
 	return (ret);
 }
 
-int	parser(t_tokens *tokens, char **env)
+t_parse	**parser(t_tokens *tokens)
 {
-	char	**path;
 	t_parse	**cmd_line;
 
-	path = get_path(env);
-	if (!path)
-		return (free_lxm(tokens->tokens, tokens->size), 1);
-	cmd_line = create_cmd_line(tokens, path);
-	free_tab(path);
+	cmd_line = create_cmd_line(tokens);
 	free_lxm(tokens->tokens, tokens->size);
 	if (!cmd_line)
-		return (1);
+		return (NULL);
 	print_cmd_line(cmd_line);
 	print_cmd_line_detail(cmd_line);
-	free_parse(cmd_line);
-	return (0);
+	return (cmd_line);
 }

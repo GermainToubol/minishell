@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
+/*   By: fmauguin <fmauguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 00:58:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/16 16:22:03 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/17 12:36:07 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 #include "libft.h"
 #include "utils.h"
 
-int	main(int ac, char **av, char **envp)
+int	main(int ac, char **av)
 {
 	char		*line;
 	t_tokens	tokens;
+	t_parse		**parse;
 
 	if (ac > 2)
 		return (display_error("Error\nusage: ./minishell\n", 0), 1);
@@ -26,15 +27,15 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	while (1)
 	{
-		line = readline("\x1b[33mMINISHELL$> \x1b[0m");
-		if (!line)
-			return (1);
+		line = readline("MINISHELL$> ");
 		if (lexer(line, &tokens))
 			return (free(line), 1);
 		print_lexer(line, &tokens);
 		free(line);
-		if (parser(&tokens, envp))
+		parse = parser(&tokens);
+		if (!parse)
 			return (1);
+	free_parse(parse);
 	}
 	return (0);
 }

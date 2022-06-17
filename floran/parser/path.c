@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
+/*   By: fmauguin <fmauguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:04:40 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/16 13:22:58 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/17 12:22:20 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ char	**get_path(char **env)
 	int		i;
 
 	i = -1;
-	while (env[++i])
+	ret = NULL;
+	while (env && env[++i])
 	{
 		if (ft_strncmp(env[i], "PATH=", L_PATH) == 0)
 		{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
+/*   By: fmauguin <fmauguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 11:50:43 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/16 13:48:01 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/17 12:33:02 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_parse
 }	t_parse;
 
 //PARSE
-int			parser(t_tokens *tokens, char **env);
+t_parse		**parser(t_tokens *tokens);
 int			check_path(char **path, char *cmd, char **dest);
 t_redirect	**fill_redirect(t_tokens *tokens, size_t start,
 				size_t max, int *err);
