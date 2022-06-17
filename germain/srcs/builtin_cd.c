@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 10:19:43 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/16 16:06:21 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/17 16:55:58 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <errno.h>
@@ -24,7 +24,6 @@
    @input:
    * NULL -> go to $HOME
    * relativ/abspath without starting ~
-   * relativ path starting with ~
 
    @output: 0 on sucess, 1 otherwise
  */
@@ -51,9 +50,8 @@ int	builtin_cd(int argc, char **argv, t_list **env)
 		return (1);
 	}
 	re = cd_change_dir(target, env);
-	if (argc == 2 && argv[1][0] == '~' && (argv[1][1] == '\0'
-		|| argv[1][1] == '~'))
-		free(target);
+	if (re != 0)
+		ft_fprintf(2, "minishell: cd: %s: %s\n", argv[1], strerror(errno));
 	return (re);
 }
 
@@ -85,8 +83,6 @@ static char	*cd_path_to_go(char *path, t_list *env)
 		return (environment_get(env, "HOME"));
 	if (path[0] == '-')
 		return (environment_get(env, "OLDPWD"));
-	if (path[0] == '~' && (path[1] == '\0' || path[1] == '/'))
-		return (ft_strjoin(environment_get(env, "HOME"), path + 1));
 	return (path);
 }
 
@@ -123,6 +119,11 @@ static int	cd_update_env(t_list **env)
 			ft_fprintf(2, "minishell: cd: memory allocation error\n");
 			return (1);
 		}
+	}
+	else if (environment_set(*env, "OLDPWD", environment_get(*env, "PWD")) != 0)
+	{
+		ft_fprintf(2, "minishell: cd: memory allocation error\n");
+		return (1);
 	}
 	getcwd(cwd_path, PATH_MAX);
 	if (environment_set(*env, "PWD", cwd_path) == -1)

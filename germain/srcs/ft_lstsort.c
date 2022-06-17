@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 14:09:11 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/17 15:05:22 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/17 16:56:53 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -21,7 +21,7 @@
 
 static void	ft_lstsort_init(t_list **prev, t_list **min_prev, t_list **min,
 				t_list *tmp);
-static void ft_lstsort_next(t_list *prev_min, t_list **min, t_list **lst);
+static void	ft_lstsort_next(t_list *prev_min, t_list **min, t_list **lst);
 
 void	ft_lstsort(t_list **lst, int (*f)(void *, void *))
 {
@@ -56,7 +56,7 @@ static void	ft_lstsort_init(t_list **prev, t_list **min_prev, t_list **min,
 	*min = tmp;
 }
 
-static void ft_lstsort_next(t_list *prev_min, t_list **min, t_list **lst)
+static void	ft_lstsort_next(t_list *prev_min, t_list **min, t_list **lst)
 {
 	if (prev_min != NULL)
 	{

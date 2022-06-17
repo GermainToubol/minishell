@@ -6,29 +6,32 @@
 #    By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 10:59:36 by gtoubol           #+#    #+#              #
-#    Updated: 2022/06/16 18:53:23 by gtoubol          ###   ########.fr        #
+#    Updated: 2022/06/17 16:28:51 by gtoubol          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 # List of all the sources (.c)
 # -------------------------------------------------------------------------
-SRCS = 		ft_newdico.c ft_freedico.c										\
+SRCS = 		ft_newdico.c ft_freedico.c ft_lstsort.c							\
 			environment_copy.c environment_add.c environment_remove.c		\
-			environment_get.c environment_format.c environment_set.c		\
+			environment_get.c environment_format.c environment_set.c 		\
+			environment_var_compare.c										\
 			builtin_cd.c 													\
 			builtin_pwd.c 													\
 			builtin_export.c
 
 TMP =		#tmp_exec.c ft_lstpop.c
+TEST = 		test_cd.c test_export.c
 
 # List of the related directories
 # -------------------------------------------------------------------------
 SRCS_DIR =	srcs
 HEAD_DIR =	includes libft/includes
+TEST_DIR = test
 
 # List of all compilation options
 # -------------------------------------------------------------------------
-CC = 		gcc
+CC = 		cc
 CFLAGS =	-Wall -Wextra
 CDEBUG =	-g3
 CRELEASE =	-Werror
@@ -55,32 +58,26 @@ ifeq (debug, $(filter debug,$(MAKECMDGOALS)))
 	CFLAGS += $(CDEBUG)
 else ifeq (profile, $(filter profile,$(MAKECMDGOALS)))
 	CFLAGS += $(CPROFILE) $(CRELEASE)
-else ifeq (test, $(filter test,$(MAKECMDGOALS)))
-	CFLAGS = -Wall -Wextra -Werror -fPIC
 else
 	CFLAGS += $(CRELEASE)
 endif
 RM =		rm -f
 
-vpath %.c $(SRCS_DIR)
+vpath %.c $(SRCS_DIR):$(TEST_DIR)
 vpath %.h $(HEAD_DIR)
 
 $(NAME):	$(OBJS) $(LIBFT)
 			$(CC) $(CFLAGS) $(INCLUDES) -o $@ $(OBJS) $(LIB)
 
-
-$(NAME_B):	$(OBJS_B) $(LIBFT)
-			$(CC) $(CFLAGS) $(INCLUDES) -o $@ $(OBJS_B) $(LIB)
-
 %.o:		%.c
-			$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $< $(LIB)
+			$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
 
 all:		$(NAME)
 
 clean:		dclean
 			$(RM) $(OBJS)
 
-fclean:		clean libfclean
+fclean:		clean libfclean tclean
 			$(RM) $(NAME)
 
 re:			fclean all
@@ -102,6 +99,9 @@ libfclean:
 
 # Custom rules
 # ------------------------------------------------------------------------
+TEST_O =	$(addprefix $(TEST_DIR)/,$(TEST:.c=.o))
+TEST_N =	$(TEST_O:.o=.out)
+
 debug:		all
 profile:	all
 			@echo "\e[36mTo use profiler:"
@@ -109,12 +109,23 @@ profile:	all
 			@echo "    2. grof \e[3m<your-app>\e[0;36m gmon.out > \e[3m<analysis-file>\e[0;36m"
 			@echo "    3. cat \e[3m<analysis-file>\e[0m"
 
-.PHONY:		debug profile
+test:		$(TEST_N)
+
+$(TEST_N):	$(OBJS) $(TEST_O) $(LIBFT)
+			$(CC) $(CFLAGS) -o $@ $(OBJS) $(@:.out=.o) $(LIB)
+
+malloc_test:$(OBJS) $(TEST_O) $(LIBFT)
+			$(CC) $(CFLAGS) -fsanitize=undefined -rdynamic -o $@ $(OBJS) $(TEST_O) $(LIB) -L. -lmallocator
+
+t_clean:
+			$(RM) $(TEST_O) $(TEST_N)
+
+.PHONY:		debug profile test tclean
 
 # General dependences management
 # ------------------------------------------------------------------------
 %.d:		%.c
-			$(CC) -MM -MT $(@:.d=.o) $(CFLAGS) $(INCLUDES) $< $(LIB) > $@
+			$(CC) -MM -MT $(@:.d=.o) $(CFLAGS) $(INCLUDES) $< > $@
 
 dclean:
 			$(RM) $(DEPS)
