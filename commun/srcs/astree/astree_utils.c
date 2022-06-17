@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 22:01:05 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/18 00:23:59 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/18 00:57:15 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ void	print_cmd(t_astree *root)
 	else
 		type -= 4;
 	ft_printf("\n\t%s%s\x1b[0m", e_colors[type], e_type[type]);
-	print_node(root->cmd->cmd);
+	if (!root->cmd->cmd)
+		ft_printf("\n");
+	else
+		print_node(root->cmd->cmd);
 }
 
 void	astree_apply_prefix(t_astree *root)

@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 18:03:51 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/18 00:11:02 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/18 01:00:15 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,10 @@ int	p_before(t_astree *node, t_parse **parse, t_int_help *i)
 	new->i--;
 	if (run_tree(node->left, parse, new))
 		return (free(new), 1);
+	(i->i)= new->max;
+	i->is_open= i->depth;
 	free(new);
 	i->is_done = 1;
-	(i->i)++;
 	return (0);
 }
 
@@ -60,7 +61,7 @@ int	base_tree(t_astree *node, t_parse **parse, t_int_help *i)
 {
 	if (i->is_done)
 	{
-		if (parse[i->i] && (parse[i->i]->type == PIPE
+		if (i->i < i->max && (parse[i->i]->type == PIPE
 			|| parse[i->i]->type == OR || parse[i->i]->type == AND))
 				(i->i)++;
 		if (parse[i->i]->type == P_START)
@@ -71,7 +72,7 @@ int	base_tree(t_astree *node, t_parse **parse, t_int_help *i)
 					return (1);
 			(i->i)++;
 		}
-		while (parse[i->i] && i->is_open != i->depth)
+		while (i->i < i->max && i->is_open != i->depth)
 		{
 			if (parse[i->i]->type == P_END)
 				i->is_open--;
@@ -79,7 +80,7 @@ int	base_tree(t_astree *node, t_parse **parse, t_int_help *i)
 				i->is_open++;
 			(i->i)++;
 		}
-		if (parse[i->i] && i->is_open == i->depth
+		if (i->i < i->max && i->is_open == i->depth
 			&& parse[i->i]->type == CMD)
 		{
 			node->right = create_node(parse[i->i]);
