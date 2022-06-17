@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmauguin <fmauguin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 00:58:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/17 15:01:21 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/17 21:27:40 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
+#include "astree.h"
 #include "parser.h"
 #include "libft.h"
 #include "utils.h"
@@ -20,7 +21,7 @@ int	main(int ac, char **av)
 	char		*line;
 	t_tokens	tokens;
 	t_parse		**parse;
-
+	t_astree	*root;
 	if (ac > 2)
 		return (display_error("Error\nusage: ./minishell\n", 0), 1);
 	ft_printf("\x1b[32mWelcome to lexer\n\x1b[0m");
@@ -35,7 +36,9 @@ int	main(int ac, char **av)
 		parse = parser(&tokens);
 		if (!parse)
 			return (1);
-	free_parse(parse);
+		if (create_astree(&root, parse))
+			return (1);
+		free_parse(parse);
 	}
 	return (0);
 }
