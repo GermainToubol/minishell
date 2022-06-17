@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 18:03:51 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/18 01:00:15 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/18 01:19:27 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	p_after(t_astree *node, t_parse **parse, t_int_help *i)
 	if (!node->right)
 		return (1);
 	new->i--;
+	(i->i)= new->max;
+	i->is_open= i->depth;
 	if (run_tree(node->right, parse, new))
 		return (free(new), 1);
 	free(new);
@@ -70,17 +72,8 @@ int	base_tree(t_astree *node, t_parse **parse, t_int_help *i)
 			if (i->is_open == i->depth + 1)
 				if (p_after(node, parse, i))
 					return (1);
-			(i->i)++;
 		}
-		while (i->i < i->max && i->is_open != i->depth)
-		{
-			if (parse[i->i]->type == P_END)
-				i->is_open--;
-			if (parse[i->i]->type == P_START)
-				i->is_open++;
-			(i->i)++;
-		}
-		if (i->i < i->max && i->is_open == i->depth
+		else if (i->i < i->max && i->is_open == i->depth
 			&& parse[i->i]->type == CMD)
 		{
 			node->right = create_node(parse[i->i]);
