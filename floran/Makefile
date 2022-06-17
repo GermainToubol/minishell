@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
+#    By: fmauguin <fmauguin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/16 16:32:54 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/17 14:58:51 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,32 +17,32 @@ PROGNAME			:=	minishell
 LIBFT				:=	../commun/libft/libft.a
 LIBFTDIR			:=	../commun/libft/includes
 
-INCLUDEDIR			:=	./includes ../commun/
-SRCDIR				:=	.
+INCLUDEDIR			:=	../commun/includes
+SRCDIR				:=	../commun/srcs
 
 OBJDIR				:=	./obj
 DEBUGDIR			:=	./debugobj
 
-LEXERSRC			:=	lexer/lexer.c				\
-						lexer/is_separator.c		\
-						lexer/is_redirect.c			\
-						lexer/is_word.c				\
-						lexer/is_prio.c				\
-						lexer/tokens_alloc.c		\
+LEXERSRC			:=	lexer/lexer.c					\
+						lexer/is_separator.c			\
+						lexer/is_redirect.c				\
+						lexer/is_word.c					\
+						lexer/is_prio.c					\
+						lexer/tokens_alloc.c			\
 
-PARSERSRC			:=	parser/main.c				\
-						parser/parser.c				\
-						parser/path.c				\
-						parser/split_redirect.c		\
-						parser/split_cmd.c			\
+PARSERSRC			:=	parser/main.c					\
+						parser/parser.c					\
+						parser/path.c					\
+						parser/split_redirect.c			\
+						parser/split_cmd.c				\
 
-UTILSSRC			:=	utils/ft_atoll.c			\
-						utils/ft_strndup.c			\
-						utils/print.c				\
-						utils/print2.c				\
-						utils/display_msg.c			\
-						utils/ft_join3.c			\
-						utils/free.c				\
+UTILSSRC			:=	utils/ft_atoll.c				\
+						utils/ft_strndup.c				\
+						utils/print.c					\
+						utils/print2.c					\
+						utils/display_msg.c				\
+						utils/ft_join3.c				\
+						utils/free.c					\
 
 CC					:=	cc
 RM					:=	rm

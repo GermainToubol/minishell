@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 00:58:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/17 12:36:07 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/17 15:01:21 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(int ac, char **av)
 	(void)av;
 	while (1)
 	{
-		line = readline("MINISHELL$> ");
+		line = readline("\x1b[33mMINISHELL$> \x1b[0m");
 		if (lexer(line, &tokens))
 			return (free(line), 1);
 		print_lexer(line, &tokens);
