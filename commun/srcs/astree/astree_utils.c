@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 22:01:05 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/18 01:19:58 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/18 14:03:23 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	print_cmd(t_astree *root)
 
 void	astree_apply_prefix(t_astree *root)
 {
-
 	if (root->left)
 		astree_apply_prefix(root->left);
 	if (root->right)
@@ -59,6 +58,26 @@ t_astree	*create_node(t_parse *node)
 	return (new);
 }
 
+static void	fill_t_content(t_parse **parse, int depth,
+		int start, t_int_help **i)
+{
+	(*i)->i = start;
+	(*i)->min = start;
+	(*i)->is_open = depth;
+	(*i)->depth = depth;
+	(*i)->is_done = 0;
+	while (parse[(*i)->i] && (*i)->is_open >= depth)
+	{
+		if (parse[(*i)->i]->type == P_END)
+			(*i)->is_open--;
+		if (parse[(*i)->i]->type == P_START)
+			(*i)->is_open++;
+		(*i)->i++;
+	}
+	(*i)->max = (*i)->i;
+	(*i)->i--;
+}
+
 t_int_help	*fill_t_int(t_parse **parse, int depth, int start)
 {
 	t_int_help	*i;
@@ -66,21 +85,7 @@ t_int_help	*fill_t_int(t_parse **parse, int depth, int start)
 	i = ft_calloc(1, sizeof(t_int_help));
 	if (!i)
 		return (display_error("Error allocation\n", 0), NULL);
-	i->i = start;
-	i->min = start;
-	i->is_open = depth;
-	i->depth = depth;
-	i->is_done = 0;
-	while (parse[i->i] && i->is_open >= depth)
-	{
-		if (parse[i->i]->type == P_END)
-			i->is_open--;
-		if (parse[i->i]->type == P_START)
-			i->is_open++;
-		i->i++;
-	}
-	i->max = i->i;
-	i->i--;
+	fill_t_content(parse, depth, start, &i);
 	while (i->i > i->min)
 	{
 		if (parse[i->i]->type == P_END)

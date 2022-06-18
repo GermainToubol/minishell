@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/17 22:07:05 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/18 14:10:13 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ UTILSSRC			:=	utils/ft_atoll.c				\
 
 TREESRC				:=	astree/astree.c					\
 						astree/astree_utils.c			\
+						astree/fill_astree.c			\
 
 CC					:=	cc
 RM					:=	rm
