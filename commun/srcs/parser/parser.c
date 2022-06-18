@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 14:49:47 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/18 16:37:35 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/18 16:53:03 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,5 @@ t_parse	**parser(t_tokens *tokens)
 	if (!cmd_line)
 		return (NULL);
 	print_cmd_line(cmd_line);
-	print_cmd_line_detail(cmd_line);
 	return (cmd_line);
 }
