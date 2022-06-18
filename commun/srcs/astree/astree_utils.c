@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 22:01:05 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/18 14:03:23 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/18 15:08:55 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,22 @@ void	print_cmd(t_astree *root)
 		print_node(root->cmd->cmd);
 }
 
-void	astree_apply_prefix(t_astree *root)
+void	free_tree(t_astree *root)
+{
+	if (!root)
+		return ;
+	if (!root->cmd)
+		free_parse(&root->cmd);
+	free(root);
+}
+
+void	astree_apply_suffix(t_astree *root, void (*f)(t_astree *))
 {
 	if (root->left)
-		astree_apply_prefix(root->left);
+		astree_apply_suffix(root->left, f);
 	if (root->right)
-		astree_apply_prefix(root->right);
-	print_cmd(root);
+		astree_apply_suffix(root->right, f);
+	f(root);
 }
 
 t_astree	*create_node(t_parse *node)
@@ -56,46 +65,4 @@ t_astree	*create_node(t_parse *node)
 	new->left = NULL;
 	new->right = NULL;
 	return (new);
-}
-
-static void	fill_t_content(t_parse **parse, int depth,
-		int start, t_int_help **i)
-{
-	(*i)->i = start;
-	(*i)->min = start;
-	(*i)->is_open = depth;
-	(*i)->depth = depth;
-	(*i)->is_done = 0;
-	while (parse[(*i)->i] && (*i)->is_open >= depth)
-	{
-		if (parse[(*i)->i]->type == P_END)
-			(*i)->is_open--;
-		if (parse[(*i)->i]->type == P_START)
-			(*i)->is_open++;
-		(*i)->i++;
-	}
-	(*i)->max = (*i)->i;
-	(*i)->i--;
-}
-
-t_int_help	*fill_t_int(t_parse **parse, int depth, int start)
-{
-	t_int_help	*i;
-
-	i = ft_calloc(1, sizeof(t_int_help));
-	if (!i)
-		return (display_error("Error allocation\n", 0), NULL);
-	fill_t_content(parse, depth, start, &i);
-	while (i->i > i->min)
-	{
-		if (parse[i->i]->type == P_END)
-			i->is_open++;
-		if (parse[i->i]->type == P_START)
-			i->is_open--;
-		if (i->depth == i->is_open && (parse[i->i]->type == PIPE
-				|| parse[i->i]->type == OR || parse[i->i]->type == AND))
-			break ;
-		i->i--;
-	}
-	return (i);
 }

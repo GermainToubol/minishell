@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 07:13:55 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 21:49:47 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/18 14:33:55 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ int	convert_tokens(char *line, t_tokens *tokens)
 int	lexer(char *line, t_tokens *tokens)
 {
 	tokens->size = 0;
+	if (!line)
+		return (1);
 	if (tokens_alloc(tokens))
 		return (1);
 	if (convert_tokens(line, tokens))

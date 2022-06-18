@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 00:58:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/17 21:27:40 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/18 15:09:19 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	main(int ac, char **av)
 	t_tokens	tokens;
 	t_parse		**parse;
 	t_astree	*root;
+
 	if (ac > 2)
 		return (display_error("Error\nusage: ./minishell\n", 0), 1);
 	ft_printf("\x1b[32mWelcome to lexer\n\x1b[0m");
@@ -37,7 +38,7 @@ int	main(int ac, char **av)
 		if (!parse)
 			return (1);
 		if (create_astree(&root, parse))
-			return (1);
+			return (free_parse(parse), 1);
 		free_parse(parse);
 	}
 	return (0);

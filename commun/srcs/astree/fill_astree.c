@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 14:09:36 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/18 14:09:48 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/18 14:42:22 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	p_after(t_astree *node, t_parse **parse, t_int_help *i)
 		return (1);
 	node->right = create_node(parse[new->i]);
 	if (!node->right)
-		return (1);
+		return (free(new), 1);
 	new->i--;
 	(i->i) = new->max;
 	i->is_open = i->depth;
@@ -42,7 +42,7 @@ int	p_before(t_astree *node, t_parse **parse, t_int_help *i)
 		return (1);
 	node->left = create_node(parse[new->i]);
 	if (!node->left)
-		return (1);
+		return (free(new), 1);
 	new->i--;
 	if (run_tree(node->left, parse, new))
 		return (free(new), 1);
