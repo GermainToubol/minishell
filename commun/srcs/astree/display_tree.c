@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 15:19:37 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/18 16:24:23 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/18 16:44:59 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,23 @@ static void	display_tree_content(char *prefix, t_astree *node, int is_left)
 
 void	display_tree(char *prefix, t_astree *node, int is_left)
 {
+	char	*new_prefix;
+
 	if (node)
 	{
 		display_tree_content(prefix, node, is_left);
 		if (is_left)
 		{
-			display_tree(ft_strjoin(prefix, "│   "), node->left, 1);
-			display_tree(ft_strjoin(prefix, "│   "), node->right, 0);
+			new_prefix = ft_strjoin(prefix, "│   ");
+			display_tree(new_prefix, node->left, 1);
+			display_tree(new_prefix, node->right, 0);
 		}
 		else
 		{
-			display_tree(ft_strjoin(prefix, "    "), node->left, 1);
-			display_tree(ft_strjoin(prefix, "    "), node->right, 0);
+			new_prefix = ft_strjoin(prefix, "    ");
+			display_tree(new_prefix, node->left, 1);
+			display_tree(new_prefix, node->right, 0);
 		}
+		free(new_prefix);
 	}
 }

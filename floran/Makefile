@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/18 16:38:43 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/18 16:41:56 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ LEXERSRC			:=	lexer/lexer.c					\
 
 PARSERSRC			:=	parser/main.c					\
 						parser/parser.c					\
-						parser/parser2.c					\
+						parser/parser2.c				\
 						parser/path.c					\
 						parser/split_redirect.c			\
 						parser/split_cmd.c				\
@@ -123,3 +123,4 @@ re					:	fclean
 -include	$(addprefix $(OUTDIR)/,$(LEXERSRC:.c=.d))
 -include	$(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.d))
 -include	$(addprefix $(OUTDIR)/,$(PARSERSRC:.c=.d))
+-include	$(addprefix $(OUTDIR)/,$(TREESRC:.c=.d))
