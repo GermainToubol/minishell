@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/18 14:38:42 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/18 16:38:43 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ LEXERSRC			:=	lexer/lexer.c					\
 
 PARSERSRC			:=	parser/main.c					\
 						parser/parser.c					\
+						parser/parser2.c					\
 						parser/path.c					\
 						parser/split_redirect.c			\
 						parser/split_cmd.c				\
@@ -47,6 +48,7 @@ UTILSSRC			:=	utils/ft_atoll.c				\
 TREESRC				:=	astree/astree.c					\
 						astree/astree_utils.c			\
 						astree/fill_astree.c			\
+						astree/display_tree.c			\
 
 CC					:=	cc
 RM					:=	rm

@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 17:45:19 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/18 14:30:52 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/18 15:36:31 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct s_astree
 void		astree_apply_suffix(t_astree *root, void (*f)(t_astree *));
 void		print_cmd(t_astree *root);
 void		free_tree(t_astree *root);
+void		display_tree(char *prefix, t_astree *node, int is_left);
 
 int			run_tree(t_astree *node, t_parse **parse, t_int_help *i);
 int			create_astree(t_astree **root, t_parse **parse);

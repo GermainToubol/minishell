@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 18:03:51 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/18 15:03:03 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/18 15:48:33 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	create_astree(t_astree **root, t_parse **parse)
 		return (free(i), 1);
 	}
 	free(i);
-	astree_apply_suffix(*root, print_cmd);
+	display_tree("", *root, 0);
 	astree_apply_suffix(*root, free_tree);
 	return (0);
 }

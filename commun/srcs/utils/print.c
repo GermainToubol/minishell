@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:11:19 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/16 16:28:47 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/18 16:28:03 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,10 @@ void	print_node(t_cmd *data)
 	int		i;
 
 	if (!data)
+	{
+		ft_printf("\n\t%s\n", data);
 		return ;
+	}
 	ft_printf("\nPath_exec:\t%s\n", data->path_exec);
 	i = -1;
 	while (data->cmd[++i])

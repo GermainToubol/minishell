@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 14:03:08 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/16 16:22:31 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/18 15:48:49 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,5 @@ void	print_cmd_line(t_parse **parse)
 			type -= 4;
 		ft_printf("%s%s\x1b[0m ", e_colors[type], e_type[type]);
 	}
-	ft_printf("\n");
+	ft_printf("\n\n");
 }
