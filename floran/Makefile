@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/18 16:41:56 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/19 22:57:22 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,10 @@ TREESRC				:=	astree/astree.c					\
 						astree/fill_astree.c			\
 						astree/display_tree.c			\
 
+EXPANDSRC			:=	expand/wildcard.c				\
+						expand/lst_utils.c				\
+						expand/main.c					\
+
 CC					:=	cc
 RM					:=	rm
 
@@ -58,6 +62,7 @@ LIBFLAGS			:=	-lreadline
 OPTFLAG				:=	-g
 
 NAME				:=	$(PROGNAME)
+WILDCARD			:=	wildcard
 
 OUTDIR				:=	$(OBJDIR)
 
@@ -77,6 +82,9 @@ $(OUTDIR)/%.o		:	$(SRCDIR)/%.c | $(OUTDIR)
 
 $(NAME)				:	$(addprefix $(OUTDIR)/,$(LEXERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(PARSERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(TREESRC:.c=.o)) $(LIBFT)
 	$(CC) $(CCFLAGS) $(OPTFLAG) -o $(NAME) $(addprefix $(OUTDIR)/,$(LEXERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(PARSERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(TREESRC:.c=.o)) $(LIBFT) $(LIBFLAGS)
+
+$(WILDCARD)			:	$(addprefix $(OUTDIR)/,$(EXPANDSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(LIBFT)
+	$(CC) $(CCFLAGS) $(OPTFLAG) -o $(WILDCARD) $(addprefix $(OUTDIR)/,$(EXPANDSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(LIBFT) $(LIBFLAGS)
 
 all					:	$(NAME)
 
@@ -124,3 +132,4 @@ re					:	fclean
 -include	$(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.d))
 -include	$(addprefix $(OUTDIR)/,$(PARSERSRC:.c=.d))
 -include	$(addprefix $(OUTDIR)/,$(TREESRC:.c=.d))
+-include	$(addprefix $(OUTDIR)/,$(EXPANDSRC:.c=.d))
