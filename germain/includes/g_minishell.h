@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:07:25 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/16 18:49:14 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/17 18:34:13 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef G_MINISHELL_H
@@ -27,6 +27,7 @@ typedef struct s_dictionnary
 t_list	*tmp_init_exec(void);
 void	tmp_free_cmd(void *content);
 void	ft_lstpop(t_list **lst, void (*del)(void *));
+void	ft_lstsort(t_list **lst, int (*f)(void *, void *));
 
 /* SESSION MANAGEMENT */
 int		interactive_session(char **env);
@@ -44,6 +45,7 @@ void	environment_remove(t_list **env, char *name);
 int		environment_set(t_list *env, char *name, char *value);
 char	*environment_get(t_list *env, char *name);
 char	**environment_format(t_list *env);
+int		environment_var_compare(void *content1, void *content2);
 
 /* MEMORY MANAGEMENT */
 int		local_memory_manager(void *ptr, int action, int flag);
@@ -71,5 +73,7 @@ void	free_pid_list(pid_t	pid);
 int		builtin_cd(int argc, char **argv, t_list **env);
 int		builtin_pwd(int argc, char **argv, t_list **env);
 int		builtin_export(int argc, char **argv, t_list **env);
+int		builtin_unset(int argc, char **argv, t_list **env);
+int		builtin_env(int argc, char **argv, t_list **env);
 
 #endif

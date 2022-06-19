@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 17:02:00 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/16 18:56:54 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/17 15:41:20 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -16,7 +16,7 @@
 #include "minishell.h"
 #include "g_minishell.h"
 
-static int		show_export(t_list	*env);
+static int		show_export(t_list	**env);
 static size_t	export_check_name(char *name);
 static int		export_set_value(t_list **env, char *name, size_t i);
 
@@ -27,7 +27,7 @@ int	builtin_export(int argc, char **argv, t_list **env)
 	int		re;
 
 	if (argc == 1)
-		return (show_export(*env));
+		return (show_export(env));
 	i = 1;
 	re = 0;
 	while (i < argc)
@@ -49,18 +49,26 @@ int	builtin_export(int argc, char **argv, t_list **env)
 	return (re);
 }
 
-static int	show_export(t_list	*env)
+static int	show_export(t_list	**env)
 {
 	t_dico	*dico;
+	t_list	*tmp;
 
-	while (env != NULL)
+	ft_lstsort(env, environment_var_compare);
+	tmp = *env;
+	while (tmp != NULL)
 	{
-		dico = (t_dico *)env->content;
+		dico = (t_dico *)tmp->content;
+		if (ft_strcmp(dico->key, "_") == 0)
+		{
+			tmp = tmp->next;
+			continue ;
+		}
 		if (dico->value == NULL)
 			ft_printf("declare -x %s\n", dico->key);
 		else
 			ft_printf("declare -x %s=\"%s\"\n", dico->key, dico->value);
-		env = env->next;
+		tmp = tmp->next;
 	}
 	return (0);
 }
@@ -97,6 +105,8 @@ static t_list	*export_list(t_list **env, char *name_tmp, char *new_name)
 		if (content == NULL
 			|| environment_set(*env, name_tmp, content) == 1)
 			tmp = NULL;
+		else
+			tmp = *env;
 		free(content);
 	}
 	return (tmp);
@@ -107,16 +117,18 @@ static int	export_set_value(t_list **env, char *name, size_t i)
 	t_list	*tmp;
 	char	*name_tmp;
 
-	if (name[i] == '\0' && name[i] == '=')
+	tmp = *env;
+	if (name[i] == '\0' || name[i] == '=')
 		tmp = environment_add(env, name);
 	else if (name[i] == '+')
 	{
 		name_tmp = ft_substr(name, 0, i);
-		if (name == NULL)
+		if (name_tmp == NULL)
 		{
 			return (1);
 		}
-		tmp = export_list(env, name_tmp, name + i + 1);
+		tmp = export_list(env, name_tmp, name + i + 2);
+		free(name_tmp);
 	}
 	if (tmp == NULL)
 	{
