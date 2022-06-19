@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 17:45:19 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/18 15:36:31 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/19 12:35:31 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void		free_tree(t_astree *root);
 void		display_tree(char *prefix, t_astree *node, int is_left);
 
 int			run_tree(t_astree *node, t_parse **parse, t_int_help *i);
-int			create_astree(t_astree **root, t_parse **parse);
+int			create_astree(t_parse **parse, t_astree **root);
 
 t_astree	*create_node(t_parse *node);
 

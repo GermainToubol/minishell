@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 18:03:51 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/18 15:48:33 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/19 15:26:03 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_int_help	*fill_t_int(t_parse **parse, int depth, int start)
 	return (i);
 }
 
-int	create_astree(t_astree **root, t_parse **parse)
+static int	create_astree_content(t_astree **root, t_parse **parse)
 {
 	t_int_help	*i;
 
@@ -72,7 +72,21 @@ int	create_astree(t_astree **root, t_parse **parse)
 		return (free(i), 1);
 	}
 	free(i);
-	display_tree("", *root, 0);
-	astree_apply_suffix(*root, free_tree);
+	return (0);
+}
+
+int	create_astree(t_parse **parse, t_astree **root)
+{
+	if (!parse || !root)
+		return (1);
+	if (parse[1] == NULL)
+	{
+		*root = create_node(parse[0]);
+		if (!root)
+			return (1);
+	}
+	else
+		if (create_astree_content(root, parse))
+			return (1);
 	return (0);
 }
