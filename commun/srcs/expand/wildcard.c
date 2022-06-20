@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:56:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 02:09:38 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 02:17:58 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	update_wildcard(t_wildcard *mywc, char *line)
 		while (line[i] == '*')
 			i++;
 		free(mywc->suffix);
+		if (!line[i])
+			i--;
 		mywc->suffix = ft_strdup(&line[i]);
 	}
 	return (0);
@@ -59,9 +61,7 @@ int	get_match_indir(t_list *old_lst, t_list **new_lst)
 		{
 			new = prefix_suffix(mywc, dir->d_name);
 			if (new)
-			{
 				ft_lstadd_back(new_lst, ft_lstnew(new));
-			}
 		}
 	}
 	closedir(d);
