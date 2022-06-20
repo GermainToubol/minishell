@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 22:54:11 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 00:15:11 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 02:31:53 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	strncmp_sep(char *s1, char *s2)
 		return (0);
 	return (1);
 }
+
 void	del_node(void *data)
 {
 	t_wildcard	*s;
@@ -83,5 +84,5 @@ void	print_lst2(void	*data)
 	t_wildcard	*s;
 
 	s = (t_wildcard *)data;
-	printf_wc(s);
+	ft_printf("%s\n", s->prefix);
 }

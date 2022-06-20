@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/20 01:03:39 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/20 02:29:17 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ TREESRC				:=	astree/astree.c					\
 EXPANDSRC			:=	expand/wildcard.c				\
 						expand/lst_utils.c				\
 						expand/wc_utils.c				\
+						expand/rec_wc.c					\
 						expand/main.c					\
 
 CC					:=	cc

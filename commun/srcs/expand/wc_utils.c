@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 01:01:16 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 02:18:28 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 02:26:13 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,14 @@ static t_wildcard	*new_wc(t_wildcard *mywc, char *found,
 	return (new);
 }
 
-t_wildcard	*prefix_suffix(t_wildcard *mywc, char *found)
+static t_wildcard	*prefix_suffix_content(t_wildcard *mywc,
+						char *found, size_t i, size_t i2)
 {
-	size_t		i;
-	size_t		i2;
-
-	i = 0;
-	i2 = 0;
-	while (mywc->prefix[i] && found[i2] && mywc->prefix[i] == found[i2])
-	{
-		i++;
-		i2++;
-	}
-	if (mywc->prefix[i] != found[i2] && mywc->prefix[i])
-		return (NULL);
 	while (found[i2])
 	{
 		i = 0;
 		while (found[i2 + i] && mywc->suffix[i]
-				&& mywc->suffix[i] == found[i2 + i])
+			&& mywc->suffix[i] == found[i2 + i])
 			i++;
 		if (mywc->suffix[i] == '*')
 		{
@@ -75,10 +64,27 @@ t_wildcard	*prefix_suffix(t_wildcard *mywc, char *found)
 	return (NULL);
 }
 
+t_wildcard	*prefix_suffix(t_wildcard *mywc, char *found)
+{
+	size_t		i;
+	size_t		i2;
+
+	i = 0;
+	i2 = 0;
+	while (mywc->prefix[i] && found[i2] && mywc->prefix[i] == found[i2])
+	{
+		i++;
+		i2++;
+	}
+	if (mywc->prefix[i] != found[i2] && mywc->prefix[i])
+		return (NULL);
+	return (prefix_suffix_content(mywc, found, i, i2));
+}
+
 t_wildcard	*init_wc(void)
 {
 	t_wildcard	*new;
-	char 		cwd_dir[DIR_BUFFER];
+	char		cwd_dir[DIR_BUFFER];
 
 	new = ft_calloc(1, sizeof(t_wildcard *));
 	if (!new)

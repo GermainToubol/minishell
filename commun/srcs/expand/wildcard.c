@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:56:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 02:17:58 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 02:32:21 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,99 +41,27 @@ int	update_wildcard(t_wildcard *mywc, char *line)
 	return (0);
 }
 
-int	get_match_indir(t_list *old_lst, t_list **new_lst)
-{
-	struct dirent	*dir;
-	DIR				*d;
-	t_wildcard		*new;
-	t_wildcard		*mywc;
-
-	mywc = (t_wildcard *)old_lst->content;
-	d = opendir(mywc->dir_path);
-	if (!d)
-		return (1);
-	while (1)
-	{
-		dir = readdir(d);
-		if (!dir)
-			break ;
-		if (!ft_strncmp(mywc->prefix, dir->d_name, ft_strlen(mywc->prefix)))
-		{
-			new = prefix_suffix(mywc, dir->d_name);
-			if (new)
-				ft_lstadd_back(new_lst, ft_lstnew(new));
-		}
-	}
-	closedir(d);
-	return (0);
-}
-
-int	iter_lst(t_list **lst, t_list **new)
-{
-	t_list	*index;
-
-	if (!lst || !*lst)
-		return (1);
-	index = *lst;
-	while (index)
-	{
-		if (get_match_indir(*lst, new))
-			return (1);
-		index = index->next;
-	}
-	ft_lstclear(lst, del_node);
-	return (0);
-}
-
-int	rec_wildcards(t_list **lst, t_list **new, int *odd)
-{
-	t_wildcard	*wc;
-
-	if (!*odd && (!lst || !*lst))
-		return (1);
-	if (*odd && (!new || !*new))
-		return (1);
-	if (!*odd)
-	{
-		wc = (t_wildcard *)(*lst)->content;
-		if (wc->suffix[0] == '\0')
-			return (0);
-		if (iter_lst(lst, new))
-			return (1);
-	}
-	if (*odd)
-	{
-		wc = (t_wildcard *)(*new)->content;
-		if (wc->suffix[0] == '\0')
-			return (0);
-		if (iter_lst(new, lst))
-			return (1);
-	}
-	*odd = !(*odd);
-	return (rec_wildcards(new, lst, odd));
-}
-
 t_list	*wildcards(char *line)
 {
-	t_wildcard		*mywc;
-	t_list		**lst_match;
-	t_list		**lst_match2;
+	t_wildcard	*mywc;
+	t_list		**lst_odd;
+	t_list		**lst_even;
 	int			odd;
 
 	if (ft_strchr(line, '*') == NULL)
-		return (ft_lstnew(line));
+		return (NULL);
 	mywc = init_wc();
-	lst_match = ft_calloc(1, sizeof(t_list *));
-	lst_match2 = ft_calloc(1, sizeof(t_list *));
-	if (!lst_match || !lst_match2)
+	lst_odd = ft_calloc(1, sizeof(t_list *));
+	lst_even = ft_calloc(1, sizeof(t_list *));
+	if (!lst_odd || !lst_even)
 		return (NULL);
 	if (update_wildcard(mywc, line))
 		return (NULL);
-	ft_lstadd_back(lst_match, ft_lstnew(mywc));
+	ft_lstadd_back(lst_odd, ft_lstnew(mywc));
 	odd = 0;
-	rec_wildcards(lst_match, lst_match2, &odd);
+	rec_wildcards(lst_odd, lst_even, &odd);
 	if (odd)
-		return (*lst_match2);
+		return (*lst_even);
 	else
-		return (*lst_match);
+		return (*lst_odd);
 }
