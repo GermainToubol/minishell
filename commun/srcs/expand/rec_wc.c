@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 02:22:00 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 19:22:05 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 19:35:16 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	get_match_indir_content(t_wildcard *mywc,
 		node = ft_lstnew(new);
 		if (!node)
 			return (display_error("Error allocation\n", 0), -1);
-		ft_lstadd_back(new_lst, ft_lstnew(new));
+		ft_lstadd_back(new_lst, node);
 	}
 	return (0);
 }
@@ -46,7 +46,7 @@ static int	get_dir_match(t_wildcard *mywc, t_list **new_lst)
 		node = ft_lstnew(new);
 		if (!node)
 			return (display_error("Error allocation\n", 0), -1);
-		ft_lstadd_back(new_lst, ft_lstnew(new));
+		ft_lstadd_back(new_lst, node);
 		return (0);
 	}
 	return (1);

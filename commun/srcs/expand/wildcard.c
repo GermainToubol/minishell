@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:56:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 19:25:42 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 19:33:40 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ t_list	*wildcards(char *line)
 	t_wildcard	*mywc;
 	t_list		**lst_odd;
 	t_list		**lst_even;
+	t_list		*ret;
 
 	if (ft_strchr(line, '*') == NULL)
 		return (NULL);
@@ -115,7 +116,10 @@ t_list	*wildcards(char *line)
 	if (rec_wildcards(lst_odd, lst_even))
 		return (NULL);
 	if (!lst_even || !*lst_even)
-		return (*lst_odd);
+		ret = *lst_odd;
 	else
-		return (*lst_even);
+		ret = *lst_even;
+	free(lst_even);
+	free(lst_odd);
+	return (ret);
 }

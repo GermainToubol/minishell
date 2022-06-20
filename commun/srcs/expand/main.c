@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 17:34:19 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 19:22:03 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 19:28:47 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,7 @@ int	main(int ac, char **av)
 	if (!lst)
 		return (1);
 	ft_lstiter(lst, print_lst2);
+	ft_lstclear(&lst, del_node);
+	free(line);
 	return (0);
 }
