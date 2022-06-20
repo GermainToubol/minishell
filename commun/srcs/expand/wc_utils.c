@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 01:01:16 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 19:00:24 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 19:21:26 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ t_wildcard	*cpy_wc(t_wildcard *wc)
 	while (--i >= 1)
 		if (wc->dir_path[i] == '/')
 			break ;
-	new->dir_path = ft_substr(wc->dir_path, 0, i);
+	if (i == 0)
+		new->dir_path = ft_strdup("/");
+	else
+		new->dir_path = ft_substr(wc->dir_path, 0, i);
 	if (!new->prefix || !new->dir_path)
 		return (display_error("Error allocation\n", 0), NULL);
 	return (new);
@@ -55,17 +58,21 @@ t_wildcard	*init_wc(char *line)
 {
 	t_wildcard	*new;
 	char		cwd_dir[DIR_BUFFER];
+	char		*tmp;
 
 	new = ft_calloc(1, sizeof(t_wildcard *));
 	if (!new)
 		return (display_error("Error allocation\n", 0), NULL);
 	if (line[0] == '/')
-		new->dir_path = ft_strdup("");
+		tmp = ft_strdup("");
 	else
-		new->dir_path = ft_strdup(getcwd(cwd_dir, DIR_BUFFER));
+	{
+		tmp = ft_strdup(getcwd(cwd_dir, DIR_BUFFER));
+	}
 	new->found = NULL;
 	new->suffix = ft_strdup("");
 	new->prefix = ft_strdup("");
+	new->dir_path = ft_strdup(tmp);
 	if (!new->dir_path || !new->prefix || !new->suffix)
 		return (display_error("Error allocation\n", 0), NULL);
 	return (new);
