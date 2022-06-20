@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 01:01:16 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 17:18:23 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 18:15:16 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ t_wildcard	*prefix_suffix(t_wildcard *mywc, char *found)
 	return (prefix_suffix_content(mywc, found, i, i2));
 }
 
-t_wildcard	*init_wc(void)
+t_wildcard	*init_wc(char *line)
 {
 	t_wildcard	*new;
 	char		cwd_dir[DIR_BUFFER];
@@ -141,7 +141,10 @@ t_wildcard	*init_wc(void)
 	new = ft_calloc(1, sizeof(t_wildcard *));
 	if (!new)
 		return (display_error("Error allocation\n", 0), NULL);
-	new->dir_path = ft_strdup(getcwd(cwd_dir, DIR_BUFFER));
+	if (line[0] == '/')
+		new->dir_path = ft_strdup("");
+	else
+		new->dir_path = ft_strdup(getcwd(cwd_dir, DIR_BUFFER));
 	new->found = NULL;
 	new->suffix = ft_strdup("");
 	new->prefix = ft_strdup("");

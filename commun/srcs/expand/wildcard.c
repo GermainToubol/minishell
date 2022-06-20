@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:56:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 16:14:17 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 18:20:07 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	update_dir_path(t_wildcard *mywc, char *line, size_t i)
 	tmp = ft_join3(mywc->dir_path, "/", tmp2);
 	if (!tmp)
 		return (display_error("Error allocation\n", 0), 1);
-	free(mywc->dir_path);
+	//free(mywc->dir_path);
 	free(tmp2);
 	mywc->dir_path = tmp;
 	if (!mywc->dir_path)
@@ -79,7 +79,7 @@ int	update_wildcard(t_wildcard *mywc, char *line)
 	{
 		if (line[i] == '/')
 		{
-			if (update_dir_path(mywc, line, i))
+			if (i != 0 && update_dir_path(mywc, line, i))
 				return (1);
 			return (update_wildcard(mywc, &line[i + 1]));
 		}
@@ -98,7 +98,7 @@ t_list	*wildcards(char *line)
 
 	if (ft_strchr(line, '*') == NULL)
 		return (NULL);
-	mywc = init_wc();
+	mywc = init_wc(line);
 	lst_odd = ft_calloc(1, sizeof(t_list *));
 	lst_even = ft_calloc(1, sizeof(t_list *));
 	if (!lst_odd || !lst_even)
