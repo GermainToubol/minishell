@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/20 21:42:29 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/20 22:27:13 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ EXPANDSRC			:=	expand/wildcard.c				\
 						expand/lst_utils.c				\
 						expand/wc_utils.c				\
 						expand/prefix_suffix.c			\
+						expand/update_wc.c				\
 						expand/rec_wc.c					\
 						expand/main.c					\
 
@@ -92,8 +93,8 @@ $(WILDCARD)			:	$(addprefix $(OUTDIR)/,$(EXPANDSRC:.c=.o)) $(addprefix $(OUTDIR)
 
 all					:	$(NAME)
 
-malloc_test			:	$(addprefix $(OUTDIR)/,$(LEXERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(PARSERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(TREESRC:.c=.o)) $(LIBFT)
-	$(CC) $(CFLAGS) $(OPTFLAG) -fsanitize=undefined -rdynamic -o $@ $(addprefix $(OUTDIR)/,$(LEXERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(PARSERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(TREESRC:.c=.o)) $(LIBFT) $(LIBFLAGS) -L. -lmallocator
+malloc_test			:	$(addprefix $(OUTDIR)/,$(EXPANDSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(LIBFT)
+	$(CC) $(CFLAGS) $(OPTFLAG) -fsanitize=undefined -rdynamic -o $@ $(addprefix $(OUTDIR)/,$(EXPANDSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(LIBFT) $(LIBFLAGS) -L. -lmallocator
 
 $(DEBUGNAME)		:
 ifndef DEBUG

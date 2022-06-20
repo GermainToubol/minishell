@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 22:54:11 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 19:20:03 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 22:03:40 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	del_node(void *data)
 {
 	t_wildcard	*s;
 
+	if (!data)
+		return ;
 	s = (t_wildcard *)data;
 	if (s->dir_path)
 		free(s->dir_path);

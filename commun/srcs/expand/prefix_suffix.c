@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 18:47:30 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 19:16:47 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 22:37:30 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,31 @@ static t_wildcard	*new_wc(t_wildcard *mywc, char *found,
 	{
 		new->suffix = ft_strdup(&mywc->suffix[i]);
 		if (!new->suffix)
+		{
+			del_node(new);
 			return (display_error("Error allocation\n", 0), NULL);
+		}
 	}
 	if (!new->dir_path || !new->prefix)
+	{
+		del_node(new);
 		return (display_error("Error allocation\n", 0), NULL);
+	}
 	return (new);
+}
+
+static int	new_wc_path2(t_wildcard *mywc, t_wildcard *new
+						, char *tmp, size_t i)
+{
+	new->dir_path = tmp;
+	new->suffix = ft_strdup("");
+	new->prefix = ft_strdup("");
+	new->found = NULL;
+	if (!new->dir_path || !new->prefix || !new->suffix)
+		return (display_error("Error allocation\n", 0), 1);
+	if (update_wildcard(new, &mywc->suffix[i + 1]))
+		return (1);
+	return (0);
 }
 
 static t_wildcard	*new_wc_path(t_wildcard *mywc, char *found,
@@ -49,21 +69,18 @@ static t_wildcard	*new_wc_path(t_wildcard *mywc, char *found,
 		return (display_error("Error allocation\n", 0), NULL);
 	tmp2 = ft_substr(found, 0, i2 + i);
 	if (!tmp2)
+	{
+		free(new);
 		return (display_error("Error allocation\n", 0), NULL);
+	}
 	if (mywc->dir_path[ft_strlen(mywc->dir_path) - 1] == '/')
 		tmp = ft_strjoin(mywc->dir_path, tmp2);
 	else
 		tmp = ft_join3(mywc->dir_path, "/", tmp2);
 	free(tmp2);
 	free(new->dir_path);
-	new->dir_path = tmp;
-	new->suffix = ft_strdup("");
-	new->prefix = ft_strdup("");
-	new->found = NULL;
-	if (!new->dir_path || !new->prefix || !new->suffix)
-		return (display_error("Error allocation\n", 0), NULL);
-	if (update_wildcard(new, &mywc->suffix[i + 1]))
-		return (NULL);
+	if (new_wc_path2(mywc, new, tmp, i))
+		return (del_node(new), NULL);
 	return (new);
 }
 
