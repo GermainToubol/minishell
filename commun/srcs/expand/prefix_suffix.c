@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 18:47:30 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 18:55:29 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 18:59:32 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static t_wildcard	*new_wc(t_wildcard *mywc, char *found,
 	{
 		new->suffix = ft_strdup(&mywc->suffix[i]);
 		if (!new->suffix)
-		return (display_error("Error allocation\n", 0), NULL);
+			return (display_error("Error allocation\n", 0), NULL);
 	}
 	if (!new->dir_path || !new->prefix)
 		return (display_error("Error allocation\n", 0), NULL);
@@ -47,7 +47,7 @@ static t_wildcard	*new_wc_path(t_wildcard *mywc, char *found,
 	new = ft_calloc(1, sizeof(t_wildcard));
 	if (!new)
 		return (display_error("Error allocation\n", 0), NULL);
-	tmp2 = ft_substr(found, 0 , i2 + i);
+	tmp2 = ft_substr(found, 0, i2 + i);
 	if (!tmp2)
 		return (display_error("Error allocation\n", 0), NULL);
 	if (mywc->dir_path[ft_strlen(mywc->dir_path) - 1] == '/')

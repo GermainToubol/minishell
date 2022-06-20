@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 02:22:00 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 18:44:54 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 19:00:36 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,36 +27,10 @@ static int	get_match_indir_content(t_wildcard *mywc,
 	{
 		node = ft_lstnew(new);
 		if (!node)
-			return (display_error("Error allocation\n", 0) ,-1);
+			return (display_error("Error allocation\n", 0), -1);
 		ft_lstadd_back(new_lst, ft_lstnew(new));
 	}
 	return (0);
-}
-
-static t_wildcard	*cpy_wc(t_wildcard *wc)
-{
-	t_wildcard	*new;
-	char		*tmp;
-	size_t		i;
-
-	new = ft_calloc(1, sizeof(t_wildcard));
-	if (!new)
-		return (display_error("Error allocation\n", 0), NULL);
-	new->suffix = NULL;
-	new->found = NULL;
-	tmp = ft_strdup(ft_strrchr(wc->dir_path, '/') + 1);
-	if (!tmp)
-		return (display_error("Error allocation\n", 0), NULL);
-	new->prefix = ft_strjoin(tmp, "/");
-	free(tmp);
-	i = ft_strlen(wc->dir_path);
-	while (--i >= 1)
-		if (wc->dir_path[i] == '/')
-			break ;
-	new->dir_path = ft_substr(wc->dir_path, 0, i);
-	if (!new->prefix || !new->dir_path)
-		return (display_error("Error allocation\n", 0), NULL);
-	return (new);
 }
 
 static int	get_dir_match(t_wildcard *mywc, t_list **new_lst)
@@ -71,7 +45,7 @@ static int	get_dir_match(t_wildcard *mywc, t_list **new_lst)
 			return (-1);
 		node = ft_lstnew(new);
 		if (!node)
-			return (display_error("Error allocation\n", 0) ,-1);
+			return (display_error("Error allocation\n", 0), -1);
 		ft_lstadd_back(new_lst, ft_lstnew(new));
 		return (0);
 	}

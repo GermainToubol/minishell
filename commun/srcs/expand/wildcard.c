@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:56:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 18:45:05 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 19:00:53 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "utils.h"
 #include <unistd.h>
 
-static int fill_wc2(t_wildcard *mywc, char *line, size_t	i)
+static int	fill_wc2(t_wildcard *mywc, char *line, size_t	i)
 {
 	char	*tmp;
 	char	*tmp2;
@@ -33,7 +33,7 @@ static int fill_wc2(t_wildcard *mywc, char *line, size_t	i)
 	return (0);
 }
 
-static int fill_wc(t_wildcard *mywc, char *line, size_t	i)
+static int	fill_wc(t_wildcard *mywc, char *line, size_t	i)
 {
 	if (fill_wc2(mywc, line, i))
 		return (1);
@@ -65,7 +65,7 @@ static int	update_dir_path(t_wildcard *mywc, char *line, size_t i)
 	tmp = ft_join3(mywc->dir_path, "/", tmp2);
 	if (!tmp)
 		return (display_error("Error allocation\n", 0), 1);
-	//free(mywc->dir_path);
+	free(mywc->dir_path);
 	free(tmp2);
 	mywc->dir_path = tmp;
 	if (!mywc->dir_path)

@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:56:54 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 18:11:44 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 19:00:22 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,6 @@ t_list		*wildcards(char *line);
 
 t_wildcard	*init_wc(char *line);
 t_wildcard	*prefix_suffix(t_wildcard *mywc, char *found);
+t_wildcard	*cpy_wc(t_wildcard *wc);
 
 #endif
