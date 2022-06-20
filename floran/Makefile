@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/20 18:56:11 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/20 21:42:29 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ LEXERSRC			:=	lexer/lexer.c					\
 						lexer/is_separator.c			\
 						lexer/is_redirect.c				\
 						lexer/is_word.c					\
+						lexer/is_word2.c				\
 						lexer/is_prio.c					\
 						lexer/tokens_alloc.c			\
 

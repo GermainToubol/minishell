@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 07:13:19 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/16 03:49:08 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 21:42:14 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int			is_separator(char *line, t_lxm *lxm, t_tokens *tokens);
 int			is_word(char *line, t_lxm *lxm, t_tokens *tokens);
 int			lexer(char *line, t_tokens *tokens);
 int			is_prio(char *line, t_lxm *lxm, t_tokens *tokens);
+int			word_redirect(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i);
 
 //ALLOC
 int			tokens_alloc(t_tokens *tokens);
