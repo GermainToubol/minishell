@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 02:22:00 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 16:33:32 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 16:37:36 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static int	get_match_indir_content(t_wildcard *mywc,
 	new = prefix_suffix(mywc, dir->d_name);
 	if (new)
 	{
+		ft_printf("dir: %s\n", dir->d_name);
 		node = ft_lstnew(new);
 		if (!node)
 			return (display_error("Error allocation\n", 0) ,-1);

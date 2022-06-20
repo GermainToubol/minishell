@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 17:18:36 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 21:50:03 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 16:43:48 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ static int	word_redirect(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i)
 		if (n <= 2147483647 && n >= 0)
 			return (0);
 	}
-	while (ft_isalnum(line[*i]))
+	while (ft_isalnum(line[*i]) || ((line[*i] == '-' || line[*i] == '*'
+				|| line[*i] == '/' || line[*i] == '.') && *line != '$'))
 		(*i)++;
 	lxm->data = ft_strndup(line, *i);
 	if (!lxm->data)
