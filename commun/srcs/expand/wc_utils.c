@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 01:01:16 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 18:15:16 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 18:41:41 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ static t_wildcard	*new_wc_path(t_wildcard *mywc, char *found,
 	tmp2 = ft_substr(found, 0 , i2 + i);
 	if (!tmp2)
 		return (display_error("Error allocation\n", 0), NULL);
-	tmp = ft_join3(mywc->dir_path, "/", tmp2);
+	if (mywc->dir_path[ft_strlen(mywc->dir_path) - 1] == '/')
+		tmp = ft_strjoin(mywc->dir_path, tmp2);
+	else
+		tmp = ft_join3(mywc->dir_path, "/", tmp2);
 	free(tmp2);
 	free(new->dir_path);
 	new->dir_path = tmp;
