@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 17:14:28 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/16 11:08:56 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/16 13:07:23 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
   bad cmd : ->path_exec=NULL and ->cmd=cmd
   out : stdout ou stderr 1 ou 2
 */
-
 typedef enum e_io
 {
 	IN,

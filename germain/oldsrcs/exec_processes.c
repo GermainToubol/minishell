@@ -6,19 +6,20 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 13:36:20 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/14 16:31:43 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/20 10:12:32 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdio.h>
 #include <unistd.h>
 #include "libft.h"
+#include "parser.h"
 #include "minishell.h"
 #include "g_minishell.h"
 
 static void	son_set_pipes(int *pipe_in, int *pipe_out);
 static void	father_set_pipes(int *pipe_in);
 
-pid_t	exec_process(t_list *process, char **env, int *pipe_in, int *pipe_out)
+pid_t	exec_process(t_parse *parse, char **env, int *pipe_in, int *pipe_out)
 {
 	pid_t	pid;
 	t_cmd	*cmd;
