@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:56:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 00:59:18 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 02:09:38 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,13 @@
 #include "utils.h"
 #include <unistd.h>
 
-void	printf_wc(t_wildcard *mywc)
-{
-	if (mywc->dir_path)
-		ft_printf("\tpath: %s\n", mywc->dir_path);
-	if (mywc->prefix)
-		ft_printf("\tprefix: %s\n", mywc->prefix);
-	if (mywc->suffix)
-		ft_printf("\tsuffix: %s\n\n", mywc->suffix);
-}
-
-int	update_wildcard(t_wildcard *mywc, char *line, char *found)
+int	update_wildcard(t_wildcard *mywc, char *line)
 {
 	size_t	i;
 	char	*tmp;
 	char	*tmp2;
 
 	i = 0;
-	if (found)
-	{
-		free(mywc->prefix);
-		mywc->prefix = ft_strdup(found);
-	}
 	while (line[i] && line[i] != '*')
 		i++;
 	tmp2 = ft_substr(line, 0, i);
@@ -52,70 +37,6 @@ int	update_wildcard(t_wildcard *mywc, char *line, char *found)
 		mywc->suffix = ft_strdup(&line[i]);
 	}
 	return (0);
-}
-
-int	check_match_dir(t_wildcard *mywc, t_list **lst_match)
-{
-	char	*tmp;
-
-	if (!lst_match || !*lst_match)
-		return (1);
-	tmp = ft_strchr(mywc->suffix, '*');
-	while (tmp)
-	{
-		printf_wc(mywc);
-		if (update_wildcard(mywc, mywc->suffix, NULL))
-			return (1);
-		tmp = mywc->suffix;
-	}
-	ft_list_remove_if(lst_match, mywc->suffix, strncmp_sep, del_node);
-	ft_lstiter(*lst_match, print_lst2);
-	return (0);
-}
-
-t_wildcard	*new_wc(t_wildcard *mywc, char *found, size_t i, size_t i2)
-{
-	t_wildcard	*new;
-
-	new = ft_calloc(1, sizeof(t_wildcard));
-	if (!new)
-		return (display_error("Error allocation\n", 0), NULL);
-	new->dir_path = ft_strdup(mywc->dir_path);
-	new->prefix = ft_substr(found, 0, i2);
-	if (mywc->suffix[i] == '*')
-		new->suffix = ft_strdup(&mywc->suffix[i + 1]);
-	else
-		new->suffix = ft_strdup("");
-	if (!new->dir_path || !new->prefix || !new->suffix)
-		return (display_error("Error allocation\n", 0), NULL);
-	return (new);
-}
-
-t_wildcard	*prefix_suffix(t_wildcard *mywc, char *found)
-{
-	size_t		i;
-	size_t		i2;
-
-	i = 0;
-	i2 = 0;
-	while (mywc->prefix[i] && found[i2] && mywc->prefix[i] == found[i2])
-	{
-		i++;
-		i2++;
-	}
-	if (mywc->prefix[i] != found[i2] && mywc->prefix[i])
-		return (NULL);
-	while (found[i2])
-	{
-		i = 0;
-		while (found[i2 + i] && mywc->suffix[i]
-				&& mywc->suffix[i] == found[i2 + i])
-			i++;
-		if (mywc->suffix[i] == '*' || mywc->suffix[i] == '\0')
-			return (new_wc(mywc, found, i, i2));
-		i2++;
-	}
-	return (NULL);
 }
 
 int	get_match_indir(t_list *old_lst, t_list **new_lst)
@@ -138,27 +59,58 @@ int	get_match_indir(t_list *old_lst, t_list **new_lst)
 		{
 			new = prefix_suffix(mywc, dir->d_name);
 			if (new)
+			{
 				ft_lstadd_back(new_lst, ft_lstnew(new));
+			}
 		}
 	}
 	closedir(d);
 	return (0);
 }
 
-t_wildcard	*init_wc(void)
+int	iter_lst(t_list **lst, t_list **new)
 {
-	t_wildcard	*new;
-	char 		cwd_dir[DIR_BUFFER];
+	t_list	*index;
 
-	new = ft_calloc(1, sizeof(t_wildcard *));
-	if (!new)
-		return (display_error("Error allocation\n", 0), NULL);
-	new->dir_path = ft_strdup(getcwd(cwd_dir, DIR_BUFFER));
-	new->suffix = ft_strdup("");
-	new->prefix = ft_strdup("");
-	if (!new->dir_path || !new->prefix || !new->suffix)
-		return (display_error("Error allocation\n", 0), NULL);
-	return (new);
+	if (!lst || !*lst)
+		return (1);
+	index = *lst;
+	while (index)
+	{
+		if (get_match_indir(*lst, new))
+			return (1);
+		index = index->next;
+	}
+	ft_lstclear(lst, del_node);
+	return (0);
+}
+
+int	rec_wildcards(t_list **lst, t_list **new, int *odd)
+{
+	t_wildcard	*wc;
+
+	if (!*odd && (!lst || !*lst))
+		return (1);
+	if (*odd && (!new || !*new))
+		return (1);
+	if (!*odd)
+	{
+		wc = (t_wildcard *)(*lst)->content;
+		if (wc->suffix[0] == '\0')
+			return (0);
+		if (iter_lst(lst, new))
+			return (1);
+	}
+	if (*odd)
+	{
+		wc = (t_wildcard *)(*new)->content;
+		if (wc->suffix[0] == '\0')
+			return (0);
+		if (iter_lst(new, lst))
+			return (1);
+	}
+	*odd = !(*odd);
+	return (rec_wildcards(new, lst, odd));
 }
 
 t_list	*wildcards(char *line)
@@ -166,21 +118,22 @@ t_list	*wildcards(char *line)
 	t_wildcard		*mywc;
 	t_list		**lst_match;
 	t_list		**lst_match2;
-	char			*found;
+	int			odd;
 
 	if (ft_strchr(line, '*') == NULL)
 		return (ft_lstnew(line));
 	mywc = init_wc();
-	found = NULL;
 	lst_match = ft_calloc(1, sizeof(t_list *));
 	lst_match2 = ft_calloc(1, sizeof(t_list *));
 	if (!lst_match || !lst_match2)
 		return (NULL);
-	if (update_wildcard(mywc, line, found))
+	if (update_wildcard(mywc, line))
 		return (NULL);
-	ft_lstadd_back(lst_match2, ft_lstnew(mywc));
-	if (get_match_indir(*lst_match2, lst_match))
-		return (NULL);
-	ft_lstiter(*lst_match, print_lst2);
-	return (*lst_match);
+	ft_lstadd_back(lst_match, ft_lstnew(mywc));
+	odd = 0;
+	rec_wildcards(lst_match, lst_match2, &odd);
+	if (odd)
+		return (*lst_match2);
+	else
+		return (*lst_match);
 }

@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 17:34:19 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/19 22:53:53 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 02:00:12 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ int	main(int ac, char **av)
 	lst = wildcards(line);
 	if (!lst)
 		return (1);
+	ft_lstiter(lst, print_lst2);
 	return (0);
 }
