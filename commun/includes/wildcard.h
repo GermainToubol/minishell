@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:56:54 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 02:29:00 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 15:31:26 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ typedef struct s_wildcard
 }	t_wildcard;
 
 int			strncmp_sep(char *s1, char *s2);
-int			rec_wildcards(t_list **lst, t_list **new_lst, int *odd);
+int			rec_wildcards(t_list **lst, t_list **new_lst);
+int			update_wildcard(t_wildcard *mywc, char *line);
 
 void		del_node(void *data);
 void		ft_list_remove_if(t_list **begin_list, void *data_ref,

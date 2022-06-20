@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 22:54:11 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 02:31:53 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 16:29:20 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,6 @@ void	print_lst2(void	*data)
 	t_wildcard	*s;
 
 	s = (t_wildcard *)data;
-	ft_printf("%s\n", s->prefix);
+	ft_printf("\x1b[94m%s/\x1b[0m", s->dir_path);
+	ft_printf("\x1b[92m%s\x1b[0m\n", s->prefix);
 }

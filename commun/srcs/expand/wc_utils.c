@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 01:01:16 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 02:26:13 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 16:22:59 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,32 +33,79 @@ static t_wildcard	*new_wc(t_wildcard *mywc, char *found,
 		return (display_error("Error allocation\n", 0), NULL);
 	new->dir_path = ft_strdup(mywc->dir_path);
 	new->prefix = ft_substr(found, 0, i2);
-	if (mywc->suffix[i] == '*')
-		new->suffix = ft_strdup(&mywc->suffix[i + 1]);
+	if (mywc->suffix[i] == '\0')
+		new->suffix = NULL;
 	else
-		new->suffix = ft_strdup("");
+	{
+		new->suffix = ft_strdup(&mywc->suffix[i]);
+		if (!new->suffix)
+		return (display_error("Error allocation\n", 0), NULL);
+	}
+	if (!new->dir_path || !new->prefix)
+		return (display_error("Error allocation\n", 0), NULL);
+	return (new);
+}
+
+static t_wildcard	*new_wc_path(t_wildcard *mywc, char *found,
+						size_t i, size_t i2)
+{
+	t_wildcard	*new;
+	char		*tmp;
+	char		*tmp2;
+
+	new = ft_calloc(1, sizeof(t_wildcard));
+	if (!new)
+		return (display_error("Error allocation\n", 0), NULL);
+	tmp2 = ft_substr(found, 0 , i2 + i);
+	if (!tmp2)
+		return (display_error("Error allocation\n", 0), NULL);
+	tmp = ft_join3(mywc->dir_path, "/", tmp2);
+	free(tmp2);
+	free(new->dir_path);
+	new->dir_path = tmp;
+	new->suffix = ft_strdup("");
+	new->prefix = ft_strdup("");
 	if (!new->dir_path || !new->prefix || !new->suffix)
 		return (display_error("Error allocation\n", 0), NULL);
+	if (update_wildcard(new, &mywc->suffix[i + 1]))
+		return (NULL);
 	return (new);
 }
 
 static t_wildcard	*prefix_suffix_content(t_wildcard *mywc,
 						char *found, size_t i, size_t i2)
 {
+	size_t	k;
+
+	if (mywc->suffix[i] == '*')
+	{
+		while (mywc->suffix[i] == '*')
+			i++;
+		if (mywc->suffix[i] == '\0' || mywc->suffix[i] == '/')
+		{
+			return (new_wc(mywc, found, i, ft_strlen(found)));
+		}
+	}
+	if (mywc->suffix[i] == '/')
+	{
+		return (new_wc_path(mywc, found, i, i2));
+	}
 	while (found[i2])
 	{
-		i = 0;
-		while (found[i2 + i] && mywc->suffix[i]
-			&& mywc->suffix[i] == found[i2 + i])
-			i++;
-		if (mywc->suffix[i] == '*')
+		k = 0;
+		while (found[i2 + k] && mywc->suffix[i + k]
+			&& mywc->suffix[i + k] == found[i2 + k])
+			k++;
+		if (mywc->suffix[i + k] == '*')
 		{
-			if (mywc->suffix[i + 1] == '\0')
-				return (new_wc(mywc, found, i, ft_strlen(found)));
-			return (new_wc(mywc, found, i, i2));
+			return (new_wc(mywc, found, i + k, i2 + k));
 		}
-		if (mywc->suffix[i] == '\0' && found[i2 + i] == '\0')
-			return (new_wc(mywc, found, i, i2 + i));
+		if (mywc->suffix[i + k] == '/' && found[i2 + k] == '\0')
+		{
+			return (new_wc_path(mywc, found, i + k, i2 + k));
+		}
+		if (mywc->suffix[i + k] == '\0' && found[i2 + k] == '\0')
+			return (new_wc(mywc, found, i + k, i2 + k));
 		i2++;
 	}
 	return (NULL);
@@ -78,6 +125,7 @@ t_wildcard	*prefix_suffix(t_wildcard *mywc, char *found)
 	}
 	if (mywc->prefix[i] != found[i2] && mywc->prefix[i])
 		return (NULL);
+	i = 0;
 	return (prefix_suffix_content(mywc, found, i, i2));
 }
 

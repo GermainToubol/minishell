@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:56:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 14:10:57 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 16:14:17 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,9 @@ static int fill_wc2(t_wildcard *mywc, char *line, size_t	i)
 		return (display_error("Error allocation\n", 0), 1);
 	free(tmp2);
 	free(mywc->prefix);
-	mywc->prefix = ft_strdup(tmp);
+	mywc->prefix = tmp;
 	if (!mywc->prefix)
 		return (display_error("Error allocation\n", 0), 1);
-	free(tmp);
 	return (0);
 }
 
@@ -40,7 +39,7 @@ static int fill_wc(t_wildcard *mywc, char *line, size_t	i)
 		return (1);
 	if (line[i])
 	{
-		while (line[i] == '*')
+		while (line[i + 1] == '*')
 			i++;
 		free(mywc->suffix);
 		if (!line[i])
@@ -65,10 +64,9 @@ static int	update_dir_path(t_wildcard *mywc, char *line, size_t i)
 		return (display_error("Error allocation\n", 0), 1);
 	free(mywc->dir_path);
 	free(tmp2);
-	mywc->dir_path = ft_strdup(tmp);
+	mywc->dir_path = tmp;
 	if (!mywc->dir_path)
 		return (display_error("Error allocation\n", 0), 1);
-	free(tmp);
 	return (0);
 }
 
@@ -97,7 +95,6 @@ t_list	*wildcards(char *line)
 	t_wildcard	*mywc;
 	t_list		**lst_odd;
 	t_list		**lst_even;
-	int			odd;
 
 	if (ft_strchr(line, '*') == NULL)
 		return (NULL);
@@ -108,12 +105,11 @@ t_list	*wildcards(char *line)
 		return (NULL);
 	if (update_wildcard(mywc, line))
 		return (NULL);
-	printf_wc(mywc);
 	ft_lstadd_back(lst_odd, ft_lstnew(mywc));
-	odd = 0;
-	rec_wildcards(lst_odd, lst_even, &odd);
-	if (odd)
-		return (*lst_even);
-	else
+	if (rec_wildcards(lst_odd, lst_even))
+		return (NULL);
+	if (!lst_even || !*lst_even)
 		return (*lst_odd);
+	else
+		return (*lst_even);
 }
