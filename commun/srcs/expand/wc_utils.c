@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 01:01:16 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 16:22:59 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 17:18:23 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	printf_wc(t_wildcard *mywc)
 {
 	if (mywc->dir_path)
 		ft_printf("\tpath: %s\n", mywc->dir_path);
+	if (mywc->found)
+		ft_printf("\tfound: %s\n", mywc->found);
 	if (mywc->prefix)
 		ft_printf("\tprefix: %s\n", mywc->prefix);
 	if (mywc->suffix)
@@ -32,6 +34,7 @@ static t_wildcard	*new_wc(t_wildcard *mywc, char *found,
 	if (!new)
 		return (display_error("Error allocation\n", 0), NULL);
 	new->dir_path = ft_strdup(mywc->dir_path);
+	new->found = ft_strdup(found);
 	new->prefix = ft_substr(found, 0, i2);
 	if (mywc->suffix[i] == '\0')
 		new->suffix = NULL;
@@ -65,6 +68,7 @@ static t_wildcard	*new_wc_path(t_wildcard *mywc, char *found,
 	new->dir_path = tmp;
 	new->suffix = ft_strdup("");
 	new->prefix = ft_strdup("");
+	new->found = NULL;
 	if (!new->dir_path || !new->prefix || !new->suffix)
 		return (display_error("Error allocation\n", 0), NULL);
 	if (update_wildcard(new, &mywc->suffix[i + 1]))
@@ -138,6 +142,7 @@ t_wildcard	*init_wc(void)
 	if (!new)
 		return (display_error("Error allocation\n", 0), NULL);
 	new->dir_path = ft_strdup(getcwd(cwd_dir, DIR_BUFFER));
+	new->found = NULL;
 	new->suffix = ft_strdup("");
 	new->prefix = ft_strdup("");
 	if (!new->dir_path || !new->prefix || !new->suffix)

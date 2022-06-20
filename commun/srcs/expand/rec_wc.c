@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 02:22:00 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 16:37:36 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 18:07:02 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,16 @@
 #include "utils.h"
 
 static int	get_match_indir_content(t_wildcard *mywc,
-					t_list **new_lst, struct dirent	*dir)
+					t_list **new_lst, char *dir_name)
 {
 	t_wildcard		*new;
 	t_list			*node;
 
-	new = prefix_suffix(mywc, dir->d_name);
+	if (dir_name[0] == '.')
+		return (0);
+	new = prefix_suffix(mywc, dir_name);
 	if (new)
 	{
-		ft_printf("dir: %s\n", dir->d_name);
 		node = ft_lstnew(new);
 		if (!node)
 			return (display_error("Error allocation\n", 0) ,-1);
@@ -32,12 +33,57 @@ static int	get_match_indir_content(t_wildcard *mywc,
 	return (0);
 }
 
+static t_wildcard	*cpy_wc(t_wildcard *wc)
+{
+	t_wildcard	*new;
+	char		*tmp;
+	size_t		i;
+
+	new = ft_calloc(1, sizeof(t_wildcard));
+	if (!new)
+		return (display_error("Error allocation\n", 0), NULL);
+	new->suffix = NULL;
+	new->found = NULL;
+	tmp = ft_strdup(ft_strrchr(wc->dir_path, '/') + 1);
+	if (!tmp)
+		return (display_error("Error allocation\n", 0), NULL);
+	new->prefix = ft_strjoin(tmp, "/");
+	free(tmp);
+	i = ft_strlen(wc->dir_path);
+	while (--i >= 1)
+		if (wc->dir_path[i] == '/')
+			break ;
+	new->dir_path = ft_substr(wc->dir_path, 0, i);
+	if (!new->prefix || !new->dir_path)
+		return (display_error("Error allocation\n", 0), NULL);
+	return (new);
+}
+
+static int	get_dir_match(t_wildcard *mywc, t_list **new_lst)
+{
+	t_wildcard	*new;
+	t_list		*node;
+
+	if (mywc->suffix[0] == '\0')
+	{
+		new = cpy_wc(mywc);
+		if (!new)
+			return (-1);
+		node = ft_lstnew(new);
+		if (!node)
+			return (display_error("Error allocation\n", 0) ,-1);
+		ft_lstadd_back(new_lst, ft_lstnew(new));
+		return (0);
+	}
+	return (1);
+}
+
 static int	get_match_indir(t_list *old_lst, t_list **new_lst)
 {
 	struct dirent	*dir;
 	DIR				*d;
 	t_wildcard		*mywc;
-
+	int				t;
 
 	mywc = (t_wildcard *)old_lst->content;
 	d = opendir(mywc->dir_path);
@@ -45,10 +91,15 @@ static int	get_match_indir(t_list *old_lst, t_list **new_lst)
 		return (1);
 	while (1)
 	{
+		t = get_dir_match(mywc, new_lst);
+		if (t == -1)
+			return (-1);
+		if (t == 0)
+			return (closedir(d), 0);
 		dir = readdir(d);
 		if (!dir)
 			break ;
-		if (get_match_indir_content(mywc, new_lst, dir) == -1)
+		if (get_match_indir_content(mywc, new_lst, dir->d_name) == -1)
 			return (closedir(d), -1);
 	}
 	closedir(d);
@@ -57,21 +108,26 @@ static int	get_match_indir(t_list *old_lst, t_list **new_lst)
 
 static int	iter_lst(t_list **lst, t_list **new)
 {
-	t_list	*index;
+	t_list		*index;
+	t_wildcard	*wc;
 
 	if (!lst || !*lst)
 		return (1);
 	index = *lst;
 	while (index)
 	{
-		if (get_match_indir(index, new) == -1)
-			return (1);
+		wc = (t_wildcard *)index->content;
+		if (wc->found == NULL)
+		{
+			if (get_match_indir(index, new) == -1)
+				return (1);
+		}
+		else
+			if (get_match_indir_content(wc, new, wc->found) == -1)
+				return (1);
 		index = index->next;
 	}
 	ft_lstclear(lst, del_node);
-	ft_printf("\n");
-	ft_lstiter(*new, print_lst2);
-	ft_printf("\n");
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:56:54 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 15:31:26 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 16:50:34 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct s_wildcard
 	char	*prefix;
 	char	*suffix;
 	char	*dir_path;
+	char	*found;
 }	t_wildcard;
 
 int			strncmp_sep(char *s1, char *s2);
