@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:56:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 02:32:21 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/20 14:10:57 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,30 @@
 #include "utils.h"
 #include <unistd.h>
 
-int	update_wildcard(t_wildcard *mywc, char *line)
+static int fill_wc2(t_wildcard *mywc, char *line, size_t	i)
 {
-	size_t	i;
 	char	*tmp;
 	char	*tmp2;
 
-	i = 0;
-	while (line[i] && line[i] != '*')
-		i++;
 	tmp2 = ft_substr(line, 0, i);
+	if (!tmp2)
+		return (display_error("Error allocation\n", 0), 1);
 	tmp = ft_strjoin(mywc->prefix, tmp2);
+	if (!tmp)
+		return (display_error("Error allocation\n", 0), 1);
 	free(tmp2);
 	free(mywc->prefix);
 	mywc->prefix = ft_strdup(tmp);
+	if (!mywc->prefix)
+		return (display_error("Error allocation\n", 0), 1);
 	free(tmp);
+	return (0);
+}
+
+static int fill_wc(t_wildcard *mywc, char *line, size_t	i)
+{
+	if (fill_wc2(mywc, line, i))
+		return (1);
 	if (line[i])
 	{
 		while (line[i] == '*')
@@ -37,7 +46,49 @@ int	update_wildcard(t_wildcard *mywc, char *line)
 		if (!line[i])
 			i--;
 		mywc->suffix = ft_strdup(&line[i]);
+		if (!mywc->suffix)
+			return (display_error("Error allocation\n", 0), 1);
 	}
+	return (0);
+}
+
+static int	update_dir_path(t_wildcard *mywc, char *line, size_t i)
+{
+	char	*tmp;
+	char	*tmp2;
+
+	tmp2 = ft_substr(line, 0, i);
+	if (!tmp2)
+		return (display_error("Error allocation\n", 0), 1);
+	tmp = ft_join3(mywc->dir_path, "/", tmp2);
+	if (!tmp)
+		return (display_error("Error allocation\n", 0), 1);
+	free(mywc->dir_path);
+	free(tmp2);
+	mywc->dir_path = ft_strdup(tmp);
+	if (!mywc->dir_path)
+		return (display_error("Error allocation\n", 0), 1);
+	free(tmp);
+	return (0);
+}
+
+int	update_wildcard(t_wildcard *mywc, char *line)
+{
+	size_t	i;
+
+	i = 0;
+	while (line[i] && line[i] != '*')
+	{
+		if (line[i] == '/')
+		{
+			if (update_dir_path(mywc, line, i))
+				return (1);
+			return (update_wildcard(mywc, &line[i + 1]));
+		}
+		i++;
+	}
+	if (fill_wc(mywc, line, i))
+		return (1);
 	return (0);
 }
 
@@ -57,6 +108,7 @@ t_list	*wildcards(char *line)
 		return (NULL);
 	if (update_wildcard(mywc, line))
 		return (NULL);
+	printf_wc(mywc);
 	ft_lstadd_back(lst_odd, ft_lstnew(mywc));
 	odd = 0;
 	rec_wildcards(lst_odd, lst_even, &odd);
