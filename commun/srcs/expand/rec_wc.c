@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 02:22:00 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/22 00:07:14 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/22 01:21:17 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static int	get_match_indir_content(t_wildcard *mywc,
 
 	if (dir_name[0] == '.')
 		return (0);
-	ft_printf("dir : %s\n", dir_name);
 	new = prefix_suffix(mywc, dir_name);
 	if (new)
 	{

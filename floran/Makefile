@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/22 00:18:13 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/22 01:16:22 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ UTILSSRC			:=	utils/ft_atoll.c				\
 						utils/str_utils.c				\
 						utils/quicksort.c				\
 						utils/free.c					\
+						utils/lst_to_tab.c				\
 
 TREESRC				:=	astree/astree.c					\
 						astree/astree_utils.c			\
@@ -63,7 +64,6 @@ EXPANDSRC			:=	expand/wildcard.c				\
 						expand/rec_wc.c					\
 						expand/main.c					\
 						expand/expand.c					\
-						expand/lst_to_tab.c				\
 
 CC					:=	cc
 RM					:=	rm

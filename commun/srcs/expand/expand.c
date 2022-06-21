@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 16:46:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/22 00:13:00 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/22 01:50:21 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,53 +15,38 @@
 #include "libft.h"
 #include "utils.h"
 
-static int	do_basic(char *cmd, t_list **new_lst)
+static int	do_wildcard_content(t_list	**wc_lst, char **new_cmd,
+				size_t *size, size_t *max)
 {
-	char	*tmp;
-	t_list	*new;
+	char	**ret;
 
-	tmp = ft_strdup(cmd);
-	if (!tmp)
-		return (display_error("Error allcation\n", 0), 1);
-	new = ft_lstnew(tmp);
-	if (!new)
-	{
-		free(tmp);
-		return (display_error("Error allcation\n", 0), 1);
-	}
-	ft_lstadd_back(new_lst, new);
-	return (0);
-}
-
-static int	do_wildcard_loop(t_list **wc_lst, t_list **new_lst)
-{
-	t_list		*index;
-	t_list		*new;
-	t_wildcard	*wc;
-	char		*tmp;
-
-	if (!wc_lst || !*wc_lst)
+	ret = NULL;
+	ret = lst_to_tab(wc_lst);
+	print_tab(ret);
+	ft_lstclear(wc_lst, del_node);
+	free(wc_lst);
+	if (!ret)
 		return (1);
-	index = *wc_lst;
-	while (index)
+	quicksort(ret, size_tab(ret));
+	while (*size + size_tab(ret) < *max)
 	{
-		wc = (t_wildcard *)index->content;
-		tmp = ft_strdup(wc->prefix);
-		if (!tmp)
-			return (display_error("Error allcation\n", 0), -1);
-		new = ft_lstnew(tmp);
-		if (!new)
-		{
-			free(tmp);
-			return (display_error("Error allcation\n", 0), -1);
-		}
-		ft_lstadd_back(new_lst, new);
-		index = index->next;
+		new_cmd = tab_realloc(new_cmd, 1, TAB_BUFFER);
+		if (!new_cmd)
+			return (free_tab(ret), 1);
+		*max += TAB_BUFFER;
 	}
+	if (cpy_tab(ret, &new_cmd[*size]))
+	{
+		free_tab(ret);
+		free_tab(new_cmd);
+		return (1);
+	}
+	*size += size_tab(ret);
+	free_tab(ret);
 	return (0);
 }
 
-static int	do_wildcard(char *cmd, t_list **new_lst)
+static int	do_wildcard(char *cmd, char **new_cmd, size_t *size, size_t *max)
 {
 	t_list	**wc_lst;
 
@@ -69,63 +54,61 @@ static int	do_wildcard(char *cmd, t_list **new_lst)
 	if (!wc_lst)
 		return (display_error("Error allcation\n", 0), 1);
 	*wc_lst = wildcards(cmd);
+	ft_printf("cmd : %s\n", cmd);
 	if (*wc_lst)
 	{
-		if (do_wildcard_loop(wc_lst, new_lst) == -1)
-		{
-			ft_lstclear(wc_lst, del_node);
-			return (free(wc_lst), 1);
-		}
-		ft_lstclear(wc_lst, del_node);
-		free(wc_lst);
+		ft_printf("here\n");
+		if (do_wildcard_content(wc_lst, new_cmd, size, max))
+			return (1);
 	}
 	else
-		if (do_basic(cmd, new_lst))
-			return (1);
+	{
+		new_cmd[*size] = ft_strdup(cmd);
+		if (!new_cmd[*size++])
+			return (display_error("Error allcation\n", 0), 1);
+	}
 	return (0);
 }
 
-static int	do_expand_loop(char **cmd, t_list **new_lst)
+static int	do_expand_loop(char **cmd, char **new_cmd, size_t *max)
 {
 	size_t	i;
+	size_t	size;
 
 	i = 0;
+	size = 0;
 	while (cmd[i])
 	{
 		if (ft_strchr(cmd[i], '*') != NULL)
 		{
-			if (do_wildcard(cmd[i], new_lst))
+			if (do_wildcard(cmd[i], new_cmd, &size, max))
 				return (1);
 		}
 		else
-			if (do_basic(cmd[i], new_lst))
-				return (1);
+		{
+			new_cmd[size] = ft_strdup(cmd[i]);
+			if (!new_cmd[size++])
+				return (display_error("Error allcation\n", 0), 1);
+		}
 		i++;
 	}
+	new_cmd = tab_realloc(new_cmd, -1, TAB_BUFFER);
+	if (!new_cmd)
+		return (1);
+	new_cmd[size_tab(new_cmd)] = NULL;
 	return (0);
 }
 
 char	**do_expand(char **cmd)
 {
-	t_list	**new_lst;
 	char	**new_cmd;
+	size_t	max;
 
-	new_lst = ft_calloc(1, sizeof(t_list *));
-	if (!new_lst)
-	{
-		free_tab(cmd);
-		return (display_error("Error allcation\n", 0), NULL);
-	}
-	if (do_expand_loop(cmd, new_lst))
-	{
-		free_tab(cmd);
-		ft_lstclear(new_lst, free_ptr);
-		return (free(new_lst), NULL);
-	}
+	max = TAB_BUFFER;
+	new_cmd = NULL;
+	new_cmd = tab_realloc(new_cmd, 0, TAB_BUFFER);
+	if (do_expand_loop(cmd, new_cmd, &max))
+		return (free_tab(cmd), NULL);
 	free_tab(cmd);
-	new_cmd = lst_to_tab(new_lst);
-	quicksort(new_cmd, ft_lstsize(*new_lst));
-	ft_lstclear(new_lst, free_ptr);
-	free(new_lst);
 	return (new_cmd);
 }

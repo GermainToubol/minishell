@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:56:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/21 23:15:34 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/22 01:21:48 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,5 @@ t_list	*wildcards(char *line)
 		return (display_error("Error allocation\n", 0), NULL);
 	}
 	ret = wildcards_content(mywc, ret);
-	ft_lstiter(ret, print_lst2);
 	return (ret);
 }
