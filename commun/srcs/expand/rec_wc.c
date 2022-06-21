@@ -6,11 +6,12 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 02:22:00 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/21 20:52:52 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/22 00:07:14 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wildcard.h"
+#include "expand.h"
 #include "libft.h"
 #include "utils.h"
 
@@ -22,6 +23,7 @@ static int	get_match_indir_content(t_wildcard *mywc,
 
 	if (dir_name[0] == '.')
 		return (0);
+	ft_printf("dir : %s\n", dir_name);
 	new = prefix_suffix(mywc, dir_name);
 	if (new)
 	{
@@ -97,10 +99,8 @@ static int	get_match_indir(t_list *old_lst, t_list **new_lst)
 	while (1)
 	{
 		t = get_dir_match(mywc, new_lst);
-		if (t == -1)
-			return (closedir(d), -1);
-		if (t == 0)
-			return (closedir(d), 0);
+		if (t <= 0)
+			return (closedir(d), t);
 		dir = readdir(d);
 		if (!dir)
 			break ;

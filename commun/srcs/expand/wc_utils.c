@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 01:01:16 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/21 19:55:48 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/21 23:05:44 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_wildcard	*cpy_wc(t_wildcard *wc)
 	new->suffix = NULL;
 	new->found = NULL;
 	new->prefix = ft_strdup(wc->prefix);
-	new->prefix = ft_strdup(wc->dir_path);
+	new->dir_path = ft_strdup(wc->dir_path);
 	if (!new->prefix || !new->dir_path)
 	{
 		del_node(new);

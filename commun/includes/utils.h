@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:50:17 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/21 19:43:38 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/22 00:17:54 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void		print_cmd_line(t_parse **parse);
 void		print_cmd_line_detail(t_parse **parse);
 void		ft_list_remove_if(t_list **begin_list, void *data_ref,
 				int (*cmp)(), void (*free_fct)(void *));
+void		quicksort(char **tab, size_t len);
 
 int			ft_strcmp(const char *s1, const char *s2);
 int			last_char(char *s, char c);
