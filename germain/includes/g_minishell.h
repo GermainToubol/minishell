@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:07:25 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/17 18:34:13 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/20 17:51:51 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef G_MINISHELL_H
@@ -14,6 +14,7 @@
 # include <signal.h>
 # include <unistd.h>
 # include "libft.h"
+# include "parser.h"
 
 # define PROMPT_NAME "MINISHELL$> "
 
@@ -30,7 +31,7 @@ void	ft_lstpop(t_list **lst, void (*del)(void *));
 void	ft_lstsort(t_list **lst, int (*f)(void *, void *));
 
 /* SESSION MANAGEMENT */
-int		interactive_session(char **env);
+int		interactive_session(t_list **env);
 int		non_interactive_session(char *arg, char **env);
 
 /* ENVIRONMENT MANAGEMENT */
@@ -56,14 +57,15 @@ void	send_sig_list(void);
 void	kill_from_lst(void *content);
 
 /* EXECUTION */
-void	run_line(char *line, char **env);
-int		run_pipe_series(t_list *execline, char **env);
+int		run_line(char *line, t_list **env);
+int		run_pipe_series(t_parse **parse, t_list **env);
+int		do_redirect(t_parse *parse);
 pid_t	exec_process(t_list *process, char **env, int *pipe_in, int *pipe_out);
 int		wait_all(int n_process, pid_t last_pid);
 void	clear_exec(t_list **execline, pid_t pid);
 
 /* PIPE MANAGEMENT */
-int		set_outpipe(t_list *execline, int *pipe_fds);
+int	set_outpipe(int *pipe_fds);
 
 /* PID AND RELATED MEMORY */
 void	extend_pid_list(pid_t pid);
@@ -75,5 +77,7 @@ int		builtin_pwd(int argc, char **argv, t_list **env);
 int		builtin_export(int argc, char **argv, t_list **env);
 int		builtin_unset(int argc, char **argv, t_list **env);
 int		builtin_env(int argc, char **argv, t_list **env);
+int		builtin_echo(int argc, char **argv, t_list **env);
+int		builtin_exit(void);
 
 #endif

@@ -1,36 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_outpipe.c                                      :+:      :+:    :+:   */
+/*   run_pipe_series.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/14 15:53:15 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/14 16:02:14 by gtoubol          ###   ########.fr       */
+/*   Created: 2022/06/20 14:58:08 by gtoubol           #+#    #+#             */
+/*   Updated: 2022/06/20 17:51:03 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdio.h>
-#include <unistd.h>
+#include <stddef.h>
+#include "parser.h"
 #include "minishell.h"
 #include "g_minishell.h"
 
-int	set_outpipe(t_list *execline, int *pipe_fds)
+int	run_pipe_series(t_parse **parse, t_list	**env)
 {
-	int		n;
-	t_cmd	*cmd;
+	//int		pfd[2][2];
+	//int		n_process;
+	int		n_parse;
+	pid_t	pid;
 
-	cmd = (t_cmd *)execline->content;
-	if (execline->next == NULL || cmd->outputs != NULL)
+	//n_process = 0;
+	(void)env;
+	n_parse = 0;
+	pid = 1;
+	while (parse[n_parse] != NULL && pid > 0)
 	{
-		pipe_fds[0] = -2;
-		pipe_fds[1] = -2;
-		return (0);
+		if (parse[n_parse]->type == CMD)
+			do_redirect(parse[n_parse]);
+		n_parse++;
 	}
-	n = pipe(pipe_fds);
-	if (n != 0)
-	{
-		perror("pipe");
-		return (-1);
-	}
+	if (pid <= 0)
+		return (1);
 	return (0);
 }
