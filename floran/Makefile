@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/20 22:27:13 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/21 18:07:49 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,9 @@ UTILSSRC			:=	utils/ft_atoll.c				\
 						utils/print2.c					\
 						utils/display_msg.c				\
 						utils/ft_join3.c				\
+						utils/ft_strcmp.c				\
+						utils/ft_lst_sort.c				\
+						utils/ft_lst_remove_if.c		\
 						utils/free.c					\
 
 TREESRC				:=	astree/astree.c					\
@@ -58,6 +61,8 @@ EXPANDSRC			:=	expand/wildcard.c				\
 						expand/update_wc.c				\
 						expand/rec_wc.c					\
 						expand/main.c					\
+						expand/expand.c					\
+						expand/lst_to_tab.c				\
 
 CC					:=	cc
 RM					:=	rm
