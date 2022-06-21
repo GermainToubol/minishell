@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
+/*   By: fmauguin <fmauguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 00:58:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/19 15:25:35 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/21 09:05:24 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ int	main_content(void)
 
 	line = readline("\x1b[33mMINISHELL$> \x1b[0m");
 	if (lexer(line, &tokens))
-		return (free(line), 1);
+		return (free(line), 0);
 	print_lexer(line, &tokens);
 	free(line);
 	parse = parser(&tokens);
 	if (!parse)
-		return (1);
+		return (0);
 	if (create_astree(parse, &root))
-		return (free_parse(parse), 1);
+		return (free_parse(parse), 0);
 	display_tree("", root, 0);
 	astree_apply_suffix(root, free_tree);
 	free_parse(parse);
