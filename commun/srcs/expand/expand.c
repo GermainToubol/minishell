@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 16:46:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/21 18:15:23 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/21 18:58:43 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,25 @@
 #include "libft.h"
 #include "utils.h"
 
-static int	do_wildcard(t_list **wc_lst, t_list **new_lst)
+static int	do_basic(char *cmd, t_list **new_lst)
+{
+	char	*tmp;
+	t_list	*new;
+
+	tmp = ft_strdup(cmd);
+	if (!tmp)
+		return (display_error("Error allcation\n", 0), 1);
+	new = ft_lstnew(tmp);
+	if (!new)
+	{
+		free(tmp);
+		return (display_error("Error allcation\n", 0), 1);
+	}
+	ft_lstadd_back(new_lst, new);
+	return (0);
+}
+
+static int	do_wildcard_loop(t_list **wc_lst, t_list **new_lst)
 {
 	t_list		*index;
 	t_list		*new;
@@ -43,39 +61,42 @@ static int	do_wildcard(t_list **wc_lst, t_list **new_lst)
 	return (0);
 }
 
-static int	do_basic(char *cmd, t_list **new_lst)
+static int	do_wildcard(char *cmd, t_list **new_lst)
 {
-	char	*tmp;
-	t_list	*new;
+	t_list	**wc_lst;
 
-	tmp = ft_strdup(cmd);
-	if (!tmp)
+	wc_lst = ft_calloc(1, sizeof(t_list *));
+	if (!wc_lst)
 		return (display_error("Error allcation\n", 0), 1);
-	new = ft_lstnew(tmp);
-	if (!new)
+	*wc_lst = wildcards(cmd);
+	if (*wc_lst)
 	{
-		free(tmp);
-		return (display_error("Error allcation\n", 0), 1);
+		ft_lst_sort_custom(wc_lst, ft_strcmp);
+		if (do_wildcard_loop(wc_lst, new_lst) == -1)
+		{
+			ft_lstclear(wc_lst, del_node);
+			return (free(wc_lst), 1);
+		}
+		ft_lstclear(wc_lst, del_node);
+		free(wc_lst);
 	}
-	ft_lstadd_back(new_lst, new);
+	else
+		if (do_basic(cmd, new_lst))
+			return (1);
 	return (0);
 }
 
 static int	do_expand_loop(char **cmd, t_list **new_lst)
 {
 	size_t	i;
-	t_list	*wc_lst;
 
 	i = 0;
 	while (cmd[i])
 	{
-		wc_lst = wildcards(cmd[i]);
-		if (wc_lst)
+		if (ft_strchr(cmd[i], '*') != NULL)
 		{
-			ft_lst_sort(&wc_lst, ft_strcmp);
-			if (do_wildcard(&wc_lst, new_lst) == -1)
-				return (ft_lstclear(&wc_lst, del_node), 1);
-			ft_lstclear(&wc_lst, del_node);
+			if (do_wildcard(cmd[i], new_lst))
+				return (1);
 		}
 		else
 			if (do_basic(cmd[i], new_lst))
