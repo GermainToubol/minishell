@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_word.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
+/*   By: fmauguin <fmauguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 17:18:36 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 21:43:45 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/21 12:01:21 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static int	is_word_basic(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i)
 static int	is_var(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i)
 {
 	(*i)++;
-	while (ft_isalnum(line[*i]))
+	while (ft_isalnum(line[*i]) || line[*i] == '_')
 		(*i)++;
 	if (*line == '$' && line[1] == '?')
 		(*i) = 2;
