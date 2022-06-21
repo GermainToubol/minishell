@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
+/*   By: fmauguin <fmauguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 07:13:55 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/18 14:33:55 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/21 12:13:32 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	is_end(char *line, t_tokens *tokens)
 
 	if (*line == '\0')
 	{
-		if (tokens->size > 0 && tokens->tokens[tokens->size - 1].type <= IO_APP
+		if (tokens->size > 0 && tokens->tokens[tokens->size - 1].type <= AND
 			&& tokens->tokens[tokens->size - 1].type >= IO_IN)
 			return (display_error(NULL, '\n'), 1);
 		is_open = 0;
