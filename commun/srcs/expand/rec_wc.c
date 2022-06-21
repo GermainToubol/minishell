@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 02:22:00 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 22:43:41 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/21 20:52:52 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,22 +58,47 @@ static int	get_dir_match(t_wildcard *mywc, t_list **new_lst)
 	return (1);
 }
 
+static char	*get_dir_name(t_wildcard *wc)
+{
+	char	*tmp;
+	char	*tmp2;
+	int		i;
+
+	i = last_char(wc->prefix, '/');
+	tmp = ft_substr(wc->prefix, 0, i + 1);
+	if (!tmp)
+		return (display_error("Error allocation\n", 0), NULL);
+	if (wc->dir_path[0] == '\0')
+		return (tmp);
+	else
+	{
+		tmp2 = ft_join3(wc->dir_path, "/", tmp);
+		free(tmp);
+		if (!tmp)
+			return (display_error("Error allocation\n", 0), NULL);
+		return (tmp2);
+	}
+}
+
 static int	get_match_indir(t_list *old_lst, t_list **new_lst)
 {
 	struct dirent	*dir;
 	DIR				*d;
 	t_wildcard		*mywc;
 	int				t;
+	char			*tmp;
 
 	mywc = (t_wildcard *)old_lst->content;
-	d = opendir(mywc->dir_path);
+	tmp = get_dir_name(mywc);
+	d = opendir(tmp);
+	free(tmp);
 	if (!d)
 		return (1);
 	while (1)
 	{
 		t = get_dir_match(mywc, new_lst);
 		if (t == -1)
-			return (-1);
+			return (closedir(d), -1);
 		if (t == 0)
 			return (closedir(d), 0);
 		dir = readdir(d);

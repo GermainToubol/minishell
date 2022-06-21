@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:50:17 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/21 18:58:49 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/21 19:43:38 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void		ft_list_remove_if(t_list **begin_list, void *data_ref,
 				int (*cmp)(), void (*free_fct)(void *));
 
 int			ft_strcmp(const char *s1, const char *s2);
+int			last_char(char *s, char c);
 
 char		*ft_strndup(char *src, size_t len);
 char		*ft_join3(char *s1, char *s2, char *s3);

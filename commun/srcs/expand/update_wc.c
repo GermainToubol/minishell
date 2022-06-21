@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 22:26:16 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 22:27:26 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/21 19:23:37 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,22 +56,18 @@ static int	update_dir_path(t_wildcard *mywc, char *line, size_t i)
 	char	*tmp;
 	char	*tmp2;
 
-	if (line[0] == '/')
-		tmp2 = ft_substr(line, 1, i);
-	else
-		tmp2 = ft_substr(line, 0, i);
+	tmp2 = ft_substr(line, 0, i + 1);
 	if (!tmp2)
 		return (display_error("Error allocation\n", 0), 1);
-	if (mywc->dir_path[ft_strlen(mywc->dir_path) - 1] == '/')
-		tmp = ft_strjoin(mywc->dir_path, tmp2);
-	else
-		tmp = ft_join3(mywc->dir_path, "/", tmp2);
+	tmp = ft_strjoin(mywc->prefix, tmp2);
+	free(tmp2);
+	free(mywc->prefix);
 	if (!tmp)
 		return (display_error("Error allocation\n", 0), 1);
-	free(mywc->dir_path);
-	free(tmp2);
-	mywc->dir_path = tmp;
-	if (!mywc->dir_path)
+	mywc->prefix = tmp;
+	free(mywc->suffix);
+	mywc->suffix = ft_strdup(&line[i + 1]);
+	if (!mywc->suffix)
 		return (display_error("Error allocation\n", 0), 1);
 	return (0);
 }
