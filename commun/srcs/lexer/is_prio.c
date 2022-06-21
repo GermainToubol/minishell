@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_prio.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
+/*   By: fmauguin <fmauguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:04:22 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/16 03:49:21 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/21 11:17:02 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,22 @@ static int	check_next_token(char *line)
 
 static int	is_p_end(char *line, t_lxm *lxm, t_tokens *tokens, int is_open)
 {
+	size_t	i;
+
 	if (is_open <= 0)
 		return (display_error(NULL, *line), 1);
 	if (tokens->size > 0 && tokens->tokens[tokens->size - 1].type == P_START)
 		return (display_error(NULL, *line), 1);
+	if (tokens->size > 0 && tokens->tokens[tokens->size - 1].type == P_END)
+	{
+		i = 2;
+		while (i < tokens->size && tokens->tokens[tokens->size - i].type != P_START)
+			i++;
+		if (i < tokens->size && tokens->tokens[tokens->size - i].type == P_START
+			&& tokens->tokens[tokens->size - i - 1].type == P_START)
+		return (display_error_red("(())", 5), 1);
+
+	}
 	lxm->data = ft_strndup(")", 1);
 	if (!lxm->data)
 		return (display_error("Error allocation\n", 0), 1);
