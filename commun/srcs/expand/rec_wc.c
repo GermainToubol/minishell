@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 02:22:00 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/22 15:13:24 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/22 15:54:51 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ static int	iter_lst(t_list **lst, t_list **new)
 				return (1);
 		index = index->next;
 	}
+	ft_lstiter(*new, print_lst2);
 	ft_lstclear(lst, del_node);
 	return (0);
 }
@@ -83,8 +84,10 @@ int	rec_wildcards(t_list **lst, t_list **new_lst)
 {
 	t_wildcard	*wc;
 
-	if (!lst || !*lst)
+	if (!lst)
 		return (1);
+	if (!*lst)
+		return (0);
 	wc = (t_wildcard *)(*lst)->content;
 	if (wc->suffix == NULL)
 		return (0);
