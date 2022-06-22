@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:56:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/22 15:55:05 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:01:17 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,26 @@
 #include "parser.h"
 #include "utils.h"
 #include <unistd.h>
+
+static int	wildcards_end(t_list **lst_odd, t_list **lst_even,
+				t_list **ret)
+{
+	int	t;
+
+	t = 1;
+	ft_lstadd_back(lst_odd, *ret);
+	if (!rec_wildcards(lst_odd, lst_even))
+	{
+		if (lst_even && *lst_even)
+			*ret = *lst_even;
+		else if (lst_odd && *lst_odd)
+			*ret = *lst_odd;
+		else
+			*ret = NULL;
+		t = 0;
+	}
+	return (t);
+}
 
 static int	wildcards_content(t_wildcard *mywc, t_list **ret)
 {
@@ -33,19 +53,10 @@ static int	wildcards_content(t_wildcard *mywc, t_list **ret)
 		del_node(mywc);
 		return (free(ret), 1);
 	}
-	ft_lstadd_back(lst_odd, *ret);
-	if (!rec_wildcards(lst_odd, lst_even))
-	{
-		if (lst_even && *lst_even)
-			*ret = *lst_even;
-		else if (lst_odd && *lst_odd)
-			*ret = *lst_odd;
-		else
-			*ret = NULL;
-		t = 0;
-	}
+	t = wildcards_end(lst_odd, lst_even, ret);
 	free(lst_even);
-	return (free(lst_odd), t);
+	free(lst_odd);
+	return (t);
 }
 
 int	wildcards(char *line, t_list **ret)
