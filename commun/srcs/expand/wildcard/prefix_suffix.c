@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 18:47:30 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/22 16:42:05 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:59:18 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,6 @@ static t_wildcard	*prefix_suffix_content(t_wildcard *mywc,
 {
 	size_t	k;
 
-	if (mywc->suffix[i] == '/')
-		return (new_wc_path(mywc, found, i, 0));
-	while (mywc->suffix[i] == '*')
-		i++;
-	if (mywc->suffix[i] == '\0' || mywc->suffix[i] == '/')
-		return (new_wc(mywc, found, i, ft_strlen(found)));
 	while (found[i2])
 	{
 		k = 0;
@@ -53,5 +47,12 @@ t_wildcard	*prefix_suffix(t_wildcard *mywc, char *found)
 	i2 = 0;
 	while (mywc->prefix[i + i2] != '\0' && mywc->prefix[i + i2] == found[i2])
 		i2++;
-	return (prefix_suffix_content(mywc, &found[i2], 0, 0));
+	i = 0;
+	if (mywc->suffix[i] == '/')
+		return (new_wc_path(mywc, found, i, 0));
+	while (mywc->suffix[i] == '*')
+		i++;
+	if (mywc->suffix[i] == '\0' || mywc->suffix[i] == '/')
+		return (new_wc(mywc, found, i, ft_strlen(found)));
+	return (prefix_suffix_content(mywc, found, i, i2));
 }

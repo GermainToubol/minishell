@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:59:12 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/22 16:01:10 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:57:56 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,15 @@ t_wildcard	*new_wc(t_wildcard *mywc, char *found, size_t i, size_t i2)
 {
 	t_wildcard	*new;
 	char		*tmp;
+	size_t		k;
+	size_t		j;
 
-	tmp = ft_strndup(found, i2);
+	k = last_char(mywc->prefix, '/');
+	k++;
+	j = 0;
+	while (mywc->prefix[k + j] != '\0' && mywc->prefix[k + j] == found[j])
+		j++;
+	tmp = ft_substr(found, j, i2);
 	if (!tmp)
 		return (display_error("Error allocation\n", 0), NULL);
 	new = new_wc2(mywc, found, tmp, i);
@@ -76,8 +83,15 @@ t_wildcard	*new_wc_path(t_wildcard *mywc, char *found, size_t i, size_t i2)
 {
 	char		*tmp;
 	char		*tmp2;
+	size_t		k;
+	size_t		j;
 
-	tmp2 = ft_substr(found, 0, i2);
+	k = last_char(mywc->prefix, '/');
+	k++;
+	j = 0;
+	while (mywc->prefix[k + j] != '\0' && mywc->prefix[k + j] == found[j])
+		j++;
+	tmp2 = ft_substr(found, j, i2);
 	if (!tmp2)
 		return (display_error("Error allocation\n", 0), NULL);
 	if (mywc->prefix[0] != '\0'
