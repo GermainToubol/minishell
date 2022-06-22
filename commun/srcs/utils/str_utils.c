@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:42:57 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/22 01:46:43 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/22 03:06:16 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ size_t	size_tab(char **tab)
 	return (i);
 }
 
-int	cpy_tab(char **from, char **to)
+int	cpy_tab(char **from, char **to, size_t size)
 {
 	size_t	i;
 
 	i = 0;
-	while (from[i])
+	while (i < size && from[i])
 	{
 		to[i] = ft_strdup(from[i]);
 		if (!to[i])
@@ -66,7 +66,7 @@ static char	**do_realloc(size_t tab_size, char **tab)
 	tmp = ft_calloc(tab_size + 1, sizeof(char *));
 	if (!tmp)
 		return (display_error("Error allcation\n", 0), NULL);
-	if (cpy_tab(tab, tmp))
+	if (cpy_tab(tab, tmp, tab_size))
 	{
 		free_tab(tmp);
 		free_tab(tab);
@@ -75,7 +75,7 @@ static char	**do_realloc(size_t tab_size, char **tab)
 	return (tmp);
 }
 
-char	**tab_realloc(char **tab, int i, size_t buffer_size)
+char	**tab_realloc(char **tab, int i, size_t size, size_t buffer_size)
 {
 	char	**tmp;
 
@@ -87,8 +87,10 @@ char	**tab_realloc(char **tab, int i, size_t buffer_size)
 		return (tmp);
 	}
 	else if (i > 0)
-		tmp = do_realloc(size_tab(tab) + buffer_size, tab);
+	{
+		tmp = do_realloc(size + buffer_size, tab);
+	}
 	else
-		tmp = do_realloc(size_tab(tab), tab);
+		tmp = do_realloc(size, tab);
 	return (tmp);
 }

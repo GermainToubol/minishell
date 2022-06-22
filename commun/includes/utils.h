@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:50:17 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/22 01:43:16 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/22 03:05:56 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,16 @@ void		quicksort(char **tab, size_t len);
 
 int			ft_strcmp(const char *s1, const char *s2);
 int			last_char(char *s, char c);
-char		**tab_realloc(char **tab, int i, size_t buffer_size);
+char		**tab_realloc(char **tab, int i, size_t size,
+				size_t buffer_size);
 
 char		*ft_strndup(char *src, size_t len);
 char		*ft_join3(char *s1, char *s2, char *s3);
 
-char	**lst_to_tab(t_list **lst);
+char		**lst_to_tab(t_list **lst);
 
 size_t		size_tab(char **tab);
-int			cpy_tab(char **from, char **to);
+int			cpy_tab(char **from, char **to, size_t size);
 
 long long	ft_atoll(char *s);
 
