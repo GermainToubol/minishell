@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:42:57 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/22 03:06:16 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/22 03:25:08 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,20 @@ int	cpy_tab(char **from, char **to, size_t size)
 	return (0);
 }
 
-static char	**do_realloc(size_t tab_size, char **tab)
+static char	**do_realloc(size_t tab_size, char **tab, size_t size)
 {
 	char	**tmp;
 
 	tmp = ft_calloc(tab_size + 1, sizeof(char *));
 	if (!tmp)
 		return (display_error("Error allcation\n", 0), NULL);
-	if (cpy_tab(tab, tmp, tab_size))
+	if (cpy_tab(tab, tmp, size))
 	{
 		free_tab(tmp);
 		free_tab(tab);
 		return (NULL);
 	}
+	free_tab(tab);
 	return (tmp);
 }
 
@@ -88,9 +89,9 @@ char	**tab_realloc(char **tab, int i, size_t size, size_t buffer_size)
 	}
 	else if (i > 0)
 	{
-		tmp = do_realloc(size + buffer_size, tab);
+		tmp = do_realloc(buffer_size, tab, size);
 	}
 	else
-		tmp = do_realloc(size, tab);
+		tmp = do_realloc(size, tab, size);
 	return (tmp);
 }

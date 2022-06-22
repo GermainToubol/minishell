@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 16:46:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/22 03:08:13 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/22 03:26:00 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,16 @@ static char	**do_wildcard_content(t_list **wc_lst, char **new_cmd,
 	ret = NULL;
 	ret = lst_to_tab(wc_lst);
 	ft_lstclear(wc_lst, del_node);
-	free(wc_lst);
 	if (!ret)
 		return (NULL);
 	len = size_tab(ret);
 	quicksort(ret, len);
 	while (*size + len >= *max)
 	{
-		new_cmd = tab_realloc(new_cmd, 1, *size,TAB_BUFFER);
+		*max += TAB_BUFFER;
+		new_cmd = tab_realloc(new_cmd, 1, *size, *max);
 		if (!new_cmd)
 			return (free_tab(ret), NULL);
-		*max += TAB_BUFFER;
 	}
 	if (cpy_tab(ret, &new_cmd[*size], len))
 	{
@@ -69,6 +68,7 @@ static char **do_wildcard(char *cmd, char **new_cmd,
 			return (display_error("Error allcation\n", 0), NULL);
 		new_cmd[*size] = NULL;
 	}
+	free(wc_lst);
 	return (new_cmd);
 }
 
@@ -83,10 +83,10 @@ static char	**do_expand_loop(char **cmd, char **new_cmd, size_t *max)
 	{
 		if (size >= *max)
 		{
-			new_cmd = tab_realloc(new_cmd, 1, size, TAB_BUFFER);
+			*max += TAB_BUFFER;
+			new_cmd = tab_realloc(new_cmd, 1, size, *max);
 			if (!new_cmd)
 				return (free_tab(new_cmd), NULL);
-			*max += TAB_BUFFER;
 		}
 		if (ft_strchr(cmd[i], '*') != NULL)
 		{
@@ -108,7 +108,7 @@ static char	**do_expand_loop(char **cmd, char **new_cmd, size_t *max)
 		new_cmd = tab_realloc(new_cmd, -1, size, TAB_BUFFER);
 		if (!new_cmd)
 			return (NULL);
-		new_cmd[size_tab(new_cmd)] = NULL;
+		new_cmd[size] = NULL;
 	}
 	return (new_cmd);
 }
