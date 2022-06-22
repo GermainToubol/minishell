@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 10:55:52 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/20 13:18:05 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/22 11:25:56 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <errno.h>
@@ -47,7 +47,7 @@ int	builtin_echo(int argc, char **argv, t_list **env)
 static int	check_n_option(int argc, char **argv)
 {
 	int	i;
-	int j;
+	int	j;
 
 	i = 1;
 	while (i < argc)

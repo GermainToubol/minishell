@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 10:13:48 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/20 14:30:56 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/22 11:29:49 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <readline/readline.h>
@@ -51,7 +51,6 @@ static void	signal_handler(int signum, siginfo_t *siginfo, void *context)
 	}
 	if (signum == SIGQUIT)
 		return ;
-	//send_sig_list();
 	write(1, "\n", 1);
 	if (siginfo->si_pid != 0)
 	{

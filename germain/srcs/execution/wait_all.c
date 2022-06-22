@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:18:11 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/14 16:27:55 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/22 13:39:47 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdlib.h>
@@ -32,7 +32,6 @@ int	wait_all(int n_processes, pid_t last_pid)
 	{
 		status = 0;
 		pid = wait(&status);
-		free_pid_list(pid);
 		if (WIFEXITED(status))
 			wait_exited(status, pid, &exit_status, last_pid);
 		else if (WIFSIGNALED(status))

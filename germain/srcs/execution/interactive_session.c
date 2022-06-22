@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 13:10:53 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/20 18:03:51 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/22 16:16:22 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <readline/readline.h>
@@ -20,7 +20,7 @@
 
 static int	do_execution(t_list **env);
 
-int interactive_session(t_list	**env)
+int	interactive_session(t_list	**env)
 {
 	struct sigaction	sa;
 	int					is_done;
@@ -41,27 +41,23 @@ int interactive_session(t_list	**env)
 
 static int	do_execution(t_list **env)
 {
-	static int a = 0;
 	char	*line;
 	int		re;
 
-	(void)env;
-	if (a == 0)
-		line = "14<Makefile >>test >lapin";//readline(PROMPT_NAME);
-	else
-		line = NULL;
-	a++;
+	line = readline(PROMPT_NAME);
 	if (line == NULL || ft_strcmp(line, "exit") == 0)
 	{
-		//free(line);
+		free(line);
 		write(1, "exit\n", 5);
 		return (1);
 	}
-	//add_history(line);
-	//rl_redisplay();
+	if (ft_strcmp(line, "") == 0)
+	{
+		free(line);
+		return (0);
+	}
+	add_history(line);
 	re = run_line(line, env);
-	//rl_on_new_line();
-	//free(line);
 	(void)re;
 	return (0);
 }

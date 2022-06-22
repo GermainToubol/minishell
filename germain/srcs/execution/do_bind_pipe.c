@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstpop.c                                        :+:      :+:    :+:   */
+/*   do_bind_pipe.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/09 12:58:04 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/09 13:02:39 by gtoubol          ###   ########.fr       */
+/*   Created: 2022/06/21 09:18:20 by gtoubol           #+#    #+#             */
+/*   Updated: 2022/06/22 11:28:30 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stddef.h>
-#include "libft.h"
+#include <stdio.h>
+#include <unistd.h>
+#include "minishell.h"
 #include "g_minishell.h"
 
-void	ft_lstpop(t_list **lst, void (*del)(void *))
+int	do_bind_pipe(int *pfd)
 {
-	t_list	*tmp;
+	int	status;
 
-	if (*lst == NULL)
-		return ;
-	tmp = (*lst)->next;
-	ft_lstdelone(*lst, del);
-	*lst = tmp;
+	status = pipe(pfd);
+	if (status != 0)
+		perror("minishell: pipe");
+	return (status);
 }

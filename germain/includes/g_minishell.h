@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:07:25 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/20 17:51:51 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/22 15:21:26 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef G_MINISHELL_H
@@ -60,9 +60,13 @@ void	kill_from_lst(void *content);
 int		run_line(char *line, t_list **env);
 int		run_pipe_series(t_parse **parse, t_list **env);
 int		do_redirect(t_parse *parse);
-pid_t	exec_process(t_list *process, char **env, int *pipe_in, int *pipe_out);
+int		do_bind_pipe(int *pfd);
+int		get_exec_path(t_parse *parse, t_list **env);
+pid_t	exec_process(t_parse *parse, t_list **env, int *pipe_in, int *pipe_out);
+void	run_child(t_parse *parse, t_list **env, int *pipe_in, int *pipe_out);
+void	run_parent(int *pipe_in);
+int		run_builtin(t_parse *parse, t_list **env, int *pipe_in, int *pipe_out);
 int		wait_all(int n_process, pid_t last_pid);
-void	clear_exec(t_list **execline, pid_t pid);
 
 /* PIPE MANAGEMENT */
 int	set_outpipe(int *pipe_fds);
@@ -79,5 +83,6 @@ int		builtin_unset(int argc, char **argv, t_list **env);
 int		builtin_env(int argc, char **argv, t_list **env);
 int		builtin_echo(int argc, char **argv, t_list **env);
 int		builtin_exit(void);
+int		is_builtin(char *name);
 
 #endif

@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   non_interactive_session.c                          :+:      :+:    :+:   */
+/*   run_parent.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/13 15:43:20 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/14 13:04:11 by gtoubol          ###   ########.fr       */
+/*   Created: 2022/06/22 12:59:19 by gtoubol           #+#    #+#             */
+/*   Updated: 2022/06/22 14:13:38 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
 #include "minishell.h"
 #include "g_minishell.h"
 
-int	non_interactive_session(char *arg, char **env)
+void	run_parent(int *pipe_in)
 {
-	(void)arg;
-	(void)env;
-	sleep(2);
-	return (0);
+	if (pipe_in[0] != -2)
+	{
+		close(pipe_in[0]);
+		close(pipe_in[1]);
+	}
+	pipe_in[0] = -2;
+	pipe_in[1] = -2;
 }

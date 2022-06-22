@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 15:13:16 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/20 17:55:07 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/22 11:28:09 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <errno.h>
@@ -19,7 +19,7 @@
 #include "minishell.h"
 #include "g_minishell.h"
 
-static void *get_redirect_function(t_eio io_r);
+static void	*get_redirect_function(t_eio io_r);
 static int	redirect_in(char *filename, int target_fd);
 static int	redirect_out(char *filename, int target_fd);
 static int	redirect_append(char *filename, int target_fd);
@@ -41,13 +41,13 @@ int	do_redirect(t_parse *parse)
 			continue ;
 		}
 		if (f(redirect[i]->file, redirect[i]->fd) != 0)
-				return (1);
+			return (1);
 		i++;
 	}
 	return (0);
 }
 
-static void *get_redirect_function(t_eio io_r)
+static void	*get_redirect_function(t_eio io_r)
 {
 	if (io_r == IN)
 		return (redirect_in);

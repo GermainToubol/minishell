@@ -6,7 +6,7 @@
 #    By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 10:59:36 by gtoubol           #+#    #+#              #
-#    Updated: 2022/06/20 15:50:25 by gtoubol          ###   ########.fr        #
+#    Updated: 2022/06/22 15:25:47 by gtoubol          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -28,7 +28,8 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										builtin_export.c	\
 										builtin_unset.c		\
 										builtin_env.c		\
-										builtin_exit.c)		\
+										builtin_exit.c		\
+										is_builtin.c)		\
 			$(addprefix parser/, 		parser.c 			\
 										path.c 				\
 										split_cmd.c 		\
@@ -51,7 +52,14 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										interactive_signals.c\
 										run_line.c			\
 										run_pipe_series.c	\
-										do_redirect.c)
+										do_redirect.c		\
+										do_bind_pipe.c		\
+										run_child.c			\
+										run_parent.c		\
+										exec_process.c		\
+										get_exec_path.c		\
+										wait_all.c			\
+										run_builtin.c)
 
 TMP =		$(addprefix tmp/,			ft_lstsort.c)
 
@@ -70,7 +78,7 @@ CPROFILE =	-pg
 
 # Description of the final target
 # -------------------------------------------------------------------------
-NAME =		g_minishell
+NAME =		minishell
 
 # Libraries
 # -------------------------------------------------------------------------
@@ -94,7 +102,7 @@ else
 endif
 RM =		rm -f
 
-vpath %.c $(SRCS_DIR):$(TEST_DIR)
+vpath %.c $(SRCS_DIR)
 vpath %.h $(HEAD_DIR)
 
 $(NAME):	$(OBJS) $(LIBFT)
@@ -130,8 +138,6 @@ libfclean:
 
 # Custom rules
 # ------------------------------------------------------------------------
-TEST_N =	test_malloc
-
 debug:		all
 profile:	all
 			@echo "\e[36mTo use profiler:"
@@ -139,13 +145,8 @@ profile:	all
 			@echo "    2. grof \e[3m<your-app>\e[0;36m gmon.out > \e[3m<analysis-file>\e[0;36m"
 			@echo "    3. cat \e[3m<analysis-file>\e[0m"
 
-test:		$(TEST_N)
-
-$(TEST_N):	$(OBJS) $(LIBFT)
-			$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIB)
-
-malloc_test:$(OBJS) $(TEST_O) $(LIBFT)
-			$(CC) $(CFLAGS) -fsanitize=undefined -rdynamic -o $@ $(OBJS) $(TEST_O) $(LIB) -L. -lmallocator
+malloc_test:$(OBJS) $(LIBFT)
+			$(CC) $(CFLAGS) -fsanitize=undefined -rdynamic -o $@ $(OBJS) $(LIB) -L. -lmallocator
 
 t_clean:
 			$(RM) $(TEST_N)
