@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 17:34:19 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/21 18:04:44 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/22 13:49:56 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ char	**new_tab(const char **av, int size)
 int	main(int ac, const char **av)
 {
 	char	**lst;
+	char	**new;
 	size_t	i;
 
 	if (ac < 2)
@@ -44,15 +45,16 @@ int	main(int ac, const char **av)
 	lst = new_tab(av, ac);
 	if (!lst)
 		return (1);
-	lst = do_expand(lst);
-	if (!lst)
+	new = do_expand(lst);
+	free_tab(lst);
+	if (!new)
 		return (display_error("Error\n", 0), 1);
 	i = 0;
-	while (lst[i])
+	while (new[i])
 	{
-		ft_printf("%i : %s\n", i, lst[i]);
+		ft_printf("%i : %s\n", i, new[i]);
 		i++;
 	}
-	free_tab(lst);
+	free_tab(new);
 	return (0);
 }

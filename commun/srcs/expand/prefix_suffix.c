@@ -6,75 +6,12 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 18:47:30 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/22 02:00:39 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/22 15:00:04 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wildcard.h"
 #include "utils.h"
-
-static t_wildcard	*new_wc(t_wildcard *mywc, char *found,
-						size_t i, size_t i2)
-{
-	t_wildcard	*new;
-	char		*tmp;
-
-	new = ft_calloc(1, sizeof(t_wildcard));
-	if (!new)
-		return (display_error("Error allocation\n", 0), NULL);
-	new->dir_path = ft_strdup(mywc->dir_path);
-	new->found = ft_strdup(found);
-	tmp = ft_strndup(found, i2);
-	new->prefix = ft_strjoin(mywc->prefix, tmp);
-	free(tmp);
-	if (mywc->suffix[i] != '\0')
-		new->suffix = ft_strdup(&mywc->suffix[i]);
-	if (!new->dir_path || !new->prefix
-		|| (mywc->suffix[i] != '\0' && !new->suffix))
-	{
-		del_node(new);
-		return (display_error("Error allocation\n", 0), NULL);
-	}
-	if (mywc->suffix[i] == '\0')
-		new->suffix = NULL;
-	return (new);
-}
-
-static int	new_wc_path2(t_wildcard *mywc, t_wildcard *new
-						, char *tmp, size_t i)
-{
-	new->prefix = tmp;
-	new->suffix = ft_strdup(&mywc->suffix[i + 1]);
-	new->dir_path = ft_strdup(mywc->dir_path);
-	new->found = NULL;
-	if (!new->dir_path || !new->prefix || !new->suffix)
-		return (display_error("Error allocation\n", 0), 1);
-	return (0);
-}
-
-static t_wildcard	*new_wc_path(t_wildcard *mywc, char *found,
-						size_t i, size_t i2)
-{
-	t_wildcard	*new;
-	char		*tmp;
-	char		*tmp2;
-
-	new = ft_calloc(1, sizeof(t_wildcard));
-	if (!new)
-		return (display_error("Error allocation\n", 0), NULL);
-	tmp2 = ft_substr(found, 0, i2);
-	if (!tmp2)
-		return (display_error("Error allocation\n", 0), NULL);
-	if (mywc->prefix[0] != '\0'
-		&& mywc->prefix[ft_strlen(mywc->prefix) - 1] == '/')
-		tmp = ft_strjoin(mywc->prefix, tmp2);
-	else
-		tmp = ft_join3(mywc->prefix, "/", tmp2);
-	free(tmp2);
-	if (new_wc_path2(mywc, new, tmp, i))
-		return (del_node(new), NULL);
-	return (new);
-}
 
 static t_wildcard	*prefix_suffix_content(t_wildcard *mywc,
 						char *found, size_t i, size_t i2)

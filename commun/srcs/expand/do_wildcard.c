@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:33:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/22 13:38:44 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/22 14:14:19 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,11 @@ char	**do_wildcard(char *cmd)
 	wc_lst = ft_calloc(1, sizeof(t_list *));
 	if (!wc_lst)
 		return (display_error("Error allcation\n", 0), NULL);
-	*wc_lst = wildcards(cmd);
+	if (wildcards(cmd, wc_lst))
+	{
+		ft_lstclear(wc_lst, del_node);
+		return (free(wc_lst), NULL);
+	}
 	if (*wc_lst)
 	{
 		ret = do_wildcard_content(wc_lst);

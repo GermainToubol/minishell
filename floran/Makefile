@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/22 03:51:14 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/22 15:08:27 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,9 @@ TREESRC				:=	astree/astree.c					\
 EXPANDSRC			:=	expand/wildcard.c				\
 						expand/do_wildcard.c			\
 						expand/lst_utils.c				\
+						expand/dir_utils.c				\
 						expand/wc_utils.c				\
+						expand/new_wc.c					\
 						expand/prefix_suffix.c			\
 						expand/update_wc.c				\
 						expand/rec_wc.c					\

@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 22:26:16 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/21 19:23:37 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/22 14:33:41 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ static int	update_dir_path(t_wildcard *mywc, char *line, size_t i)
 		return (display_error("Error allocation\n", 0), 1);
 	tmp = ft_strjoin(mywc->prefix, tmp2);
 	free(tmp2);
-	free(mywc->prefix);
 	if (!tmp)
 		return (display_error("Error allocation\n", 0), 1);
+	free(mywc->prefix);
 	mywc->prefix = tmp;
 	free(mywc->suffix);
 	mywc->suffix = ft_strdup(&line[i + 1]);
