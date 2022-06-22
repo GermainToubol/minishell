@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:07:13 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/22 03:57:04 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/22 13:32:30 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,9 @@
 
 void	free_ptr(void *data);
 char	**do_expand(char **cmd);
-char	**expand_loop_end(char **new_cmd, size_t *size,
-			size_t *max);
-char	**expand_loop_realloc(char **new_cmd, size_t *size,
-			size_t *max);
-char	**expand_loop_wildcard(char **new_cmd, char *cmd,
-			size_t *size, size_t *max);
-char	**do_wildcard(char *cmd, char ***new_cmd,
-			size_t *size, size_t *max);
+char	**expand_loop_end(char ***new_cmd);
+int		expand_loop_wildcard(char ***new_cmd, char *cmd, size_t i);
+char	**do_wildcard(char *cmd);
+char	**do_basic(char *cmd);
 
 #endif

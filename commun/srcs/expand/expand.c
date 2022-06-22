@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 16:46:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/22 03:48:39 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/22 13:40:33 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,35 +15,42 @@
 #include "libft.h"
 #include "utils.h"
 
-static char	**do_expand_loop(char **cmd, char **new_cmd, size_t *max)
+static char	**do_expand_loop(char **cmd, char ***new_cmd)
 {
 	size_t	i;
-	size_t	size;
 
 	i = 0;
-	size = 0;
 	while (cmd[i])
 	{
-		new_cmd = expand_loop_realloc(new_cmd, &size, max);
-		if (!new_cmd)
-			return (NULL);
-		new_cmd = expand_loop_wildcard(new_cmd, cmd[i], &size, max);
-		if (!new_cmd)
+		if (expand_loop_wildcard(new_cmd, cmd[i], i))
 			return (NULL);
 		i++;
 	}
-	return (expand_loop_end(new_cmd, &size, max));
+	new_cmd[i] = NULL;
+	return (expand_loop_end(new_cmd));
+}
+
+void	free_tab3(char ***tab)
+{
+	size_t	i;
+
+	if (!tab || !*tab)
+		return ;
+	i = 0;
+	while (tab[i])
+		free_tab(tab[i++]);
 }
 
 char	**do_expand(char **cmd)
 {
-	char	**new_cmd;
-	size_t	max;
+	char	***new_cmd;
+	char	**ret;
 
-	max = TAB_BUFFER;
-	new_cmd = NULL;
-	new_cmd = tab_realloc(new_cmd, 0, 0, TAB_BUFFER);
-	new_cmd = do_expand_loop(cmd, new_cmd, &max);
+	new_cmd = ft_calloc(size_tab(cmd) + 1, sizeof(char **));
+	if (!new_cmd)
+		return (display_error("Error allocation\n", 0), NULL);
+	ret = do_expand_loop(cmd, new_cmd);
+	free_tab3(new_cmd);
 	free_tab(cmd);
-	return (new_cmd);
+	return (ret);
 }
