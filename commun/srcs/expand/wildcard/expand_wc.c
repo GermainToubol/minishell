@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   do_wildcard.c                                      :+:      :+:    :+:   */
+/*   expand_wc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:33:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/22 16:01:06 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:15:25 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,6 @@
 #include "expand.h"
 #include "libft.h"
 #include "utils.h"
-
-char	**do_basic(char *cmd)
-{
-	char	**ret;
-
-	ret = ft_calloc(2, sizeof(char **));
-	if (!ret)
-		return (display_error("Error allocation\n", 0), NULL);
-	ret[0] = ft_strdup(cmd);
-	ret[1] = NULL;
-	if (!ret[0])
-	{
-		free(ret);
-		return (display_error("Error allcation\n", 0), NULL);
-	}
-	return (ret);
-}
 
 static char	**do_wildcard_content(t_list **wc_lst)
 {
@@ -44,7 +27,7 @@ static char	**do_wildcard_content(t_list **wc_lst)
 	return (ret);
 }
 
-char	**do_wildcard(char *cmd)
+char	**expand_wc(char *cmd)
 {
 	t_list	**wc_lst;
 	char	**ret;

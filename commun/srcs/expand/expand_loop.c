@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:47:46 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/22 16:01:07 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:26:11 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,21 @@
 #include "libft.h"
 #include "utils.h"
 
-size_t	tab3_size(char ***new_cmd)
+char	**do_basic(char *cmd)
 {
-	size_t	count;
-	size_t	i;
-	size_t	j;
+	char	**ret;
 
-	count = 0;
-	i = 0;
-	while (new_cmd[i])
+	ret = ft_calloc(2, sizeof(char **));
+	if (!ret)
+		return (display_error("Error allocation\n", 0), NULL);
+	ret[0] = ft_strdup(cmd);
+	ret[1] = NULL;
+	if (!ret[0])
 	{
-		j = 0;
-		while (new_cmd[i][j])
-		{
-			count++;
-			j++;
-		}
-		i++;
+		free(ret);
+		return (display_error("Error allcation\n", 0), NULL);
 	}
-	return (count);
+	return (ret);
 }
 
 static int	fill_ret(char ***new_cmd, char **ret)
@@ -78,7 +74,7 @@ int	expand_loop_wildcard(char ***new_cmd, char *cmd, size_t i)
 {
 	if (ft_strchr(cmd, '*') != NULL)
 	{
-		new_cmd[i] = do_wildcard(cmd);
+		new_cmd[i] = expand_wc(cmd);
 		if (!new_cmd[i])
 			return (1);
 	}
