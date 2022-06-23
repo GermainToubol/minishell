@@ -6,7 +6,7 @@
 #    By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 10:59:36 by gtoubol           #+#    #+#              #
-#    Updated: 2022/06/22 15:25:47 by gtoubol          ###   ########.fr        #
+#    Updated: 2022/06/22 16:47:21 by gtoubol          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -31,6 +31,7 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										builtin_exit.c		\
 										is_builtin.c)		\
 			$(addprefix parser/, 		parser.c 			\
+										parser2.c			\
 										path.c 				\
 										split_cmd.c 		\
 										split_redirect.c)	\
@@ -38,6 +39,7 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										is_redirect.c 		\
 										is_separator.c		\
 										is_word.c			\
+										is_word2.c			\
 										lexer.c				\
 										tokens_alloc.c)		\
 			$(addprefix utils/, 		display_msg.c 		\

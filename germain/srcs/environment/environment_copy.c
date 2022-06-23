@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:01:15 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/17 13:56:53 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/22 19:00:44 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -38,7 +38,7 @@ t_list	*environment_copy(char **env)
 		tmp = ft_lstnew(dico);
 		if (tmp == NULL)
 			break ;
-		ft_lstadd_back(&lst, tmp);
+		ft_lstadd_front(&lst, tmp);
 		i++;
 	}
 	tmp_free(tmp, &lst, dico);

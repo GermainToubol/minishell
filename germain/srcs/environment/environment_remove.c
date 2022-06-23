@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:51:50 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/16 11:23:18 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/22 18:59:03 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -32,6 +32,7 @@ void	environment_remove(t_list **env, char *name)
 			else
 				prev->next = tmp->next;
 			ft_lstdelone(tmp, ft_freedico);
+			return ;
 		}
 		prev = tmp;
 		tmp = tmp->next;

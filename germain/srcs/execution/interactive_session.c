@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 13:10:53 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/22 16:16:22 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/23 11:11:32 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <readline/readline.h>
@@ -26,6 +26,8 @@ int	interactive_session(t_list	**env)
 	int					is_done;
 
 	is_done = 0;
+	if (isatty(2))
+		rl_outstream = stderr;
 	if (init_signal_interactive(&sa) != 0)
 	{
 		perror("minishell: signal init");
@@ -36,6 +38,10 @@ int	interactive_session(t_list	**env)
 	{
 		is_done = do_execution(env);
 	}
+	rl_clear_history();
+	close(0);
+	close(1);
+	close(2);
 	return (0);
 }
 
@@ -48,7 +54,7 @@ static int	do_execution(t_list **env)
 	if (line == NULL || ft_strcmp(line, "exit") == 0)
 	{
 		free(line);
-		write(1, "exit\n", 5);
+		write(2, "exit\n", 5);
 		return (1);
 	}
 	if (ft_strcmp(line, "") == 0)

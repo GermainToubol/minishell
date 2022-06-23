@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:14:29 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/22 16:27:30 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/23 11:16:26 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -19,31 +19,32 @@
 static void	builtin_set_pipe(int *pipe_in, int *pipe_out);
 static void	builtin_close_fds(t_parse *parse);
 static void	*get_builtin(t_parse *parse);
+static void	reset_fds(int *std_cpy);
 
 int	run_builtin(t_parse *parse, t_list **env, int *pipe_in, int *pipe_out)
 {
 	int	i;
 	int	status;
-	int	stdin_cpy;
-	int	stdout_cpy;
+	int	std_cpy[3];
 	int	(*f)(int, char **, t_list **);
 
-	stdin_cpy = dup(0);
-	stdout_cpy = dup(1);
+	std_cpy[0] = dup(0);
+	std_cpy[1] = dup(1);
+	std_cpy[2] = dup(2);
 	status = 0;
 	builtin_set_pipe(pipe_in, pipe_out);
 	if (do_redirect(parse) != 0)
+	{
+		reset_fds(std_cpy);
 		return (1);
+	}
 	i = 0;
 	while (parse->cmd->cmd[i] != NULL)
 		i++;
 	f = get_builtin(parse);
 	status = (*f)(i, parse->cmd->cmd, env);
 	builtin_close_fds(parse);
-	dup2(stdin_cpy, STDIN_FILENO);
-	dup2(stdout_cpy, STDOUT_FILENO);
-	close(stdin_cpy);
-	close(stdout_cpy);
+	reset_fds(std_cpy);
 	return (status);
 }
 
@@ -95,4 +96,14 @@ static void	builtin_close_fds(t_parse *parse)
 		close(redirect[i]->fd);
 		i++;
 	}
+}
+
+static void	reset_fds(int *std_cpy)
+{
+	dup2(std_cpy[0], STDIN_FILENO);
+	dup2(std_cpy[1], STDOUT_FILENO);
+	dup2(std_cpy[2], STDERR_FILENO);
+	close(std_cpy[0]);
+	close(std_cpy[1]);
+	close(std_cpy[2]);
 }

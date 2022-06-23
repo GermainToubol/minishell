@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:58:08 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/22 16:26:27 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/23 10:58:29 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -25,7 +25,7 @@ int	run_pipe_series(t_parse **parse, t_list	**env)
 	pid_t	pid;
 	int		pfd[2][2];
 
-	init_pfds(pfd, n_parse, pid);
+	init_pfds(pfd, &n_parse, &pid);
 	while (parse[n_parse] != NULL && pid > 0)
 	{
 		status = 0;
@@ -61,6 +61,7 @@ static void	clear_exec(t_parse **parse, int n_parse, t_list **env, pid_t pid)
 	{
 		free_parse(parse);
 		ft_lstclear(env, ft_freedico);
+		rl_clear_history();
 		exit(-pid);
 	}
 	free_parse(parse);
