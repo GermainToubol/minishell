@@ -6,7 +6,7 @@
 #    By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 10:59:36 by gtoubol           #+#    #+#              #
-#    Updated: 2022/06/22 16:47:21 by gtoubol          ###   ########.fr        #
+#    Updated: 2022/06/23 18:02:00 by gtoubol          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -49,6 +49,9 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										ft_strndup.c		\
 										print2.c			\
 										print.c)			\
+			$(addprefix astree/,		astree.c			\
+										astree_utils.c		\
+										fill_astree.c)		\
 			$(addprefix execution/,		main.c				\
 										interactive_session.c\
 										interactive_signals.c\
@@ -61,9 +64,17 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										exec_process.c		\
 										get_exec_path.c		\
 										wait_all.c			\
-										run_builtin.c)
+										run_builtin.c		\
+										run_tree_exec.c)	\
+			$(addprefix tree_execution/,count_wait_tree.c	\
+										exec_tree_and.c		\
+										exec_tree.c			\
+										exec_tree_cmd.c		\
+										exec_tree_or.c		\
+										exec_tree_pipe.c)
 
-TMP =		$(addprefix tmp/,			ft_lstsort.c)
+TMP =		$(addprefix tmp/,			ft_lstsort.c		\
+										astree_apply_infix.c)
 
 # List of the related directories
 # -------------------------------------------------------------------------

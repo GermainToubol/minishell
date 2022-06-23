@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:07:25 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/22 15:21:26 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/23 18:05:06 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef G_MINISHELL_H
@@ -15,6 +15,7 @@
 # include <unistd.h>
 # include "libft.h"
 # include "parser.h"
+# include "astree.h"
 
 # define PROMPT_NAME "MINISHELL$> "
 
@@ -24,11 +25,19 @@ typedef struct s_dictionnary
 	char	*value;
 }	t_dico;
 
+typedef struct s_clean
+{
+	t_list		**env;
+	t_astree	*root;
+	t_parse		**parse;
+}	t_clean;
+
 /* TMP */
 t_list	*tmp_init_exec(void);
 void	tmp_free_cmd(void *content);
 void	ft_lstpop(t_list **lst, void (*del)(void *));
 void	ft_lstsort(t_list **lst, int (*f)(void *, void *));
+void	astree_apply_infix(t_astree *root, void (*f)(t_astree *));
 
 /* SESSION MANAGEMENT */
 int		interactive_session(t_list **env);
@@ -66,7 +75,21 @@ pid_t	exec_process(t_parse *parse, t_list **env, int *pipe_in, int *pipe_out);
 void	run_child(t_parse *parse, t_list **env, int *pipe_in, int *pipe_out);
 void	run_parent(int *pipe_in);
 int		run_builtin(t_parse *parse, t_list **env, int *pipe_in, int *pipe_out);
+int		run_tree_exec(t_astree *root, t_parse **parse, t_list **env);
 int		wait_all(int n_process, pid_t last_pid);
+
+/* TREE EXEC */
+pid_t	exec_tree(t_astree *node, int *pipe_in, int *pipe_out,
+			t_clean *cleanable);
+pid_t	exec_tree_and(t_astree *node, int *pipe_in, int *pipe_out,
+			t_clean *cleanable);
+pid_t	exec_tree_cmd(t_parse *parse, int *pipe_in, int *pipe_out,
+			t_clean *cleanable);
+pid_t	exec_tree_or(t_astree *node, int *pipe_in, int *pipe_out,
+			t_clean *cleanable);
+pid_t	exec_tree_pipe(t_astree *node, int *pipe_in, int *pipe_out,
+			t_clean *cleanable);
+int		count_wait_tree(t_astree *root);
 
 /* PIPE MANAGEMENT */
 int	set_outpipe(int *pipe_fds);
