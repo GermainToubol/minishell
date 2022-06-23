@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 07:13:55 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/18 14:33:55 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:01:45 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	is_forbidden(char line)
 		|| line == '$' || line == '>' || line == '<' || line == '|'
 		|| line == '&' || line == '*' || line == '-' || line == '\0'
 		|| line == '"' || line == '\'' || line == '(' || line == ')'
-		|| line == '.')
+		|| line == '.' || line == '/')
 		return (1);
 	display_error(NULL, line);
 	return (0);
@@ -33,7 +33,7 @@ static int	is_end(char *line, t_tokens *tokens)
 
 	if (*line == '\0')
 	{
-		if (tokens->size > 0 && tokens->tokens[tokens->size - 1].type <= IO_APP
+		if (tokens->size > 0 && tokens->tokens[tokens->size - 1].type <= AND
 			&& tokens->tokens[tokens->size - 1].type >= IO_IN)
 			return (display_error(NULL, '\n'), 1);
 		is_open = 0;

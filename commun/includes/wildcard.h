@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:56:54 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 19:00:22 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:16:38 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ typedef struct s_wildcard
 int			strncmp_sep(char *s1, char *s2);
 int			rec_wildcards(t_list **lst, t_list **new_lst);
 int			update_wildcard(t_wildcard *mywc, char *line);
+int			get_dir_match(t_wildcard *mywc, t_list **new_lst);
+int			wildcards(char *line, t_list **ret);
+int			check_found(t_wildcard *mywc, t_list **new_lst, char *dir_name);
+int			expand_loop_wildcard(char ***new_cmd, char *cmd, size_t i);
 
 void		del_node(void *data);
 void		ft_list_remove_if(t_list **begin_list, void *data_ref,
@@ -37,10 +41,14 @@ void		ft_list_remove_if(t_list **begin_list, void *data_ref,
 void		print_lst2(void	*data);
 void		printf_wc(t_wildcard *mywc);
 
-t_list		*wildcards(char *line);
+char		*get_dir_name(t_wildcard *wc);
 
 t_wildcard	*init_wc(char *line);
 t_wildcard	*prefix_suffix(t_wildcard *mywc, char *found);
 t_wildcard	*cpy_wc(t_wildcard *wc);
+t_wildcard	*new_wc2(t_wildcard *mywc, char *found, char *tmp, size_t i);
+t_wildcard	*new_wc(t_wildcard *mywc, char *found, size_t i, size_t i2);
+t_wildcard	*new_wc_path2(t_wildcard *mywc, char *tmp, size_t i);
+t_wildcard	*new_wc_path(t_wildcard *mywc, char *found, size_t i, size_t i2);
 
 #endif

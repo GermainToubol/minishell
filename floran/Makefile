@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/20 22:27:13 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/22 16:23:59 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,20 +44,32 @@ UTILSSRC			:=	utils/ft_atoll.c				\
 						utils/print2.c					\
 						utils/display_msg.c				\
 						utils/ft_join3.c				\
+						utils/ft_strcmp.c				\
+						utils/ft_lst_remove_if.c		\
+						utils/str_utils.c				\
+						utils/quicksort.c				\
 						utils/free.c					\
+						utils/lst_to_tab.c				\
 
 TREESRC				:=	astree/astree.c					\
 						astree/astree_utils.c			\
 						astree/fill_astree.c			\
 						astree/display_tree.c			\
 
-EXPANDSRC			:=	expand/wildcard.c				\
-						expand/lst_utils.c				\
-						expand/wc_utils.c				\
-						expand/prefix_suffix.c			\
-						expand/update_wc.c				\
-						expand/rec_wc.c					\
-						expand/main.c					\
+WCSRC			:=		expand/wildcard/wildcard.c		\
+						expand/wildcard/update_wc.c		\
+						expand/wildcard/prefix_suffix.c	\
+						expand/wildcard/new_wc.c		\
+						expand/wildcard/rec_wc.c		\
+						expand/wildcard/lst_utils.c		\
+						expand/wildcard/dir_utils.c		\
+						expand/wildcard/wc_utils.c		\
+						expand/wildcard/expand_wc.c		\
+
+EXPANDSRC			:=	expand/main.c					\
+						expand/expand.c					\
+						expand/expand_loop.c			\
+						expand/expand_utils.c			\
 
 CC					:=	cc
 RM					:=	rm
@@ -88,8 +100,8 @@ $(OUTDIR)/%.o		:	$(SRCDIR)/%.c | $(OUTDIR)
 $(NAME)				:	$(addprefix $(OUTDIR)/,$(LEXERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(PARSERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(TREESRC:.c=.o)) $(LIBFT)
 	$(CC) $(CCFLAGS) $(OPTFLAG) -o $(NAME) $(addprefix $(OUTDIR)/,$(LEXERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(PARSERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(TREESRC:.c=.o)) $(LIBFT) $(LIBFLAGS)
 
-$(WILDCARD)			:	$(addprefix $(OUTDIR)/,$(EXPANDSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(LIBFT)
-	$(CC) $(CCFLAGS) $(OPTFLAG) -o $(WILDCARD) $(addprefix $(OUTDIR)/,$(EXPANDSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(LIBFT) $(LIBFLAGS)
+$(WILDCARD)			:	$(addprefix $(OUTDIR)/,$(EXPANDSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o))  $(addprefix $(OUTDIR)/,$(WCSRC:.c=.o)) $(LIBFT)
+	$(CC) $(CCFLAGS) $(OPTFLAG) -o $(WILDCARD) $(addprefix $(OUTDIR)/,$(EXPANDSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(WCSRC:.c=.o)) $(LIBFT) $(LIBFLAGS)
 
 all					:	$(NAME)
 
@@ -138,3 +150,4 @@ re					:	fclean
 -include	$(addprefix $(OUTDIR)/,$(PARSERSRC:.c=.d))
 -include	$(addprefix $(OUTDIR)/,$(TREESRC:.c=.d))
 -include	$(addprefix $(OUTDIR)/,$(EXPANDSRC:.c=.d))
+-include	$(addprefix $(OUTDIR)/,$(WCSRC:.c=.d))

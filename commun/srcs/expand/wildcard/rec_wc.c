@@ -6,82 +6,50 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 02:22:00 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 22:43:41 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/22 16:01:11 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wildcard.h"
+#include "expand.h"
 #include "libft.h"
 #include "utils.h"
 
-static int	get_match_indir_content(t_wildcard *mywc,
-					t_list **new_lst, char *dir_name)
+static int	get_match_indir_loop(t_list **new_lst, t_wildcard *mywc, DIR *d)
 {
-	t_wildcard		*new;
-	t_list			*node;
+	int				t;
+	struct dirent	*dir;
 
-	if (dir_name[0] == '.')
-		return (0);
-	new = prefix_suffix(mywc, dir_name);
-	if (new)
+	while (1)
 	{
-		node = ft_lstnew(new);
-		if (!node)
-		{
-			del_node(new);
-			return (display_error("Error allocation\n", 0), -1);
-		}
-		ft_lstadd_back(new_lst, node);
+		t = get_dir_match(mywc, new_lst);
+		if (t <= 0)
+			return (t);
+		dir = readdir(d);
+		if (!dir)
+			break ;
+		if (check_found(mywc, new_lst, dir->d_name) == -1)
+			return (-1);
 	}
 	return (0);
 }
 
-static int	get_dir_match(t_wildcard *mywc, t_list **new_lst)
-{
-	t_wildcard	*new;
-	t_list		*node;
-
-	if (mywc->suffix[0] == '\0')
-	{
-		new = cpy_wc(mywc);
-		if (!new)
-			return (-1);
-		node = ft_lstnew(new);
-		if (!node)
-		{
-			del_node(new);
-			return (display_error("Error allocation\n", 0), -1);
-		}
-		ft_lstadd_back(new_lst, node);
-		return (0);
-	}
-	return (1);
-}
-
 static int	get_match_indir(t_list *old_lst, t_list **new_lst)
 {
-	struct dirent	*dir;
 	DIR				*d;
 	t_wildcard		*mywc;
-	int				t;
+	char			*tmp;
 
 	mywc = (t_wildcard *)old_lst->content;
-	d = opendir(mywc->dir_path);
+	tmp = get_dir_name(mywc);
+	if (!tmp)
+		return (-1);
+	d = opendir(tmp);
+	free(tmp);
 	if (!d)
 		return (1);
-	while (1)
-	{
-		t = get_dir_match(mywc, new_lst);
-		if (t == -1)
-			return (-1);
-		if (t == 0)
-			return (closedir(d), 0);
-		dir = readdir(d);
-		if (!dir)
-			break ;
-		if (get_match_indir_content(mywc, new_lst, dir->d_name) == -1)
-			return (closedir(d), -1);
-	}
+	if (get_match_indir_loop(new_lst, mywc, d) == -1)
+		return (closedir(d), -1);
 	closedir(d);
 	return (0);
 }
@@ -103,7 +71,7 @@ static int	iter_lst(t_list **lst, t_list **new)
 				return (1);
 		}
 		else
-			if (get_match_indir_content(wc, new, wc->found) == -1)
+			if (check_found(wc, new, wc->found) == -1)
 				return (1);
 		index = index->next;
 	}
@@ -115,8 +83,10 @@ int	rec_wildcards(t_list **lst, t_list **new_lst)
 {
 	t_wildcard	*wc;
 
-	if (!lst || !*lst)
+	if (!lst)
 		return (1);
+	if (!*lst)
+		return (0);
 	wc = (t_wildcard *)(*lst)->content;
 	if (wc->suffix == NULL)
 		return (0);
