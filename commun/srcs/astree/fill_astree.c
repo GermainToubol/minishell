@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 14:09:36 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/24 18:04:55 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/24 20:17:09 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	p_after(t_astree *node, t_parse **parse, t_int_help *i)
 {
 	t_int_help	*new;
 
-	new = fill_t_int(parse, i->depth + 1, i->i + 1);
+	new = fill_t_int(parse, i->depth + 1, i->i + 1, 0);
 	if (!new)
 		return (1);
 	node->right = create_node(parse[new->i], new->depth);
@@ -37,7 +37,7 @@ int	p_before(t_astree *node, t_parse **parse, t_int_help *i)
 {
 	t_int_help	*new;
 
-	new = fill_t_int(parse, i->depth + 1, i->min + 1);
+	new = fill_t_int(parse, i->depth + 1, i->min + 1, 0);
 	if (!new)
 		return (1);
 	node->left = create_node(parse[new->i], new->depth);
@@ -94,7 +94,7 @@ int	run_tree_content(t_astree *node, t_parse **parse, t_int_help *i)
 		if (p_before(node, parse, i))
 			return (1);
 	}
-	else if (i->is_open == i->depth)
+	else if (i->is_open == i->depth && i->i >= i->min)
 	{
 		node->left = create_node(parse[i->i], i->depth);
 		if (!node->left)

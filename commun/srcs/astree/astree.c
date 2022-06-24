@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 18:03:51 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/24 18:03:30 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/24 20:09:33 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	fill_t_content(t_parse **parse, int depth,
 	(*i)->i--;
 }
 
-t_int_help	*fill_t_int(t_parse **parse, int depth, int start)
+t_int_help	*fill_t_int(t_parse **parse, int depth, int start, int type)
 {
 	t_int_help	*i;
 
@@ -47,21 +47,34 @@ t_int_help	*fill_t_int(t_parse **parse, int depth, int start)
 			i->is_open++;
 		if (parse[i->i]->type == P_START)
 			i->is_open--;
-		if (i->depth == i->is_open && (parse[i->i]->type == PIPE
-				|| parse[i->i]->type == OR || parse[i->i]->type == AND))
+		if (type == 0 && i->depth == i->is_open && (parse[i->i]->type == OR
+			|| parse[i->i]->type == AND))
+			break ;
+		if (type == 1 && i->depth == i->is_open && parse[i->i]->type == PIPE)
+			break ;
+		if (type == 2 && i->depth == i->is_open && parse[i->i]->type == CMD)
 			break ;
 		i->i--;
 	}
+	if (i->i == i->min && type < 2)
+		return (fill_t_int(parse, depth, start, type + 1));
 	return (i);
 }
 
 static int	create_astree_content(t_astree **root, t_parse **parse)
 {
 	t_int_help	*i;
+	int			depth;
 
-	i = fill_t_int(parse, 0, 0);
+	depth = 0;
+	i = fill_t_int(parse, depth, 0, 0);
 	if (!i)
 		return (1);
+	while (parse[i->i]->type == P_START)
+	{
+		depth++;
+		i = fill_t_int(parse, depth, depth, 0);
+	}
 	*root = create_node(parse[i->i], i->depth);
 	if (!*root)
 		return (free(i), 1);
