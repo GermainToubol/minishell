@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 14:09:36 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/25 01:10:36 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/25 01:15:32 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ t_int_help	*new_right(t_parse **parse, t_int_help *i, int min)
 			|| parse[min]->type == AND))
 				break ;
 	}
+	new->depth = i->depth;
 	new->max = min;
 	new->i = i->i;
 	new->is_open = 0;
