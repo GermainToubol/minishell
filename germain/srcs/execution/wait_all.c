@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:18:11 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/22 13:39:47 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/24 12:48:34 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdlib.h>
@@ -45,9 +45,7 @@ static void	wait_exited(int status, pid_t pid, int *exit_status,
 				pid_t last_pid)
 {
 	if (pid == last_pid)
-	{
 		*exit_status = WEXITSTATUS(status);
-	}
 }
 
 static void	wait_signaled(int status, pid_t pid, int *exit_status,

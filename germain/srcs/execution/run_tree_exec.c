@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 13:29:58 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/23 17:58:15 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/24 12:50:38 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
@@ -42,7 +42,6 @@ int	run_tree_exec(t_astree *root, t_parse **parse, t_list **env)
 	wait_all(n, pid);
 	return (0);
 }
-
 
 static void	init_pfds(int (*pfd)[2], pid_t *pid)
 {
