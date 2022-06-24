@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 14:09:36 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/25 01:15:32 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/25 01:24:01 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ t_int_help	*new_right(t_parse **parse, t_int_help *i, int min)
 		return (display_error("Error allocation", 0), NULL);
 	new->min = min + 1;
 	new->depth = i->depth;
-	while (++min < i->max)
+	while (new->depth >= i->depth && ++min < i->max)
 	{
 		if (parse[min]->type == P_START)
 			new->depth++;
