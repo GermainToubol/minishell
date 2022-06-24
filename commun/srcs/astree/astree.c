@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 18:03:51 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/24 20:09:33 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/24 22:50:08 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ static int	create_astree_content(t_astree **root, t_parse **parse)
 	*root = create_node(parse[i->i], i->depth);
 	if (!*root)
 		return (free(i), 1);
-	i->i--;
 	if (run_tree(*root, parse, i))
 	{
 		astree_apply_suffix(*root, free_tree);

@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 14:09:36 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/24 20:17:09 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/24 22:53:22 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,9 @@ int	p_after(t_astree *node, t_parse **parse, t_int_help *i)
 	node->right = create_node(parse[new->i], new->depth);
 	if (!node->right)
 		return (free(new), 1);
-	new->i--;
-	(i->i) = new->max;
-	i->is_open = i->depth;
 	if (run_tree(node->right, parse, new))
 		return (free(new), 1);
 	free(new);
-	(i->i)++;
 	return (0);
 }
 
@@ -43,64 +39,112 @@ int	p_before(t_astree *node, t_parse **parse, t_int_help *i)
 	node->left = create_node(parse[new->i], new->depth);
 	if (!node->left)
 		return (free(new), 1);
-	new->i--;
 	if (run_tree(node->left, parse, new))
 		return (free(new), 1);
-	(i->i) = new->max;
-	i->is_open = i->depth;
 	free(new);
-	i->is_done = 1;
 	return (0);
 }
 
-int	base_tree(t_astree *node, t_parse **parse, t_int_help *i)
+int	get_next_left(t_parse **parse, t_int_help *i, int type)
 {
-	if (i->is_done)
+	int	index;
+	int	is_open;
+
+	index = i->i;
+	is_open = i->is_open;
+	while (--index >= i->min)
 	{
-		if (i->i < i->max && (parse[i->i]->type == PIPE
-				|| parse[i->i]->type == OR || parse[i->i]->type == AND))
-			(i->i)++;
-		if (parse[i->i]->type == P_START)
-		{
-			i->is_open++;
-			if (i->is_open == i->depth + 1)
-				if (p_after(node, parse, i))
-					return (1);
-		}
-		else if (i->i < i->max && i->is_open == i->depth
-			&& parse[i->i]->type == CMD)
-		{
-			node->right = create_node(parse[i->i], i->depth);
-			if (!node->right)
-				return (1);
-			(i->i)++;
-		}
+		if (parse[index]->type == P_END)
+				is_open++;
+		if (parse[index]->type == P_START)
+				is_open--;
+		if (type == 0 && is_open == i->depth
+			&& (parse[index]->type == OR || parse[index]->type == AND))
+			return (index) ;
+		if (type == 1 && is_open == i->depth
+			&& (parse[index]->type == PIPE))
+			return (index) ;
+		if (type == 2 && is_open == i->depth
+			&& (parse[index]->type == CMD))
+			return (index) ;
+		if (type == 3 && parse[index]->type == P_END)
+			return (index) ;
 	}
-	return (0);
+	if (type < 3)
+		return (get_next_left(parse, i, type + 1));
+	return (-1);
 }
 
-int	run_tree_content(t_astree *node, t_parse **parse, t_int_help *i)
+int	get_next_right(t_parse **parse, t_int_help *i, int type)
 {
-	if (i->i == i->min && parse[i->i]->type == CMD)
+	int	index;
+	int	is_open;
+
+	index = i->i;
+	is_open = i->is_open;
+	while (++index < i->max)
 	{
-		node->left = create_node(parse[i->i], i->depth);
-		if (!node->left)
-			return (1);
-		i->is_done = 1;
-		(i->i)++;
+		if (parse[index]->type == P_START)
+				is_open++;
+		if (parse[index]->type == P_END)
+				is_open--;
+		if (type == 0 && is_open == i->depth
+			&& (parse[index]->type == PIPE))
+			return (index) ;
+		if (type == 1 && is_open == i->depth
+			&& (parse[index]->type == CMD))
+			return (index) ;
+		if (type == 2 && parse[index]->type == P_START)
+			return (index) ;
 	}
-	else if (i->i == i->min && parse[i->i]->type == P_START)
+	if (type < 2)
+		return (get_next_right(parse, i, type + 1));
+	return (-1);
+}
+
+int	run_tree_left(t_astree *node, t_parse **parse, t_int_help *i)
+{
+	if (node->cmd->type == PIPE)
+		i->i = get_next_left(parse, i, 1);
+	else
+		i->i = get_next_left(parse, i, 0);
+	if (i->i == -1)
+		return (0);
+	if (parse[i->i]->type == P_END)
 	{
 		if (p_before(node, parse, i))
 			return (1);
 	}
-	else if (i->is_open == i->depth && i->i >= i->min)
+	else
 	{
 		node->left = create_node(parse[i->i], i->depth);
 		if (!node->left)
 			return (1);
-		(i->i)--;
-		if (run_tree(node->left, parse, i))
+		if (parse[i->i]->type != CMD && run_tree(node->left, parse, i))
+			return (1);
+	}
+	return (0);
+}
+
+int	run_tree_right(t_astree *node, t_parse **parse, t_int_help *i)
+{
+	if (node->cmd->type == PIPE)
+		i->i = get_next_right(parse, i, 1);
+	else
+		i->i = get_next_right(parse, i, 0);
+	if (i->i == -1)
+		return (0);
+	if (parse[i->i]->type == P_START)
+	{
+		if (p_after(node, parse, i))
+			return (1);
+	}
+	else
+	{
+		node->right = create_node(parse[i->i], i->depth);
+		if (!node->right)
+			return (1);
+		if (parse[i->i]->type != CMD && run_tree(node->right, parse, i))
 			return (1);
 	}
 	return (0);
@@ -108,21 +152,9 @@ int	run_tree_content(t_astree *node, t_parse **parse, t_int_help *i)
 
 int	run_tree(t_astree *node, t_parse **parse, t_int_help *i)
 {
-	if (!i->is_done)
-	{
-		while (i->i > i->min)
-		{
-			if (parse[i->i]->type == P_END)
-				i->is_open++;
-			if (parse[i->i]->type == P_START)
-				i->is_open--;
-			if (i->is_open == i->depth && (parse[i->i]->type == PIPE
-					|| parse[i->i]->type == OR || parse[i->i]->type == AND))
-				break ;
-			(i->i)--;
-		}
-		if (run_tree_content(node, parse, i))
-			return (1);
-	}
-	return (base_tree(node, parse, i));
+	if (run_tree_right(node, parse, i))
+		return (1);
+	if (run_tree_left(node, parse, i))
+		return (1);
+	return (0);
 }
