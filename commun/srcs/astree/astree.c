@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 18:03:51 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/24 22:50:08 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/25 01:30:24 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_int_help	*fill_t_int(t_parse **parse, int depth, int start, int type)
 		if (parse[i->i]->type == P_START)
 			i->is_open--;
 		if (type == 0 && i->depth == i->is_open && (parse[i->i]->type == OR
-			|| parse[i->i]->type == AND))
+				|| parse[i->i]->type == AND))
 			break ;
 		if (type == 1 && i->depth == i->is_open && parse[i->i]->type == PIPE)
 			break ;
