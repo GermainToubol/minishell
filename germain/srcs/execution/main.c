@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 11:27:29 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/22 14:59:47 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/24 17:08:03 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
@@ -31,4 +31,5 @@ int	main(int argc, char **argv, char **env)
 	if (argc == 1 && isatty(0))
 		interactive_session(&env_lst);
 	ft_lstclear(&env_lst, ft_freedico);
+	return (0);
 }

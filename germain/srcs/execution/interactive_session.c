@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 13:10:53 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/23 11:11:32 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/24 17:08:25 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <readline/readline.h>
@@ -48,13 +48,15 @@ int	interactive_session(t_list	**env)
 static int	do_execution(t_list **env)
 {
 	char	*line;
-	int		re;
 
 	line = readline(PROMPT_NAME);
 	if (line == NULL || ft_strcmp(line, "exit") == 0)
 	{
 		free(line);
 		write(2, "exit\n", 5);
+		close(0);
+		close(1);
+		close(2);
 		return (1);
 	}
 	if (ft_strcmp(line, "") == 0)
@@ -63,7 +65,6 @@ static int	do_execution(t_list **env)
 		return (0);
 	}
 	add_history(line);
-	re = run_line(line, env);
-	(void)re;
+	run_line(line, env);
 	return (0);
 }
