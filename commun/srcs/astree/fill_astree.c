@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 14:09:36 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/18 14:42:22 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/24 18:04:55 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	p_after(t_astree *node, t_parse **parse, t_int_help *i)
 	new = fill_t_int(parse, i->depth + 1, i->i + 1);
 	if (!new)
 		return (1);
-	node->right = create_node(parse[new->i]);
+	node->right = create_node(parse[new->i], new->depth);
 	if (!node->right)
 		return (free(new), 1);
 	new->i--;
@@ -40,7 +40,7 @@ int	p_before(t_astree *node, t_parse **parse, t_int_help *i)
 	new = fill_t_int(parse, i->depth + 1, i->min + 1);
 	if (!new)
 		return (1);
-	node->left = create_node(parse[new->i]);
+	node->left = create_node(parse[new->i], new->depth);
 	if (!node->left)
 		return (free(new), 1);
 	new->i--;
@@ -70,7 +70,7 @@ int	base_tree(t_astree *node, t_parse **parse, t_int_help *i)
 		else if (i->i < i->max && i->is_open == i->depth
 			&& parse[i->i]->type == CMD)
 		{
-			node->right = create_node(parse[i->i]);
+			node->right = create_node(parse[i->i], i->depth);
 			if (!node->right)
 				return (1);
 			(i->i)++;
@@ -83,7 +83,7 @@ int	run_tree_content(t_astree *node, t_parse **parse, t_int_help *i)
 {
 	if (i->i == i->min && parse[i->i]->type == CMD)
 	{
-		node->left = create_node(parse[i->i]);
+		node->left = create_node(parse[i->i], i->depth);
 		if (!node->left)
 			return (1);
 		i->is_done = 1;
@@ -96,7 +96,7 @@ int	run_tree_content(t_astree *node, t_parse **parse, t_int_help *i)
 	}
 	else if (i->is_open == i->depth)
 	{
-		node->left = create_node(parse[i->i]);
+		node->left = create_node(parse[i->i], i->depth);
 		if (!node->left)
 			return (1);
 		(i->i)--;
