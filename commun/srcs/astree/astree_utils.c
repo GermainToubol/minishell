@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 22:01:05 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/19 11:42:43 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/24 18:02:19 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	astree_apply_suffix(t_astree *root, void (*f)(t_astree *))
 	f(root);
 }
 
-t_astree	*create_node(t_parse *node)
+t_astree	*create_node(t_parse *node, int depth)
 {
 	t_astree	*new;
 
@@ -62,6 +62,7 @@ t_astree	*create_node(t_parse *node)
 	if (!new)
 		return (display_error("Error allocation\n", 0), NULL);
 	new->cmd = node;
+	new->depth = depth;
 	new->left = NULL;
 	new->right = NULL;
 	return (new);
