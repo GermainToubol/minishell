@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_word.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fmauguin <fmauguin@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 17:18:36 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/21 12:01:21 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/25 16:56:42 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,12 @@ static int	is_var(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i)
 	{
 		if (is_quote_content(line, i))
 			return (1);
+	}
+	if (line[*i] == '$')
+	{
+		if (is_var(line, lxm, tokens, i))
+			return (1);
+		return (0);
 	}
 	lxm->data = ft_strndup(line, *i);
 	if (!lxm->data)
