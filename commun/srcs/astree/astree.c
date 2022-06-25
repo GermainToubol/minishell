@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 18:03:51 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/25 01:30:24 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/25 14:53:36 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,15 @@ t_int_help	*fill_t_int(t_parse **parse, int depth, int start, int type)
 			i->is_open--;
 		if (type == 0 && i->depth == i->is_open && (parse[i->i]->type == OR
 				|| parse[i->i]->type == AND))
-			break ;
+			return (i);
 		if (type == 1 && i->depth == i->is_open && parse[i->i]->type == PIPE)
-			break ;
+			return (i);
 		if (type == 2 && i->depth == i->is_open && parse[i->i]->type == CMD)
-			break ;
+			return (i);
 		i->i--;
 	}
 	if (i->i == i->min && type < 2)
-		return (fill_t_int(parse, depth, start, type + 1));
+		return (free(i), fill_t_int(parse, depth, start, type + 1));
 	return (i);
 }
 
@@ -72,8 +72,11 @@ static int	create_astree_content(t_astree **root, t_parse **parse)
 		return (1);
 	while (parse[i->i]->type == P_START)
 	{
+		free(i);
 		depth++;
 		i = fill_t_int(parse, depth, depth, 0);
+		if (!i)
+			return (1);
 	}
 	*root = create_node(parse[i->i], i->depth);
 	if (!*root)
