@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 15:19:37 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/24 18:07:32 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/25 15:00:56 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,20 @@ static void	display_tree_content(char *prefix, t_astree *node, int is_left)
 		"\x1b[35m", "\x1b[31m"};
 	int			type;
 
-	ft_printf("%s", prefix);
 	if (is_left)
-		ft_printf("├──");
+		ft_printf("%s├──", prefix);
 	else
-		ft_printf("└──");
+		ft_printf("%s└──", prefix);
 	type = node->cmd->type;
 	if (type == CMD)
 	{
 		type = 0;
 		if (node->cmd->cmd)
-			ft_printf("%s%s %i\x1b[0m\n", e_colors[type], node->cmd->cmd->cmd[0], node->depth);
+			ft_printf("%s%s %i\x1b[0m\n", e_colors[type],
+				node->cmd->cmd->cmd[0], node->depth);
 		else
-			ft_printf("%s%s %i\x1b[0m\n", e_colors[type], node->cmd->cmd, node->depth);
+			ft_printf("%s%s %i\x1b[0m\n", e_colors[type],
+				node->cmd->cmd, node->depth);
 	}
 	else
 	{

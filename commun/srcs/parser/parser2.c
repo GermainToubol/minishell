@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 16:36:58 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/18 16:39:18 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/25 15:06:38 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static t_parse	*create_parse(t_tokens *tokens, size_t *i)
 		new->type = CMD;
 		new->cmd = fill_cmd(tokens, i);
 		if (!new->cmd)
-			return (NULL);
+			return (free(new), NULL);
 	}
 	return (new);
 }
