@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 16:05:10 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/25 18:47:20 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/25 23:14:28 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,14 @@ static int	get_var(const char *cmd, size_t *i, char **ret)
 	size_t	start;
 
 	start = *i;
-	if (ft_isdigit(cmd[*i]))
-	{
-		(*i)++;
+	if (ft_isdigit(cmd[*i]) && (*i)++)
 		return (*ret = NULL, 0);
-	}
 	while (ft_isalnum(cmd[*i]) || cmd[*i] == '_')
 		(*i)++;
-	ft_printf("value: %s\n\n", *ret);
 	var = ft_substr(cmd, start, *i - start);
 	if (!var)
 		return (display_error("Error allocation\n", 0), 1);
-	ft_printf("\nget_var\nkey: %s\n", var);
 	*ret = getenv(var);
-	ft_printf("value: %s\n\n", *ret);
 	free(var);
 	if (!*ret)
 		return (0);
@@ -70,34 +64,23 @@ static int	rec_var(const char *cmd, size_t i, char **ret)
 
 	if (!cmd[i])
 		return (0);
-	ft_printf("\ncmd %s\n", &cmd[i]);
 	start = i;
 	while (cmd[i] && cmd[i] != '$')
 		i++;
-	ft_printf("cmd %s\n", &cmd[i]);
-	if (i > start)
+	if (i > start
+		&& strjoin_custom(ret, ft_substr(cmd, start, i - start)))
+		return (1);
+	if (cmd[i])
 	{
-		if (strjoin_custom(ret, ft_substr(cmd, start, i - start)))
-			return (1);
-		if (!cmd[i])
-			return (0);
-	}
-	if (cmd[++i])
-	{
-		ft_printf("\nret: %s\n", *ret);
+		i++;
 		if (get_var(cmd, &i, &tmp))
 			return (1);
-		if (tmp)
-		{
-			if (strjoin_custom(ret, tmp))
-				return (1);
-		}
-		ft_printf("\nret: %s\n", *ret);
-		ft_printf("\ncmd: %s\n", &cmd[i]);
+		if (tmp && strjoin_custom(ret, tmp))
+			return (1);
 		if (rec_var(cmd, i, ret))
 			return (1);
 	}
-	return(0);
+	return (0);
 }
 
 char	*expand_var(const char *cmd)
