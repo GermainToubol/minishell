@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/26 16:44:38 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/26 17:10:22 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,6 +68,7 @@ WCSRC				:=	expand/wildcard/wildcard.c		\
 						expand/wildcard/expand_wc.c		\
 
 VARSRC				:=	expand/variable/var_expand.c	\
+						expand/quotes/expand_quotes.c	\
 						expand/variable/main.c			\
 
 EXPANDSRC			:=	expand/main.c					\

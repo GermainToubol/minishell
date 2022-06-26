@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand.h                                           :+:      :+:    :+:   */
+/*   expand_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/21 17:07:13 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/26 17:08:09 by fmauguin         ###   ########.fr       */
+/*   Created: 2022/06/26 16:46:09 by fmauguin          #+#    #+#             */
+/*   Updated: 2022/06/26 17:06:46 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXPAND_H
-# define EXPAND_H
+#include "expand.h"
+#include "libft.h"
+#include "utils.h"
 
-# include <stdlib.h>
+char	*expand_quotes(char *cmd)
+{
+	char	*ret;
 
-char		**do_expand(char **cmd);
-char		**expand_loop_end(char ***new_cmd);
-char		**expand_wc(char *cmd);
-char		**do_basic(char *cmd);
-
-void		free_tab3(char ***tab);
-
-size_t		tab3_size(char ***new_cmd);
-
-char		*expand_var(const char *cmd);
-char		*expand_quotes(char *cmd);
-
-#endif
+	ret = NULL;
+	if (cmd[0] == '\'')
+	{
+		ret = ft_substr(cmd, 1, ft_strlen(cmd) - 1);
+		if (!ret)
+			return (display_error("Error allocation\n", 0), NULL);
+	}
+	else if (cmd[0] == '"')
+	{
+		ret = expand_var(&cmd[1]);
+		if (!ret)
+			return (NULL);
+		ret[ft_strlen(ret) - 1] = '\0';
+	}
+	return (ret);
+}

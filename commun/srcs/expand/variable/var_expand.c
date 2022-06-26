@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 16:05:10 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/25 23:14:28 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/26 17:11:36 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,6 @@ char	*expand_var(const char *cmd)
 {
 	char	*ret;
 
-	if (!ft_strchr(cmd, '$'))
-		return (display_error("no '$'\n", 0), NULL);
 	ret = NULL;
 	if (rec_var(cmd, 0, &ret))
 	{
