@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/25 22:56:21 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/26 16:44:38 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,13 +51,13 @@ UTILSSRC			:=	utils/ft_atoll.c				\
 						utils/free.c					\
 						utils/lst_to_tab.c				\
 
-TREESRC				:=	astree/astree.c					\
-						astree/astree_utils.c			\
-						astree/fill_astree.c			\
-						astree/display_tree.c			\
-						astree/rec_astree.c				\
+TREESRC				:=	parser/astree/astree.c			\
+						parser/astree/astree_utils.c	\
+						parser/astree/fill_astree.c		\
+						parser/astree/display_tree.c	\
+						parser/astree/rec_astree.c		\
 
-WCSRC			:=		expand/wildcard/wildcard.c		\
+WCSRC				:=	expand/wildcard/wildcard.c		\
 						expand/wildcard/update_wc.c		\
 						expand/wildcard/prefix_suffix.c	\
 						expand/wildcard/new_wc.c		\
@@ -67,9 +67,8 @@ WCSRC			:=		expand/wildcard/wildcard.c		\
 						expand/wildcard/wc_utils.c		\
 						expand/wildcard/expand_wc.c		\
 
-VARSRC			:=		expand/variable/var_expand.c	\
+VARSRC				:=	expand/variable/var_expand.c	\
 						expand/variable/main.c			\
-
 
 EXPANDSRC			:=	expand/main.c					\
 						expand/expand.c					\
@@ -160,3 +159,4 @@ re					:	fclean
 -include	$(addprefix $(OUTDIR)/,$(TREESRC:.c=.d))
 -include	$(addprefix $(OUTDIR)/,$(EXPANDSRC:.c=.d))
 -include	$(addprefix $(OUTDIR)/,$(WCSRC:.c=.d))
+-include	$(addprefix $(OUTDIR)/,$(VARSRC:.c=.d))
