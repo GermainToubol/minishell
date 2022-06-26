@@ -6,26 +6,28 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 17:49:03 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/26 17:53:13 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/26 19:04:18 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "expand.h"
+#include <readline/readline.h>
+#include <readline/history.h>
 
-int	main(int ac, char **av)
+int	main(void)
 {
 	char	*var;
+	char	*line;
 
-	if (ac < 2)
-		return (0);
 	var = NULL;
-	ft_printf("arg %s\n\n", av[1]);
-	if (ft_strchr(av[1], '\'') || ft_strchr(av[1], '"'))
-		var = expand_quotes(av[1]);
-	else if (ft_strchr(av[1], '$'))
-		var = expand_var(av[1]);
-	ft_printf("\nmain: %s\n", var);
+	line = readline("line: ");
+	if (ft_strchr(line, '\'') || ft_strchr(line, '"'))
+		var = expand_quotes(line);
+	else if (ft_strchr(line, '$'))
+		var = expand_var(line);
+	ft_printf("\n%s\n", var);
 	free(var);
+	free(line);
 	return (0);
 }
