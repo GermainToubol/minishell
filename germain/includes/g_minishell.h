@@ -114,6 +114,7 @@ int		builtin_unset(int argc, char **argv, t_list **env);
 int		builtin_env(int argc, char **argv, t_list **env);
 int		builtin_echo(int argc, char **argv, t_list **env);
 int		builtin_exit(void);
+int		get_exit_state(void);
 int		is_builtin(t_parse *parse);
 
 #endif

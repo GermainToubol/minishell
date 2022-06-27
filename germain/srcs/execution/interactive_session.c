@@ -34,7 +34,7 @@ int	interactive_session(t_list	**env)
 		return (1);
 	}
 	rl_clear_history();
-	while (is_done == 0)
+	while (is_done == 0 && get_exit_state() == 0)
 	{
 		is_done = do_execution(env);
 	}

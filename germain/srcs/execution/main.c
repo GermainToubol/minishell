@@ -9,6 +9,7 @@
 /*   Updated: 2022/06/27 16:36:55 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <stdlib.h>
 #include <unistd.h>
 #include "libft.h"
 #include "minishell.h"
@@ -23,21 +24,30 @@ int	main(int argc, char **argv, char **env)
 {
 	t_list	*env_lst;
 
-	(void)argc;
 	(void)argv;
 	env_lst = environment_copy(env);
 	if (env_lst == NULL && env[0] != NULL)
 		return (1);
 	if (argc == 1 && isatty(0))
 		interactive_session(&env_lst);
+	if (argc == 3)
+		run_line(ft_strdup(argv[2]), &env_lst);
 	ft_lstclear(&env_lst, ft_freedico);
 	return (0);
 }
 
-int	environment_init(t_list	*env_lst)
+int	environment_init(t_list	**env_lst)
 {
-	char	shvlvl;
+	char	*shlvl;
 
-	shlvl = environment_get("SHLVL");
+	shlvl = environment_get(*env_lst, "SHLVL");
 	if (shlvl == NULL)
+		environment_add(env_lst, "SHLVL=1");
+	else
+	{
+		shlvl = ft_itoa(1 + ft_atoi(shlvl));
+		environment_set(*env_lst, "SHLVL", shlvl);
+		free(shlvl);
+	}
+	return (0);
 }
