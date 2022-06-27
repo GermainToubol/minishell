@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:38:31 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/23 17:53:53 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/27 15:48:27 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -32,8 +32,6 @@ int	run_line(char *line, t_list **env)
 	parse = parser(&tokens);
 	if (parse == NULL)
 		return (1);
-	if (parse[0]->type == CMD && parse[0]->cmd->cmd[0] == NULL)
-		return (free_parse(parse), 0);
 	if (create_astree(parse, &root))
 		return (free_parse(parse), 0);
 	return (do_exec_run(root, parse, env));
@@ -45,7 +43,7 @@ static int	do_exec_run(t_astree *root, t_parse **parse, t_list **env)
 
 	if (parse[0] != NULL && parse[1] == NULL)
 	{
-		if (is_builtin(parse[0]->cmd->cmd[0]))
+		if (is_builtin(root->cmd) && root->depth == 0)
 		{
 			status = run_builtin(parse[0], env, (int [2]){-2, -2},
 					(int [2]){-2, -2});

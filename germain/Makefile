@@ -6,7 +6,7 @@
 #    By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 10:59:36 by gtoubol           #+#    #+#              #
-#    Updated: 2022/06/23 18:02:00 by gtoubol          ###   ########.fr        #
+#    Updated: 2022/06/27 13:01:15 by gtoubol          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -48,10 +48,16 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										ft_join3.c			\
 										ft_strndup.c		\
 										print2.c			\
-										print.c)			\
-			$(addprefix astree/,		astree.c			\
+										print.c				\
+										ft_lst_remove_if.c	\
+										str_utils.c			\
+										quicksort.c			\
+										lst_to_tab.c)		\
+			$(addprefix parser/astree/,	astree.c			\
 										astree_utils.c		\
-										fill_astree.c)		\
+										fill_astree.c\
+										display_tree.c\
+										rec_astree.c)		\
 			$(addprefix execution/,		main.c				\
 										interactive_session.c\
 										interactive_signals.c\
@@ -65,13 +71,29 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										get_exec_path.c		\
 										wait_all.c			\
 										run_builtin.c		\
-										run_tree_exec.c)	\
+										run_tree_exec.c		\
+										cmd_status.c)		\
 			$(addprefix tree_execution/,count_wait_tree.c	\
 										exec_tree_and.c		\
 										exec_tree.c			\
 										exec_tree_cmd.c		\
 										exec_tree_or.c		\
-										exec_tree_pipe.c)
+										exec_tree_pipe.c	\
+										exec_tree_add_level.c\
+										clear_cleanable.c)	\
+			$(addprefix expand/wildcard/,wildcard.c			\
+										update_wc.c			\
+										prefix_suffix.c		\
+										new_wc.c			\
+										rec_wc.c			\
+										lst_utils.c			\
+										dir_utils.c			\
+										wc_utils.c			\
+										expand_wc.c)		\
+			$(addprefix	expand/variable/,var_expand.c)		\
+			$(addprefix expand/,		expand.c			\
+										expand_loop.c		\
+										expand_utils.c)
 
 TMP =		$(addprefix tmp/,			ft_lstsort.c		\
 										astree_apply_infix.c)

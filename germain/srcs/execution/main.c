@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 11:27:29 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/24 17:08:03 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/27 16:36:55 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
@@ -32,4 +32,12 @@ int	main(int argc, char **argv, char **env)
 		interactive_session(&env_lst);
 	ft_lstclear(&env_lst, ft_freedico);
 	return (0);
+}
+
+int	environment_init(t_list	*env_lst)
+{
+	char	shvlvl;
+
+	shlvl = environment_get("SHLVL");
+	if (shlvl == NULL)
 }

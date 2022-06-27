@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:42:36 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/23 18:03:12 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/27 13:34:06 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "astree.h"
@@ -14,12 +14,14 @@
 #include "minishell.h"
 #include "g_minishell.h"
 
-int	count_wait_tree(t_astree *root)
+int	count_wait_tree(t_astree *root, int depth)
 {
-	if (root->cmd->type == CMD || root->cmd->type == AND
-		|| root->cmd->type == OR)
+	if (root->depth > depth || root->cmd->type == CMD)
 		return (1);
+	if (root->cmd->type == AND || root->cmd->type == OR)
+		return (0);
 	else if (root->cmd->type == PIPE)
-		return (count_wait_tree(root->left) + count_wait_tree(root->right));
+		return (count_wait_tree(root->left, depth)
+			+ count_wait_tree(root->right, depth));
 	return (0);
 }

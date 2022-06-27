@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:21:00 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/23 18:04:41 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/27 11:03:36 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
@@ -17,6 +17,8 @@
 pid_t	exec_tree(t_astree *node, int *pipe_in, int *pipe_out,
 			t_clean *cleanable)
 {
+	if (node->depth > cleanable->depth)
+		return (exec_tree_add_level(node, pipe_in, pipe_out, cleanable));
 	if (node->cmd->type == CMD)
 		return (exec_tree_cmd(node->cmd, pipe_in, pipe_out, cleanable));
 	if (node->cmd->type == PIPE)

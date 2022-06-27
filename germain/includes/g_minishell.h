@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:07:25 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/23 18:05:06 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/27 15:21:18 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef G_MINISHELL_H
@@ -30,6 +30,7 @@ typedef struct s_clean
 	t_list		**env;
 	t_astree	*root;
 	t_parse		**parse;
+	int			depth;
 }	t_clean;
 
 /* TMP */
@@ -89,10 +90,17 @@ pid_t	exec_tree_or(t_astree *node, int *pipe_in, int *pipe_out,
 			t_clean *cleanable);
 pid_t	exec_tree_pipe(t_astree *node, int *pipe_in, int *pipe_out,
 			t_clean *cleanable);
-int		count_wait_tree(t_astree *root);
+pid_t	exec_tree_add_level(t_astree *node, int *pipe_in, int *pipe_out,
+			t_clean *cleanable);
+int		count_wait_tree(t_astree *root, int depth);
+void	clear_cleanable(t_clean *cleanable);
 
 /* PIPE MANAGEMENT */
-int	set_outpipe(int *pipe_fds);
+int		set_outpipe(int *pipe_fds);
+
+/* STATUS MANAGEMENT */
+void	set_status(int status);
+int		get_status(void);
 
 /* PID AND RELATED MEMORY */
 void	extend_pid_list(pid_t pid);
@@ -106,6 +114,6 @@ int		builtin_unset(int argc, char **argv, t_list **env);
 int		builtin_env(int argc, char **argv, t_list **env);
 int		builtin_echo(int argc, char **argv, t_list **env);
 int		builtin_exit(void);
-int		is_builtin(char *name);
+int		is_builtin(t_parse *parse);
 
 #endif

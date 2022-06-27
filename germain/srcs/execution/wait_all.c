@@ -6,12 +6,13 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:18:11 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/24 12:48:34 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/27 14:08:50 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include "libft.h"
 #include "minishell.h"
 #include "g_minishell.h"
 
@@ -28,6 +29,7 @@ int	wait_all(int n_processes, pid_t last_pid)
 	int		exit_status;
 
 	i = 0;
+	exit_status = 0;
 	while (i < n_processes)
 	{
 		status = 0;
@@ -38,6 +40,8 @@ int	wait_all(int n_processes, pid_t last_pid)
 			wait_signaled(status, pid, &exit_status, last_pid);
 		i++;
 	}
+	if (n_processes != 0)
+		set_status(exit_status);
 	return (exit_status);
 }
 

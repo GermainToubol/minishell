@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:58:08 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/23 10:58:29 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/27 14:35:05 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -57,7 +57,7 @@ static void	init_pfds(int (*pfd)[2], int *n_parse, pid_t *pid)
 
 static void	clear_exec(t_parse **parse, int n_parse, t_list **env, pid_t pid)
 {
-	if (is_builtin(parse[n_parse - 1]->cmd->cmd[0]) && pid <= 0)
+	if (is_builtin(parse[n_parse - 1]) && pid <= 0)
 	{
 		free_parse(parse);
 		ft_lstclear(env, ft_freedico);
