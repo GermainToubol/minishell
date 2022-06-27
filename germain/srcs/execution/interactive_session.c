@@ -39,6 +39,7 @@ int	interactive_session(t_list	**env)
 		is_done = do_execution(env);
 	}
 	rl_clear_history();
+	write(2, "exit\n", 5);
 	close(0);
 	close(1);
 	close(2);
@@ -53,10 +54,6 @@ static int	do_execution(t_list **env)
 	if (line == NULL || ft_strcmp(line, "exit") == 0)
 	{
 		free(line);
-		write(2, "exit\n", 5);
-		close(0);
-		close(1);
-		close(2);
 		return (1);
 	}
 	if (ft_strcmp(line, "") == 0)

@@ -40,6 +40,7 @@ int	run_tree_exec(t_astree *root, t_parse **parse, t_list **env)
 		ft_lstclear(env, ft_freedico);
 		exit(EXIT_FAILURE);
 	}
+	ft_fprintf(2, "--%d -- %d\n", close(pfd[1][0]), close(pfd[1][1]));
 	wait_all(n, pid);
 	return (0);
 }
