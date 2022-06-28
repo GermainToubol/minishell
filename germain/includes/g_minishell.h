@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:07:25 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/27 15:21:18 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/28 12:06:37 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef G_MINISHELL_H
@@ -31,6 +31,8 @@ typedef struct s_clean
 	t_astree	*root;
 	t_parse		**parse;
 	int			depth;
+	int			pipe[1024];
+	int			n_pipes;
 }	t_clean;
 
 /* TMP */
@@ -72,7 +74,7 @@ int		run_pipe_series(t_parse **parse, t_list **env);
 int		do_redirect(t_parse *parse);
 int		do_bind_pipe(int *pfd);
 int		get_exec_path(t_parse *parse, t_list **env);
-pid_t	exec_process(t_parse *parse, t_list **env, int *pipe_in, int *pipe_out);
+pid_t	exec_process(t_parse *parse, t_clean *cleanable, int *pipe_in, int *pipe_out);
 void	run_child(t_parse *parse, t_list **env, int *pipe_in, int *pipe_out);
 void	run_parent(int *pipe_in);
 int		run_builtin(t_parse *parse, t_list **env, int *pipe_in, int *pipe_out);
@@ -93,6 +95,10 @@ pid_t	exec_tree_pipe(t_astree *node, int *pipe_in, int *pipe_out,
 pid_t	exec_tree_add_level(t_astree *node, int *pipe_in, int *pipe_out,
 			t_clean *cleanable);
 int		count_wait_tree(t_astree *root, int depth);
+
+/* CLEANABLE TOOLS */
+void	cleanable_add_pipe(t_clean *cleanable, int *pipe_fds);
+void	cleanable_pop_pipe(t_clean *cleanable);
 void	clear_cleanable(t_clean *cleanable);
 
 /* PIPE MANAGEMENT */

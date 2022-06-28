@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 11:27:29 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/27 16:36:55 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/28 14:15:53 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdlib.h>
@@ -34,8 +34,8 @@ int	main(int argc, char **argv, char **env)
 		return (1);
 	if (argc == 1 && isatty(0))
 		interactive_session(&env_lst);
-	if (argc == 3)
-		run_line(ft_strdup(argv[2]), &env_lst);
+//if (argc == 3)
+//		run_line(ft_strdup(argv[2]), &env_lst);
 	ft_lstclear(&env_lst, ft_freedico);
 	return (0);
 }
