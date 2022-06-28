@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:42:36 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/27 13:34:06 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/28 10:35:48 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "astree.h"
@@ -21,7 +21,6 @@ int	count_wait_tree(t_astree *root, int depth)
 	if (root->cmd->type == AND || root->cmd->type == OR)
 		return (0);
 	else if (root->cmd->type == PIPE)
-		return (count_wait_tree(root->left, depth)
-			+ count_wait_tree(root->right, depth));
+		return (count_wait_tree(root->left, depth) + count_wait_tree(root->right, depth));
 	return (0);
 }

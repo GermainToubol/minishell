@@ -6,9 +6,10 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:18:11 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/27 14:08:50 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/28 10:41:58 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <signal.h>
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -38,6 +39,8 @@ int	wait_all(int n_processes, pid_t last_pid)
 			wait_exited(status, pid, &exit_status, last_pid);
 		else if (WIFSIGNALED(status))
 			wait_signaled(status, pid, &exit_status, last_pid);
+		if (pid > 0)
+			kill(pid, SIGTERM);
 		i++;
 	}
 	if (n_processes != 0)

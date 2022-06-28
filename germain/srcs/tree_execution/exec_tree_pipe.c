@@ -6,9 +6,11 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:40:00 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/27 15:20:22 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/28 12:13:38 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <stddef.h>
+#include <stdio.h>
 #include <unistd.h>
 #include "astree.h"
 #include "minishell.h"
@@ -28,7 +30,15 @@ pid_t	exec_tree_pipe(t_astree *node, int *pipe_in, int *pipe_out,
 	builtin_level = set_builtin_level_left(node);
 	if (builtin_level == 1)
 		cleanable->depth -= 1;
+	if (pipe_out[0] != -2)
+	{
+		cleanable->pipe[2 * cleanable->n_pipes] = pipe_out[0];
+		cleanable->pipe[2 * cleanable->n_pipes + 1] = pipe_out[1];
+		cleanable->n_pipes += 1;
+	}
 	pid = exec_tree(node->left, pipe_in, tmp_pipe, cleanable);
+	if (pipe_out[0] != -2)
+		cleanable->n_pipes -= 1;
 	if (builtin_level == 1)
 		cleanable->depth += 1;
 	if (pid == 0)

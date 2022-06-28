@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 16:31:13 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/27 15:07:44 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/28 09:34:01 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
@@ -20,6 +20,6 @@ pid_t	exec_tree_cmd(t_parse *parse, int *pipe_in, int *pipe_out,
 {
 	pid_t	pid;
 
-	pid = exec_process(parse, cleanable->env, pipe_in, pipe_out);
+	pid = exec_process(parse, cleanable, pipe_in, pipe_out);
 	return (pid);
 }

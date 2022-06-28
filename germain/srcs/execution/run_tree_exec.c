@@ -6,9 +6,10 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 13:29:58 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/27 15:04:53 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/06/28 11:10:19 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <stddef.h>
 #include <unistd.h>
 #include "libft.h"
 #include "parser.h"
@@ -31,6 +32,7 @@ int	run_tree_exec(t_astree *root, t_parse **parse, t_list **env)
 	cleanable.root = root;
 	cleanable.parse = parse;
 	cleanable.depth = 0;
+	cleanable.n_pipes = 0;
 	n = count_wait_tree(root, 0);
 	pid = exec_tree(root, pfd[0], pfd[1], &cleanable);
 	astree_apply_suffix(root, free_tree);
@@ -40,7 +42,6 @@ int	run_tree_exec(t_astree *root, t_parse **parse, t_list **env)
 		ft_lstclear(env, ft_freedico);
 		exit(EXIT_FAILURE);
 	}
-	ft_fprintf(2, "--%d -- %d\n", close(pfd[1][0]), close(pfd[1][1]));
 	wait_all(n, pid);
 	return (0);
 }
