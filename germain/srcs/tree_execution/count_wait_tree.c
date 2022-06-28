@@ -21,6 +21,7 @@ int	count_wait_tree(t_astree *root, int depth)
 	if (root->cmd->type == AND || root->cmd->type == OR)
 		return (0);
 	else if (root->cmd->type == PIPE)
-		return (count_wait_tree(root->left, depth) + count_wait_tree(root->right, depth));
+		return (count_wait_tree(root->left, depth)
+			+ count_wait_tree(root->right, depth));
 	return (0);
 }

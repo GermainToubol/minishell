@@ -34,8 +34,8 @@ int	main(int argc, char **argv, char **env)
 		return (1);
 	if (argc == 1 && isatty(0))
 		interactive_session(&env_lst);
-//if (argc == 3)
-//		run_line(ft_strdup(argv[2]), &env_lst);
+	if (argc == 3)
+		run_line(ft_strdup(argv[2]), &env_lst);
 	ft_lstclear(&env_lst, ft_freedico);
 	return (0);
 }

@@ -39,19 +39,6 @@ int	run_line(char *line, t_list **env)
 
 static int	do_exec_run(t_astree *root, t_parse **parse, t_list **env)
 {
-	int	status;
-
-	if (parse[0] != NULL && parse[1] == NULL)
-	{
-		if (is_builtin(root->cmd) && root->depth == 0)
-		{
-			status = run_builtin(parse[0], env, (int [2]){-2, -2},
-					(int [2]){-2, -2});
-			astree_apply_suffix(root, free_tree);
-			free_parse(parse);
-			return (status);
-		}
-	}
 	run_tree_exec(root, parse, env);
 	return (0);
 }

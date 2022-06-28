@@ -12,29 +12,73 @@
 #include <unistd.h>
 #include "libft.h"
 #include "parser.h"
+#include "expand.h"
+#include "utils.h"
 #include "minishell.h"
 #include "g_minishell.h"
 
-pid_t	exec_process(t_parse *parse, t_clean *cleanable, int *pipe_in, int *pipe_out)
+static char	**new_tab(char **av, int size)
 {
-	pid_t	pid;
+	char	**ret;
 	int		i;
 
+	ret = ft_calloc(size + 1, sizeof(char *));
+	if (!ret)
+		return (NULL);
+	i = 0;
+	while (i < size)
+	{
+		if (ft_strchr(av[i], '\'') || ft_strchr(av[i], '"'))
+			ret[i] = expand_quotes(av[i]);
+		else if (ft_strchr(av[i], '$'))
+			ret[i] = expand_var(av[i]);
+		else
+			ret[i] = ft_strdup(av[i]);
+		if (!ret[i] && get_status() != 0)
+			return (ft_free_split(ret), NULL);
+		i++;
+	}
+	ret[i] = NULL;
+	return (ret);
+}
+
+int	expand_parse(t_parse *parse)
+{
+	char	**lst;
+	char	**new;
+	int		i;
+
+	i = 0;
+	while (parse->cmd->cmd[i] != NULL)
+		i++;
+	lst = new_tab(parse->cmd->cmd, i);
+	if (!lst)
+		return (1);
+	new = do_expand(lst);
+	ft_free_split(lst);
+	if (!new)
+		return (display_error("Error\n", 0), 1);
+	ft_free_split(parse->cmd->cmd);
+	parse->cmd->cmd = new;
+	return (0);
+}
+
+pid_t	exec_process(t_parse *parse, t_clean *cleanable,
+			int *pipe_in, int *pipe_out)
+{
+	pid_t	pid;
+
+	if (parse->cmd->cmd != NULL)
+		expand_parse(parse);
 	if (is_builtin(parse))
-		return (-run_builtin(parse, cleanable->env, pipe_in, pipe_out));
+		return (-17 - run_builtin(parse, cleanable->env, pipe_in, pipe_out));
 	pid = fork();
 	if (pid < 0)
 		perror("minishell: fork");
 	if (pid == 0)
 	{
-		i = 0;
-		while (i < cleanable->n_pipes)
-		{
-			close(cleanable->pipe[2 * i]);
-			close(cleanable->pipe[2 * i + 1]);
-			i++;
-		}
-		cleanable->n_pipes = 0;
+		while (cleanable->n_pipes > 0)
+			cleanable_pop_pipe(cleanable);
 		run_child(parse, cleanable->env, pipe_in, pipe_out);
 		exit(0);
 	}

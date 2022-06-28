@@ -1,86 +1,117 @@
 
-libft/srcs/ft_printf_padding.c,59
-int	ft_atoi_padding(15,931
-int	ft_printf_padding(31,1137
+libft/srcs/ft_printf_unsigned.c,106
+int	ft_printf_unsigned(18,1040
+static int	get_len_unsigned(33,1409
+static void	putnbr_unsigned(46,1542
 
-libft/srcs/ft_lstdelone.c,26
-void	ft_lstdelone(15,931
+libft/srcs/ft_strchr.c,34
+char	*ft_strchr(ft_strchr14,911
 
-libft/srcs/ft_memcmp.c,22
-int	ft_memcmp(14,911
+libft/srcs/ft_lstiter.c,24
+void	ft_lstiter(14,911
 
-libft/srcs/ft_lstadd_front.c,29
-void	ft_lstadd_front(14,911
-
-libft/srcs/ft_memcpy.c,34
-void	*ft_memcpy(ft_memcpy15,931
-
-libft/srcs/ft_printf_percent.c,30
-int	ft_printf_percent(15,931
-
-libft/srcs/ft_calloc.c,34
-void	*ft_calloc(ft_calloc16,951
-
-libft/srcs/ft_putendl_fd.c,27
-void	ft_putendl_fd(14,911
-
-libft/srcs/ft_printf_str.c,94
-int	ft_printf_str(19,1041
-static int	ft_strnlen(42,1617
-static int	size_print_null(52,1732
-
-libft/srcs/ft_strnstr.c,36
-char	*ft_strnstr(ft_strnstr14,911
-
-libft/srcs/ft_isalpha.c,23
-int	ft_isalpha(14,911
-
-libft/srcs/ft_printf_hex_caps.c,31
-int	ft_printf_hex_caps(14,911
+libft/srcs/ft_split.c,141
+char	**ft_split(ft_split19,1094
+static int	split_count_words(45,1460
+static void	split_get_words(69,1711
+static void	split_free(96,2034
 
 libft/srcs/ft_strtrim.c,105
 char	*ft_strtrim(ft_strtrim17,1030
 static int	trim_get_start(36,1401
 static int	trim_get_end(46,1582
 
-libft/srcs/ft_lstclear.c,25
-void	ft_lstclear(14,911
+libft/srcs/ft_bzero.c,22
+void	ft_bzero(15,931
 
-libft/srcs/ft_memmove.c,106
-void	*ft_memmove(ft_memmove18,1063
-static void	memmove_left(29,1296
-static void	memmove_right(45,1524
+libft/srcs/ft_strnstr.c,36
+char	*ft_strnstr(ft_strnstr14,911
 
-libft/srcs/ft_isalnum.c,23
-int	ft_isalnum(14,911
+libft/srcs/ft_free_split.c,27
+void	ft_free_split(15,931
 
-libft/srcs/ft_lstadd_back.c,28
-void	ft_lstadd_back(14,911
+libft/srcs/ft_strmapi.c,36
+char	*ft_strmapi(ft_strmapi14,911
+
+libft/srcs/ft_isprint.c,23
+int	ft_isprint(14,911
+
+libft/srcs/ft_atoi.c,51
+int	ft_atoi(16,943
+static int	ft_isspace(41,1240
+
+libft/srcs/ft_strdup.c,34
+char	*ft_strdup(ft_strdup14,911
+
+libft/srcs/ft_lstdelone.c,26
+void	ft_lstdelone(15,931
+
+libft/srcs/ft_printf_str.c,94
+int	ft_printf_str(19,1041
+static int	ft_strnlen(42,1617
+static int	size_print_null(52,1732
+
+libft/srcs/ft_tolower.c,23
+int	ft_tolower(14,911
+
+libft/srcs/ft_printf_padding.c,59
+int	ft_atoi_padding(15,931
+int	ft_printf_padding(31,1137
 
 libft/srcs/ft_strcmp.c,22
 int	ft_strcmp(14,911
 
-libft/srcs/ft_isdigit.c,23
-int	ft_isdigit(14,911
+libft/srcs/ft_toupper.c,23
+int	ft_toupper(14,911
 
-libft/srcs/ft_printf_char.c,27
-int	ft_printf_char(15,931
+libft/srcs/ft_substr.c,65
+char	*ft_substr(ft_substr17,975
+static size_t	the_min(38,1380
 
-libft/srcs/ft_lstnew.c,36
-t_list	*ft_lstnew(ft_lstnew15,931
+libft/srcs/ft_striteri.c,25
+void	ft_striteri(14,911
 
-libft/srcs/ft_lstsize.c,23
-int	ft_lstsize(14,911
+libft/srcs/ft_memchr.c,34
+void	*ft_memchr(ft_memchr14,911
 
-libft/srcs/ft_printf_precision.c,93
-int	ft_printf_precision(15,931
-int	ft_len_precision(30,1111
-int	ft_atoi_precision(39,1288
+libft/srcs/ft_putnbr_fd.c,26
+void	ft_putnbr_fd(14,911
 
-libft/srcs/ft_printf_hex_base.c,96
-int	ft_printf_hex_base(18,1045
-static int	get_hex_len(44,1721
-static void	putnbr_hex(57,1849
+libft/srcs/ft_strlcpy.c,26
+size_t	ft_strlcpy(15,931
+
+libft/srcs/ft_itoa.c,109
+char	*ft_itoa(ft_itoa17,1017
+static void	itoa_fill_number(44,1422
+static char	itoa_digit_to_char(68,1752
+
+libft/srcs/ft_printf.c,86
+int	ft_printf(19,1064
+static int	put_print(48,1534
+static int	normal_write(72,2361
+
+libft/srcs/ft_lstlast.c,38
+t_list	*ft_lstlast(ft_lstlast14,911
+
+libft/srcs/ft_memset.c,34
+void	*ft_memset(ft_memset15,931
+
+libft/srcs/ft_printf_percent.c,30
+int	ft_printf_percent(15,931
+
+libft/srcs/ft_fprintf.c,87
+int	ft_fprintf(19,1092
+static int	put_print(48,1585
+static int	normal_write(72,2434
+
+libft/srcs/ft_calloc.c,34
+void	*ft_calloc(ft_calloc16,951
+
+libft/srcs/ft_printf_int.c,124
+int	ft_printf_int(19,1074
+static void	printf_sign(44,1634
+static int	get_int_len(57,1860
+static void	printf_nbr(70,1973
 
 libft/srcs/get_next_line.c,248
 char	*get_next_line(get_next_line24,1256
@@ -89,11 +120,71 @@ static char	*gnl_read_to_newline(gnl_read_to_newline58,1763
 static size_t	gnl_join(83,2279
 static char	*gnl_update_newline_buffer(gnl_update_newline_buffer109,2684
 
-libft/srcs/ft_isprint.c,23
-int	ft_isprint(14,911
+libft/srcs/ft_lstsize.c,23
+int	ft_lstsize(14,911
 
-libft/srcs/ft_tolower.c,23
-int	ft_tolower(14,911
+libft/srcs/ft_printf_long_hex.c,96
+int	ft_printf_long_hex(18,1055
+static int	get_hex_len(44,1736
+static void	putnbr_hex(57,1869
+
+libft/srcs/ft_strlen.c,25
+size_t	ft_strlen(15,931
+
+libft/srcs/ft_printf_formatify.c,127
+int	set_arguments(18,1044
+static void	set_format(40,1505
+static void	init_convert(57,1847
+static int	is_convertion(69,2097
+
+libft/srcs/ft_putchar_fd.c,27
+void	ft_putchar_fd(15,931
+
+libft/srcs/ft_isascii.c,23
+int	ft_isascii(14,911
+
+libft/srcs/ft_printf_hex_base.c,96
+int	ft_printf_hex_base(18,1045
+static int	get_hex_len(44,1721
+static void	putnbr_hex(57,1849
+
+libft/srcs/ft_lstmap.c,36
+t_list	*ft_lstmap(ft_lstmap14,911
+
+libft/srcs/ft_strlcat.c,26
+size_t	ft_strlcat(15,931
+
+libft/srcs/ft_putendl_fd.c,27
+void	ft_putendl_fd(14,911
+
+libft/srcs/ft_memcmp.c,22
+int	ft_memcmp(14,911
+
+libft/srcs/ft_isdigit.c,23
+int	ft_isdigit(14,911
+
+libft/srcs/ft_strrchr.c,36
+char	*ft_strrchr(ft_strrchr14,911
+
+libft/srcs/ft_printf_char.c,27
+int	ft_printf_char(15,931
+
+libft/srcs/ft_lstnew.c,36
+t_list	*ft_lstnew(ft_lstnew15,931
+
+libft/srcs/ft_printf_precision.c,93
+int	ft_printf_precision(15,931
+int	ft_len_precision(30,1111
+int	ft_atoi_precision(39,1288
+
+libft/srcs/ft_putstr_fd.c,26
+void	ft_putstr_fd(16,951
+
+libft/srcs/get_next_line_utils_fds.c,48
+t_buffer	*gnl_get_buffer(gnl_get_buffer14,911
+
+libft/srcs/ft_isalpha.c,23
+int	ft_isalpha(14,911
 
 libft/srcs/get_next_line_fds.c,256
 char	*get_next_line_fds(get_next_line_fds24,1256
@@ -102,78 +193,22 @@ static char	*gnl_read_to_newline(gnl_read_to_newline58,1889
 static size_t	gnl_join(83,2405
 static char	*gnl_update_newline_buffer(gnl_update_newline_buffer109,2827
 
-libft/srcs/ft_toupper.c,23
-int	ft_toupper(14,911
+libft/srcs/ft_lstadd_back.c,28
+void	ft_lstadd_back(14,911
 
 libft/srcs/ft_strncmp.c,23
 int	ft_strncmp(15,931
 
-libft/srcs/ft_printf.c,86
-int	ft_printf(19,1064
-static int	put_print(48,1534
-static int	normal_write(72,2361
+libft/srcs/ft_isalnum.c,23
+int	ft_isalnum(14,911
 
-libft/srcs/ft_strlen.c,25
-size_t	ft_strlen(15,931
+libft/srcs/ft_memcpy.c,34
+void	*ft_memcpy(ft_memcpy15,931
 
-libft/srcs/ft_fprintf.c,87
-int	ft_fprintf(19,1092
-static int	put_print(48,1585
-static int	normal_write(72,2434
-
-libft/srcs/ft_putstr_fd.c,26
-void	ft_putstr_fd(16,951
-
-libft/srcs/ft_bzero.c,22
-void	ft_bzero(15,931
-
-libft/srcs/get_next_line_utils_fds.c,48
-t_buffer	*gnl_get_buffer(gnl_get_buffer14,911
-
-libft/srcs/ft_memset.c,34
-void	*ft_memset(ft_memset15,931
-
-libft/srcs/ft_substr.c,65
-char	*ft_substr(ft_substr17,975
-static size_t	the_min(38,1380
-
-libft/srcs/ft_printf_formatify.c,127
-int	set_arguments(18,1044
-static void	set_format(40,1505
-static void	init_convert(57,1847
-static int	is_convertion(69,2097
-
-libft/srcs/ft_strmapi.c,36
-char	*ft_strmapi(ft_strmapi14,911
-
-libft/srcs/ft_strchr.c,34
-char	*ft_strchr(ft_strchr14,911
-
-libft/srcs/ft_printf_int.c,124
-int	ft_printf_int(19,1074
-static void	printf_sign(44,1634
-static int	get_int_len(57,1860
-static void	printf_nbr(70,1973
-
-libft/srcs/ft_atoi.c,51
-int	ft_atoi(16,943
-static int	ft_isspace(41,1240
-
-libft/srcs/ft_isascii.c,23
-int	ft_isascii(14,911
-
-libft/srcs/ft_itoa.c,109
-char	*ft_itoa(ft_itoa17,1017
-static void	itoa_fill_number(44,1422
-static char	itoa_digit_to_char(68,1752
-
-libft/srcs/ft_printf_long_hex.c,96
-int	ft_printf_long_hex(18,1055
-static int	get_hex_len(44,1736
-static void	putnbr_hex(57,1869
-
-libft/srcs/ft_putchar_fd.c,27
-void	ft_putchar_fd(15,931
+libft/srcs/ft_memmove.c,106
+void	*ft_memmove(ft_memmove18,1063
+static void	memmove_left(29,1296
+static void	memmove_right(45,1524
 
 libft/srcs/ft_printf_ptr.c,26
 int	ft_printf_ptr(16,951
@@ -181,210 +216,87 @@ int	ft_printf_ptr(16,951
 libft/srcs/ft_strjoin.c,36
 char	*ft_strjoin(ft_strjoin14,911
 
-libft/srcs/ft_split.c,141
-char	**ft_split(ft_split19,1094
-static int	split_count_words(45,1460
-static void	split_get_words(69,1711
-static void	split_free(96,2034
+libft/srcs/ft_lstclear.c,25
+void	ft_lstclear(14,911
 
-libft/srcs/ft_free_split.c,27
-void	ft_free_split(15,931
+libft/srcs/ft_lstadd_front.c,29
+void	ft_lstadd_front(14,911
 
-libft/srcs/ft_strlcat.c,26
-size_t	ft_strlcat(15,931
-
-libft/srcs/ft_lstiter.c,24
-void	ft_lstiter(14,911
-
-libft/srcs/ft_printf_unsigned.c,106
-int	ft_printf_unsigned(18,1040
-static int	get_len_unsigned(33,1409
-static void	putnbr_unsigned(46,1542
-
-libft/srcs/ft_lstmap.c,36
-t_list	*ft_lstmap(ft_lstmap14,911
-
-libft/srcs/ft_putnbr_fd.c,26
-void	ft_putnbr_fd(14,911
+libft/srcs/ft_printf_hex_caps.c,31
+int	ft_printf_hex_caps(14,911
 
 libft/srcs/ft_printf_hex.c,26
 int	ft_printf_hex(14,911
 
-libft/srcs/ft_memchr.c,34
-void	*ft_memchr(ft_memchr14,911
+srcs/tree_execution/exec_tree_add_level.c,35
+pid_t	exec_tree_add_level(19,1018
 
-libft/srcs/ft_strrchr.c,36
-char	*ft_strrchr(ft_strrchr14,911
+srcs/tree_execution/count_wait_tree.c,28
+int	count_wait_tree(17,980
 
-libft/srcs/ft_striteri.c,25
-void	ft_striteri(14,911
+srcs/tree_execution/exec_tree_cmd.c,28
+pid_t	exec_tree_cmd(18,999
 
-libft/srcs/ft_strdup.c,34
-char	*ft_strdup(ft_strdup14,911
+srcs/tree_execution/exec_tree_and.c,61
+pid_t	exec_tree_and(22,1072
+static void	close_pipe(50,1702
 
-libft/srcs/ft_lstlast.c,38
-t_list	*ft_lstlast(ft_lstlast14,911
+srcs/tree_execution/exec_tree_pipe.c,117
+pid_t	exec_tree_pipe(22,1123
+static int	set_builtin_level_left(57,2007
+static int	set_builtin_level_right(64,2159
 
-libft/srcs/ft_strlcpy.c,26
-size_t	ft_strlcpy(15,931
+srcs/tree_execution/exec_tree.c,24
+pid_t	exec_tree(17,980
 
-libft/includes/libft.h,568
-# define LIBFT_H13,907
-typedef struct s_list18,967
-	void			*content;content20,991
-	struct s_list	*next;next21,1009
-}	t_list;22,1031
-# define BUFFER_SIZE 72,3049
-# define MAX_FDS 73,3073
-typedef struct s_buffer75,3094
-	int		fd;77,3120
-	size_t	size;78,3130
-	char	buffer[buffer79,3144
-}	t_buffer;80,3171
-typedef struct s_convert88,3331
-	char	convertion;90,3358
-	char	alternate;91,3376
-	char	padd_char;92,3393
-	char	leftify;93,3410
-	int		padd_size;94,3425
-	int		has_precision;95,3442
-	int		precision;96,3463
-	char	sign;97,3480
-}	t_convert;99,3493
+srcs/tree_execution/exec_tree_or.c,60
+pid_t	exec_tree_or(22,1072
+static void	close_pipe(48,1654
 
-srcs/utils/ft_join3.c,32
-char	*ft_join3(ft_join315,912
+srcs/lexer/is_separator.c,86
+static int	is_pipe(16,931
+static int	is_ampersand(44,1652
+int	is_separator(66,2279
 
-srcs/utils/print2.c,64
-void	print_cmd_line_detail(16,932
-void	print_cmd_line(43,1492
+srcs/lexer/tokens_alloc.c,115
+static t_lxm	*transfer_tokens(transfer_tokens17,950
+static int	tokens_realloc(37,1357
+int	tokens_alloc(53,1728
 
-srcs/utils/ft_strndup.c,36
-char	*ft_strndup(ft_strndup15,912
+srcs/lexer/is_word.c,141
+static int	is_quote_content(17,950
+int	is_quote(43,1522
+static int	is_word_basic(56,1806
+static int	is_var(77,2476
+int	is_word(103,3013
 
-srcs/utils/print.c,124
-void	print_tokens(15,912
-void	print_tab(29,1149
-void	print_lexer(43,1292
-void	show_red(65,1884
-void	print_node(89,2283
+srcs/lexer/is_redirect.c,95
+static int	is_redirect_out(17,950
+static int	is_redirect_in(36,1432
+int	is_redirect(55,1913
 
-srcs/utils/lst_to_tab.c,37
-char	**lst_to_tab(lst_to_tab17,953
+srcs/lexer/lexer.c,150
+static int	is_forbidden(17,950
+static int	is_end(29,1335
+static int	convert_tokens_content(55,1860
+int	convert_tokens(82,2470
+int	lexer(108,2892
 
-srcs/utils/ft_strcmp.c,22
-int	ft_strcmp(13,892
+srcs/lexer/is_word2.c,26
+int	word_redirect(17,950
 
-srcs/utils/ft_lst_remove_if.c,31
-void	ft_list_remove_if(16,932
-
-srcs/utils/quicksort.c,42
-void	swap(17,953
-void	quicksort(26,1033
-
-srcs/utils/ft_atoll.c,27
-long long	ft_atoll(15,912
-
-srcs/utils/str_utils.c,153
-int	last_char(18,971
-size_t	size_tab(34,1117
-int	cpy_tab(46,1212
-static char	**do_realloc(do_realloc62,1454
-char	**tab_realloc(tab_realloc79,1773
-
-srcs/utils/display_msg.c,59
-void	display_error(15,912
-void	display_error_red(27,1192
-
-srcs/utils/free.c,116
-void	free_lxm(17,951
-void	free_tab(27,1068
-void	free_red(41,1193
-void	free_cmd(57,1373
-void	free_parse(68,1531
-
-srcs/parser/split_redirect.c,169
-static size_t	count_red(19,993
-static int	get_fd(34,1231
-static int	fill_red2(60,1641
-static int	fill_red(79,2150
-t_redirect	**fill_redirect(fill_redirect100,2486
-
-srcs/parser/main.c,44
-int	main_content(56,1717
-int	main(79,2178
-
-srcs/parser/parser.c,109
-size_t	get_n_sep(18,970
-t_parse	**create_cmd_line(create_cmd_line43,1339
-t_parse	**parser(parser57,1649
-
-srcs/parser/split_cmd.c,99
-static size_t	count_arg(19,993
-static int	fill_cmdn2(35,1299
-char	**fill_cmdn(fill_cmdn57,1761
-
-srcs/parser/astree/astree_utils.c,124
-void	print_cmd(18,975
-void	free_tree(37,1413
-void	astree_apply_suffix(46,1528
-t_astree	*create_node(create_node55,1719
-
-srcs/parser/astree/rec_astree.c,120
-int	p_after(16,933
-int	p_before(32,1284
-int	run_tree_left(48,1635
-int	run_tree_right(72,2124
-int	run_tree(101,2781
-
-srcs/parser/astree/display_tree.c,68
-static void	display_tree_content(17,951
-void	display_tree(46,1679
-
-srcs/parser/astree/fill_astree.c,116
-int	start_p(16,932
-int	get_next_left(33,1198
-int	get_next_right(61,1901
-t_int_help	*new_right(new_right81,2281
-
-srcs/parser/astree/astree.c,147
-static void	fill_t_content(16,932
-t_int_help	*fill_t_int(fill_t_int36,1344
-static int	create_astree_content(64,2129
-int	create_astree(93,2643
-
-srcs/parser/path.c,57
-char	**get_path(get_path18,974
-int	check_path(43,1326
-
-srcs/parser/parser2.c,118
-static t_cmd	*fill_cmd(fill_cmd18,970
-static t_parse	*create_parse(create_parse39,1431
-int	fill_cmd_line(61,1884
-
-srcs/builtins/builtin_export.c,187
-int	builtin_export(23,1170
-static int	show_export(52,1594
-static size_t	export_check_name(76,2036
-static t_list	*export_list(export_list89,2304
-static int	export_set_value(115,2811
+srcs/lexer/is_prio.c,122
+static int	check_next_token(17,950
+static int	is_p_end(36,1324
+static int	is_prio_content(64,2153
+int	is_prio(87,2728
 
 srcs/builtins/builtin_unset.c,66
 int	builtin_unset(22,1040
 static int	unset_valid_format(38,1315
 
-srcs/builtins/builtin_env.c,24
-int	builtin_env(16,959
-
 srcs/builtins/is_builtin.c,23
 int	is_builtin(16,959
-
-srcs/builtins/builtin_pwd.c,25
-int	builtin_pwd(26,1138
-
-srcs/builtins/builtin_echo.c,61
-int	builtin_echo(20,1048
-static int	check_n_option(47,1433
 
 srcs/builtins/builtin_cd.c,173
 int	builtin_cd(36,1440
@@ -393,16 +305,93 @@ static char	*cd_path_to_go(cd_path_to_go80,2454
 static int	cd_change_dir(89,2651
 static int	cd_update_env(110,3076
 
-srcs/builtins/builtin_exit.c,25
-int	builtin_exit(15,940
+srcs/builtins/builtin_exit.c,84
+static int	exit_state(15,940
+int	get_exit_state(24,1046
+int	builtin_exit(29,1101
 
-srcs/tmp/astree_apply_infix.c,32
-void	astree_apply_infix(16,960
+srcs/builtins/builtin_export.c,187
+int	builtin_export(23,1170
+static int	show_export(52,1594
+static size_t	export_check_name(76,2036
+static t_list	*export_list(export_list89,2304
+static int	export_set_value(115,2811
 
-srcs/tmp/ft_lstsort.c,99
-void	ft_lstsort(26,1259
-static void	ft_lstsort_init(51,1708
-static void	ft_lstsort_next(59,1853
+srcs/builtins/builtin_echo.c,61
+int	builtin_echo(20,1048
+static int	check_n_option(47,1433
+
+srcs/builtins/builtin_env.c,24
+int	builtin_env(16,959
+
+srcs/builtins/builtin_pwd.c,25
+int	builtin_pwd(26,1138
+
+srcs/utils/free.c,116
+void	free_lxm(17,951
+void	free_tab(27,1068
+void	free_red(41,1193
+void	free_cmd(57,1373
+void	free_parse(68,1531
+
+srcs/utils/display_msg.c,59
+void	display_error(15,912
+void	display_error_red(27,1192
+
+srcs/utils/ft_strndup.c,36
+char	*ft_strndup(ft_strndup15,912
+
+srcs/utils/ft_lst_remove_if.c,31
+void	ft_list_remove_if(16,932
+
+srcs/utils/ft_strcmp.c,22
+int	ft_strcmp(13,892
+
+srcs/utils/lst_to_tab.c,37
+char	**lst_to_tab(lst_to_tab17,953
+
+srcs/utils/str_utils.c,153
+int	last_char(18,971
+size_t	size_tab(34,1117
+int	cpy_tab(46,1212
+static char	**do_realloc(do_realloc62,1454
+char	**tab_realloc(tab_realloc79,1773
+
+srcs/utils/print.c,124
+void	print_tokens(15,912
+void	print_tab(29,1149
+void	print_lexer(43,1292
+void	show_red(65,1884
+void	print_node(89,2283
+
+srcs/utils/ft_join3.c,32
+char	*ft_join3(ft_join315,912
+
+srcs/utils/quicksort.c,42
+void	swap(17,953
+void	quicksort(26,1033
+
+srcs/utils/print2.c,64
+void	print_cmd_line_detail(16,932
+void	print_cmd_line(43,1492
+
+srcs/utils/ft_atoll.c,27
+long long	ft_atoll(15,912
+
+srcs/expand/quotes/expand_quotes.c,178
+size_t	i_matching_quote(19,1013
+static int	rec_do_quotes(30,1189
+static int	rec_quote_content(47,1492
+static int	rec_quote(70,1930
+char	*expand_quotes(expand_quotes94,2410
+
+srcs/expand/expand.c,88
+static char	**do_expand_loop(do_expand_loop18,973
+char	**do_expand(do_expand33,1207
+
+srcs/expand/expand_utils.c,49
+size_t	tab3_size(17,951
+void	free_tab3(38,1159
 
 srcs/expand/variable/var_expand.c,120
 static int	get_var(17,951
@@ -413,37 +402,39 @@ char	*expand_var(expand_var86,2207
 srcs/expand/variable/main.c,17
 int	main(18,993
 
-srcs/expand/expand.c,88
-static char	**do_expand_loop(do_expand_loop18,973
-char	**do_expand(do_expand33,1207
-
-srcs/expand/expand_utils.c,49
-size_t	tab3_size(17,951
-void	free_tab3(38,1159
-
-srcs/expand/main.c,49
-char	**new_tab(new_tab17,954
-int	main(36,1246
-
 srcs/expand/expand_loop.c,144
 char	**do_basic(do_basic18,973
 static int	fill_ret(35,1271
 char	**expand_loop_end(expand_loop_end59,1617
 int	expand_loop_wildcard(73,1908
 
+srcs/expand/wildcard/expand_wc.c,98
+static char	**do_wildcard_content(do_wildcard_content18,973
+char	**expand_wc(expand_wc30,1158
+
 srcs/expand/wildcard/lst_utils.c,47
 void	del_node(15,915
 void	print_lst2(33,1163
 
-srcs/expand/wildcard/wildcard.c,94
-static int	wildcards_end(18,974
-static int	wildcards_content(38,1301
-int	wildcards(62,1749
+srcs/expand/wildcard/rec_wc.c,132
+static int	get_match_indir_loop(18,973
+static int	get_match_indir(37,1294
+static int	iter_lst(57,1661
+int	rec_wildcards(82,2081
+
+srcs/expand/wildcard/prefix_suffix.c,120
+static t_wildcard	*prefix_suffix_content(prefix_suffix_content16,934
+t_wildcard	*prefix_suffix(prefix_suffix38,1508
 
 srcs/expand/wildcard/dir_utils.c,92
 int	check_found(16,934
 int	get_dir_match(37,1303
 char	*get_dir_name(get_dir_name59,1663
+
+srcs/expand/wildcard/wc_utils.c,95
+void	printf_wc(16,934
+t_wildcard	*cpy_wc(cpy_wc28,1229
+t_wildcard	*init_wc(init_wc47,1650
 
 srcs/expand/wildcard/new_wc.c,163
 t_wildcard	*new_wc2(new_wc217,953
@@ -457,103 +448,58 @@ static int	fill_wc(36,1388
 static int	update_dir_path(54,1726
 int	update_wildcard(75,2233
 
-srcs/expand/wildcard/rec_wc.c,132
-static int	get_match_indir_loop(18,973
-static int	get_match_indir(37,1294
-static int	iter_lst(57,1661
-int	rec_wildcards(82,2081
+srcs/expand/wildcard/wildcard.c,94
+static int	wildcards_end(18,974
+static int	wildcards_content(38,1301
+int	wildcards(62,1749
 
-srcs/expand/wildcard/wc_utils.c,95
-void	printf_wc(16,934
-t_wildcard	*cpy_wc(cpy_wc28,1229
-t_wildcard	*init_wc(init_wc47,1650
+srcs/expand/main.c,49
+char	**new_tab(new_tab17,954
+int	main(36,1246
 
-srcs/expand/wildcard/expand_wc.c,98
-static char	**do_wildcard_content(do_wildcard_content18,973
-char	**expand_wc(expand_wc30,1158
+srcs/execution/run_parent.c,24
+void	run_parent(16,960
 
-srcs/expand/wildcard/prefix_suffix.c,120
-static t_wildcard	*prefix_suffix_content(prefix_suffix_content16,934
-t_wildcard	*prefix_suffix(prefix_suffix38,1508
-
-srcs/expand/quotes/expand_quotes.c,178
-size_t	i_matching_quote(19,1013
-static int	rec_do_quotes(30,1189
-static int	rec_quote_content(47,1492
-static int	rec_quote(70,1930
-char	*expand_quotes(expand_quotes94,2410
-
-srcs/tree_execution/exec_tree.c,24
-pid_t	exec_tree(17,980
-
-srcs/tree_execution/exec_tree_or.c,89
-pid_t	exec_tree_or(24,1162
-static int	or_child(51,1650
-static void	close_pipe(78,2195
-
-srcs/tree_execution/exec_tree_pipe.c,29
-pid_t	exec_tree_pipe(17,980
-
-srcs/tree_execution/count_wait_tree.c,28
-int	count_wait_tree(17,980
-
-srcs/tree_execution/exec_tree_cmd.c,28
-pid_t	exec_tree_cmd(18,999
-
-srcs/tree_execution/exec_tree_and.c,91
-pid_t	exec_tree_and(24,1163
-static int	and_child(51,1653
-static void	close_pipe(78,2208
-
-srcs/lexer/tokens_alloc.c,115
-static t_lxm	*transfer_tokens(transfer_tokens17,950
-static int	tokens_realloc(37,1357
-int	tokens_alloc(53,1728
-
-srcs/lexer/lexer.c,150
-static int	is_forbidden(17,950
-static int	is_end(29,1335
-static int	convert_tokens_content(55,1860
-int	convert_tokens(82,2470
-int	lexer(108,2892
-
-srcs/lexer/is_prio.c,122
-static int	check_next_token(17,950
-static int	is_p_end(36,1324
-static int	is_prio_content(64,2153
-int	is_prio(87,2728
-
-srcs/lexer/is_redirect.c,95
-static int	is_redirect_out(17,950
-static int	is_redirect_in(36,1432
-int	is_redirect(55,1913
-
-srcs/lexer/is_word.c,141
-static int	is_quote_content(17,950
-int	is_quote(43,1522
-static int	is_word_basic(56,1806
-static int	is_var(77,2476
-int	is_word(103,3013
-
-srcs/lexer/is_separator.c,86
-static int	is_pipe(16,931
-static int	is_ampersand(44,1652
-int	is_separator(66,2279
-
-srcs/lexer/is_word2.c,26
-int	word_redirect(17,950
-
-srcs/execution/interactive_session.c,66
-int	interactive_session(23,1120
-static int	do_execution(48,1502
+srcs/execution/run_pipe_series.c,92
+int	run_pipe_series(21,1143
+static void	init_pfds(48,1731
+static void	clear_exec(58,1893
 
 srcs/execution/run_child.c,97
-void	run_child(21,1102
-static void	child_set_pipe(39,1517
-static void	child_close_fds(55,1875
+void	run_child(22,1144
+static void	child_set_pipe(42,1601
+static void	child_close_fds(58,1959
 
-srcs/execution/main.c,18
-int	main(22,1057
+srcs/execution/wait_all.c,90
+int	wait_all(25,1216
+static void	wait_exited(51,1699
+static void	wait_signaled(58,1849
+
+srcs/execution/interactive_signals.c,73
+int	init_signal_interactive(33,1377
+static void	signal_handler(44,1622
+
+srcs/execution/cmd_status.c,83
+static int	status_manager(15,940
+void	set_status(24,1078
+int	get_status(29,1139
+
+srcs/execution/do_bind_pipe.c,25
+int	do_bind_pipe(17,979
+
+srcs/execution/get_exec_path.c,136
+int	get_exec_path(25,1214
+static int	check_path_relativ(35,1452
+static int	check_fullname(54,1835
+static int	check_path_env(79,2266
+
+srcs/execution/run_tree_exec.c,58
+int	run_tree_exec(23,1109
+static void	init_pfds(49,1629
+
+srcs/execution/run_line.c,54
+int	run_line(23,1129
+static int	do_exec_run(40,1467
 
 srcs/execution/do_redirect.c,193
 int	do_redirect(27,1300
@@ -562,179 +508,126 @@ static int	redirect_in(61,1873
 static int	redirect_out(81,2257
 static int	redirect_append(101,2662
 
-srcs/execution/run_line.c,54
-int	run_line(23,1129
-static int	do_exec_run(42,1561
-
-srcs/execution/do_bind_pipe.c,25
-int	do_bind_pipe(17,979
-
-srcs/execution/run_pipe_series.c,92
-int	run_pipe_series(21,1143
-static void	init_pfds(48,1731
-static void	clear_exec(58,1893
-
-srcs/execution/run_parent.c,24
-void	run_parent(16,960
-
 srcs/execution/exec_process.c,27
 pid_t	exec_process(18,999
 
 srcs/execution/run_builtin.c,180
-int	run_builtin(24,1205
-static void	*get_builtin(get_builtin51,1732
-static void	builtin_set_pipe(71,2202
-static void	builtin_close_fds(87,2562
-static void	reset_fds(101,2778
+int	run_builtin(26,1243
+static void	*get_builtin(get_builtin53,1770
+static void	builtin_set_pipe(73,2240
+static void	builtin_close_fds(89,2600
+static void	reset_fds(103,2816
 
-srcs/execution/run_tree_exec.c,58
-int	run_tree_exec(22,1089
-static void	init_pfds(46,1560
+srcs/execution/interactive_session.c,66
+int	interactive_session(23,1120
+static int	do_execution(49,1551
 
-srcs/execution/get_exec_path.c,136
-int	get_exec_path(25,1214
-static int	check_path_relativ(35,1452
-static int	check_fullname(54,1835
-static int	check_path_env(79,2266
+srcs/execution/main.c,48
+int	main(25,1118
+int	environment_init(43,1512
 
-srcs/execution/wait_all.c,90
-int	wait_all(23,1177
-static void	wait_exited(44,1554
-static void	wait_signaled(51,1704
+srcs/parser/parser2.c,118
+static t_cmd	*fill_cmd(fill_cmd18,970
+static t_parse	*create_parse(create_parse39,1431
+int	fill_cmd_line(61,1884
 
-srcs/execution/interactive_signals.c,73
-int	init_signal_interactive(33,1377
-static void	signal_handler(44,1622
+srcs/parser/split_cmd.c,99
+static size_t	count_arg(19,993
+static int	fill_cmdn2(35,1299
+char	**fill_cmdn(fill_cmdn57,1761
 
-srcs/environment/ft_freedico.c,26
-void	ft_freedico(24,1157
+srcs/parser/split_redirect.c,169
+static size_t	count_red(19,993
+static int	get_fd(34,1231
+static int	fill_red2(60,1641
+static int	fill_red(79,2150
+t_redirect	**fill_redirect(fill_redirect100,2486
 
-srcs/environment/ft_newdico.c,39
-t_dico	*ft_newdico(ft_newdico29,1292
+srcs/parser/parser.c,109
+size_t	get_n_sep(18,970
+t_parse	**create_cmd_line(create_cmd_line43,1339
+t_parse	**parser(parser57,1649
 
-srcs/environment/environment_remove.c,32
-void	environment_remove(17,979
+srcs/parser/path.c,57
+char	**get_path(get_path18,974
+int	check_path(43,1326
 
-srcs/environment/environment_get.c,47
-char	*environment_get(environment_get23,1099
+srcs/parser/astree/rec_astree.c,120
+int	p_after(16,933
+int	p_before(32,1284
+int	run_tree_left(48,1635
+int	run_tree_right(72,2124
+int	run_tree(101,2781
+
+srcs/parser/astree/astree_utils.c,124
+void	print_cmd(18,975
+void	free_tree(37,1413
+void	astree_apply_suffix(46,1528
+t_astree	*create_node(create_node55,1719
+
+srcs/parser/astree/astree.c,147
+static void	fill_t_content(16,932
+t_int_help	*fill_t_int(fill_t_int36,1344
+static int	create_astree_content(64,2129
+int	create_astree(93,2643
+
+srcs/parser/astree/display_tree.c,68
+static void	display_tree_content(17,951
+void	display_tree(46,1679
+
+srcs/parser/astree/fill_astree.c,116
+int	start_p(16,932
+int	get_next_left(33,1198
+int	get_next_right(61,1901
+t_int_help	*new_right(new_right81,2281
+
+srcs/parser/main.c,44
+int	main_content(56,1717
+int	main(79,2178
+
+srcs/environment/environment_var_compare.c,37
+int	environment_var_compare(22,1096
 
 srcs/environment/environment_copy.c,81
 t_list	*environment_copy(environment_copy23,1122
 static void	tmp_free(48,1479
 
-srcs/environment/environment_add.c,89
-t_list	*environment_add(environment_add26,1144
-static t_list	*tmp_add(tmp_add53,1619
-
-srcs/environment/environment_var_compare.c,37
-int	environment_var_compare(22,1096
-
-srcs/environment/environment_set.c,29
-int	environment_set(25,1163
+srcs/environment/ft_newdico.c,39
+t_dico	*ft_newdico(ft_newdico29,1292
 
 srcs/environment/environment_format.c,104
 char	**environment_format(environment_format26,1177
 static char	*tmp_dico_join(tmp_dico_join50,1561
 
-includes/astree.h,375
-# define ASTREE_H14,909
-typedef struct s_int_help19,970
-	int	i;21,998
-	int	min;22,1006
-	int	max;23,1016
-	int	is_open;24,1026
-	int	is_done;25,1040
-	int	depth;26,1054
-}	t_int_help;27,1066
-typedef struct s_astree29,1081
-	t_parse			*cmd;cmd31,1107
-	int				depth;32,1124
-	struct s_astree	*left;left33,1139
-	struct s_astree	*right;right34,1163
-}	t_astree;35,1188
+srcs/environment/environment_get.c,47
+char	*environment_get(environment_get23,1099
 
-includes/wildcard.h,233
-# define WILDCARD_H14,911
-# define DIR_BUFFER 20,995
-typedef struct s_wildcard22,1021
-	char	*prefix;prefix24,1049
-	char	*suffix;suffix25,1064
-	char	*dir_path;dir_path26,1079
-	char	*found;found27,1096
-}	t_wildcard;28,1110
+srcs/environment/environment_set.c,29
+int	environment_set(25,1163
 
-includes/g_minishell.h,308
-# define G_MINISHELL_H13,913
-# define PROMPT_NAME 20,1041
-typedef struct s_dictionnary22,1078
-	char	*key;key24,1109
-	char	*value;value25,1121
-}	t_dico;26,1135
-typedef struct s_clean28,1146
-	t_list		**env;env30,1171
-	t_astree	*root;root31,1187
-	t_parse		**parse;parse32,1204
-}	t_clean;33,1223
+srcs/environment/environment_remove.c,32
+void	environment_remove(17,979
 
-includes/expand.h,25
-# define EXPAND_H14,909
+srcs/environment/ft_freedico.c,26
+void	ft_freedico(24,1157
 
-includes/utils.h,24
-# define UTILS_H14,908
+srcs/environment/environment_add.c,89
+t_list	*environment_add(environment_add26,1144
+static t_list	*tmp_add(tmp_add53,1619
 
-includes/minishell.h,511
-# define MINISHELL_H14,912
-typedef enum e_io23,1084
-	IN,25,1104
-	OUT,26,1109
-	HDOC,27,1115
-	APP28,1122
-}	t_eio;29,1127
-typedef struct s_redirect31,1137
-	char	*file;file33,1165
-	int		fd;34,1178
-	t_eio	io_r;35,1188
-}	t_redirect;36,1201
-typedef struct s_cmd38,1216
-	char		*path_exec;path_exec40,1239
-	char		**cmd;cmd41,1258
-	t_redirect	**redirect;redirect42,1272
-}	t_cmd;43,1296
-# define IS_HEREDOC 45,1306
-# define NO_HEREDOC 46,1328
-# define IS_APPEND 47,1350
-# define NO_APPEND 48,1371
+srcs/tmp/astree_apply_infix.c,32
+void	astree_apply_infix(16,960
 
-includes/parser.h,148
-# define PARSER_H14,909
-# define L_PATH 21,1015
-typedef struct s_parse23,1034
-	t_token	type;25,1059
-	t_cmd	*cmd;cmd26,1074
-}	t_parse;27,1087
+srcs/tmp/ft_lstsort.c,99
+void	ft_lstsort(26,1259
+static void	ft_lstsort_init(51,1708
+static void	ft_lstsort_next(59,1853
 
-includes/lexer.h,494
-# define LEXER_H14,908
-# define BUFFER_LXM 21,1031
-typedef enum e_token23,1057
-	WORD,25,1080
-	IO_IN,26,1087
-	IO_OUT,27,1095
-	IO_HDOC,28,1104
-	IO_APP,29,1114
-	PIPE,30,1123
-	OR,31,1130
-	AND,32,1135
-	P_START,33,1141
-	P_END,34,1151
-	CMD35,1159
-}	t_token;36,1164
-typedef struct s_lxm38,1176
-	char	*data;data40,1199
-	t_token	type;41,1212
-}	t_lxm;42,1227
-typedef struct s_tokens44,1237
-	t_lxm	*tokens;tokens46,1263
-	size_t	size;47,1279
-	size_t	max;48,1293
-}	t_tokens;49,1306
+srcs/cleanable/cleanable_pop_pipe.c,32
+void	cleanable_pop_pipe(16,960
+
+srcs/cleanable/clear_cleanable.c,29
+void	clear_cleanable(18,999
+
+srcs/cleanable/cleanable_add_pipe.c,32
+void	cleanable_add_pipe(16,941

@@ -21,7 +21,6 @@ pid_t	exec_tree_add_level(t_astree *node, int *pipe_in, int *pipe_out,
 {
 	pid_t	pid;
 	int		n;
-	int		i;
 
 	pid = fork();
 	if (pid < 0)
@@ -32,14 +31,8 @@ pid_t	exec_tree_add_level(t_astree *node, int *pipe_in, int *pipe_out,
 	if (pid == 0)
 	{
 		cleanable->depth = node->depth;
-		i = 0;
-		while (i < cleanable->n_pipes)
-		{
-			close(cleanable->pipe[2 * i]);
-			close(cleanable->pipe[2 * i + 1]);
-			i++;
-		}
-		cleanable->n_pipes = 0;
+		while (cleanable->n_pipes > 0)
+			cleanable_pop_pipe(cleanable);
 		n = count_wait_tree(node, cleanable->depth);
 		pid = exec_tree(node, pipe_in, pipe_out, cleanable);
 		close(pipe_out[0]);

@@ -21,7 +21,7 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										environment_format.c\
 										environment_var_compare.c \
 										ft_newdico.c		\
-										ft_freedico.c)		 \
+										ft_freedico.c)		\
 			$(addprefix builtins/,		builtin_echo.c 		\
 										builtin_cd.c 		\
 										builtin_pwd.c		\
@@ -62,7 +62,6 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										interactive_session.c\
 										interactive_signals.c\
 										run_line.c			\
-										run_pipe_series.c	\
 										do_redirect.c		\
 										do_bind_pipe.c		\
 										run_child.c			\
@@ -79,9 +78,12 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										exec_tree_cmd.c		\
 										exec_tree_or.c		\
 										exec_tree_pipe.c	\
-										exec_tree_add_level.c\
+										exec_tree_add_level.c)\
+			$(addprefix cleanable/,		cleanable_add_pipe.c\
+										cleanable_pop_pipe.c\
 										clear_cleanable.c)	\
-			$(addprefix expand/wildcard/,wildcard.c			\
+			$(addprefix expand/,							\
+			$(addprefix wildcard/,		wildcard.c			\
 										update_wc.c			\
 										prefix_suffix.c		\
 										new_wc.c			\
@@ -90,8 +92,9 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										dir_utils.c			\
 										wc_utils.c			\
 										expand_wc.c)		\
-			$(addprefix	expand/variable/,var_expand.c)		\
-			$(addprefix expand/,		expand.c			\
+			$(addprefix	variable/,		var_expand.c)		\
+			$(addprefix quotes/,		expand_quotes.c)	\
+										expand.c			\
 										expand_loop.c		\
 										expand_utils.c)
 

@@ -20,8 +20,9 @@ void	cleanable_pop_pipe(t_clean *cleanable)
 	n = cleanable->n_pipes;
 	if (n > 0)
 	{
+		cleanable->n_pipes -= 1;
+		n--;
 		close(cleanable->pipe[2 * n]);
 		close(cleanable->pipe[2 * n + 1]);
-		cleanable->n_pipes--;
 	}
 }
