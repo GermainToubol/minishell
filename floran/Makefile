@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/30 00:00:29 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/30 01:04:49 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ UTILSSRC			:=	utils/ft_atoll.c				\
 						utils/quicksort.c				\
 						utils/free.c					\
 						utils/lst_to_tab.c				\
+						utils/strjoin_custom.c			\
 
 TREESRC				:=	parser/astree/astree.c			\
 						parser/astree/astree_utils.c	\
@@ -73,6 +74,7 @@ VARSRC				:=	expand/variable/var_expand.c	\
 
 HDOCSRC				:=	expand/hdoc/main_hdoc.c			\
 						expand/hdoc/get_hdoc.c			\
+						expand/hdoc/quotes_hdoc.c		\
 
 EXPANDSRC			:=	expand/main.c					\
 						expand/expand.c					\

@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 23:56:07 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 00:13:24 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/30 01:24:18 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,18 @@ int	main(int ac, char **av)
 	char	*file;
 	char	*file2;
 
-	if (ac == 1)
+	if (ac <= 2)
 		return (0);
 	file = ft_strdup(av[1]);
+	ft_printf("arg %s\n", file);
 	if (get_hdoc(&file))
 		return (1);
-	file2 = ft_strdup(av[1]);
+	file2 = ft_strdup(av[2]);
 	if (get_hdoc(&file2))
 		return (1);
 	ft_printf("name %s\n", file);
 	ft_printf("name %s\n", file2);
+	unlink(file);
+	unlink(file2);
 	return (0);
 }

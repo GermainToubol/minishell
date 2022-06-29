@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand.h                                           :+:      :+:    :+:   */
+/*   strjoin_custom.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/21 17:07:13 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 01:01:50 by fmauguin         ###   ########.fr       */
+/*   Created: 2022/06/30 01:00:43 by fmauguin          #+#    #+#             */
+/*   Updated: 2022/06/30 01:01:41 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXPAND_H
-# define EXPAND_H
+#include "utils.h"
+#include <stdlib.h>
 
-# include <stdlib.h>
+int	strjoin_custom(char **dest, char *src)
+{
+	char	*tmp;
 
-char		**do_expand(char **cmd);
-char		**expand_loop_end(char ***new_cmd);
-char		**expand_wc(char *cmd);
-char		**do_basic(char *cmd);
-
-void		free_tab3(char ***tab);
-
-size_t		tab3_size(char ***new_cmd);
-
-char		*expand_var(const char *cmd);
-char		*expand_quotes(const char *cmd);
-
-#endif
+	if (!src)
+		return (display_error("Error allocation\n", 0), 1);
+	if (!*dest)
+		*dest = src;
+	else
+	{
+		tmp = ft_strjoin(*dest, src);
+		free(src);
+		if (!tmp)
+			return (display_error("Error allocation\n", 0), 1);
+		free(*dest);
+		*dest = tmp;
+	}
+	return (0);
+}
