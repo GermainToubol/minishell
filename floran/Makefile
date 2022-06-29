@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/30 01:04:49 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/30 01:40:03 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,6 +75,7 @@ VARSRC				:=	expand/variable/var_expand.c	\
 HDOCSRC				:=	expand/hdoc/main_hdoc.c			\
 						expand/hdoc/get_hdoc.c			\
 						expand/hdoc/quotes_hdoc.c		\
+						expand/hdoc/tmp_filename.c		\
 
 EXPANDSRC			:=	expand/main.c					\
 						expand/expand.c					\
