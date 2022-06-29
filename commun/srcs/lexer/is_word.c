@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 17:18:36 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/25 16:56:42 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/29 19:22:23 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static int	is_quote_content(char *line, size_t *i)
 	{
 		if (!sq_open && !dq_open && (line[*i] == ' ' || line[*i] == '\t'
 				|| line[*i] == '|' || line[*i] == '&' || line[*i] == '>'
-				|| line[*i] == '<' || line[*i] == '\0'))
+				|| line[*i] == '<' || line[*i] == '\0' || line[*i] == '('
+				|| line[*i] == ')'))
 			break ;
 		if (line[*i] == '\'' && !dq_open)
 			sq_open = !sq_open;
