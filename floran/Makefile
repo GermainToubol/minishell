@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/26 17:10:22 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/30 00:00:29 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,6 +71,9 @@ VARSRC				:=	expand/variable/var_expand.c	\
 						expand/quotes/expand_quotes.c	\
 						expand/variable/main.c			\
 
+HDOCSRC				:=	expand/hdoc/main_hdoc.c			\
+						expand/hdoc/get_hdoc.c			\
+
 EXPANDSRC			:=	expand/main.c					\
 						expand/expand.c					\
 						expand/expand_loop.c			\
@@ -86,6 +89,7 @@ OPTFLAG				:=	-g
 NAME				:=	$(PROGNAME)
 WILDCARD			:=	wildcard
 VARIABLE			:=	var
+HDOC				:=	hdoc
 
 OUTDIR				:=	$(OBJDIR)
 
@@ -111,6 +115,9 @@ $(WILDCARD)			:	$(addprefix $(OUTDIR)/,$(EXPANDSRC:.c=.o)) $(addprefix $(OUTDIR)
 
 $(VARIABLE)			:	$(addprefix $(OUTDIR)/,$(VARSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(LIBFT)
 	$(CC) $(CCFLAGS) $(OPTFLAG) -o $(VARIABLE) $(addprefix $(OUTDIR)/,$(VARSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(LIBFT) $(LIBFLAGS)
+
+$(HDOC)			:	$(addprefix $(OUTDIR)/,$(HDOCSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(LIBFT)
+	$(CC) $(CCFLAGS) $(OPTFLAG) -o $(HDOC) $(addprefix $(OUTDIR)/,$(HDOCSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(LIBFT) $(LIBFLAGS)
 
 all					:	$(NAME)
 
@@ -161,3 +168,4 @@ re					:	fclean
 -include	$(addprefix $(OUTDIR)/,$(EXPANDSRC:.c=.d))
 -include	$(addprefix $(OUTDIR)/,$(WCSRC:.c=.d))
 -include	$(addprefix $(OUTDIR)/,$(VARSRC:.c=.d))
+-include	$(addprefix $(OUTDIR)/,$(HDOCSRC:.c=.d))
