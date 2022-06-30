@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 22:50:53 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 01:51:23 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/30 02:56:54 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-static int	create_hdoc_loop(char *eof)
+static int	create_hdoc_loop(char *eof, int fd)
 {
 	char	*line;
 
@@ -35,8 +35,8 @@ static int	create_hdoc_loop(char *eof)
 			break ;
 		else if (!eof && !line[0])
 			break ;
-		write (4, line, ft_strlen(line));
-		write (4, "\n", 1);
+		write (fd, line, ft_strlen(line));
+		write (fd, "\n", 1);
 	}
 	free(line);
 	return (0);
@@ -48,15 +48,16 @@ static int	create_hdoc(char **hdoc)
 	int		hdoc_fd;
 
 	hdoc_name = tmp_filename();
-	if (!hdoc)
+	if (!hdoc_name)
 		return (1);
 	hdoc_fd = open(hdoc_name, O_WRONLY | O_CREAT | O_EXCL | O_TRUNC, 0600);
 	if (hdoc_fd == -1)
 		return (free(hdoc_name), -1);
-	if (dup2(hdoc_fd, 4) == -1)
-		return (free(hdoc_name), -1);
-	if (create_hdoc_loop(*hdoc))
+	if (create_hdoc_loop(*hdoc, hdoc_fd))
+	{
+		close(hdoc_fd);
 		return (free(hdoc_name), 1);
+	}
 	close(hdoc_fd);
 	free(*hdoc);
 	*hdoc = hdoc_name;
@@ -70,17 +71,16 @@ static int	create_hdoc_q(char **hdoc)
 	int		hdoc_fd;
 
 	hdoc_name = tmp_filename_q();
-	if (!hdoc)
+	if (!hdoc_name)
 		return (1);
 	hdoc_fd = open(hdoc_name, O_WRONLY | O_CREAT | O_EXCL | O_TRUNC, 0600);
 	if (hdoc_fd == -1)
 		return (free(hdoc_name), -1);
-	if (dup2(hdoc_fd, 4) == -1)
-		return (free(hdoc_name), -1);
 	eof = quotes_hdoc(*hdoc);
-	if (create_hdoc_loop(eof))
+	if (create_hdoc_loop(eof, hdoc_fd))
 	{
 		free(hdoc_name);
+		close(hdoc_fd);
 		return (free(eof), 1);
 	}
 	free(eof);

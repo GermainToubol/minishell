@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 16:05:10 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/26 18:33:49 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/30 02:44:21 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,26 +34,6 @@ static int	get_var(const char *cmd, size_t *i, char **ret)
 	*ret = ft_strdup(*ret);
 	if (!ret)
 		return (display_error("Error allocation\n", 0), 1);
-	return (0);
-}
-
-int	strjoin_custom(char **dest, char *src)
-{
-	char	*tmp;
-
-	if (!src)
-		return (display_error("Error allocation\n", 0), 1);
-	if (!*dest)
-		*dest = src;
-	else
-	{
-		tmp = ft_strjoin(*dest, src);
-		free(src);
-		if (!tmp)
-			return (display_error("Error allocation\n", 0), 1);
-		free(*dest);
-		*dest = tmp;
-	}
 	return (0);
 }
 

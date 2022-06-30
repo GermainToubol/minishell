@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 16:46:09 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/26 19:18:59 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/30 02:44:15 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 static int	rec_quote(const char *cmd, size_t i, char **ret);
 
-size_t	i_matching_quote(const char *cmd, size_t start)
+static size_t	i_matching_quote(const char *cmd, size_t start)
 {
 	char	quote;
 
