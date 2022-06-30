@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 07:13:19 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/20 21:42:14 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/30 14:25:25 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,10 @@ int			word_redirect(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i);
 
 //ALLOC
 int			tokens_alloc(t_tokens *tokens);
+
+int			set_hdoc(char **hdoc);
+char		*quotes_hdoc(const char *cmd);
+char		*tmp_filename(void);
+char		*tmp_filename_q(void);
 
 #endif

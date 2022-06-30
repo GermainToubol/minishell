@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 17:18:36 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/25 16:56:42 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/30 14:52:26 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static int	is_quote_content(char *line, size_t *i)
 	{
 		if (!sq_open && !dq_open && (line[*i] == ' ' || line[*i] == '\t'
 				|| line[*i] == '|' || line[*i] == '&' || line[*i] == '>'
-				|| line[*i] == '<' || line[*i] == '\0'))
+				|| line[*i] == '<' || line[*i] == '\0' || line[*i] == '('
+				|| line[*i] == ')'))
 			break ;
 		if (line[*i] == '\'' && !dq_open)
 			sq_open = !sq_open;
@@ -103,24 +104,25 @@ static int	is_var(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i)
 int	is_word(char *line, t_lxm *lxm, t_tokens *tokens)
 {
 	size_t	i;
+	size_t	is_word;
 
 	i = 0;
+	is_word = tokens->size;
 	if (is_word_basic(line, lxm, tokens, &i) == -1)
 		return (-1);
-	if (i > 0 && (line[i] == '>' || line[i] == '<'))
-	{
-		if (word_redirect(line, lxm, tokens, &i))
-			return (-1);
-	}
-	if (*line == '$')
-	{
-		if (is_var(line, lxm, tokens, &i))
-			return (-1);
-	}
+	if (i > 0 && (line[i] == '>' || line[i] == '<')
+		&& word_redirect(line, lxm, tokens, &i))
+		return (-1);
+	if (*line == '$' && is_var(line, lxm, tokens, &i))
+		return (-1);
 	else if (line[i] == '"' || line[i] == '\'')
 	{
 		if (is_quote(line, lxm, tokens, &i) == -1)
 			return (-1);
 	}
+	if (is_word != tokens->size && tokens->size > 1
+		&& tokens->tokens[tokens->size - 2].type == IO_HDOC
+		&& lxm->type == WORD && set_hdoc(&lxm->data))
+		return (-1);
 	return (i);
 }

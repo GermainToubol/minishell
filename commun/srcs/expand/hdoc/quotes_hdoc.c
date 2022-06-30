@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_quotes.c                                    :+:      :+:    :+:   */
+/*   quotes_hdoc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 16:46:09 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 18:38:40 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/30 02:44:11 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,10 @@ static size_t	i_matching_quote(const char *cmd, size_t start)
 static int	rec_do_quotes(const char *cmd, size_t *i,
 				char **ret, char *tmp)
 {
-	char	*tmp2;
-
 	if (cmd[*i] == '\'' && strjoin_custom(ret, tmp))
 		return (1);
-	else if (cmd[*i] == '"')
-	{
-		tmp2 = expand_var(tmp);
-		free(tmp);
-		if (tmp2 && strjoin_custom(ret, tmp2))
-			return (1);
-	}
+	else if (cmd[*i] == '"' && strjoin_custom(ret, tmp))
+		return (1);
 	return (0);
 }
 
@@ -62,8 +55,6 @@ static int	rec_quote_content(const char *cmd, size_t *i, char **ret)
 		if (rec_do_quotes(cmd, i, ret, tmp))
 			return (1);
 	}
-	else if (strjoin_custom(ret, ft_strdup("")))
-		return (1);
 	if (rec_quote(cmd, *i + 1, ret))
 		return (1);
 	return (0);
@@ -72,7 +63,6 @@ static int	rec_quote_content(const char *cmd, size_t *i, char **ret)
 static int	rec_quote(const char *cmd, size_t i, char **ret)
 {
 	size_t	start;
-	char	*tmp;
 
 	if (!cmd[i])
 		return (0);
@@ -80,20 +70,14 @@ static int	rec_quote(const char *cmd, size_t i, char **ret)
 	while (cmd[i] && cmd[i] != '\'' && cmd[i] != '"')
 		i++;
 	if (i > start)
-	{
-		tmp = ft_substr(cmd, start, i - start);
-		if (!tmp)
-			return (display_error("Error allocation\n", 0), 1);
-		if (strjoin_custom(ret, expand_var(tmp)))
-			return (free(tmp), 1);
-		free(tmp);
-	}
+		if (strjoin_custom(ret, ft_substr(cmd, start, i - start)))
+			return (1);
 	if (cmd[i] && rec_quote_content(cmd, &i, ret))
 		return (1);
 	return (0);
 }
 
-char	*expand_quotes(const char *cmd)
+char	*quotes_hdoc(const char *cmd)
 {
 	char	*ret;
 
