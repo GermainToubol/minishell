@@ -21,24 +21,25 @@ int	builtin_echo(int argc, char **argv, t_list **env)
 {
 	int	n_arg;
 	int	i;
+	int	status;
 
 	(void)env;
-	n_arg = 0;
 	i = 1;
 	n_arg = check_n_option(argc, argv);
 	i += n_arg;
-	while (i < argc)
+	status = 0;
+	while (i < argc && status >= 0)
 	{
-		ft_putstr_fd(argv[i], 1);
+		status = ft_printf("%s", argv[i]);
 		i++;
 		if (i < argc)
-			ft_putchar_fd(' ', 1);
+			status = ft_printf(" ");
 	}
 	if (n_arg == 0)
-		ft_putchar_fd('\n', 1);
-	if (errno != 0)
+		status = ft_printf("\n");
+	if (status < 0)
 	{
-		perror("minishell: echo");
+		perror("minishell: echo: write error");
 		return (1);
 	}
 	return (0);

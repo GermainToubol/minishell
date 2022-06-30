@@ -32,9 +32,9 @@ int	ft_printf_str(const int fd, char *str, t_convert *convert)
 	if (!convert->leftify)
 		len += ft_printf_padding(fd, size_to_print, convert);
 	if (str == NULL)
-		len += write(fd, "(null)", size_to_print);
+		len += ft_printf_write(fd, "(null)", size_to_print);
 	else
-		len += write(fd, str, size_to_print);
+		len += ft_printf_write(fd, str, size_to_print);
 	len += ft_printf_padding(fd, len, convert);
 	return (len);
 }

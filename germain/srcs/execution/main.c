@@ -30,6 +30,7 @@ int	main(int argc, char **argv, char **env)
 	env_lst = environment_copy(env);
 	if (env_lst == NULL && env[0] != NULL)
 		return (1);
+	environment_update(env_lst);
 	if (environment_init(&env_lst) != 0)
 		return (1);
 	if (argc == 1 && isatty(0))
@@ -37,7 +38,7 @@ int	main(int argc, char **argv, char **env)
 	if (argc == 3)
 		run_line(ft_strdup(argv[2]), &env_lst);
 	ft_lstclear(&env_lst, ft_freedico);
-	return (0);
+	return (get_status());
 }
 
 int	environment_init(t_list	**env_lst)

@@ -9,6 +9,7 @@
 /*   Updated: 2022/05/09 09:50:11 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <limits.h>
 #include "libft.h"
 
 static int	ft_isspace(char c);
@@ -32,6 +33,10 @@ int	ft_atoi(const char *s)
 	}
 	while (s[i] >= '0' && s[i] <= '9')
 	{
+		if (sign > 0 && (INT_MAX - s[i] + '0') / 10 < n)
+			return (0);
+		if (sign < 0 && (-2147483648 + s[i] - '0') / 10 > -n)
+			return (0);
 		n = 10 * n + (s[i] - '0');
 		i++;
 	}

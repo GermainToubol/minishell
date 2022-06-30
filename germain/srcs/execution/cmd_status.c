@@ -17,7 +17,7 @@ static int	status_manager(int status, int action)
 	static int	_status = 0;
 
 	if (action == 1)
-		_status = status;
+		_status = status & 0xff;
 	return (_status);
 }
 
@@ -29,4 +29,12 @@ void	set_status(int status)
 int	get_status(void)
 {
 	return (status_manager(0, 0));
+}
+
+char	*get_status_str(void)
+{
+	static char	str[2] = {'0', '\0'};
+
+	str[0] = get_status() + '0';
+	return (ft_strdup(str));
 }

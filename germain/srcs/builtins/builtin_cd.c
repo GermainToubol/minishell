@@ -37,11 +37,14 @@ int	builtin_cd(int argc, char **argv, t_list **env)
 {
 	int		re;
 	char	*target;
+	char	buffer[4096];
 
 	if (cd_errors(argc, argv, *env) != 0)
 		return (1);
 	if (argc == 1)
 		target = cd_path_to_go(NULL, *env);
+	else if (argv[1] == NULL)
+		return (1);
 	else
 		target = cd_path_to_go(argv[1], *env);
 	if (target == NULL)
@@ -52,6 +55,11 @@ int	builtin_cd(int argc, char **argv, t_list **env)
 	re = cd_change_dir(target, env);
 	if (re != 0)
 		ft_fprintf(2, "minishell: cd: %s: %s\n", argv[1], strerror(errno));
+	if (argv[1] != NULL && ft_strcmp(argv[1], "-") == 0 && ft_printf("%s\n", getcwd(buffer, 4096)) < 0)
+	{
+		perror("minishell: cd: write error");
+		re = 1;
+	}
 	return (re);
 }
 

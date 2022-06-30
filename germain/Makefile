@@ -19,10 +19,12 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										environment_set.c	\
 										environment_get.c	\
 										environment_format.c\
-										environment_var_compare.c \
+										environment_var_compare.c\
+										environment_update.c\
 										ft_newdico.c		\
 										ft_freedico.c)		\
-			$(addprefix signals/,		manage_pid.c)		\
+			$(addprefix signals/,		manage_pid.c		\
+										pid_utils.c)		\
 			$(addprefix builtins/,		builtin_echo.c 		\
 										builtin_cd.c 		\
 										builtin_pwd.c		\
@@ -53,7 +55,9 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										ft_lst_remove_if.c	\
 										str_utils.c			\
 										quicksort.c			\
-										lst_to_tab.c)		\
+										lst_to_tab.c		\
+										strjoin_custom.c	\
+										clean_hdoc.c)		\
 			$(addprefix parser/astree/,	astree.c			\
 										astree_utils.c		\
 										fill_astree.c\
@@ -95,6 +99,10 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										expand_wc.c)		\
 			$(addprefix	variable/,		var_expand.c)		\
 			$(addprefix quotes/,		expand_quotes.c)	\
+			$(addprefix hdoc/,			get_hdoc.c			\
+										set_hdoc.c			\
+										quotes_hdoc.c		\
+										tmp_filename.c)		\
 										expand.c			\
 										expand_loop.c		\
 										expand_utils.c)

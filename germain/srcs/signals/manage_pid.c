@@ -19,7 +19,9 @@
 
 static int	_add_pid(pid_t pid, t_list **pid_list)
 {
-	new = ft_lstnew((long)pid);
+	t_list	*new;
+
+	new = ft_lstnew((void *)(long)pid);
 	if (new == NULL)
 	{
 		ft_fprintf(2, "minishell: Memory allocation error");
@@ -68,15 +70,16 @@ static int	_signal_all(t_list *pid_list)
 	while (tmp != NULL)
 	{
 		pid = (int)(long)tmp->content;
-		kill(pid, SIGTERM);
+		kill(pid, SIGINT);
 		tmp = tmp->next;
 	}
+	manage_pid_list(0, -2);
 	return (0);
 }
 
 int	manage_pid_list(pid_t pid, int action)
 {
-	static	t_list	*pid_list;
+	static t_list	*pid_list;
 
 	if (action == 1)
 		return (_add_pid(pid, &pid_list));

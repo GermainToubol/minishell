@@ -50,5 +50,5 @@ static void	putnbr_unsigned(const int fd, unsigned int nbr)
 	digits = "0123456789";
 	if (nbr > 9)
 		putnbr_unsigned(fd, nbr / 10);
-	ft_putchar_fd(digits[nbr % 10], fd);
+	ft_printf_write(fd, digits + nbr % 10, fd);
 }

@@ -98,8 +98,12 @@ typedef struct s_convert
 
 }	t_convert;
 
+# define PRINT_BUFFER_SIZE 30000
+
 int			ft_printf(const char *format, ...);
 int			ft_fprintf(const int fd, const char *format, ...);
+
+int			ft_printf_write(int fd, char *str, int n);
 
 int			ft_printf_char(const int fd, char c, t_convert *convert);
 int			ft_printf_str(const int fd, char *str, t_convert *convert);

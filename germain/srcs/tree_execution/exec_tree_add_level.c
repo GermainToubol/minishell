@@ -16,6 +16,8 @@
 #include "minishell.h"
 #include "g_minishell.h"
 
+static void	close_pipes(int *pipe_fds);
+
 pid_t	exec_tree_add_level(t_astree *node, int *pipe_in, int *pipe_out,
 			t_clean *cleanable)
 {
@@ -35,13 +37,22 @@ pid_t	exec_tree_add_level(t_astree *node, int *pipe_in, int *pipe_out,
 			cleanable_pop_pipe(cleanable);
 		n = count_wait_tree(node, cleanable->depth);
 		pid = exec_tree(node, pipe_in, pipe_out, cleanable);
-		close(pipe_out[0]);
-		close(pipe_out[1]);
+		close_pipes(pipe_out);
 		clear_cleanable(cleanable);
 		wait_all(n, pid);
 		exit(get_status());
 	}
-	close(pipe_in[0]);
-	close(pipe_in[1]);
+	close_pipes(pipe_in);
+	if (pid_extend_list(pid))
+		return (-1);
 	return (pid);
+}
+
+static void	close_pipes(int *pipe_fds)
+{
+	if (pipe_fds[0] != -2)
+	{
+		close(pipe_fds[0]);
+		close(pipe_fds[1]);
+	}
 }

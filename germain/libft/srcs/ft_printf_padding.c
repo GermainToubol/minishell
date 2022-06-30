@@ -37,7 +37,7 @@ int	ft_printf_padding(const int fd, int len, t_convert *convert)
 	n = 0;
 	while (len + i < convert->padd_size)
 	{
-		n += write(fd, &(convert->padd_char), 1);
+		n += ft_printf_write(fd, &(convert->padd_char), 1);
 		i++;
 	}
 	convert->padd_size = 0;

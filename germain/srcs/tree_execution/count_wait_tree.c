@@ -16,7 +16,11 @@
 
 int	count_wait_tree(t_astree *root, int depth)
 {
-	if (root->depth > depth || root->cmd->type == CMD)
+	if (root->depth > depth)
+		return (1);
+	if (root->cmd->type == CMD && is_builtin(root->cmd))
+		return (0);
+	if (root->cmd->type == CMD)
 		return (1);
 	if (root->cmd->type == AND || root->cmd->type == OR)
 		return (0);

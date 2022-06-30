@@ -59,6 +59,8 @@ int		environment_set(t_list *env, char *name, char *value);
 char	*environment_get(t_list *env, char *name);
 char	**environment_format(t_list *env);
 int		environment_var_compare(void *content1, void *content2);
+void	environment_update(t_list *env);
+t_list	*environment_call(void);
 
 /* MEMORY MANAGEMENT */
 int		local_memory_manager(void *ptr, int action, int flag);
@@ -74,7 +76,8 @@ int		run_pipe_series(t_parse **parse, t_list **env);
 int		do_redirect(t_parse *parse);
 int		do_bind_pipe(int *pfd);
 int		get_exec_path(t_parse *parse, t_list **env);
-pid_t	exec_process(t_parse *parse, t_clean *cleanable, int *pipe_in, int *pipe_out);
+pid_t	exec_process(t_parse *parse, t_clean *cleanable,
+			int *pipe_in, int *pipe_out);
 void	run_child(t_parse *parse, t_list **env, int *pipe_in, int *pipe_out);
 void	run_parent(int *pipe_in);
 int		run_builtin(t_parse *parse, t_list **env, int *pipe_in, int *pipe_out);
@@ -107,10 +110,14 @@ int		set_outpipe(int *pipe_fds);
 /* STATUS MANAGEMENT */
 void	set_status(int status);
 int		get_status(void);
+char	*get_status_str(void);
 
 /* PID AND RELATED MEMORY */
-void	extend_pid_list(pid_t pid);
-void	free_pid_list(pid_t	pid);
+int		manage_pid_list(pid_t pid, int action);
+int		pid_extend_list(pid_t pid);
+int		pid_signal_all(void);
+int		pid_clear_list(void);
+int		pid_remove_pid(pid_t pid);
 
 /* BUILTIN */
 int		builtin_cd(int argc, char **argv, t_list **env);
@@ -119,7 +126,7 @@ int		builtin_export(int argc, char **argv, t_list **env);
 int		builtin_unset(int argc, char **argv, t_list **env);
 int		builtin_env(int argc, char **argv, t_list **env);
 int		builtin_echo(int argc, char **argv, t_list **env);
-int		builtin_exit(void);
+int		builtin_exit(int argc, char **argv, t_list **env);
 int		get_exit_state(void);
 int		is_builtin(t_parse *parse);
 

@@ -23,7 +23,7 @@ int	ft_printf_ptr(const int fd, void *ptr, t_convert *convert)
 		convert->padd_char = ' ';
 		if (!convert->leftify)
 			len += ft_printf_padding(fd, 5, convert);
-		len += write(fd, "(nil)", 5);
+		len += ft_printf_write(fd, "(nil)", 5);
 		len += ft_printf_padding(fd, len, convert);
 		return (len);
 	}
