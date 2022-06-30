@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/30 14:15:55 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/30 18:54:31 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,6 @@ WCSRC				:=	expand/wildcard/wildcard.c		\
 
 VARSRC				:=	expand/variable/var_expand.c	\
 						expand/quotes/expand_quotes.c	\
-						expand/variable/main.c			\
 
 HDOCSRC				:=	expand/hdoc/get_hdoc.c			\
 						expand/hdoc/set_hdoc.c			\
@@ -116,8 +115,8 @@ $(OUTDIR)/%.o		:	$(SRCDIR)/%.c | $(OUTDIR)
 $(NAME)				:	$(addprefix $(OUTDIR)/,$(LEXERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(HDOCSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(PARSERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(TREESRC:.c=.o)) $(LIBFT)
 	$(CC) $(CCFLAGS) $(OPTFLAG) -o $(NAME) $(addprefix $(OUTDIR)/,$(LEXERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(HDOCSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(PARSERSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(TREESRC:.c=.o)) $(LIBFT) $(LIBFLAGS)
 
-$(WILDCARD)			:	$(addprefix $(OUTDIR)/,$(EXPANDSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(WCSRC:.c=.o)) $(LIBFT)
-	$(CC) $(CCFLAGS) $(OPTFLAG) -o $(WILDCARD) $(addprefix $(OUTDIR)/,$(EXPANDSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(WCSRC:.c=.o)) $(LIBFT) $(LIBFLAGS)
+$(WILDCARD)			:	$(addprefix $(OUTDIR)/,$(VARSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(EXPANDSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(WCSRC:.c=.o)) $(LIBFT)
+	$(CC) $(CCFLAGS) $(OPTFLAG) -o $(WILDCARD) $(addprefix $(OUTDIR)/,$(VARSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(EXPANDSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(WCSRC:.c=.o)) $(LIBFT) $(LIBFLAGS)
 
 $(VARIABLE)			:	$(addprefix $(OUTDIR)/,$(VARSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(LIBFT)
 	$(CC) $(CCFLAGS) $(OPTFLAG) -o $(VARIABLE) $(addprefix $(OUTDIR)/,$(VARSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(LIBFT) $(LIBFLAGS)

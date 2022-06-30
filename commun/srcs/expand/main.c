@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 17:34:19 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/22 16:25:55 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/30 19:18:15 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,19 @@ char	**new_tab(const char **av, int size)
 	return (ret);
 }
 
-int	main(int ac, const char **av)
+int	main(void)
 {
 	char	**lst;
 	char	**new;
+	char	*line;
 	size_t	i;
 
-	if (ac < 2)
-		return (display_error("Error\nusage: ./wildcard [path]\n", 0), 1);
 	ft_printf("\x1b[32mWelcome to wildcard\n\x1b[0m");
-	lst = new_tab(av, ac);
+	line = readline("> ");
+	if (!line)
+		return (1);
+	lst = ft_split(line, ' ');
+	free(line);
 	if (!lst)
 		return (1);
 	new = do_expand(lst);
