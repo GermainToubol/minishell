@@ -28,7 +28,7 @@ SRCS =		ft_atoi.c ft_bzero.c ft_calloc.c ft_fprintf.c ft_free_split.c	\
 			ft_strlcat.c ft_strlcpy.c ft_strlen.c ft_strmapi.c				\
 			ft_strncmp.c ft_strnstr.c ft_strrchr.c ft_strtrim.c				\
 			ft_substr.c ft_tolower.c ft_toupper.c get_next_line.c			\
-			get_next_line_fds.c get_next_line_utils_fds.c
+			get_next_line_fds.c get_next_line_utils_fds.c ft_printf_write.c
 
 # List of the related directories
 # -------------------------------------------------------------------------

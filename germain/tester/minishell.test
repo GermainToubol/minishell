@@ -1,0 +1,5 @@
+ls
+cat minishell.test
+yes | head
+yes | cat | cat | cat | head
+yes | cat | cat | cat | (cat | cat | cat ) | head

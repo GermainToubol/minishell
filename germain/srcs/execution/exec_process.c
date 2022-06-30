@@ -80,9 +80,10 @@ pid_t	exec_process(t_parse *parse, t_clean *cleanable,
 		while (cleanable->n_pipes > 0)
 			cleanable_pop_pipe(cleanable);
 		run_child(parse, cleanable->env, pipe_in, pipe_out);
-		exit(0);
+		exit(get_status());
 	}
-	if (pid > 0)
-		run_parent(pipe_in);
+	if (pid_extend_list(pid))
+		return (-1);
+	run_parent(pipe_in);
 	return (pid);
 }

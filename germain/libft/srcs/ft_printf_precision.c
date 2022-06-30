@@ -21,7 +21,7 @@ int	ft_printf_precision(const int fd, t_convert *convert)
 	i = 0;
 	while (i < convert->precision)
 	{
-		n += write(fd, "0", 1);
+		n += ft_printf_write(fd, "0", 1);
 		i++;
 	}
 	return (n);

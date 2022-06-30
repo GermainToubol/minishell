@@ -19,10 +19,12 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										environment_set.c	\
 										environment_get.c	\
 										environment_format.c\
-										environment_var_compare.c \
+										environment_var_compare.c\
+										environment_update.c\
 										ft_newdico.c		\
 										ft_freedico.c)		\
-			$(addprefix signals/,		manage_pid.c)		\
+			$(addprefix signals/,		manage_pid.c		\
+										pid_utils.c)		\
 			$(addprefix builtins/,		builtin_echo.c 		\
 										builtin_cd.c 		\
 										builtin_pwd.c		\

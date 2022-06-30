@@ -46,7 +46,7 @@ int	builtin_export(int argc, char **argv, t_list **env)
 		}
 		i++;
 	}
-	return (re);
+	return (environment_update(*env), re);
 }
 
 static int	show_export(t_list	**env)

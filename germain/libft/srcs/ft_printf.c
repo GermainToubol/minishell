@@ -15,6 +15,8 @@
 
 static int	put_print(va_list args, t_convert *convert);
 static int	normal_write(int *i, char *fmt, int *valid);
+static void	init_args(int *n, int *i, int *valid);
+static int	n_reafect(int n, int to_add);
 
 int	ft_printf(const char *format, ...)
 {
@@ -24,24 +26,23 @@ int	ft_printf(const char *format, ...)
 	va_list		args;
 	t_convert	convert;
 
-	n = 0;
-	i = 0;
-	valid = 1;
+	init_args(&n, &i, &valid);
 	va_start(args, format);
-	while (format[i] != '\0')
+	while (format[i] != '\0' && n >= 0)
 	{
 		if (format[i] != '%' || !valid)
 		{
-			n += normal_write(&i, (char *)format + i, &valid);
+			n += n_reafect(n, normal_write(&i, (char *)format + i, &valid));
 			continue ;
 		}
 		valid = set_arguments((char *)format + i, &convert);
 		if (!valid)
 			continue ;
 		i += valid;
-		n += put_print(args, &convert);
+		n += n_reafect(n, put_print(args, &convert));
 	}
 	va_end(args);
+	n += n_reafect(n, ft_printf_write(1, NULL, -1));
 	return (n);
 }
 
@@ -73,8 +74,22 @@ static int	normal_write(int *i, char *fmt, int *valid)
 {
 	int	n;
 
-	n = write(1, fmt, 1);
+	n = ft_printf_write(1, fmt, 1);
 	*i += 1;
 	*valid = 1;
 	return (n);
+}
+
+static void	init_args(int *n, int *i, int *valid)
+{
+	*n = 0;
+	*i = 0;
+	*valid = 1;
+}
+
+static int	n_reafect(int n, int to_add)
+{
+	if (to_add < 0)
+		return (-n - 1);
+	return (to_add);
 }

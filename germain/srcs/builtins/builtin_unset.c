@@ -32,6 +32,7 @@ int	builtin_unset(int argc, char **argv, t_list **env)
 			ft_fprintf(2, "minishell: unset: `%s': not a valid identifier\n");
 		i++;
 	}
+	environment_update(*env);
 	return (0);
 }
 

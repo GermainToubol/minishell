@@ -44,13 +44,13 @@ int	ft_printf_int(const int fd, int n, t_convert *convert)
 static void	printf_sign(const int fd, int n, t_convert *convert)
 {
 	if (n < 0)
-		ft_putchar_fd('-', fd);
+		ft_printf_write(fd, "-", 1);
 	else
 	{
 		if (convert->sign == 1)
-			ft_putchar_fd(' ', fd);
+			ft_printf_write(fd, " ", 1);
 		if (convert->sign == 2)
-			ft_putchar_fd('+', fd);
+			ft_printf_write(fd, "+", 1);
 	}
 }
 
@@ -78,5 +78,5 @@ static void	printf_nbr(const int fd, int n)
 		sign = -1;
 	if (sign * n > 9 || sign * n < 0)
 		printf_nbr(fd, sign * (n / 10));
-	ft_putchar_fd(digits[sign * (n % 10)], fd);
+	ft_printf_write(fd, digits + sign * (n % 10), 1);
 }

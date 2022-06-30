@@ -14,5 +14,5 @@
 
 int	ft_printf_percent(const int fd)
 {
-	return (write(fd, "%", 1));
+	return (ft_printf_write(fd, "%", 1));
 }

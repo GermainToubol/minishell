@@ -26,7 +26,7 @@ int	ft_printf_hex_base(const int fd, unsigned int nbr, char *charset,
 	{
 		if (!convert->leftify && convert->padd_char == ' ')
 			len += ft_printf_padding(fd, len + 2, convert);
-		len += write(fd, charset + 16, 2);
+		len += ft_printf_write(fd, charset + 16, 2);
 		if (!convert->leftify && convert->padd_char == '0')
 			len += ft_printf_padding(fd, len, convert);
 	}
@@ -60,5 +60,5 @@ static void	putnbr_hex(const int fd, unsigned int nbr, char *charset)
 		return ;
 	if (nbr > 15)
 		putnbr_hex(fd, nbr / 16, charset);
-	ft_putchar_fd(charset[nbr % 16], fd);
+	ft_printf_write(fd, charset + nbr % 16, 1);
 }
