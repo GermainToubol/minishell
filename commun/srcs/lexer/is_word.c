@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 17:18:36 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 14:46:09 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/30 14:51:18 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,16 +110,11 @@ int	is_word(char *line, t_lxm *lxm, t_tokens *tokens)
 	is_word = tokens->size;
 	if (is_word_basic(line, lxm, tokens, &i) == -1)
 		return (-1);
-	if (i > 0 && (line[i] == '>' || line[i] == '<'))
-	{
-		if (word_redirect(line, lxm, tokens, &i))
-			return (-1);
-	}
-	if (*line == '$')
-	{
-		if (is_var(line, lxm, tokens, &i))
-			return (-1);
-	}
+	if (i > 0 && (line[i] == '>' || line[i] == '<')
+		&& word_redirect(line, lxm, tokens, &i))
+		return (-1);
+	if (*line == '$' && is_var(line, lxm, tokens, &i))
+		return (-1);
 	else if (line[i] == '"' || line[i] == '\'')
 	{
 		if (is_quote(line, lxm, tokens, &i) == -1)
