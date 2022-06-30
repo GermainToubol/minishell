@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 22:50:53 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 02:56:54 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/30 11:07:03 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,40 @@
 static int	create_hdoc_loop(char *eof, int fd)
 {
 	char	*line;
+	int		len_line;
 
 	line = NULL;
 	while (1)
 	{
 		free(line);
-		line = readline("> ");
+		line = get_next_line(0);
 		if (!line)
-			return (1);
-		if (eof && !ft_strcmp(line, eof))
+			return (0);
+		len_line = ft_strlen(line);
+		if (eof && !ft_strncmp(eof, line, len_line - 1)
+			&& !eof[len_line - 1])
 			break ;
 		else if (!eof && !line[0])
 			break ;
-		write (fd, line, ft_strlen(line));
-		write (fd, "\n", 1);
+		write (fd, line, len_line);
 	}
 	free(line);
 	return (0);
+}
+
+static int	clean_hdoc(char *name, void *ptr, int fd, int out)
+{
+	if (ptr)
+		free(ptr);
+	if (fd > 0)
+		close(fd);
+	if (name)
+	{
+		if (unlink(name) == -1)
+			return (-1);
+		free(name);
+	}
+	return (out);
 }
 
 static int	create_hdoc(char **hdoc)
@@ -54,10 +71,7 @@ static int	create_hdoc(char **hdoc)
 	if (hdoc_fd == -1)
 		return (free(hdoc_name), -1);
 	if (create_hdoc_loop(*hdoc, hdoc_fd))
-	{
-		close(hdoc_fd);
-		return (free(hdoc_name), 1);
-	}
+		return (clean_hdoc(hdoc_name, NULL, hdoc_fd, 1));
 	close(hdoc_fd);
 	free(*hdoc);
 	*hdoc = hdoc_name;
@@ -78,11 +92,7 @@ static int	create_hdoc_q(char **hdoc)
 		return (free(hdoc_name), -1);
 	eof = quotes_hdoc(*hdoc);
 	if (create_hdoc_loop(eof, hdoc_fd))
-	{
-		free(hdoc_name);
-		close(hdoc_fd);
-		return (free(eof), 1);
-	}
+		return (clean_hdoc(hdoc_name, eof, hdoc_fd, 1));
 	free(eof);
 	close(hdoc_fd);
 	free(*hdoc);

@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 01:53:05 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 03:13:58 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/30 11:16:05 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include "utils.h"
 #include "libft.h"
 #include "expand.h"
+#include <sys/types.h>
+#include <sys/wait.h>
 
 int	read_hdoc(int hdoc_fd, int out_fd)
 {
@@ -62,6 +64,7 @@ int	get_hdoc(char *hdoc, int fd, char **env, int type)
 {
 	int		hdoc_fd;
 	char	*catcmd[] = {"cat", NULL};
+	pid_t	p;
 
 	hdoc_fd = open(hdoc, O_RDONLY);
 	if (hdoc_fd == -1)
@@ -81,6 +84,10 @@ int	get_hdoc(char *hdoc, int fd, char **env, int type)
 		close(hdoc_fd);
 		return (get_hdoc(hdoc, fd, env, 1));
 	}
-	execve("/usr/bin/cat", catcmd, env);
+	p = fork();
+	if (p == 0)
+		execve("/usr/bin/cat", catcmd, env);
+	close(fd);
+	wait(NULL);
 	return (0);
 }
