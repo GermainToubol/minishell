@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 22:50:53 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 12:21:07 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/30 14:50:07 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ static int	clean_hdoc(char *name, void *ptr, int fd, int out)
 static int	create_hdoc(char **hdoc)
 {
 	char	*hdoc_name;
+	char	*eof;
 	int		hdoc_fd;
 
 	hdoc_name = tmp_filename();
@@ -94,11 +95,15 @@ static int	create_hdoc(char **hdoc)
 	hdoc_fd = open(hdoc_name, O_WRONLY | O_CREAT | O_EXCL | O_TRUNC, 0600);
 	if (hdoc_fd == -1)
 		return (free(hdoc_name), -1);
-	if (create_hdoc_loop(*hdoc, hdoc_fd))
-		return (clean_hdoc(hdoc_name, NULL, hdoc_fd, 1));
-	close(hdoc_fd);
+	eof = ft_strdup(*hdoc);
+	if (!eof)
+		return (display_error("Error allocation\n", 0), 1);
 	free(*hdoc);
 	*hdoc = hdoc_name;
+	if (create_hdoc_loop(eof, hdoc_fd))
+		return (clean_hdoc(hdoc_name, eof, hdoc_fd, 1));
+	free(eof);
+	close(hdoc_fd);
 	return (0);
 }
 
@@ -115,12 +120,12 @@ static int	create_hdoc_q(char **hdoc)
 	if (hdoc_fd == -1)
 		return (free(hdoc_name), -1);
 	eof = quotes_hdoc(*hdoc);
+	free(*hdoc);
+	*hdoc = hdoc_name;
 	if (create_hdoc_loop(eof, hdoc_fd))
 		return (clean_hdoc(hdoc_name, eof, hdoc_fd, 1));
 	free(eof);
 	close(hdoc_fd);
-	free(*hdoc);
-	*hdoc = hdoc_name;
 	return (0);
 }
 
