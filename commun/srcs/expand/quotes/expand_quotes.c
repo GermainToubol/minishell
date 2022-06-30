@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 16:46:09 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 18:38:40 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/30 19:35:40 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ static int	rec_do_quotes(const char *cmd, size_t *i,
 		tmp2 = expand_var(tmp);
 		free(tmp);
 		if (tmp2 && strjoin_custom(ret, tmp2))
+			return (1);
+		else if (strjoin_custom(ret, ft_strdup("")))
 			return (1);
 	}
 	return (0);

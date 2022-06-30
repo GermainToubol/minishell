@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:56:54 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/22 16:16:38 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/30 19:52:41 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int			update_wildcard(t_wildcard *mywc, char *line);
 int			get_dir_match(t_wildcard *mywc, t_list **new_lst);
 int			wildcards(char *line, t_list **ret);
 int			check_found(t_wildcard *mywc, t_list **new_lst, char *dir_name);
-int			expand_loop_wildcard(char ***new_cmd, char *cmd, size_t i);
+int			expand_loop(char ***new_cmd, char *cmd, size_t i);
 
 void		del_node(void *data);
 void		ft_list_remove_if(t_list **begin_list, void *data_ref,

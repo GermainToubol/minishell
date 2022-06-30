@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:47:46 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/22 16:26:11 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/30 19:54:56 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,15 @@ char	**do_basic(char *cmd)
 {
 	char	**ret;
 
-	ret = ft_calloc(2, sizeof(char **));
+	if (!cmd)
+	{
+		ret = ft_calloc(1, sizeof(char *));
+		if (!ret)
+			return (display_error("Error allocation\n", 0), NULL);
+		ret[0] = NULL;
+		return (ret);
+	}
+	ret = ft_calloc(2, sizeof(char *));
 	if (!ret)
 		return (display_error("Error allocation\n", 0), NULL);
 	ret[0] = ft_strdup(cmd);
@@ -70,7 +78,7 @@ char	**expand_loop_end(char ***new_cmd)
 	return (ret);
 }
 
-int	expand_loop_wildcard(char ***new_cmd, char *cmd, size_t i)
+static int	expand_loop2(char ***new_cmd, char *cmd, size_t i)
 {
 	if (ft_strchr(cmd, '*') != NULL)
 	{
@@ -84,5 +92,30 @@ int	expand_loop_wildcard(char ***new_cmd, char *cmd, size_t i)
 		if (!new_cmd[i])
 			return (1);
 	}
+	return (0);
+}
+
+int	expand_loop(char ***new_cmd, char *cmd, size_t i)
+{
+	char	*tmp;
+
+	if (ft_strchr(cmd, '\'') || ft_strchr(cmd, '"'))
+	{
+		tmp = expand_quotes(cmd);
+		new_cmd[i] = do_basic(tmp);
+		free(tmp);
+		if (!new_cmd[i])
+			return (1);
+	}
+	else if (ft_strchr(cmd, '$'))
+	{
+		tmp = expand_var(cmd);
+		new_cmd[i] = do_basic(tmp);
+		free(tmp);
+		if (!new_cmd[i])
+			return (1);
+	}
+	else
+		return (expand_loop2(new_cmd, cmd, i));
 	return (0);
 }
