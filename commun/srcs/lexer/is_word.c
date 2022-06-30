@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 17:18:36 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 14:51:18 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/30 14:52:26 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int	is_word(char *line, t_lxm *lxm, t_tokens *tokens)
 		if (is_quote(line, lxm, tokens, &i) == -1)
 			return (-1);
 	}
-	if (tokens->size > 1 && is_word != tokens->size
+	if (is_word != tokens->size && tokens->size > 1
 		&& tokens->tokens[tokens->size - 2].type == IO_HDOC
 		&& lxm->type == WORD && set_hdoc(&lxm->data))
 		return (-1);

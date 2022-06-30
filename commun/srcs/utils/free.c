@@ -6,13 +6,14 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 00:38:09 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/16 14:52:50 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/30 15:00:37 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "parser.h"
 #include "libft.h"
+#include "utils.h"
 
 void	free_lxm(t_lxm *lxm, size_t size)
 {
@@ -71,6 +72,8 @@ void	free_parse(t_parse **parse)
 
 	i = 0;
 	if (!parse)
+		return ;
+	if (del_hdoc_parse(parse))
 		return ;
 	while (parse[i])
 	{
