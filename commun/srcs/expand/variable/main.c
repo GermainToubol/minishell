@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 17:49:03 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/26 19:04:18 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/30 18:39:34 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(void)
 		var = expand_quotes(line);
 	else if (ft_strchr(line, '$'))
 		var = expand_var(line);
-	ft_printf("\n%s\n", var);
+	ft_printf("\nret: %s\n", var);
 	free(var);
 	free(line);
 	return (0);
