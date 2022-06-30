@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 01:53:05 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 12:31:23 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/30 12:48:19 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,9 @@ static int	exec_cat(char **env)
 	return (0);
 }
 
-int	get_hdoc(char *hdoc, int fd, char **env, int type)
+static int	redirect_hdoc(char *hdoc, int fd, char **env, int type)
 {
 	int		hdoc_fd;
-	int		err;
-	int		fd_cpy;
 
 	hdoc_fd = open(hdoc, O_RDONLY);
 	if (hdoc_fd == -1)
@@ -89,9 +87,6 @@ int	get_hdoc(char *hdoc, int fd, char **env, int type)
 		return (close(hdoc_fd), -1);
 	if (hdoc[ft_strlen(hdoc) - 1] == 'q' || type == 1)
 	{
-		fd_cpy = dup(fd);
-		if (fd_cpy == -1)
-			return (-1);
 		if (dup2(hdoc_fd, fd) == -1)
 			return (close(hdoc_fd), -1);
 		close(hdoc_fd);
@@ -101,8 +96,21 @@ int	get_hdoc(char *hdoc, int fd, char **env, int type)
 		if (expand_hdoc(&hdoc, hdoc_fd) == -1)
 			return (-1);
 		close(hdoc_fd);
-		return (get_hdoc(hdoc, fd, env, 1));
+		return (redirect_hdoc(hdoc, fd, env, 1));
 	}
+	return (0);
+}
+
+int	get_hdoc(char *hdoc, int fd, char **env)
+{
+	int		fd_cpy;
+	int		err;
+
+	fd_cpy = dup(fd);
+	if (fd_cpy == -1)
+		return (-1);
+	if (redirect_hdoc(hdoc, fd, env, 0) == -1)
+		return (-1);
 	err = exec_cat(env);
 	if (dup2(fd_cpy, fd) == -1)
 		return (close(fd_cpy), -1);
