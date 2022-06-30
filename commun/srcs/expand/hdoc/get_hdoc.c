@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 01:53:05 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 11:16:05 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/30 12:31:23 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,27 @@ static int	expand_hdoc(char **hdoc, int in_fd)
 	return (0);
 }
 
+static int	exec_cat(char **env)
+{
+	char	*catcmd[2];
+	pid_t	p;
+
+	catcmd[0] = "cat";
+	catcmd[1] = NULL;
+	p = fork();
+	if (p == -1)
+		return (1);
+	if (p == 0)
+		execve("/usr/bin/cat", catcmd, env);
+	wait(NULL);
+	return (0);
+}
+
 int	get_hdoc(char *hdoc, int fd, char **env, int type)
 {
 	int		hdoc_fd;
-	char	*catcmd[] = {"cat", NULL};
-	pid_t	p;
+	int		err;
+	int		fd_cpy;
 
 	hdoc_fd = open(hdoc, O_RDONLY);
 	if (hdoc_fd == -1)
@@ -73,6 +89,9 @@ int	get_hdoc(char *hdoc, int fd, char **env, int type)
 		return (close(hdoc_fd), -1);
 	if (hdoc[ft_strlen(hdoc) - 1] == 'q' || type == 1)
 	{
+		fd_cpy = dup(fd);
+		if (fd_cpy == -1)
+			return (-1);
 		if (dup2(hdoc_fd, fd) == -1)
 			return (close(hdoc_fd), -1);
 		close(hdoc_fd);
@@ -84,10 +103,9 @@ int	get_hdoc(char *hdoc, int fd, char **env, int type)
 		close(hdoc_fd);
 		return (get_hdoc(hdoc, fd, env, 1));
 	}
-	p = fork();
-	if (p == 0)
-		execve("/usr/bin/cat", catcmd, env);
-	close(fd);
-	wait(NULL);
-	return (0);
+	err = exec_cat(env);
+	if (dup2(fd_cpy, fd) == -1)
+		return (close(fd_cpy), -1);
+	close(fd_cpy);
+	return (err);
 }

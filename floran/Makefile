@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/03 14:23:03 by fmauguin          #+#    #+#              #
-#    Updated: 2022/06/30 02:45:54 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/06/30 11:18:05 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -126,8 +126,8 @@ $(HDOC)				:	$(addprefix $(OUTDIR)/,$(HDOCSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(U
 
 all					:	$(NAME)
 
-malloc_test			:	$(addprefix $(OUTDIR)/,$(VARSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(LIBFT)
-	$(CC) $(CFLAGS) $(OPTFLAG) -fsanitize=undefined -rdynamic -o $@ $(addprefix $(OUTDIR)/,$(VARSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(LIBFT) -L. -lmallocator
+malloc_test			:	$(addprefix $(OUTDIR)/,$(HDOCSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(LIBFT)
+	$(CC) $(CFLAGS) $(OPTFLAG) -fsanitize=undefined -rdynamic -o $@ $(addprefix $(OUTDIR)/,$(HDOCSRC:.c=.o)) $(addprefix $(OUTDIR)/,$(UTILSSRC:.c=.o)) $(LIBFT) -L. -lmallocator
 
 $(DEBUGNAME)		:
 ifndef DEBUG

@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 23:56:07 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 03:14:04 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/30 12:20:57 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,10 @@ int	main(int ac, char **av, char **envp)
 	while (i < ac)
 	{
 		file = ft_strdup(av[i]);
-		ft_printf("arg %s\n", file);
 		if (set_hdoc(&file))
-			return (1);
-		ft_printf("name %s\n", file);
-		get_hdoc(file, 0, envp, 0);
+			return (free(file), 1);
+		if (get_hdoc(file, 0, envp, 0) == -1)
+			return (free(file), 1);
 		free(file);
 		i++;
 	}
