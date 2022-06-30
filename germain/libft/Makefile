@@ -37,7 +37,7 @@ HEAD_DIR =	includes
 
 # List of all compilation options
 # -------------------------------------------------------------------------
-CC = 		gcc
+CC = 		cc
 CFLAGS =	-Wall -Wextra
 CDEBUG =	-g3
 CRELEASE =	-Werror
