@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:47:46 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 19:17:55 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/30 19:25:21 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,15 @@ char	**do_basic(char *cmd)
 {
 	char	**ret;
 
-	ret = ft_calloc(2, sizeof(char **));
+	if (!cmd)
+	{
+		ret = ft_calloc(1, sizeof(char *));
+		if (!ret)
+			return (display_error("Error allocation\n", 0), NULL);
+		ret[0] = NULL;
+		return (ret);
+	}
+	ret = ft_calloc(2, sizeof(char *));
 	if (!ret)
 		return (display_error("Error allocation\n", 0), NULL);
 	ret[0] = ft_strdup(cmd);
