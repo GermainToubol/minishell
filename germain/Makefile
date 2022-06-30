@@ -55,7 +55,9 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										ft_lst_remove_if.c	\
 										str_utils.c			\
 										quicksort.c			\
-										lst_to_tab.c)		\
+										lst_to_tab.c		\
+										strjoin_custom.c	\
+										clean_hdoc.c)		\
 			$(addprefix parser/astree/,	astree.c			\
 										astree_utils.c		\
 										fill_astree.c\
@@ -97,6 +99,10 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										expand_wc.c)		\
 			$(addprefix	variable/,		var_expand.c)		\
 			$(addprefix quotes/,		expand_quotes.c)	\
+			$(addprefix hdoc/,			get_hdoc.c			\
+										set_hdoc.c			\
+										quotes_hdoc.c		\
+										tmp_filename.c)		\
 										expand.c			\
 										expand_loop.c		\
 										expand_utils.c)

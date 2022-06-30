@@ -1,33 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_hdoc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/25 17:49:03 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 18:39:34 by fmauguin         ###   ########.fr       */
+/*   Created: 2022/06/29 23:56:07 by fmauguin          #+#    #+#             */
+/*   Updated: 2022/06/30 12:44:42 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "utils.h"
+#include "lexer.h"
 #include "expand.h"
-#include <readline/readline.h>
-#include <readline/history.h>
 
-int	main(void)
+int	main(int ac, char **av, char **envp)
 {
-	char	*var;
-	char	*line;
+	char	*file;
+	int		i;
+	int		fd;
 
-	var = NULL;
-	line = readline("line: ");
-	if (ft_strchr(line, '\'') || ft_strchr(line, '"'))
-		var = expand_quotes(line);
-	else if (ft_strchr(line, '$'))
-		var = expand_var(line);
-	ft_printf("\nret: %s\n", var);
-	free(var);
-	free(line);
+	if (ac <= 1)
+		return (0);
+	i = 1;
+	fd = 0;
+	while (i < ac)
+	{
+		file = ft_strdup(av[i]);
+		if (set_hdoc(&file))
+			return (free(file), 1);
+		if (get_hdoc(file, fd, envp) == -1)
+			return (free(file), 1);
+		free(file);
+		i++;
+	}
+	close(fd);
 	return (0);
 }

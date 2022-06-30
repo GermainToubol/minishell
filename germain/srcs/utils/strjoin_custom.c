@@ -1,33 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   strjoin_custom.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/25 17:49:03 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 18:39:34 by fmauguin         ###   ########.fr       */
+/*   Created: 2022/06/30 01:00:43 by fmauguin          #+#    #+#             */
+/*   Updated: 2022/06/30 01:01:41 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "expand.h"
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "utils.h"
+#include <stdlib.h>
 
-int	main(void)
+int	strjoin_custom(char **dest, char *src)
 {
-	char	*var;
-	char	*line;
+	char	*tmp;
 
-	var = NULL;
-	line = readline("line: ");
-	if (ft_strchr(line, '\'') || ft_strchr(line, '"'))
-		var = expand_quotes(line);
-	else if (ft_strchr(line, '$'))
-		var = expand_var(line);
-	ft_printf("\nret: %s\n", var);
-	free(var);
-	free(line);
+	if (!src)
+		return (display_error("Error allocation\n", 0), 1);
+	if (!*dest)
+		*dest = src;
+	else
+	{
+		tmp = ft_strjoin(*dest, src);
+		free(src);
+		if (!tmp)
+			return (display_error("Error allocation\n", 0), 1);
+		free(*dest);
+		*dest = tmp;
+	}
 	return (0);
 }

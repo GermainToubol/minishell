@@ -39,7 +39,6 @@ int	builtin_cd(int argc, char **argv, t_list **env)
 	char	*target;
 	char	buffer[4096];
 
-	ft_printf("%d\n", argc);
 	if (cd_errors(argc, argv, *env) != 0)
 		return (1);
 	if (argc == 1)
