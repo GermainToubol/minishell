@@ -19,5 +19,6 @@ void	clear_cleanable(t_clean	*cleanable)
 {
 	astree_apply_suffix(cleanable->root, free_tree);
 	free_parse(cleanable->parse);
+	pid_clear_list();
 	ft_lstclear(cleanable->env, ft_freedico);
 }

@@ -43,23 +43,19 @@ int	builtin_cd(int argc, char **argv, t_list **env)
 		return (1);
 	if (argc == 1)
 		target = cd_path_to_go(NULL, *env);
-	else if (argv[1] == NULL)
-		return (1);
+	else if (argv[1][0] == '\0')
+		return (0);
 	else
 		target = cd_path_to_go(argv[1], *env);
 	if (target == NULL)
-	{
-		ft_fprintf(2, "minishell: cd: memory allocation error encountered\n");
-		return (1);
-	}
+		return (ft_fprintf(2, "minishell: cd: memory allocation\
+ error encountered\n"), 1);
 	re = cd_change_dir(target, env);
 	if (re != 0)
 		ft_fprintf(2, "minishell: cd: %s: %s\n", argv[1], strerror(errno));
-	if (argv[1] != NULL && ft_strcmp(argv[1], "-") == 0 && ft_printf("%s\n", getcwd(buffer, 4096)) < 0)
-	{
-		perror("minishell: cd: write error");
-		re = 1;
-	}
+	if (argv[1] != NULL && ft_strcmp(argv[1], "-") == 0
+		&& ft_printf("%s\n", getcwd(buffer, 4096)) < 0)
+		return (perror("minishell: cd: write error"), 1);
 	return (re);
 }
 

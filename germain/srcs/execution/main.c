@@ -25,6 +25,8 @@ int	environment_init(t_list	**env_lst);
 int	main(int argc, char **argv, char **env)
 {
 	t_list	*env_lst;
+	int		i;
+	char	**lines;
 
 	(void)argv;
 	env_lst = environment_copy(env);
@@ -35,8 +37,20 @@ int	main(int argc, char **argv, char **env)
 		return (1);
 	if (argc == 1 && isatty(0))
 		interactive_session(&env_lst);
+	// REMOVE -- TEST FEATURE
 	if (argc == 3)
-		run_line(ft_strdup(argv[2]), &env_lst);
+	{
+		i = 0;
+		lines = ft_split(argv[2], ';');
+		while (lines[i] != NULL)
+		{
+			if (lines[i][ft_strlen(lines[i]) -1] == '\n')
+				lines[i][ft_strlen(lines[i]) -1] = '\0';
+			run_line(lines[i], &env_lst);
+			i++;
+		}
+		free(lines);
+	}
 	ft_lstclear(&env_lst, ft_freedico);
 	return (get_status());
 }

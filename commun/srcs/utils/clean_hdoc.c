@@ -49,7 +49,7 @@ int	del_hdoc_parse(t_parse **parse)
 	i = 0;
 	while (parse[i])
 	{
-		if (parse[i]->type == CMD && parse[i]->cmd->redirect)
+		if (parse[i]->type == CMD && parse[i]->cmd && parse[i]->cmd->redirect)
 		{
 			j = 0;
 			while (parse[i]->cmd->redirect[j])
