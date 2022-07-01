@@ -26,7 +26,8 @@ pid_t	exec_tree_pipe(t_astree *node, int *pipe_in, int *pipe_out,
 	int		tmp_pipe[2];
 	int		builtin_level;
 
-	pipe(tmp_pipe);
+	if (pipe(tmp_pipe) < 0)
+		return (perror("minishell: pipe"), set_status(-1), -1);
 	builtin_level = set_builtin_level_left(node);
 	if (builtin_level == 1)
 		cleanable->depth -= 1;

@@ -47,6 +47,7 @@ int	run_builtin(t_parse *parse, t_list **env, int *pipe_in, int *pipe_out)
 	status = (*f)(i, parse->cmd->cmd, env);
 	builtin_close_fds(parse);
 	reset_fds(std_cpy);
+	set_status(status);
 	return (status);
 }
 

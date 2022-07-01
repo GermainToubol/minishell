@@ -1,5 +1,40 @@
-ls
-cat minishell.test
-yes | head
-yes | cat | cat | cat | head
-yes | cat | cat | cat | (cat | cat | cat ) | head
+# Basic commands and arguments
+cd ; ls
+cd ; ls -l
+cd ; ls -l -a
+cd ; ls -la
+cd ; ls *
+cd ; ls /dev
+cd ; /usr/bin/ls
+cd ; dsfvkjlfs
+cd ; ./efdgedrg
+cd ; touch aaa.exe ; chmod 0000 aaa.exe; ./aaa.exe ; rm -rf aaa.exe
+cd ; touch aaa.exe ; chmod 1000 aaa.exe; ./aaa.exe ; rm -rf aaa.exe
+cd ; touch aaa.exe ; chmod 2000 aaa.exe; ./aaa.exe ; rm -rf aaa.exe
+cd ; unset PATH ; ls
+cd ; unset PATH ; ./ls
+cd ; unset PATH ; /usr/bin/ls
+cd ; unset PATH ; export "PATH" ; ls
+cd ; unset PATH ; export "PATH" ; /usr/bin/ls
+cd ; unset PATH ; export "PATH" ; ./ls
+# Basic Pipes
+cd ; ls | cat
+cd ; ls | cat -e
+cd ; ls | cat -e | cat | cat -e
+cd ; yes | head
+cd ; yes | cat | head
+cd ; yes | cat -e | cat -e | cat -e | cat -e | head
+# Basic Operations
+cd ; ls && ls
+cd ; ls || ls
+cd ; ls && ls || ls
+cd ; true || ls
+cd ; false || ls
+cd ; true && ls
+cd ; false && ls
+cd ; (ls | ls | false) && ls
+cd ; (ls | false | true) && ls
+cd ; (ls | ls | false) || ls
+cd ; (ls | false | true) || ls
+# All Operations
+cd ; yes | (cat | cat && cat | head) | head

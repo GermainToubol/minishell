@@ -28,7 +28,7 @@ pid_t	exec_tree_add_level(t_astree *node, int *pipe_in, int *pipe_out,
 	if (pid < 0)
 	{
 		perror("minishell: fork");
-		return (-1);
+		return (set_status(-1), -1);
 	}
 	if (pid == 0)
 	{
@@ -44,7 +44,7 @@ pid_t	exec_tree_add_level(t_astree *node, int *pipe_in, int *pipe_out,
 	}
 	close_pipes(pipe_in);
 	if (pid_extend_list(pid))
-		return (-1);
+		return (set_status(-1), -1);
 	return (pid);
 }
 

@@ -27,7 +27,9 @@ int	get_exec_path(t_parse *parse, t_list **env)
 	char	*cmd_name;
 
 	cmd_name = parse->cmd->cmd[0];
-	if (ft_strchr(cmd_name, '/') != NULL)
+	if (ft_strchr(cmd_name, '/') != NULL
+		|| environment_get(*env, "PATH") == NULL
+		|| environment_get(*env, "PATH")[0] == '\0')
 		return (check_path_relativ(cmd_name, parse));
 	return (check_path_env(cmd_name, parse, env));
 }
@@ -48,7 +50,7 @@ static int	check_path_relativ(char *cmd_name, t_parse *parse)
 		return (0);
 	}
 	ft_fprintf(2, "%s: %s: %s\n", "minishell", cmd_name, strerror(errno));
-	return (1);
+	return (set_status(127), 127);
 }
 
 static int	check_fullname(char **paths, char *cmd_name, t_parse *parse)
@@ -97,6 +99,6 @@ static int	check_path_env(char *cmd_name, t_parse *parse, t_list **env)
 		return (1);
 	if (i == 0)
 		return (0);
-	ft_fprintf(2, "%s: command not found\n", cmd_name);
-	return (1);
+	ft_fprintf(2, "minishell: %s: command not found\n", cmd_name);
+	return (set_status(127), 127);
 }

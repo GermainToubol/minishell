@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 16:46:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/22 16:25:59 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/30 19:52:52 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ static char	**do_expand_loop(char **cmd, char ***new_cmd)
 	i = 0;
 	while (cmd[i])
 	{
-		if (expand_loop_wildcard(new_cmd, cmd[i], i))
+		if (expand_loop(new_cmd, cmd[i], i))
 			return (NULL);
+		else
 		i++;
 	}
 	new_cmd[i] = NULL;

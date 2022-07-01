@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 07:13:55 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 14:47:31 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/06/30 21:29:07 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 
 static int	is_forbidden(char line)
 {
-	if (ft_isalnum(line) || line == ' ' || line == '\t' || line == '\n'
-		|| line == '$' || line == '>' || line == '<' || line == '|'
-		|| line == '&' || line == '*' || line == '-' || line == '\0'
-		|| line == '"' || line == '\'' || line == '(' || line == ')'
-		|| line == '.' || line == '/')
+	if (ft_isalnum(line) || line == ' ' || line == '\t' || line == '$'
+		|| line == '>' || line == '<' || line == '|' || line == '&'
+		|| line == '*' || line == '-' || line == '\0' || line == '"'
+		|| line == '\'' || line == '(' || line == ')' || line == '.'
+		|| line == '/')
 		return (1);
 	display_error(NULL, line);
 	return (0);
