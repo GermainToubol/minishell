@@ -37,6 +37,11 @@ cd ; (ls | false | true) && ls
 cd ; (ls | ls | false) || ls
 cd ; (ls | false | true) || ls
 # All Operations
+yes | (cat | cat) | head
+yes | (cat && cat) | head
+yes | (cat || cat) | head
+yes | (head -2 | cat -e && head) | head
+yes | (head -2 | (cat && ls | cat -e)) | head
 # Builtin
 ## Echo
 echo bonjour
