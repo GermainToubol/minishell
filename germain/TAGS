@@ -37,8 +37,8 @@ libft/srcs/ft_isprint.c,23
 int	ft_isprint(14,911
 
 libft/srcs/ft_atoi.c,51
-int	ft_atoi(16,943
-static int	ft_isspace(41,1240
+int	ft_atoi(17,963
+static int	ft_isspace(46,1397
 
 libft/srcs/ft_strdup.c,34
 char	*ft_strdup(ft_strdup14,911
@@ -48,8 +48,8 @@ void	ft_lstdelone(15,931
 
 libft/srcs/ft_printf_str.c,94
 int	ft_printf_str(19,1041
-static int	ft_strnlen(42,1617
-static int	size_print_null(52,1732
+static int	ft_strnlen(42,1637
+static int	size_print_null(52,1752
 
 libft/srcs/ft_tolower.c,23
 int	ft_tolower(14,911
@@ -85,10 +85,12 @@ char	*ft_itoa(ft_itoa17,1017
 static void	itoa_fill_number(44,1422
 static char	itoa_digit_to_char(68,1752
 
-libft/srcs/ft_printf.c,86
-int	ft_printf(19,1064
-static int	put_print(48,1534
-static int	normal_write(72,2361
+libft/srcs/ft_printf.c,147
+int	ft_printf(21,1156
+static int	put_print(49,1714
+static int	normal_write(73,2541
+static void	init_args(83,2679
+static int	n_reafect(90,2765
 
 libft/srcs/ft_lstlast.c,38
 t_list	*ft_lstlast(ft_lstlast14,911
@@ -99,10 +101,12 @@ void	*ft_memset(ft_memset15,931
 libft/srcs/ft_printf_percent.c,30
 int	ft_printf_percent(15,931
 
-libft/srcs/ft_fprintf.c,87
-int	ft_fprintf(19,1092
-static int	put_print(48,1585
-static int	normal_write(72,2434
+libft/srcs/ft_fprintf.c,148
+int	ft_fprintf(21,1184
+static int	put_print(49,1766
+static int	normal_write(73,2615
+static void	init_args(83,2768
+static int	n_reafect(90,2854
 
 libft/srcs/ft_calloc.c,34
 void	*ft_calloc(ft_calloc16,951
@@ -110,8 +114,8 @@ void	*ft_calloc(ft_calloc16,951
 libft/srcs/ft_printf_int.c,124
 int	ft_printf_int(19,1074
 static void	printf_sign(44,1634
-static int	get_int_len(57,1860
-static void	printf_nbr(70,1973
+static int	get_int_len(57,1875
+static void	printf_nbr(70,1988
 
 libft/srcs/get_next_line.c,248
 char	*get_next_line(get_next_line24,1256
@@ -125,8 +129,8 @@ int	ft_lstsize(14,911
 
 libft/srcs/ft_printf_long_hex.c,96
 int	ft_printf_long_hex(18,1055
-static int	get_hex_len(44,1736
-static void	putnbr_hex(57,1869
+static int	get_hex_len(44,1746
+static void	putnbr_hex(57,1879
 
 libft/srcs/ft_strlen.c,25
 size_t	ft_strlen(15,931
@@ -145,8 +149,8 @@ int	ft_isascii(14,911
 
 libft/srcs/ft_printf_hex_base.c,96
 int	ft_printf_hex_base(18,1045
-static int	get_hex_len(44,1721
-static void	putnbr_hex(57,1849
+static int	get_hex_len(44,1731
+static void	putnbr_hex(57,1859
 
 libft/srcs/ft_lstmap.c,36
 t_list	*ft_lstmap(ft_lstmap14,911
@@ -174,8 +178,8 @@ t_list	*ft_lstnew(ft_lstnew15,931
 
 libft/srcs/ft_printf_precision.c,93
 int	ft_printf_precision(15,931
-int	ft_len_precision(30,1111
-int	ft_atoi_precision(39,1288
+int	ft_len_precision(30,1121
+int	ft_atoi_precision(39,1298
 
 libft/srcs/ft_putstr_fd.c,26
 void	ft_putstr_fd(16,951
@@ -213,6 +217,10 @@ static void	memmove_right(45,1524
 libft/srcs/ft_printf_ptr.c,26
 int	ft_printf_ptr(16,951
 
+libft/srcs/ft_printf_write.c,65
+static int	printf_clear_buffer(4,40
+int	ft_printf_write(16,233
+
 libft/srcs/ft_strjoin.c,36
 char	*ft_strjoin(ft_strjoin14,911
 
@@ -228,8 +236,12 @@ int	ft_printf_hex_caps(14,911
 libft/srcs/ft_printf_hex.c,26
 int	ft_printf_hex(14,911
 
-srcs/tree_execution/exec_tree_add_level.c,35
-pid_t	exec_tree_add_level(19,1018
+tester/testfd.c,15
+int main(3,21
+
+srcs/tree_execution/exec_tree_add_level.c,68
+pid_t	exec_tree_add_level(21,1059
+static void	close_pipes(51,1692
 
 srcs/tree_execution/count_wait_tree.c,28
 int	count_wait_tree(17,980
@@ -239,19 +251,19 @@ pid_t	exec_tree_cmd(18,999
 
 srcs/tree_execution/exec_tree_and.c,61
 pid_t	exec_tree_and(22,1072
-static void	close_pipe(50,1702
+static void	close_pipe(55,1961
 
 srcs/tree_execution/exec_tree_pipe.c,117
 pid_t	exec_tree_pipe(22,1123
-static int	set_builtin_level_left(57,2007
-static int	set_builtin_level_right(64,2159
+static int	set_builtin_level_left(53,1940
+static int	set_builtin_level_right(60,2092
 
 srcs/tree_execution/exec_tree.c,24
 pid_t	exec_tree(17,980
 
 srcs/tree_execution/exec_tree_or.c,60
 pid_t	exec_tree_or(22,1072
-static void	close_pipe(48,1654
+static void	close_pipe(52,1782
 
 srcs/lexer/is_separator.c,86
 static int	is_pipe(16,931
@@ -265,10 +277,10 @@ int	tokens_alloc(53,1728
 
 srcs/lexer/is_word.c,141
 static int	is_quote_content(17,950
-int	is_quote(43,1522
-static int	is_word_basic(56,1806
-static int	is_var(77,2476
-int	is_word(103,3013
+int	is_quote(44,1564
+static int	is_word_basic(57,1848
+static int	is_var(78,2518
+int	is_word(104,3055
 
 srcs/lexer/is_redirect.c,95
 static int	is_redirect_out(17,950
@@ -277,10 +289,10 @@ int	is_redirect(55,1913
 
 srcs/lexer/lexer.c,150
 static int	is_forbidden(17,950
-static int	is_end(29,1335
-static int	convert_tokens_content(55,1860
-int	convert_tokens(82,2470
-int	lexer(108,2892
+static int	is_end(29,1319
+static int	convert_tokens_content(55,1844
+int	convert_tokens(82,2454
+int	lexer(108,2876
 
 srcs/lexer/is_word2.c,26
 int	word_redirect(17,950
@@ -293,33 +305,35 @@ int	is_prio(87,2728
 
 srcs/builtins/builtin_unset.c,66
 int	builtin_unset(22,1040
-static int	unset_valid_format(38,1315
+static int	unset_valid_format(39,1342
 
 srcs/builtins/is_builtin.c,23
 int	is_builtin(16,959
 
 srcs/builtins/builtin_cd.c,173
 int	builtin_cd(36,1440
-static int	cd_errors(58,1923
-static char	*cd_path_to_go(cd_path_to_go80,2454
-static int	cd_change_dir(89,2651
-static int	cd_update_env(110,3076
+static int	cd_errors(62,2136
+static char	*cd_path_to_go(cd_path_to_go84,2667
+static int	cd_change_dir(93,2864
+static int	cd_update_env(114,3289
 
-srcs/builtins/builtin_exit.c,84
+srcs/builtins/builtin_exit.c,161
 static int	exit_state(15,940
 int	get_exit_state(24,1046
-int	builtin_exit(29,1101
+static int	exit_check_numeric(29,1101
+static int	exit_check_number(53,1475
+int	builtin_exit(80,1852
 
 srcs/builtins/builtin_export.c,187
 int	builtin_export(23,1170
-static int	show_export(52,1594
-static size_t	export_check_name(76,2036
-static t_list	*export_list(export_list89,2304
-static int	export_set_value(115,2811
+static int	show_export(52,1620
+static size_t	export_check_name(76,2062
+static t_list	*export_list(export_list89,2330
+static int	export_set_value(115,2837
 
 srcs/builtins/builtin_echo.c,61
 int	builtin_echo(20,1048
-static int	check_n_option(47,1433
+static int	check_n_option(48,1488
 
 srcs/builtins/builtin_env.c,24
 int	builtin_env(16,959
@@ -328,11 +342,16 @@ srcs/builtins/builtin_pwd.c,25
 int	builtin_pwd(26,1138
 
 srcs/utils/free.c,116
-void	free_lxm(17,951
-void	free_tab(27,1068
-void	free_red(41,1193
-void	free_cmd(57,1373
-void	free_parse(68,1531
+void	free_lxm(18,970
+void	free_tab(28,1087
+void	free_red(42,1212
+void	free_cmd(58,1392
+void	free_parse(69,1550
+
+srcs/utils/clean_hdoc.c,88
+static int	unlink_hdoc(20,1013
+int	del_hdoc_token(27,1105
+int	del_hdoc_parse(44,1341
 
 srcs/utils/display_msg.c,59
 void	display_error(15,912
@@ -346,6 +365,9 @@ void	ft_list_remove_if(16,932
 
 srcs/utils/ft_strcmp.c,22
 int	ft_strcmp(13,892
+
+srcs/utils/strjoin_custom.c,27
+int	strjoin_custom(16,932
 
 srcs/utils/lst_to_tab.c,37
 char	**lst_to_tab(lst_to_tab17,953
@@ -378,35 +400,64 @@ void	print_cmd_line(43,1492
 srcs/utils/ft_atoll.c,27
 long long	ft_atoll(15,912
 
-srcs/expand/quotes/expand_quotes.c,178
-size_t	i_matching_quote(19,1013
-static int	rec_do_quotes(30,1189
-static int	rec_quote_content(47,1492
-static int	rec_quote(70,1930
-char	*expand_quotes(expand_quotes94,2410
+srcs/expand/quotes/expand_quotes.c,185
+static size_t	i_matching_quote(19,1013
+static int	rec_do_quotes(30,1196
+static int	rec_quote_content(49,1561
+static int	rec_quote(74,2059
+char	*expand_quotes(expand_quotes98,2539
 
 srcs/expand/expand.c,88
 static char	**do_expand_loop(do_expand_loop18,973
-char	**do_expand(do_expand33,1207
+char	**do_expand(do_expand34,1205
 
 srcs/expand/expand_utils.c,49
 size_t	tab3_size(17,951
 void	free_tab3(38,1159
 
-srcs/expand/variable/var_expand.c,120
-static int	get_var(17,951
-int	strjoin_custom(40,1445
-static int	rec_var(60,1766
-char	*expand_var(expand_var86,2207
+srcs/expand/variable/var_expand.c,92
+static int	get_var(18,976
+static int	rec_var(43,1569
+char	*expand_var(expand_var69,2010
 
 srcs/expand/variable/main.c,17
 int	main(18,993
 
-srcs/expand/expand_loop.c,144
+srcs/expand/hdoc/get_hdoc.c,141
+int	read_hdoc(21,1035
+static int	expand_hdoc(50,1486
+static int	exec_cat(63,1757
+static int	redirect_hdoc(79,1981
+int	get_hdoc(104,2476
+
+srcs/expand/hdoc/set_hdoc.c,158
+static int	create_hdoc_loop(23,1089
+static int	clean_hdoc(71,1933
+static int	create_hdoc(86,2137
+static int	create_hdoc_q(110,2663
+int	set_hdoc(132,3130
+
+srcs/expand/hdoc/quotes_hdoc.c,181
+static size_t	i_matching_quote(19,1013
+static int	rec_do_quotes(30,1196
+static int	rec_quote_content(40,1426
+static int	rec_quote(63,1864
+char	*quotes_hdoc(quotes_hdoc80,2210
+
+srcs/expand/hdoc/main_hdoc.c,17
+int	main(18,970
+
+srcs/expand/hdoc/tmp_filename.c,123
+static int	tmp_filename_loop(18,970
+char	*tmp_filename(tmp_filename31,1194
+char	*tmp_filename_q(tmp_filename_q50,1533
+
+srcs/expand/expand_loop.c,168
 char	**do_basic(do_basic18,973
-static int	fill_ret(35,1271
-char	**expand_loop_end(expand_loop_end59,1617
-int	expand_loop_wildcard(73,1908
+static int	fill_ret(43,1428
+char	**expand_loop_end(expand_loop_end67,1774
+static int	expand_loop2(81,2065
+int	expand_loop(98,2326
 
 srcs/expand/wildcard/expand_wc.c,98
 static char	**do_wildcard_content(do_wildcard_content18,973
@@ -466,32 +517,33 @@ static void	init_pfds(48,1731
 static void	clear_exec(58,1893
 
 srcs/execution/run_child.c,97
-void	run_child(22,1144
-static void	child_set_pipe(42,1601
-static void	child_close_fds(58,1959
+void	run_child(21,1102
+static void	child_set_pipe(39,1517
+static void	child_close_fds(55,1875
 
 srcs/execution/wait_all.c,90
 int	wait_all(25,1216
-static void	wait_exited(51,1699
-static void	wait_signaled(58,1849
+static void	wait_exited(52,1717
+static void	wait_signaled(62,1926
 
 srcs/execution/interactive_signals.c,73
 int	init_signal_interactive(33,1377
-static void	signal_handler(44,1622
+static void	signal_handler(45,1656
 
-srcs/execution/cmd_status.c,83
-static int	status_manager(15,940
-void	set_status(24,1078
-int	get_status(29,1139
+srcs/execution/cmd_status.c,128
+static int	status_manager(16,959
+void	set_status(25,1104
+int	get_status(30,1165
+char	*get_status_str(get_status_str35,1223
 
 srcs/execution/do_bind_pipe.c,25
 int	do_bind_pipe(17,979
 
 srcs/execution/get_exec_path.c,136
 int	get_exec_path(25,1214
-static int	check_path_relativ(35,1452
-static int	check_fullname(54,1835
-static int	check_path_env(79,2266
+static int	check_path_relativ(37,1541
+static int	check_fullname(56,1943
+static int	check_path_env(81,2374
 
 srcs/execution/run_tree_exec.c,58
 int	run_tree_exec(23,1109
@@ -508,23 +560,48 @@ static int	redirect_in(61,1873
 static int	redirect_out(81,2257
 static int	redirect_append(101,2662
 
-srcs/execution/exec_process.c,27
-pid_t	exec_process(18,999
+srcs/execution/exec_process.c,54
+int	expand_parse(20,1038
+pid_t	exec_process(40,1347
 
 srcs/execution/run_builtin.c,180
 int	run_builtin(26,1243
-static void	*get_builtin(get_builtin53,1770
-static void	builtin_set_pipe(73,2240
-static void	builtin_close_fds(89,2600
-static void	reset_fds(103,2816
+static void	*get_builtin(get_builtin54,1791
+static void	builtin_set_pipe(74,2261
+static void	builtin_close_fds(90,2621
+static void	reset_fds(104,2837
 
 srcs/execution/interactive_session.c,66
 int	interactive_session(23,1120
-static int	do_execution(49,1551
+static int	do_execution(50,1571
 
 srcs/execution/main.c,48
 int	main(25,1118
-int	environment_init(43,1512
+int	environment_init(58,1793
+
+srcs/signals/interupted.c,116
+static int	_interupted_status(3,26
+void	set_interupt(14,201
+void	reset_interupt(19,254
+int	is_interupted(24,310
+
+srcs/signals/pid_utils.c,130
+int	pid_extend_list(5,69
+int	pid_signal_all(10,140
+int	pid_clear_list(15,203
+int	pid_remove_pid(20,267
+int pid_lstlen(25,338
+
+srcs/signals/last_pid.c,89
+static pid_t	_manage_last_pid(4,46
+pid_t	get_last_pid(13,185
+void	set_last_pid(18,249
+
+srcs/signals/manage_pid.c,122
+static int	_add_pid(20,1038
+static int	_remove_pid(40,1413
+static int	_signal_all(64,1780
+int	manage_pid_list(80,2008
 
 srcs/parser/parser2.c,118
 static t_cmd	*fill_cmd(fill_cmd18,970
@@ -610,6 +687,11 @@ void	environment_remove(17,979
 
 srcs/environment/ft_freedico.c,26
 void	ft_freedico(24,1157
+
+srcs/environment/environment_update.c,143
+static t_list	*_manage_environment(_manage_environment5,65
+void	environment_update(14,213
+t_list	*environment_call(environment_call19,285
 
 srcs/environment/environment_add.c,89
 t_list	*environment_add(environment_add26,1144

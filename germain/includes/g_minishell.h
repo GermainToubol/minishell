@@ -72,8 +72,6 @@ void	kill_from_lst(void *content);
 void	set_interupt(void);
 void	reset_interupt(void);
 int		is_interupted(void);
-pid_t	get_last_pid(void);
-void	set_last_pid(pid_t pid);
 
 /* EXECUTION */
 int		run_line(char *line, t_list **env);
@@ -123,7 +121,9 @@ int		pid_extend_list(pid_t pid);
 int		pid_signal_all(void);
 int		pid_clear_list(void);
 int		pid_remove_pid(pid_t pid);
-
+pid_t	get_last_pid(void);
+void	set_last_pid(pid_t pid);
+int		pid_lstlen(void);
 /* BUILTIN */
 int		builtin_cd(int argc, char **argv, t_list **env);
 int		builtin_pwd(int argc, char **argv, t_list **env);

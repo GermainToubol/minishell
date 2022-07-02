@@ -43,8 +43,6 @@ int	builtin_cd(int argc, char **argv, t_list **env)
 		return (1);
 	if (argc == 1)
 		target = cd_path_to_go(NULL, *env);
-	else if (argv[1][0] == '\0')
-		return (0);
 	else
 		target = cd_path_to_go(argv[1], *env);
 	if (target == NULL)
@@ -52,7 +50,7 @@ int	builtin_cd(int argc, char **argv, t_list **env)
  error encountered\n"), 1);
 	re = cd_change_dir(target, env);
 	if (re != 0)
-		ft_fprintf(2, "minishell: cd: %s: %s\n", argv[1], strerror(errno));
+		ft_fprintf(2, "minishell: cd: %s: %s\n", target, strerror(errno));
 	if (argv[1] != NULL && ft_strcmp(argv[1], "-") == 0
 		&& ft_printf("%s\n", getcwd(buffer, 4096)) < 0)
 		return (perror("minishell: cd: write error"), 1);
@@ -95,6 +93,8 @@ static int	cd_change_dir(char *path, t_list **env)
 	int		re;
 	char	cwd_path[PATH_MAX];
 
+	if (path[0] =='\0')
+		return (0);
 	if (environment_get(*env, "PWD") == NULL)
 	{
 		getcwd(cwd_path, PATH_MAX);
@@ -107,8 +107,8 @@ static int	cd_change_dir(char *path, t_list **env)
 	}
 	re = chdir(path);
 	if (re == 0)
-		re = cd_update_env(env);
-	return (re);
+		return (cd_update_env(env));
+	return (1);
 }
 
 static int	cd_update_env(t_list **env)

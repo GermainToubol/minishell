@@ -21,3 +21,8 @@ int	pid_remove_pid(pid_t pid)
 {
 	return (manage_pid_list(pid, -1));
 }
+
+int pid_lstlen(void)
+{
+	return(manage_pid_list(0, 3));
+}

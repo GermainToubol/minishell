@@ -2,6 +2,10 @@ import os
 import subprocess
 import logging
 
+print("------------ Make --------------------")
+with subprocess.Popen(["make", "-C", ".."]) as proc:
+    pass
+
 print("------------ Run Tests ---------------")
 with open("log_minishell", "w") as logfile:
     pass
@@ -39,7 +43,7 @@ with open("minishell.test", "r") as testfile:
                 logfile.write("RETUN: {}\n".format(proc.returncode))
 
 print("------------ Analyse Diffs -----------")
-with subprocess.Popen(["bash", "-c", 'cat log_bash | sed "s/^bash/minishell/g" | diff - log_minishell']):
+with subprocess.Popen(["bash", "-c", 'cat log_bash | sed "s/^bash: line 0/bash/g" | ""sed "s/^bash/minishell/g" | diff - log_minishell']):
     pass
 
 print("------------ Done --------------------")

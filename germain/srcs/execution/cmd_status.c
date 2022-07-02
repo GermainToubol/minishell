@@ -9,6 +9,7 @@
 /*   Updated: 2022/06/27 12:57:23 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 #include "minishell.h"
 #include "g_minishell.h"
 
@@ -33,8 +34,13 @@ int	get_status(void)
 
 char	*get_status_str(void)
 {
-	static char	str[2] = {'0', '\0'};
+	char	*str;
 
-	str[0] = get_status() + '0';
-	return (ft_strdup(str));
+	str = ft_itoa(get_status());
+	if (str == NULL)
+	{
+		set_status(1);
+		ft_fprintf(2, "minishell: Memory allocation error\n");
+	}
+	return (str);
 }

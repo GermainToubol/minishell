@@ -44,6 +44,8 @@ int	init_signal_interactive(struct sigaction *sa)
 
 static void	signal_handler(int signum, siginfo_t *siginfo, void *context)
 {
+	int	size;
+
 	(void)context;
 	if (signum != SIGINT && signum != SIGQUIT)
 	{
@@ -52,9 +54,10 @@ static void	signal_handler(int signum, siginfo_t *siginfo, void *context)
 	}
 	if (signum == SIGQUIT)
 		return ;
+	size = pid_lstlen();
 	pid_signal_all();
 	set_interupt();
-	wait_all(12, 0);
+	wait_all(size, 0);
 	if (rl_outstream == stderr)
 			write(2, "\n", 1);
 		else

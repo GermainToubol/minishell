@@ -43,7 +43,6 @@ int	run_tree_exec(t_astree *root, t_parse **parse, t_list **env)
 		exit(EXIT_FAILURE);
 	}
 	wait_all(n, pid);
-	ft_fprintf(2, "N: %d | Out pid: %d | int status: %d | $?: %d\n", n, pid, is_interupted(), get_status());
 	return (0);
 }
 

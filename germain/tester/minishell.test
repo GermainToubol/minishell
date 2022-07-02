@@ -37,4 +37,33 @@ cd ; (ls | false | true) && ls
 cd ; (ls | ls | false) || ls
 cd ; (ls | false | true) || ls
 # All Operations
-cd ; yes | (cat | cat && cat | head) | head
+# Builtin
+## Echo
+echo bonjour
+echo bon jou r
+echo 'test 123v sfg'
+echo
+echo bonjour > /dev/full
+echo > /dev/full
+echo -n bonjour les amis
+echo -n -n -n bonjour
+echo -nnnnnnnnn -n -n bonjour
+echo -m -n bonjour
+echo -nnnnnm bonjour
+echo -n sfdgfgh > /dev/full
+echo -n > /dev/full
+## cd
+cd /tmp ; /usr/bin/pwd
+cd ../srcs/signals ; /usr/bin/pwd
+cd ../../../../../../../../../../../../../.. ; /usr/bin/pwd
+cd sdfhgsfgs
+cd /tmp ; rm -rf /tmp/coucou ;mkdir coucou ; chmod 000 coucou ; cd coucou
+rm -rf /tmp/coucou
+cd ''
+cd '' '' ''
+cd /tmp ; unset HOME ; cd
+cd /tmp ; export "HOME=" ; cd
+cd /tmp ; export "HOME=sdfhfgh" ; cd
+cd /tmp ; unset HOME ; cd ; /usr/bin/pwd
+cd /tmp ; export "HOME=" ; cd ; /usr/bin/pwd
+cd /tmp ; export "HOME=sdfhfgh" ; cd ; /usr/bin/pwd

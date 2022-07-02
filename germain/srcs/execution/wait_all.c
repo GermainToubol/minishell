@@ -43,7 +43,7 @@ int	wait_all(int n_processes, pid_t last_pid)
 			wait_signaled(status, pid, &exit_status, last_pid);
 		pid_remove_pid(pid);
 		if (pid > 0)
-			kill(pid, SIGINT);
+			kill(pid, SIGTERM);
 		i++;
 	}
 	return (exit_status);
