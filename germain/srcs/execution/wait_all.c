@@ -31,6 +31,8 @@ int	wait_all(int n_processes, pid_t last_pid)
 
 	i = 0;
 	exit_status = 0;
+	if (last_pid > 0)
+		set_last_pid(last_pid);
 	while (i < n_processes)
 	{
 		status = 0;
@@ -41,19 +43,20 @@ int	wait_all(int n_processes, pid_t last_pid)
 			wait_signaled(status, pid, &exit_status, last_pid);
 		pid_remove_pid(pid);
 		if (pid > 0)
-			kill(pid, SIGTERM);
+			kill(pid, SIGINT);
 		i++;
 	}
-	if (n_processes != 0)
-		set_status(exit_status);
 	return (exit_status);
 }
 
 static void	wait_exited(int status, pid_t pid, int *exit_status,
 				pid_t last_pid)
 {
-	if (pid == last_pid)
+	if (pid == last_pid || pid == get_last_pid())
+	{
 		*exit_status = WEXITSTATUS(status);
+		set_status(*exit_status);
+	}
 }
 
 static void	wait_signaled(int status, pid_t pid, int *exit_status,
@@ -62,6 +65,9 @@ static void	wait_signaled(int status, pid_t pid, int *exit_status,
 	int	sig_number;
 
 	sig_number = WTERMSIG(status);
-	if (pid == last_pid)
+	if (pid == last_pid || pid == get_last_pid())
+	{
 		*exit_status = 128 + sig_number;
+		set_status(*exit_status);
+	}
 }

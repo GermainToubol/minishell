@@ -36,9 +36,10 @@ pid_t	exec_tree_and(t_astree *node, int *pipe_in, int *pipe_out,
 	pid = exec_tree(node->left, pipe_in, pipe_out, cleanable);
 	close_pipe(pipe_in);
 	wait_all(n, pid);
+	ft_fprintf(2, "Out pid: %d | int status: %d | $?: %d\n", pid, is_interupted(), get_status());
 	pipe_in[0] = tmp[0];
 	//cleanable->n_pipes -= 1;
-	if (get_status() == 0 && get_exit_state() == 0)
+	if (get_status() == 0 && get_exit_state() == 0 && is_interupted() == 0)
 	{
 		n = count_wait_tree(node->right, cleanable->depth);
 		pid = exec_tree(node->right, pipe_in, pipe_out, cleanable);
@@ -48,7 +49,7 @@ pid_t	exec_tree_and(t_astree *node, int *pipe_in, int *pipe_out,
 	else
 		close(tmp[0]);
 	close_pipe(pipe_out);
-	return (1);
+	return (pid);
 }
 
 static void	close_pipe(int *pfd)

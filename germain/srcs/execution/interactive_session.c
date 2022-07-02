@@ -36,6 +36,7 @@ int	interactive_session(t_list	**env)
 	rl_clear_history();
 	while (is_done == 0 && get_exit_state() == 0)
 	{
+		reset_interupt();
 		is_done = do_execution(env);
 	}
 	rl_clear_history();

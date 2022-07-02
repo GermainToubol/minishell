@@ -36,7 +36,7 @@ pid_t	exec_tree_or(t_astree *node, int *pipe_in, int *pipe_out,
 	close_pipe(pipe_in);
 	pipe_in[0] = tmp[0];
 	wait_all(n, pid);
-	if (get_status() != 0 && get_exit_state() == 0)
+	if (get_status() != 0 && get_exit_state() == 0 && is_interupted() == 0)
 	{
 		n = count_wait_tree(node->right, cleanable->depth);
 		pid = exec_tree(node->right, pipe_in, pipe_out, cleanable);

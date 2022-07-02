@@ -69,6 +69,11 @@ int		local_memory_manager(void *ptr, int action, int flag);
 int		init_signal_interactive(struct sigaction *sa);
 void	send_sig_list(void);
 void	kill_from_lst(void *content);
+void	set_interupt(void);
+void	reset_interupt(void);
+int		is_interupted(void);
+pid_t	get_last_pid(void);
+void	set_last_pid(pid_t pid);
 
 /* EXECUTION */
 int		run_line(char *line, t_list **env);

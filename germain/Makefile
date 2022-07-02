@@ -24,7 +24,9 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										ft_newdico.c		\
 										ft_freedico.c)		\
 			$(addprefix signals/,		manage_pid.c		\
-										pid_utils.c)		\
+										pid_utils.c			\
+										interupted.c		\
+										last_pid.c)			\
 			$(addprefix builtins/,		builtin_echo.c 		\
 										builtin_cd.c 		\
 										builtin_pwd.c		\
