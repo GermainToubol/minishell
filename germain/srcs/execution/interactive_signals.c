@@ -59,9 +59,9 @@ static void	signal_handler(int signum, siginfo_t *siginfo, void *context)
 	set_interupt();
 	wait_all(size, 0);
 	if (rl_outstream == stderr)
-			write(2, "\n", 1);
-		else
-			write(1, "\n", 1);
+		write(2, "\n", 1);
+	else
+		write(1, "\n", 1);
 	if (siginfo->si_pid != 0)
 	{
 		rl_replace_line("", 0);

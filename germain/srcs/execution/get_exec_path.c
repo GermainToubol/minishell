@@ -97,15 +97,13 @@ static int	check_path_env(char *cmd_name, t_parse *parse, t_list **env)
 		i = check_fullname(paths, cmd_name, parse);
 		ft_free_split(paths);
 	}
-	if (i == 1)
-		return (1);
-	if (i == 0)
-		return (0);
+	if (i == 1 || i == 0)
+		return (i);
 	if (errno == EACCES)
 	{
 		ft_fprintf(2, "%s: %s: %s\n", "minishell", cmd_name, strerror(errno));
 		return (set_status(126), 126);
 	}
 	ft_fprintf(2, "minishell: %s: command not found\n", cmd_name);
-		return (set_status(127), 127);
+	return (set_status(127), 127);
 }

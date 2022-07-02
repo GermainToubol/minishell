@@ -45,8 +45,6 @@ pid_t	exec_tree_pipe(t_astree *node, int *pipe_in, int *pipe_out,
 	pid = exec_tree(node->right, tmp_pipe, pipe_out, cleanable);
 	if (builtin_level == 1)
 		cleanable->depth += 1;
-	if (pid == 0)
-		return (pid);
 	return (pid);
 }
 

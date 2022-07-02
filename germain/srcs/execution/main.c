@@ -44,8 +44,8 @@ int	main(int argc, char **argv, char **env)
 		lines = ft_split(argv[2], ';');
 		while (lines[i] != NULL)
 		{
-			if (lines[i][ft_strlen(lines[i]) -1] == '\n')
-				lines[i][ft_strlen(lines[i]) -1] = '\0';
+			if (lines[i][ft_strlen(lines[i]) - 1] == '\n')
+				lines[i][ft_strlen(lines[i]) - 1] = '\0';
 			run_line(lines[i], &env_lst);
 			i++;
 		}
