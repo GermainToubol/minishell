@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:11:19 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/18 16:28:03 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 01:11:48 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	print_tab(char **tab)
 		ft_printf("tab %i: %s\n", i, tab[i]);
 		i++;
 	}
+	ft_printf("tab %i: %s\n", i, tab[i]);
 }
 
 void	print_lexer(char *line, t_tokens *tokens)
