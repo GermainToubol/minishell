@@ -62,7 +62,8 @@ pid_t	exec_process(t_parse *parse, t_clean *cleanable,
 		exit(get_status());
 	}
 	if (pid_extend_list(pid))
-		return (-1);
+		return (set_status(-1), -1);
+	unset_father();
 	run_parent(pipe_in);
 	return (pid);
 }

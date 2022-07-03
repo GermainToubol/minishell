@@ -34,8 +34,8 @@ int	init_signal_interactive(struct sigaction *sa)
 {
 	sa->sa_handler = NULL;
 	sigemptyset(&sa->sa_mask);
-	sigaddset(&sa->sa_mask, SIGINT);
-	sa->sa_flags = SA_SIGINFO;
+	sigaddset(&sa->sa_mask, SIGQUIT);
+	sa->sa_flags = SA_SIGINFO | SA_RESTART;
 	sa->sa_sigaction = signal_handler;
 	sigaction(SIGINT, sa, NULL);
 	sigaction(SIGQUIT, sa, NULL);
@@ -53,6 +53,8 @@ static void	signal_handler(int signum, siginfo_t *siginfo, void *context)
 		return ;
 	}
 	if (signum == SIGQUIT)
+		return ;
+	if (is_father() == 0)
 		return ;
 	size = pid_lstlen();
 	pid_signal_all();

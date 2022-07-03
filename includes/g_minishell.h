@@ -73,6 +73,9 @@ void		kill_from_lst(void *content);
 void		set_interupt(void);
 void		reset_interupt(void);
 int			is_interupted(void);
+int			is_father(void);
+void		unset_father(void);
+void		reset_father(void);
 
 /* EXECUTION */
 int			run_line(char *line, t_list **env);
