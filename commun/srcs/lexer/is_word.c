@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 17:18:36 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/03 15:34:46 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/03 15:53:42 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "utils.h"
 
-static int	is_quote_content(char *line, size_t *i)
+int	is_quote_content(char *line, size_t *i)
 {
 	int		sq_open;
 	int		dq_open;
@@ -28,7 +28,6 @@ static int	is_quote_content(char *line, size_t *i)
 				|| line[*i] == '<' || line[*i] == '\0' || line[*i] == '('
 				|| line[*i] == ')'))
 			break ;
-		(*i)++;
 		if (line[*i] == '\'' && !dq_open)
 			sq_open = !sq_open;
 		if (line[*i] == '"' && !sq_open)
@@ -57,16 +56,14 @@ int	is_quote(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i)
 
 static int	is_word_basic(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i)
 {
-	if (!ft_isalnum(*line) && *line != '-' && *line != '"' && *line != '\''
-		&& *line != '*' && *line != '/' && *line != '.')
+	if (c_separator(line[*i]))
 		return (0);
-	while (!(line[*i] == ' ' || line[*i] == '\t'
-		|| line[*i] == '|' || line[*i] == '&' || line[*i] == '>'
-		|| line[*i] == '<' || line[*i] == '\0' || line[*i] == '('
-		|| line[*i] == ')'))
+	while (!c_separator(line[*i]))
 		(*i)++;
 	if (line[*i] == '>'	|| line[*i] == '<' )
 		return (0);
+	if ((line[*i] == '"' || line[*i] == '\'') && is_quote_content(line, i))
+		return (1);
 	lxm->data = ft_strndup(line, *i);
 	if (!lxm->data)
 		return (display_error("Error allocation\n", 0), -1);
@@ -78,16 +75,10 @@ static int	is_word_basic(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i)
 static int	is_var(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i)
 {
 	(*i)++;
-	while (!(line[*i] == ' ' || line[*i] == '\t'
-		|| line[*i] == '|' || line[*i] == '&' || line[*i] == '>'
-		|| line[*i] == '<' || line[*i] == '\0' || line[*i] == '('
-		|| line[*i] == ')'))
+	while (!c_separator(line[*i]))
 		(*i)++;
-	if (line[*i] == '"' || line[*i] == '\'')
-	{
-		if (is_quote_content(line, i))
-			return (1);
-	}
+	if ((line[*i] == '"' || line[*i] == '\'') && is_quote_content(line, i))
+		return (1);
 	lxm->data = ft_strndup(line, *i);
 	if (!lxm->data)
 		return (display_error("Error allocation\n", 0), 1);
@@ -103,7 +94,7 @@ int	is_word(char *line, t_lxm *lxm, t_tokens *tokens)
 
 	i = 0;
 	is_word = tokens->size;
-	if (is_word_basic(line, lxm, tokens, &i) == -1)
+	if (is_word_basic(line, lxm, tokens, &i))
 		return (-1);
 	if (i > 0 && (line[i] == '>' || line[i] == '<')
 		&& word_redirect(line, lxm, tokens, &i))
