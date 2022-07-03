@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 22:50:53 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 15:10:38 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/01 18:14:28 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ static int	clean_hdoc(char *name, void *ptr, int fd, int out)
 	{
 		if (unlink(name) == -1)
 			return (-1);
-		free(name);
 	}
 	return (out);
 }

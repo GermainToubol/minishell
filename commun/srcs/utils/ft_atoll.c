@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:14:08 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 16:52:34 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/03 12:53:02 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ long long	ft_atoll(char *s)
 	}
 	while (ft_isdigit(*s))
 	{
-		n += *s - '0';
 		n *= 10;
+		n += *s - '0';
 		s++;
 	}
 	return (n * minus);
