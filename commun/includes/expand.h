@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:07:13 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 12:44:37 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/03 17:15:45 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define EXPAND_H
 
 # include <stdlib.h>
+# include "parser.h"
 
 char		**do_expand(char **cmd);
 char		**expand_loop_end(char ***new_cmd);
@@ -26,6 +27,7 @@ size_t		tab3_size(char ***new_cmd);
 
 char		*expand_var(const char *cmd);
 char		*expand_quotes(const char *cmd);
-int			get_hdoc(char *hdoc, int fd, char **env);
+int			dup_hdoc(char **env, t_parse *parse);
+int			close_hdoc(int fd, int fd_copy);
 
 #endif
