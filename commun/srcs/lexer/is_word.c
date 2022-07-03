@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 17:18:36 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/03 14:56:19 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/03 15:34:46 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,13 @@ static int	is_word_basic(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i)
 		|| line[*i] == '<' || line[*i] == '\0' || line[*i] == '('
 		|| line[*i] == ')'))
 		(*i)++;
-	{
-		lxm->data = ft_strndup(line, *i);
-		if (!lxm->data)
-			return (display_error("Error allocation\n", 0), -1);
-		lxm->type = WORD;
-		tokens->size++;
-	}
+	if (line[*i] == '>'	|| line[*i] == '<' )
+		return (0);
+	lxm->data = ft_strndup(line, *i);
+	if (!lxm->data)
+		return (display_error("Error allocation\n", 0), -1);
+	lxm->type = WORD;
+	tokens->size++;
 	return (0);
 }
 
