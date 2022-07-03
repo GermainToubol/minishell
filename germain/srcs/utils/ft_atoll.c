@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:14:08 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/03 12:53:02 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/03 17:13:38 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ft_atoll(char *s, long long *n)
 	*n = 0;
 	minus = 1;
 	if (!s)
-		return (0);
+		return (1);
 	if (*s == '+' || *s == '-')
 	{
 		if (*s == '-')
@@ -31,7 +31,7 @@ int	ft_atoll(char *s, long long *n)
 	{
 		if (minus > 0 && (LLONG_MAX - *s + '0') / 10 < *n)
 			return (1);
-		if (minus < 0 && (LLONG_MIN + *s - '0') / 10 > *n * -1)
+		if (minus < 0 && (LLONG_MIN + *s - '0') / 10 > -(*n))
 			return (1);
 		*n *= 10;
 		*n += *s - '0';

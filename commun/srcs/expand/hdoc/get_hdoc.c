@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 01:53:05 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 12:48:19 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/03 17:15:29 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "utils.h"
 #include "libft.h"
 #include "expand.h"
+#include "parser.h"
 #include <sys/types.h>
 #include <sys/wait.h>
 
@@ -60,22 +61,6 @@ static int	expand_hdoc(char **hdoc, int in_fd)
 	return (0);
 }
 
-static int	exec_cat(char **env)
-{
-	char	*catcmd[2];
-	pid_t	p;
-
-	catcmd[0] = "cat";
-	catcmd[1] = NULL;
-	p = fork();
-	if (p == -1)
-		return (1);
-	if (p == 0)
-		execve("/usr/bin/cat", catcmd, env);
-	wait(NULL);
-	return (0);
-}
-
 static int	redirect_hdoc(char *hdoc, int fd, char **env, int type)
 {
 	int		hdoc_fd;
@@ -101,19 +86,44 @@ static int	redirect_hdoc(char *hdoc, int fd, char **env, int type)
 	return (0);
 }
 
-int	get_hdoc(char *hdoc, int fd, char **env)
+int	close_hdoc(int fd, int fd_copy)
+{
+	if (dup2(fd_copy, fd) == -1)
+		return (close(fd_copy), -1);
+	close(fd_copy);
+	return (0);
+}
+
+int	get_hdoc(t_parse *parse)
+{
+	int	i;
+
+	if (parse->type != CMD || !parse->cmd || !parse->cmd->redirect)
+		return (0);
+	i = 0;
+	while (parse->cmd->redirect[i] && parse->cmd->redirect[i]->io_r == HDOC)
+		i++;
+	if (parse->cmd->redirect[i])
+		return (i);
+	return (0);
+}
+
+int	dup_hdoc(char **env, t_parse *parse)
 {
 	int		fd_cpy;
-	int		err;
+	int		fd;
+	char 	*file;
+	int		i;
 
+	i = get_hdoc(parse);
+	if (i < 0)
+		return (-1);
+	file = parse->cmd->redirect[i]->file;
+	fd = parse->cmd->redirect[i]->fd;
 	fd_cpy = dup(fd);
 	if (fd_cpy == -1)
 		return (-1);
-	if (redirect_hdoc(hdoc, fd, env, 0) == -1)
+	if (redirect_hdoc(file, fd, env, 0) == -1)
 		return (-1);
-	err = exec_cat(env);
-	if (dup2(fd_cpy, fd) == -1)
-		return (close(fd_cpy), -1);
-	close(fd_cpy);
-	return (err);
+	return (fd_cpy);
 }
