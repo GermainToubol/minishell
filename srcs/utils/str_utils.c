@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:42:57 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/22 03:25:08 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/03 18:47:22 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ size_t	size_tab(char **tab)
 	size_t	i;
 
 	i = 0;
+	if (!tab)
+		return (0);
 	while (tab[i])
 	{
 		i++;
