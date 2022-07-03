@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include "libft.h"
@@ -53,10 +54,12 @@ static int	show_export(t_list	**env)
 {
 	t_dico	*dico;
 	t_list	*tmp;
+	int		status;
 
 	ft_lstsort(env, environment_var_compare);
 	tmp = *env;
-	while (tmp != NULL)
+	status = 0;
+	while (tmp != NULL && status >= 0)
 	{
 		dico = (t_dico *)tmp->content;
 		if (ft_strcmp(dico->key, "_") == 0)
@@ -65,10 +68,15 @@ static int	show_export(t_list	**env)
 			continue ;
 		}
 		if (dico->value == NULL)
-			ft_printf("declare -x %s\n", dico->key);
+			status = ft_printf("declare -x %s\n", dico->key);
 		else
-			ft_printf("declare -x %s=\"%s\"\n", dico->key, dico->value);
+			status = ft_printf("declare -x %s=\"%s\"\n", dico->key, dico->value);
 		tmp = tmp->next;
+	}
+	if (status < 0)
+	{
+		perror("minishell: export: write error");
+		return (1);
 	}
 	return (0);
 }
@@ -80,6 +88,8 @@ static size_t	export_check_name(char *name)
 	i = 0;
 	while (name[i] != '\0' && (ft_isalnum(name[i]) || name[i] == '_'))
 		i++;
+	if (ft_isdigit(name[0]))
+		return (0);
 	if (i != 0 && (name[i] == '\0' || name[i] == '='
 			|| (name[i] == '+' && name[i + 1] == '=')))
 		return (i);
@@ -118,7 +128,7 @@ static int	export_set_value(t_list **env, char *name, size_t i)
 	char	*name_tmp;
 
 	tmp = *env;
-	if (name[i] == '\0' || name[i] == '=')
+	if ((name[i] == '\0' && environment_get(*env, name) == NULL) || (name[i] == '='))
 		tmp = environment_add(env, name);
 	else if (name[i] == '+')
 	{

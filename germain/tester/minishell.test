@@ -6,6 +6,10 @@ cd ; ls -la
 cd ; ls *
 cd ; ls /dev
 cd ; /usr/bin/ls
+/usr/bin
+cd ; rm -f coucou ; ln -s /usr/bin/pwd coucou ; ./coucou
+cd ; rm -f coucou ; ln -s /usr/bin coucou ; ./coucou
+cd ; rm -f coucou
 cd ; dsfvkjlfs
 cd ; ./efdgedrg
 cd ; touch aaa.exe ; chmod 0000 aaa.exe; ./aaa.exe ; rm -rf aaa.exe
@@ -41,7 +45,7 @@ yes | (cat | cat) | head
 yes | (cat && cat) | head
 yes | (cat || cat) | head
 yes | (head -2 | cat -e && head) | head
-yes | (head -2 | (cat && ls | cat -e)) | head
+cd ; yes | (head -2 | (cat && ls | cat -e)) | head
 # Builtin
 ## Echo
 echo bonjour
@@ -59,6 +63,10 @@ echo -n sfdgfgh > /dev/full
 echo -n > /dev/full
 ## cd
 cd /tmp ; /usr/bin/pwd
+cd /usr/bin
+cd /usr/bin ; /usr/bin/pwd
+cd /usr /usr ; /usr/bin/pwd
+cd /usr /usr
 cd ../srcs/signals ; /usr/bin/pwd
 cd ../../../../../../../../../../../../../.. ; /usr/bin/pwd
 cd sdfhgsfgs
@@ -72,6 +80,10 @@ cd /tmp ; export "HOME=sdfhfgh" ; cd
 cd /tmp ; unset HOME ; cd ; /usr/bin/pwd
 cd /tmp ; export "HOME=" ; cd ; /usr/bin/pwd
 cd /tmp ; export "HOME=sdfhfgh" ; cd ; /usr/bin/pwd
+cd /tmp ; cd $HOME/Documents
+cd /tmp ; cd $HOME/Documents ; /usr/bin/pwd
+cd /tmp ; unset HOME ; cd $HOME/Documents
+cd /tmp ; unset HOME ; cd $HOME/Documents ; /usr/bin/pwd
 ## pwd
 cd /tmp ; pwd
 cd ; unset PATH ; pwd
@@ -112,3 +124,29 @@ exit '' '' '' ''
 exit 1111111111111111
 exit 2147483648
 exit 2147483647
+cd ; ls && exit
+false && exit
+cd ; ls | exit
+## Export
+export "_=/usr/bin/python3" ; export
+export > /dev/full
+export 123
+export "pdqo  rg"
+export "TEST=abcd"
+export "TEST=abcd"; export "TEST=efgh"
+export "TEST=abcd" "COUCOU=efgh" "BONJOUR=ijkl"
+export "TEST=aa" "TEST"
+export "TEST="
+export "TEST=abc" "TEST+=cou ocu" "LAMA+=oui"
+export ""
+export "" "TEST=coucou"
+export 123 ; export "_=/usr/bin/python3" ; export
+export "pdqo  rg" ; export "_=/usr/bin/python3" ; export
+export "TEST=abcd" ; export "_=/usr/bin/python3" ; export
+export "TEST=abcd"; export "TEST=efgh" ; export "_=/usr/bin/python3" ; export
+export "TEST=abcd" "COUCOU=efgh" "BONJOUR=ijkl" ; export "_=/usr/bin/python3" ; export
+export "TEST=aa" "TEST" ; export "_=/usr/bin/python3" ; export
+export "TEST=" ; export "_=/usr/bin/python3" ; export
+export "TEST=abc" "TEST+=cou ocu" "LAMA+=oui" ; export "_=/usr/bin/python3" ; export
+export "" ; export "_=/usr/bin/python3" ; export
+export "" "TEST=coucou" ; export "_=/usr/bin/python3" ; export

@@ -9,6 +9,8 @@
 /*   Updated: 2022/06/22 16:17:10 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <unistd.h>
 #include "libft.h"
 #include "parser.h"
@@ -17,6 +19,7 @@
 
 static void	child_set_pipe(int *pipe_in, int *pipe_out);
 static void	child_close_fds(t_parse *parse);
+static int	check_path_exec(t_parse *parse);
 
 void	run_child(t_parse *parse, t_list **env, int *pipe_in, int *pipe_out)
 {
@@ -26,7 +29,9 @@ void	run_child(t_parse *parse, t_list **env, int *pipe_in, int *pipe_out)
 	if (do_redirect(parse) != 0)
 		return ;
 	if (get_exec_path(parse, env) != 0)
-		return ;
+		return (child_close_fds(parse));
+	if (check_path_exec(parse) != 0)
+		return (child_close_fds(parse));
 	envp = environment_format(*env);
 	if (envp == NULL)
 		return ;
@@ -64,4 +69,22 @@ static void	child_close_fds(t_parse *parse)
 		close(redirect[i]->fd);
 		i++;
 	}
+}
+
+static int	check_path_exec(t_parse *parse)
+{
+	struct stat file_stats;
+
+	if (stat(parse->cmd->path_exec, &file_stats) == 0)
+	{
+		if (S_ISDIR(file_stats.st_mode) != 0)
+		{
+			ft_fprintf(2, "minishell: %s: Is a directory\n",
+				parse->cmd->path_exec);
+			return (set_status(126), 126);
+		}
+		return (0);
+	}
+	perror("minishell: stat");
+	return (set_status(1), 1);
 }
