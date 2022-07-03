@@ -55,7 +55,6 @@ pid_t	exec_process(t_parse *parse, t_clean *cleanable,
 		perror("minishell: fork");
 	if (pid == 0)
 	{
-		fprintf(stderr, "N: %d | %s\n", cleanable->n_pipes, parse->cmd->cmd[0]);
 		while (cleanable->n_pipes > 0)
 			cleanable_pop_pipe(cleanable);
 		run_child(parse, cleanable->env, pipe_in, pipe_out);

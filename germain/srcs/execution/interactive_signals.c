@@ -35,7 +35,6 @@ int	init_signal_interactive(struct sigaction *sa)
 	sa->sa_handler = NULL;
 	sigemptyset(&sa->sa_mask);
 	sigaddset(&sa->sa_mask, SIGINT);
-	sigaddset(&sa->sa_mask, SIGQUIT);
 	sa->sa_flags = SA_SIGINFO;
 	sa->sa_sigaction = signal_handler;
 	sigaction(SIGINT, sa, NULL);
@@ -45,6 +44,8 @@ int	init_signal_interactive(struct sigaction *sa)
 
 static void	signal_handler(int signum, siginfo_t *siginfo, void *context)
 {
+	int	size;
+
 	(void)context;
 	if (signum != SIGINT && signum != SIGQUIT)
 	{
@@ -53,8 +54,10 @@ static void	signal_handler(int signum, siginfo_t *siginfo, void *context)
 	}
 	if (signum == SIGQUIT)
 		return ;
+	size = pid_lstlen();
 	pid_signal_all();
-	wait_all(12, 0);
+	set_interupt();
+	wait_all(size, 0);
 	if (rl_outstream == stderr)
 		write(2, "\n", 1);
 	else
@@ -65,4 +68,5 @@ static void	signal_handler(int signum, siginfo_t *siginfo, void *context)
 		rl_on_new_line();
 		rl_redisplay();
 	}
+	(void)siginfo;
 }

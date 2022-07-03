@@ -41,7 +41,7 @@ int	do_redirect(t_parse *parse)
 			continue ;
 		}
 		if (f(redirect[i]->file, redirect[i]->fd) != 0)
-			return (1);
+			return (set_status(1), 1);
 		i++;
 	}
 	return (0);

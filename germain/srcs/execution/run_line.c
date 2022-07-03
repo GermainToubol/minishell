@@ -33,7 +33,7 @@ int	run_line(char *line, t_list **env)
 	if (parse == NULL)
 		return (1);
 	if (create_astree(parse, &root))
-		return (free_parse(parse), 0);
+		return (free_parse(parse), 1);
 	return (do_exec_run(root, parse, env));
 }
 

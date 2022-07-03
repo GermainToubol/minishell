@@ -37,4 +37,78 @@ cd ; (ls | false | true) && ls
 cd ; (ls | ls | false) || ls
 cd ; (ls | false | true) || ls
 # All Operations
-cd ; yes | (cat | cat && cat | head) | head
+yes | (cat | cat) | head
+yes | (cat && cat) | head
+yes | (cat || cat) | head
+yes | (head -2 | cat -e && head) | head
+yes | (head -2 | (cat && ls | cat -e)) | head
+# Builtin
+## Echo
+echo bonjour
+echo bon jou r
+echo 'test 123v sfg'
+echo
+echo bonjour > /dev/full
+echo > /dev/full
+echo -n bonjour les amis
+echo -n -n -n bonjour
+echo -nnnnnnnnn -n -n bonjour
+echo -m -n bonjour
+echo -nnnnnm bonjour
+echo -n sfdgfgh > /dev/full
+echo -n > /dev/full
+## cd
+cd /tmp ; /usr/bin/pwd
+cd ../srcs/signals ; /usr/bin/pwd
+cd ../../../../../../../../../../../../../.. ; /usr/bin/pwd
+cd sdfhgsfgs
+cd /tmp ; rm -rf /tmp/coucou ;mkdir coucou ; chmod 000 coucou ; cd coucou
+rm -rf /tmp/coucou
+cd ''
+cd '' '' ''
+cd /tmp ; unset HOME ; cd
+cd /tmp ; export "HOME=" ; cd
+cd /tmp ; export "HOME=sdfhfgh" ; cd
+cd /tmp ; unset HOME ; cd ; /usr/bin/pwd
+cd /tmp ; export "HOME=" ; cd ; /usr/bin/pwd
+cd /tmp ; export "HOME=sdfhfgh" ; cd ; /usr/bin/pwd
+## pwd
+cd /tmp ; pwd
+cd ; unset PATH ; pwd
+cd /tmp ; pwd > /dev/full
+cd ; unset PATH ; pwd > /dev/full
+## unset
+unset PATH
+unset PATH PWD OLDPWD
+unset sfdlgkjsfdg
+unset '__1212'
+unset '12__12'
+unset ''
+unset '' '' '' ''
+unset PATH ; export
+unset PATH PWD OLDPWD ; export
+unset sfdlgkjsfdg ; export
+unset '__1212' ; export
+unset '12__12' ; export
+unset '' ; export
+unset '' '' '' '' ; export
+unset
+unset ; export
+## env
+env > /dev/full
+## exit
+exit
+exit 1
+exit 9
+exit 10
+exit 12
+exit 17
+exit 255
+exit 257
+exit 258
+exit 1 1 1
+exit ''
+exit '' '' '' ''
+exit 1111111111111111
+exit 2147483648
+exit 2147483647

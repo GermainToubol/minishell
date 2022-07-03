@@ -9,6 +9,7 @@
 /*   Updated: 2022/06/27 15:16:43 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "utils.h"
 #include "minishell.h"
 #include "g_minishell.h"
 
@@ -52,16 +53,16 @@ static int	exit_check_numeric(char *str)
 
 static int	exit_check_number(char *str)
 {
-	int		n;
-	size_t	i;
+	long long	n;
+	size_t		i;
 
-	n = ft_atoi(str);
+	n = ft_atoll(str);
 	if (n == 0)
 	{
 		i = 0;
 		if (str[i] == '+' || str[i] == '-')
 			i++;
-		while (str[i] != '\0')
+		while (i == 0 || str[i] != '\0')
 		{
 			if (str[i] != '0')
 			{
@@ -73,7 +74,7 @@ static int	exit_check_number(char *str)
 			i++;
 		}
 	}
-	set_status(n);
+	set_status((n/10));
 	return (0);
 }
 

@@ -89,5 +89,7 @@ int	manage_pid_list(pid_t pid, int action)
 		return (_signal_all(pid_list));
 	if (action == -2)
 		ft_lstclear(&pid_list, NULL);
+	if (action == 3)
+		return (ft_lstsize(pid_list));
 	return (0);
 }

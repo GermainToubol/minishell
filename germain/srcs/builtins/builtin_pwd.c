@@ -37,7 +37,7 @@ int	builtin_pwd(int argc, char **argv, t_list **env)
 	}
 	if (ft_printf("%s\n", path) < 0)
 	{
-		perror("minishell:pwd: write error");
+		perror("minishell: pwd: write error");
 		return (1);
 	}
 	return (0);
