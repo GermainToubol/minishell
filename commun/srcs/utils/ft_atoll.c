@@ -19,7 +19,6 @@ int	ft_atoll(char *s, long long *n)
 
 	*n = 0;
 	minus = 1;
-	n = 0;
 	if (!s)
 		return (0);
 	if (*s == '+' || *s == '-')
@@ -30,12 +29,12 @@ int	ft_atoll(char *s, long long *n)
 	}
 	while (ft_isdigit(*s))
 	{
-		if (minus > 0 && (LLONG_MAX - *s + '0') / 10 < n)
+		if (minus > 0 && (LLONG_MAX - *s + '0') / 10 < *n)
 			return (1);
-		if (minus < 0 && (LLONG_MIN + *s - '0') / 10 > -n)
+		if (minus < 0 && (LLONG_MIN + *s - '0') / 10 > -*n)
 			return (1);
-		n *= 10;
-		n += *s - '0';
+		*n *= 10;
+		*n += *s - '0';
 		s++;
 	}
 	*n *= minus;
