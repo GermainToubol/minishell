@@ -82,9 +82,11 @@ int			do_bind_pipe(int *pfd);
 int			get_exec_path(t_parse *parse, t_list **env);
 pid_t		exec_process(t_parse *parse, t_clean *cleanable,
 				int *pipe_in, int *pipe_out);
-void		run_child(t_parse *parse, t_list **env, int *pipe_in, int *pipe_out);
+void		run_child(t_parse *parse, t_list **env, int *pipe_in,
+				int *pipe_out);
 void		run_parent(int *pipe_in);
-int			run_builtin(t_parse *parse, t_list **env, int *pipe_in, int *pipe_out);
+int			run_builtin(t_parse *parse, t_list **env, int *pipe_in,
+				int *pipe_out);
 int			run_tree_exec(t_astree *root, t_parse **parse, t_list **env);
 int			wait_all(int n_process, pid_t last_pid);
 
@@ -106,6 +108,7 @@ int			count_wait_tree(t_astree *root, int depth);
 /* CLEANABLE TOOLS */
 void		cleanable_add_pipe(t_clean *cleanable, int *pipe_fds);
 void		cleanable_pop_pipe(t_clean *cleanable);
+void		cleanble_close_pipes(t_clean *cleanable);
 void		clear_cleanable(t_clean *cleanable);
 
 /* PIPE MANAGEMENT */

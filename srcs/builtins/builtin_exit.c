@@ -55,7 +55,7 @@ static int	exit_check_number(char *str)
 {
 	long long	n;
 	int			status;
-	size_t	i;
+	size_t		i;
 
 	i = 0;
 	n = ft_atoll_protected(str);

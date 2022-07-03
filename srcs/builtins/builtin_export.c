@@ -74,10 +74,7 @@ static int	show_export(t_list	**env)
 		tmp = tmp->next;
 	}
 	if (status < 0)
-	{
-		perror("minishell: export: write error");
-		return (1);
-	}
+		return (perror("minishell: export: write error"), 1);
 	return (0);
 }
 
@@ -128,7 +125,8 @@ static int	export_set_value(t_list **env, char *name, size_t i)
 	char	*name_tmp;
 
 	tmp = *env;
-	if ((name[i] == '\0' && environment_get(*env, name) == NULL) || (name[i] == '='))
+	if ((name[i] == '\0' && environment_get(*env, name) == NULL)
+		|| (name[i] == '='))
 		tmp = environment_add(env, name);
 	else if (name[i] == '+')
 	{

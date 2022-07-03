@@ -88,7 +88,8 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										exec_tree_add_level.c)\
 			$(addprefix cleanable/,		cleanable_add_pipe.c\
 										cleanable_pop_pipe.c\
-										clear_cleanable.c)	\
+										clear_cleanable.c	\
+										cleanable_close_pipes.c)\
 			$(addprefix expand/,							\
 			$(addprefix wildcard/,		wildcard.c			\
 										update_wc.c			\

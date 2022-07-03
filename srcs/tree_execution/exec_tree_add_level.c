@@ -34,8 +34,7 @@ pid_t	exec_tree_add_level(t_astree *node, int *pipe_in, int *pipe_out,
 	if (pid == 0)
 	{
 		cleanable->depth = node->depth;
-		while (cleanable->n_pipes > 0)
-			cleanable_pop_pipe(cleanable);
+		cleanble_close_pipes(cleanable);
 		if (set_pipes(pipe_in, pipe_out) < 0)
 			return (set_status(1), -1);
 		n = count_wait_tree(node, cleanable->depth);
@@ -61,7 +60,7 @@ static void	close_pipes(int *pipe_fds)
 
 static int	set_pipes(int *pipe_in, int *pipe_out)
 {
-	int status;
+	int	status;
 
 	status = 1;
 	if (pipe_in[0] != -2)

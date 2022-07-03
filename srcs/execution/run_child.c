@@ -73,7 +73,7 @@ static void	child_close_fds(t_parse *parse)
 
 static int	check_path_exec(t_parse *parse)
 {
-	struct stat file_stats;
+	struct stat	file_stats;
 
 	if (stat(parse->cmd->path_exec, &file_stats) == 0)
 	{
