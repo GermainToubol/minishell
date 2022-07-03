@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 16:46:09 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/03 20:35:07 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/03 22:49:30 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ static int	rec_do_quotes(const char *cmd, size_t *i,
 	tmp = ft_substr(cmd, start, *i - start);
 	if (!tmp)
 		return (display_error("Error allocation\n", 0), 1);
-	if (cmd[*i] == '\'' && strjoin_custom(ret, tmp))
-		return (1);
+	if (cmd[*i] == '\'')
+	{
+
+	}
 	else if (cmd[*i] == '"')
 	{
 		tmp2 = expand_var(tmp);
@@ -67,6 +69,7 @@ static int	rec_quote_content(const char *cmd, size_t *i, char ***ret)
 		tmp = ft_split("", ' ');
 		if (!tmp)
 			return (display_error("Error allocation\n", 0), 1);
+		
 		if (ft_join_tab(ret, size_tab(*ret), tmp, size_tab(tmp)))
 			return (free_tab(ret), NULL);
 	}

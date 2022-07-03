@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:50:17 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/03 20:17:37 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/03 23:05:05 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,6 @@ int		strjoin_custom(char **dest, char *src);
 int		del_hdoc_token(t_tokens *tokens);
 int		del_hdoc_parse(t_parse **parse);
 int		ft_join_tab(char ***tab1, size_t size1, char **tab2, size_t size2);
+char	*ft_strnjoin(char **tab, char sep);
 
 #endif
