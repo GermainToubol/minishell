@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:47:46 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/03 20:05:23 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 00:37:19 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,15 @@ static int	expand_loop2(char ***new_cmd, char *cmd, size_t i)
 
 int	expand_loop(char ***new_cmd, char *cmd, size_t i)
 {
+	char	*tmp;
+
 	if (ft_strchr(cmd, '\'') || ft_strchr(cmd, '"'))
 	{
-		new_cmd[i] = expand_quotes(cmd);
+		tmp = expand_quotes(cmd);
+		if (!tmp)
+			return (1);
+		new_cmd[i] = do_basic(tmp);
+		free(tmp);
 		if (!new_cmd[i])
 			return (1);
 	}

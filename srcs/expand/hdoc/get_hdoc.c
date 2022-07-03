@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 01:53:05 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/03 17:15:29 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/03 23:07:05 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	read_hdoc(int hdoc_fd, int out_fd)
 	ssize_t	r;
 	char	buffer[BUFFER_SIZE + 1];
 	char	*line;
+	char	**tmp;
 
 	r = 1;
 	while (r)
@@ -38,7 +39,11 @@ int	read_hdoc(int hdoc_fd, int out_fd)
 			write (out_fd, buffer, r);
 		else
 		{
-			line = expand_var(buffer);
+			tmp = expand_var(buffer);
+			if (!tmp)
+				return (-1);
+			line = ft_strnjoin(tmp, ' ');
+			free(tmp);
 			if (line)
 				write (out_fd, line, ft_strlen(line));
 			free(line);
