@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:47:46 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 01:13:07 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 01:36:15 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int	expand_loop(char ***new_cmd, char *cmd, size_t i)
 		if (!tmp2)
 			return (1);
 		if (var_expand_wc(&tmp2))
-			return (1);
+			return (free_tab(tmp2), 1);
 		new_cmd[i] = tmp2;
 		if (!new_cmd[i])
 			return (1);

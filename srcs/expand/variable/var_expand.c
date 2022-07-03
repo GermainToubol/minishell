@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 16:05:10 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 01:24:18 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 01:55:14 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,30 +83,45 @@ static int	rec_var(const char *cmd, size_t i, char **ret)
 	return (0);
 }
 
+static int	var_expand_wc_content(char ***ret, char *tab)
+{
+	char **tmp;
+
+	if (ft_strchr(tab, '*'))
+	{
+		tmp = expand_wc(tab);
+		if (!tmp)
+			return (free_tab(*ret), 1);
+		if (ft_join_tab(ret, size_tab(*ret), tmp, size_tab(tmp)))
+			return (free_tab(*ret), 1);
+	}
+	else
+	{
+		if (ft_join_tab(ret, size_tab(*ret), &tab, 1))
+			return (free_tab(*ret), 1);
+	}
+	return (0);
+}
+
 int	var_expand_wc(char ***tab)
 {
 	size_t	i;
 	char	**ret;
-	char	**tmp;
 
 	i = 0;
 	ret = NULL;
 	while ((*tab)[i])
 	{
-		if (ft_strchr((*tab)[i], '*'))
-		{
-			tmp = expand_wc((*tab)[i]);
-			if (!tmp)
-				return (free_tab(ret), 1);
-			if (ft_join_tab(&ret, size_tab(ret), tmp, size_tab(tmp)))
-				return (free_tab(ret), 1);
-		}
-		else
-		{
-			if (ft_join_tab(&ret, size_tab(ret), &(*tab)[i], 1))
-				return (free_tab(ret), 1);
-		}
+		if (var_expand_wc_content(&ret, (*tab)[i]))
+			return (1);
 		i++;
+	}
+	if (i == 0)
+	{
+		ret = ft_calloc(1, sizeof(char *));
+		if (!ret)
+			return (display_error("Error allocation\n", 0), 1);
+		ret[0] = NULL;
 	}
 	free_tab(*tab);
 	*tab = ret;
@@ -121,8 +136,6 @@ char	**expand_var(const char *cmd)
 	ret = NULL;
 	if (rec_var(cmd, 0, &ret))
 		return (NULL);
-	ft_printf("ret: %s\n", ret);
 	tab_ret = split_var(ret);
-	print_tab(tab_ret);
 	return (tab_ret);
 }
