@@ -13,6 +13,7 @@
 #include "libft.h"
 #include "parser.h"
 #include "utils.h"
+#include "g_minishell.h"
 
 static int	get_var(const char *cmd, size_t *i, char **ret)
 {
@@ -22,12 +23,14 @@ static int	get_var(const char *cmd, size_t *i, char **ret)
 	start = *i;
 	if (ft_isdigit(cmd[*i]) && (*i)++)
 		return (*ret = NULL, 0);
+	if (cmd[*i] == '?' && (*i)++)
+		return (*ret = get_status_str(), 0);
 	while (ft_isalnum(cmd[*i]) || cmd[*i] == '_')
 		(*i)++;
 	var = ft_substr(cmd, start, *i - start);
 	if (!var)
 		return (display_error("Error allocation\n", 0), 1);
-	*ret = getenv(var);
+	*ret = environment_get(environment_call(), var);
 	free(var);
 	if (!*ret)
 		return (0);
