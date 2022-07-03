@@ -46,7 +46,7 @@ char	**lst_to_tab(t_list **lst);
 size_t	size_tab(char **tab);
 int		cpy_tab(char **from, char **to, size_t size);
 
-int		ft_atoll(char *s);
+int		ft_atoll(char *s, long long *n);
 int		strjoin_custom(char **dest, char *src);
 
 int		del_hdoc_token(t_tokens *tokens);
