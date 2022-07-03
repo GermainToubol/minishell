@@ -33,21 +33,20 @@ static int	exit_check_numeric(char *str)
 	size_t	i;
 
 	i = 0;
-	while (str[i] != '\0')
-	{
-		if (i == 0 && (str[i] == '+' || str[i] == '-') && str[i + 1] != '\0')
-		{
-			i++;
-			continue ;
-		}
-		if (str[i] < '0' || str[i] > '9')
-		{
-			ft_fprintf(2, "minishell: exit: %s: numeric argument required\n",
-				str);
-			set_status(2);
-			return (2);
-		}
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
 		i++;
+	if (str[i] == '+' || str[i] == '-')
+		i++;
+	while (str[i] >= '0' && str[i] <= '9')
+		i++;
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] != '\0')
+	{
+		ft_fprintf(2, "minishell: exit: %s: numeric argument required\n",
+			str);
+		set_status(2);
+		return (2);
 	}
 	return (0);
 }
@@ -55,16 +54,27 @@ static int	exit_check_numeric(char *str)
 static int	exit_check_number(char *str)
 {
 	long long	n;
+	int			status;
+	size_t	i;
 
-	if (ft_atoll(str, &n) != 0)
+	i = 0;
+	n = ft_atoll_protected(str);
+	if (n == 0)
 	{
-		ft_fprintf(2, "minishell: exit: %s: numeric argument required\n",
-				   str);
-		set_status(2);
-		return (2);
+		status = 1;
+		while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+			i++;
+		if (str[i] == '+' || str[i] == '-')
+			i++;
+		while (str[i++] == '0')
+			status = 0;
+		while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+			i++;
 	}
-	set_status(n);
-	return (0);
+	if (n != 0 || (n == 0 && (status == 0 && str[i] == '\0')))
+		return (set_status(n), 0);
+	ft_fprintf(2, "minishell: exit: %s: numeric argument required\n", str);
+	return (set_status(2), 2);
 }
 
 int	builtin_exit(int argc, char **argv, t_list **env)
