@@ -6,17 +6,18 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:14:08 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 16:52:34 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/03 12:53:02 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <limits.h>
 #include "utils.h"
 
-long long	ft_atoll(char *s)
+int	ft_atoll(char *s, long long *n)
 {
-	long long	n;
-	int			minus;
+	int	minus;
 
+	*n = 0;
 	minus = 1;
 	n = 0;
 	if (!s)
@@ -29,9 +30,14 @@ long long	ft_atoll(char *s)
 	}
 	while (ft_isdigit(*s))
 	{
-		n += *s - '0';
+		if (minus > 0 && (LLONG_MAX - *s + '0') / 10 < n)
+			return (1);
+		if (minus < 0 && (LLONG_MIN + *s - '0') / 10 > -n)
+			return (1);
 		n *= 10;
+		n += *s - '0';
 		s++;
 	}
-	return (n * minus);
+	*n *= minus;
+	return (0);
 }
