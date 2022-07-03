@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 16:05:10 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 01:12:53 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 01:24:18 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,6 @@
 #include "g_minishell.h"
 
 static int	rec_var(const char *cmd, size_t i, char **ret);
-
-size_t	skip_quote(const char *line)
-{
-	size_t	i;
-	char	c;
-
-	if (!line)
-		return (0);
-	c = line[0];
-	i = 0;
-	while (line[++i])
-	{
-		if (line[i] == c)
-			return (i + 1);
-	}
-	return (0);
-}
 
 static int	get_var(const char *cmd, size_t *i, char **ret)
 {
@@ -110,7 +93,7 @@ int	var_expand_wc(char ***tab)
 	ret = NULL;
 	while ((*tab)[i])
 	{
-		if (ft_strchr((*tab)[i], '*') && !ft_strchr((*tab)[i], '\'') && !ft_strchr((*tab)[i], '"'))
+		if (ft_strchr((*tab)[i], '*'))
 		{
 			tmp = expand_wc((*tab)[i]);
 			if (!tmp)
@@ -128,111 +111,6 @@ int	var_expand_wc(char ***tab)
 	free_tab(*tab);
 	*tab = ret;
 	return (0);
-}
-
-// char	**expand_var(const char *cmd)
-// {
-// 	char	*ret;
-// 	char	**tab_ret;
-
-// 	ret = NULL;
-// 	tab_ret = NULL;
-// 	if (!ft_strchr(cmd, '$'))
-// 	{
-// 		tab_ret = ft_split(cmd, ' ');
-// 		if (!tab_ret)
-// 			return (display_error("Error allocation\n", 0), NULL);
-// 	}
-// 	else if (rec_var(cmd, 0, &ret))
-// 	{
-// 		if (ret)
-// 			free(ret);
-// 		return (NULL);
-// 	}
-// 	ft_printf("expand: %s\n\n", ret);
-// 	tab_ret = ft_split(ret, ' ');
-// 	if (!tab_ret)
-// 		return (display_error("Error allocation\n", 0), NULL);
-// 	if (var_expand_wc(&tab_ret))
-// 		return (free_tab(tab_ret), NULL);
-// 	return (tab_ret);
-// }
-size_t	count_line(const char *line)
-{
-	size_t count;
-	size_t i;
-
-	if (!line)
-		return (0);
-	count = 1;
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] == '\'' || line[i] == '"')
-			i += skip_quote(&line[i]);
-		if (line[i] == ' ')
-		{
-			count++;
-			while (line[i] == ' ')
-				i++;
-			if (!line[i])
-				count--;
-		}
-		else
-			i++;
-	}
-	return (i);
-}
-
-int	fill_split(const char *line, char ***ret)
-{
-	size_t	i;
-	size_t	count;
-
-	i = 0;
-	count = 0;
-	while (line[i])
-	{
-		if (line[i] == '\'' || line[i] == '"')
-			i += skip_quote(&line[i]);
-		if (line[i] == ' ')
-		{
-			(*ret)[count] = ft_substr(line, 0, i);
-			if (!(*ret)[count++])
-				return (free_tab((*ret)), 1);
-			while (line[i] == ' ')
-				i++;
-			line += i;
-			i = 0;
-		}
-		else if (line[i + 1] == '\0')
-		{
-			i++;
-			(*ret)[count] = ft_substr(line, 0, i);
-			if (!(*ret)[count++])
-				return (free_tab((*ret)), 1);
-		}
-		else
-			i++;
-	}
-	(*ret)[count] = NULL;
-	return (0);
-}
-
-char	**split_var(const char *cmd)
-{
-	size_t	line;
-	char	**ret;
-
-	line = count_line(cmd);
-	ret = ft_calloc(line + 1, sizeof(char *));
-	if (!ret)
-		return (display_error("Error allocation\n", 0), NULL);
-	if (!line)
-		ret[0] = NULL;
-	else if (fill_split(cmd, &ret))
-		return (display_error("Error allocation\n", 0), NULL);
-	return (ret);
 }
 
 char	**expand_var(const char *cmd)
