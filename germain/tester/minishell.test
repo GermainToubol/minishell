@@ -119,11 +119,20 @@ exit 255
 exit 257
 exit 258
 exit 1 1 1
-exit ''
-exit '' '' '' ''
 exit 1111111111111111
 exit 2147483648
 exit 2147483647
+exit 9223372036854775807
+exit 9223372036854775808
+exit -9223372036854775808
+exit -9223372036854775809
+exit ''
+exit '' '' '' ''
+exit "     12"
+exit "12      "
+exit "  12"3
+exit "		17  	"
+export TEST=21 ; exit $TEST
 cd ; ls && exit
 false && exit
 cd ; ls | exit
@@ -132,21 +141,21 @@ export "_=/usr/bin/python3" ; export
 export > /dev/full
 export 123
 export "pdqo  rg"
-export "TEST=abcd"
-export "TEST=abcd"; export "TEST=efgh"
-export "TEST=abcd" "COUCOU=efgh" "BONJOUR=ijkl"
-export "TEST=aa" "TEST"
-export "TEST="
-export "TEST=abc" "TEST+=cou ocu" "LAMA+=oui"
+export TEST=abcd
+export TEST=abcd ; export TEST=efgh
+export TEST=abcd COUCOU=efgh BONJOUR=ijkl
+export TEST=aa TEST
+export TEST=
+export TEST=abc "TEST+=cou ocu" "LAMA+=oui"
 export ""
-export "" "TEST=coucou"
+export "" TEST=coucou
 export 123 ; export "_=/usr/bin/python3" ; export
 export "pdqo  rg" ; export "_=/usr/bin/python3" ; export
-export "TEST=abcd" ; export "_=/usr/bin/python3" ; export
-export "TEST=abcd"; export "TEST=efgh" ; export "_=/usr/bin/python3" ; export
-export "TEST=abcd" "COUCOU=efgh" "BONJOUR=ijkl" ; export "_=/usr/bin/python3" ; export
-export "TEST=aa" "TEST" ; export "_=/usr/bin/python3" ; export
-export "TEST=" ; export "_=/usr/bin/python3" ; export
-export "TEST=abc" "TEST+=cou ocu" "LAMA+=oui" ; export "_=/usr/bin/python3" ; export
+export TEST=abcd ; export "_=/usr/bin/python3" ; export
+export TEST=abcd ; export "TEST=efgh" ; export "_=/usr/bin/python3" ; export
+export TEST=abcd COUCOU=efgh BONJOUR=ijkl ; export "_=/usr/bin/python3" ; export
+export TEST=aa TEST ; export "_=/usr/bin/python3" ; export
+export TEST= ; export "_=/usr/bin/python3" ; export
+export TEST=abc "TEST+=cou ocu" "LAMA+=oui" ; export "_=/usr/bin/python3" ; export
 export "" ; export "_=/usr/bin/python3" ; export
 export "" "TEST=coucou" ; export "_=/usr/bin/python3" ; export
