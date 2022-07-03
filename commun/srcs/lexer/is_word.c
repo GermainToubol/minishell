@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 17:18:36 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/03 12:44:29 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/03 14:56:19 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static int	is_quote_content(char *line, size_t *i)
 				|| line[*i] == '<' || line[*i] == '\0' || line[*i] == '('
 				|| line[*i] == ')'))
 			break ;
+		(*i)++;
 		if (line[*i] == '\'' && !dq_open)
 			sq_open = !sq_open;
 		if (line[*i] == '"' && !sq_open)
@@ -59,12 +60,11 @@ static int	is_word_basic(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i)
 	if (!ft_isalnum(*line) && *line != '-' && *line != '"' && *line != '\''
 		&& *line != '*' && *line != '/' && *line != '.')
 		return (0);
-	while (ft_isalnum(line[*i]) || (line[*i] == '-' || line[*i] == '*'
-			|| line[*i] == '/' || line[*i] == '.' || line[*i] == '='))
+	while (!(line[*i] == ' ' || line[*i] == '\t'
+		|| line[*i] == '|' || line[*i] == '&' || line[*i] == '>'
+		|| line[*i] == '<' || line[*i] == '\0' || line[*i] == '('
+		|| line[*i] == ')'))
 		(*i)++;
-	if (line[*i] == '\0' || line[*i] == ' ' || line[*i] == '\t'
-		|| line[*i] == '|' || line[*i] == '&' || line[*i] == '('
-		|| line[*i] == ')' || line[*i] == '$')
 	{
 		lxm->data = ft_strndup(line, *i);
 		if (!lxm->data)
@@ -78,20 +78,15 @@ static int	is_word_basic(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i)
 static int	is_var(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i)
 {
 	(*i)++;
-	while (ft_isalnum(line[*i]) || line[*i] == '_')
+	while (!(line[*i] == ' ' || line[*i] == '\t'
+		|| line[*i] == '|' || line[*i] == '&' || line[*i] == '>'
+		|| line[*i] == '<' || line[*i] == '\0' || line[*i] == '('
+		|| line[*i] == ')'))
 		(*i)++;
-	if (*line == '$' && line[1] == '?')
-		(*i) = 2;
 	if (line[*i] == '"' || line[*i] == '\'')
 	{
 		if (is_quote_content(line, i))
 			return (1);
-	}
-	if (line[*i] == '$')
-	{
-		if (is_var(line, lxm, tokens, i))
-			return (1);
-		return (0);
 	}
 	lxm->data = ft_strndup(line, *i);
 	if (!lxm->data)
