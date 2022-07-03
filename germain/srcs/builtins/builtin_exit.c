@@ -12,6 +12,7 @@
 #include "utils.h"
 #include "minishell.h"
 #include "g_minishell.h"
+#include <stdio.h>
 
 static int	exit_state(int i)
 {
@@ -54,27 +55,15 @@ static int	exit_check_numeric(char *str)
 static int	exit_check_number(char *str)
 {
 	long long	n;
-	size_t		i;
 
-	n = ft_atoll(str);
-	if (n == 0)
+	if (ft_atoll(str, &n) != 0)
 	{
-		i = 0;
-		if (str[i] == '+' || str[i] == '-')
-			i++;
-		while (i == 0 || str[i] != '\0')
-		{
-			if (str[i] != '0')
-			{
-				ft_fprintf(2, "minishell: exit: %s: numeric argument required\n",
-					str);
-				set_status(2);
-				return (2);
-			}
-			i++;
-		}
+		ft_fprintf(2, "minishell: exit: %s: numeric argument required\n",
+				   str);
+		set_status(2);
+		return (2);
 	}
-	set_status((n/10));
+	set_status(n);
 	return (0);
 }
 
