@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 17:18:36 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/03 15:53:42 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/03 16:06:36 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "utils.h"
 
-int	is_quote_content(char *line, size_t *i)
+static int	is_quote_content(char *line, size_t *i)
 {
 	int		sq_open;
 	int		dq_open;
@@ -41,17 +41,42 @@ int	is_quote_content(char *line, size_t *i)
 	return (0);
 }
 
-int	is_quote(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i)
+static int	is_quote(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i)
 {
 	*i = 0;
 	if (is_quote_content(line, i))
-		return (-1);
+		return (1);
 	lxm->data = ft_strndup(line, *i);
 	if (!lxm->data)
-		return (display_error("Error allocation\n", 0), -1);
+		return (display_error("Error allocation\n", 0), 1);
 	lxm->type = WORD;
 	tokens->size++;
-	return (*i);
+	return (0);
+}
+
+static int	word_redirect(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i)
+{
+	long long	n;
+
+	(*i)--;
+	while (*i > 0 && ft_isdigit(line[*i]))
+		(*i)--;
+	if (ft_isdigit(line[*i]) && *i == 0)
+	{
+		n = ft_atoll(line);
+		if (n <= 2147483647 && n >= 0)
+			return (0);
+	}
+	while (!c_separator(line[*i]))
+		(*i)++;
+	if ((line[*i] == '"' || line[*i] == '\'') && is_quote_content(line, i))
+		return (1);
+	lxm->data = ft_strndup(line, *i);
+	if (!lxm->data)
+		return (display_error("Error allocation\n", 0), 1);
+	lxm->type = WORD;
+	tokens->size++;
+	return (0);
 }
 
 static int	is_word_basic(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i)
@@ -60,25 +85,10 @@ static int	is_word_basic(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i)
 		return (0);
 	while (!c_separator(line[*i]))
 		(*i)++;
+	if ((line[*i] == '"' || line[*i] == '\'') && is_quote_content(line, i))
+		return (1);
 	if (line[*i] == '>'	|| line[*i] == '<' )
 		return (0);
-	if ((line[*i] == '"' || line[*i] == '\'') && is_quote_content(line, i))
-		return (1);
-	lxm->data = ft_strndup(line, *i);
-	if (!lxm->data)
-		return (display_error("Error allocation\n", 0), -1);
-	lxm->type = WORD;
-	tokens->size++;
-	return (0);
-}
-
-static int	is_var(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i)
-{
-	(*i)++;
-	while (!c_separator(line[*i]))
-		(*i)++;
-	if ((line[*i] == '"' || line[*i] == '\'') && is_quote_content(line, i))
-		return (1);
 	lxm->data = ft_strndup(line, *i);
 	if (!lxm->data)
 		return (display_error("Error allocation\n", 0), 1);
@@ -99,13 +109,9 @@ int	is_word(char *line, t_lxm *lxm, t_tokens *tokens)
 	if (i > 0 && (line[i] == '>' || line[i] == '<')
 		&& word_redirect(line, lxm, tokens, &i))
 		return (-1);
-	if (*line == '$' && is_var(line, lxm, tokens, &i))
-		return (-1);
-	else if (line[i] == '"' || line[i] == '\'')
-	{
-		if (is_quote(line, lxm, tokens, &i) == -1)
+	else if ((line[i] == '"' || line[i] == '\'')
+			&& is_quote(line, lxm, tokens, &i))
 			return (-1);
-	}
 	if (is_word != tokens->size && tokens->size > 1
 		&& tokens->tokens[tokens->size - 2].type == IO_HDOC
 		&& lxm->type == WORD && set_hdoc(&lxm->data))
