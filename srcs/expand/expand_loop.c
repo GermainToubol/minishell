@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:47:46 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/03 19:02:42 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/03 20:05:23 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,39 +97,15 @@ static int	expand_loop2(char ***new_cmd, char *cmd, size_t i)
 
 int	expand_loop(char ***new_cmd, char *cmd, size_t i)
 {
-	char	*tmp;
-	char	**tmp2;
-	char	**tmp3;
-
 	if (ft_strchr(cmd, '\'') || ft_strchr(cmd, '"'))
 	{
-		tmp = expand_quotes(cmd);
-		if (ft_strchr(cmd, '*') != NULL)
-		{
-			new_cmd[i] = expand_wc(tmp);
-			free(tmp);
-			if (!new_cmd[i])
-				return (1);
-		}
-		else
-		{
-			new_cmd[i] = do_basic(tmp);
-			free(tmp);
-			if (!new_cmd[i])
-				return (1);
-		}
+		new_cmd[i] = expand_quotes(cmd);
+		if (!new_cmd[i])
+			return (1);
 	}
 	else if (ft_strchr(cmd, '$'))
 	{
-		tmp = expand_var(cmd);
-		tmp2 = ft_split(tmp, ' ');
-		free(tmp);
-		if (!tmp2)
-			return (1);
-		tmp3 = expand_wc(tmp2[size_tab(tmp2) - 1]);
-		if (!tmp3)
-			return (1);
-		new_cmd[i] = ft_join_tab(tmp2, size_tab(tmp2), tmp3, size_tab(tmp3));
+		new_cmd[i] = expand_var(cmd);
 		if (!new_cmd[i])
 			return (1);
 	}
