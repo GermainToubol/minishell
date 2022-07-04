@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:56:54 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 19:52:41 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 20:57:29 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void		ft_list_remove_if(t_list **begin_list, void *data_ref,
 				int (*cmp)(), void (*free_fct)(void *));
 void		print_lst2(void	*data);
 void		printf_wc(t_wildcard *mywc);
+void		sort_list(t_list **lst);
 
 char		*get_dir_name(t_wildcard *wc);
 
