@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 18:57:35 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 01:11:08 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 01:57:59 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ft_join_tab(char ***tab1, size_t size1, char **tab2, size_t size2)
 
 	size_tab[0] = size1;
 	size_tab[1] = size2;
-	size = size1 +size2;
+	size = size1 + size2;
 	if (size == 0)
 		return (1);
 	ret = ft_calloc(size + 1, sizeof(char *));

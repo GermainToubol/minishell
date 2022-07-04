@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   g_minishell.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:07:25 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/28 12:06:37 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/07/04 02:27:58 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #ifndef G_MINISHELL_H
 # define G_MINISHELL_H
 # include <signal.h>
 # include <unistd.h>
+# include <fcntl.h>
 # include "libft.h"
 # include "parser.h"
 # include "astree.h"
@@ -82,9 +84,11 @@ int			do_bind_pipe(int *pfd);
 int			get_exec_path(t_parse *parse, t_list **env);
 pid_t		exec_process(t_parse *parse, t_clean *cleanable,
 				int *pipe_in, int *pipe_out);
-void		run_child(t_parse *parse, t_list **env, int *pipe_in, int *pipe_out);
+void		run_child(t_parse *parse, t_list **env,
+				int *pipe_in, int *pipe_out);
 void		run_parent(int *pipe_in);
-int			run_builtin(t_parse *parse, t_list **env, int *pipe_in, int *pipe_out);
+int			run_builtin(t_parse *parse, t_list **env,
+				int *pipe_in, int *pipe_out);
 int			run_tree_exec(t_astree *root, t_parse **parse, t_list **env);
 int			wait_all(int n_process, pid_t last_pid);
 

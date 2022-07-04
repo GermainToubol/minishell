@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   run_child.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 09:46:12 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/22 16:17:10 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/07/04 02:32:30 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <sys/stat.h>
+
 #include <sys/types.h>
 #include <unistd.h>
 #include "libft.h"
@@ -73,7 +73,7 @@ static void	child_close_fds(t_parse *parse)
 
 static int	check_path_exec(t_parse *parse)
 {
-	struct stat file_stats;
+	struct stat	file_stats;
 
 	if (stat(parse->cmd->path_exec, &file_stats) == 0)
 	{

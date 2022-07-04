@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 11:07:18 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/27 15:16:43 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/07/04 02:30:40 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "utils.h"
+
 #include "minishell.h"
 #include "g_minishell.h"
 #include <stdio.h>
@@ -55,7 +55,7 @@ static int	exit_check_number(char *str)
 {
 	long long	n;
 	int			status;
-	size_t	i;
+	size_t		i;
 
 	i = 0;
 	n = ft_atoll_protected(str);

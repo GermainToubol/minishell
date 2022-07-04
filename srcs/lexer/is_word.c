@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 17:18:36 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/03 17:14:05 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 02:31:31 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static int	is_word_basic(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i)
 		(*i)++;
 	if ((line[*i] == '"' || line[*i] == '\'') && is_quote_content(line, i))
 		return (1);
-	if (line[*i] == '>'	|| line[*i] == '<' )
+	if (line[*i] == '>' || line[*i] == '<' )
 		return (0);
 	lxm->data = ft_strndup(line, *i);
 	if (!lxm->data)
@@ -109,8 +109,8 @@ int	is_word(char *line, t_lxm *lxm, t_tokens *tokens)
 		&& word_redirect(line, lxm, tokens, &i))
 		return (-1);
 	else if ((line[i] == '"' || line[i] == '\'')
-			&& is_quote(line, lxm, tokens, &i))
-			return (-1);
+		&& is_quote(line, lxm, tokens, &i))
+		return (-1);
 	if (is_word != tokens->size && tokens->size > 1
 		&& tokens->tokens[tokens->size - 2].type == IO_HDOC
 		&& lxm->type == WORD && set_hdoc(&lxm->data))

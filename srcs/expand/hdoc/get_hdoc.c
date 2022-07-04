@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 01:53:05 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/03 23:07:05 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 02:18:10 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,40 +18,6 @@
 #include "parser.h"
 #include <sys/types.h>
 #include <sys/wait.h>
-
-int	read_hdoc(int hdoc_fd, int out_fd)
-{
-	ssize_t	r;
-	char	buffer[BUFFER_SIZE + 1];
-	char	*line;
-	char	**tmp;
-
-	r = 1;
-	while (r)
-	{
-		r = read(hdoc_fd, &buffer, BUFFER_SIZE);
-		if (r == -1)
-			return (-1);
-		if (r == 0)
-			break ;
-		buffer[r] = '\0';
-		if (!ft_strchr(buffer, '$'))
-			write (out_fd, buffer, r);
-		else
-		{
-			tmp = expand_var(buffer);
-			if (!tmp)
-				return (-1);
-			line = ft_strnjoin(tmp, ' ');
-			free(tmp);
-			if (line)
-				write (out_fd, line, ft_strlen(line));
-			free(line);
-		}
-	}
-	close(out_fd);
-	return (0);
-}
 
 static int	expand_hdoc(char **hdoc, int in_fd)
 {
@@ -117,7 +83,7 @@ int	dup_hdoc(char **env, t_parse *parse)
 {
 	int		fd_cpy;
 	int		fd;
-	char 	*file;
+	char	*file;
 	int		i;
 
 	i = get_hdoc(parse);

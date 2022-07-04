@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   interactive_signals.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 10:13:48 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/28 15:58:07 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/07/04 02:29:36 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <readline/readline.h>
+
 #include <readline/history.h>
 #include <stdio.h>
 #include <signal.h>
