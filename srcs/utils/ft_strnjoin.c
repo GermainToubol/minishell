@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 22:56:00 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 01:57:53 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 02:52:33 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ void	ft_strnjoin_content(char *ret, char **tab, char sep)
 		j = -1;
 		while (tab[i][++j])
 		{
-			if (i != 0)
-				ret[size++] = sep;
 			ret[size++] = tab[i][j];
 		}
+		if (tab[i + 1])
+			ret[size++] = sep;
 	}
 	ret[size++] = '\0';
 }

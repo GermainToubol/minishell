@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 01:16:22 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 02:12:37 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 02:53:19 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static size_t	count_line(const char *line)
 		else
 			i++;
 	}
-	return (i);
+	return (count);
 }
 
 static int	fill_split_content(const char *line,

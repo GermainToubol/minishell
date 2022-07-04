@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 16:46:09 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 02:25:05 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 02:52:59 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ static int	rec_do_quotes(const char *cmd, size_t *i,
 		else if (tmp2)
 		{
 			tmp = ft_strnjoin(tmp2, ' ');
-			ft_printf("tmp %s\ntmp2 %s\n", tmp, tmp2[0]);
 			free(tmp2);
 			if (tmp && strjoin_custom(ret, tmp))
 				return (1);
