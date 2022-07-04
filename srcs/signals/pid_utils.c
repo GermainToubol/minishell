@@ -13,6 +13,7 @@
 #include <unistd.h>
 #include "minishell.h"
 #include "g_minishell.h"
+#include <stdio.h>
 
 int	pid_extend_list(pid_t pid)
 {

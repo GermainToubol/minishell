@@ -24,26 +24,29 @@ pid_t	exec_tree_add_level(t_astree *node, int *pipe_in, int *pipe_out,
 {
 	pid_t	pid;
 	int		n;
+	struct sigaction sa;
 
 	pid = fork();
 	if (pid < 0)
-	{
-		perror("minishell: fork");
-		return (set_status(-1), -1);
-	}
+		return (perror("minishell: fork"), set_status(-1), -1);
 	if (pid == 0)
 	{
+		pid_clear_list();
+		init_signal_interactive(&sa);
+		unset_father();
 		cleanable->depth = node->depth;
-		while (cleanable->n_pipes > 0)
-			cleanable_pop_pipe(cleanable);
+		cleanble_close_pipes(cleanable);
 		if (set_pipes(pipe_in, pipe_out) < 0)
 			return (set_status(1), -1);
 		n = count_wait_tree(node, cleanable->depth);
 		pid = exec_tree(node, (int [2]){-2, -2}, (int [2]){-2, -2}, cleanable);
-		clear_cleanable(cleanable);
+		if (pid == 0)
+			return (0);
 		wait_all(n, pid);
+		clear_cleanable(cleanable);
 		exit(get_status());
 	}
+	unset_father();
 	close_pipes(pipe_in);
 	if (pid_extend_list(pid))
 		return (set_status(-1), -1);
@@ -61,7 +64,7 @@ static void	close_pipes(int *pipe_fds)
 
 static int	set_pipes(int *pipe_in, int *pipe_out)
 {
-	int status;
+	int	status;
 
 	status = 1;
 	if (pipe_in[0] != -2)

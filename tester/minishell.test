@@ -159,3 +159,38 @@ export TEST= ; export "_=/usr/bin/python3" ; export
 export TEST=abc "TEST+=cou ocu" "LAMA+=oui" ; export "_=/usr/bin/python3" ; export
 export "" ; export "_=/usr/bin/python3" ; export
 export "" "TEST=coucou" ; export "_=/usr/bin/python3" ; export
+# Redirections
+cd .. ; <Makefile cat
+cd .. ; <Makefile
+cd .. ; <Makefile | ls
+cd .. ; 0<Makefile cat
+cd .. ; 1<Makefile ls
+cd .. ; 1023<Makefile ls
+cd .. ; 1024<Makefile ls
+cd .. ; 1025<Makefile ls
+cd .. ; 2147483647<Makefile ls
+cd .. ; 2147483648<Makefile ls
+cd .. ; <Makefile cat | ls
+cd .. ; 0<Makefile cat | ls
+cd .. ; 1<Makefile ls | ls
+cd .. ; 1023<Makefile ls | ls
+cd .. ; 1024<Makefile ls | ls
+cd .. ; 1025<Makefile ls | ls
+cd .. ; 2147483647<Makefile ls | ls
+cd .. ; 2147483648<Makefile ls | ls
+cd .. ; <Makefile <./libft/Makefile cat
+cd .. ; rm -f lama ; touch lama ; chmod 000 lama ; <lama cat
+cd .. ; rm -f lama ; touch lama ; chmod 000 lama ; <lama cat | ls
+cd .. ; rm -f lama ; touch lama ; chmod 000 lama ; <lama | ls
+cd .. ; rm -f lama
+cd .. ; ls >a
+cd .. ; ls 2>a
+cd .. ; ls 1023>a
+cd .. ; ls 1024>a
+cd .. ;	ls 2147483647>a
+cd .. ; ls 2147483648>a
+cd .. ; ls >a >b >c
+cd .. ; ls >a >b >c | cat
+cd .. ; ls >a >b >c | <a cat && ls && <b cat && ls && <c cat
+cd .. ; rm -f a b c lama
+cd .. ; ls 2>a >/dev/full || echo $? && cat a
