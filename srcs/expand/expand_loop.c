@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:47:46 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 23:25:32 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 00:00:30 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	do_basic(char *cmd, t_list **lst_tmp)
 	return (0);
 }
 
-static int	do_basic_lst(const char *cmd, size_t *next, t_list **lst_tmp)
+static int	do_basic_lst(const char *cmd, t_list **lst_tmp, size_t *next)
 {
 	char	*tmp;
 
@@ -77,6 +77,51 @@ int	expand_quotes(const char *cmd, t_list **lst_tmp, size_t *next)
 	return (0);
 }
 
+int	var_tab(char *expand, t_list **lst, t_list **lst_tmp)
+{
+	char	**tmp2;
+	size_t	tab_len;
+
+	tmp2 = split_var(expand);
+	if (!tmp2)
+		return (1);
+	tab_len = 0;
+	while (tmp2[tab_len])
+	{
+		if (tmp2[tab_len + 1])
+		{
+			if (do_basic(tmp2[tab_len], lst_tmp))
+				return (free_tab(tmp2), 1);
+			transfer_lst(lst, lst_tmp);
+		}
+		else
+		{
+			if (do_basic(tmp2[tab_len], lst_tmp))
+				return (free_tab(tmp2), 1);
+		}
+		tab_len++;
+	}
+	free(tmp2);
+	return (0);
+}
+
+int	expand_var(const char *cmd, t_list **lst, t_list **lst_tmp, size_t *next)
+{
+	char	*expand;
+
+	if (!lst_tmp)
+		return (1);
+	*next = 1;
+	if (get_var(cmd, next, &expand))
+		return (1);
+	ft_printf("expand %s\n", expand);
+	if (expand && !ft_strchr(expand, ' ') && do_basic(expand, lst_tmp))
+		return (1);
+	else if (expand && ft_strchr(expand, ' ') && var_tab(expand, lst, lst_tmp))
+		return (1);
+	return (0);
+}
+
 int	expand_loop(const char *cmd, t_list **lst, t_list **lst_tmp)
 {
 	size_t	next;
@@ -88,9 +133,14 @@ int	expand_loop(const char *cmd, t_list **lst, t_list **lst_tmp)
 		if (expand_quotes(cmd, lst_tmp, &next))
 			return (1);
 	}
+	else if (cmd[0] == '$')
+	{
+		if (expand_var(cmd, lst, lst_tmp, &next))
+			return (1);
+	}
 	else
 	{
-		if (do_basic_lst(cmd, &next, lst_tmp))
+		if (do_basic_lst(cmd, lst_tmp, &next))
 			return (1);
 	}
 	return (expand_loop(&cmd[next], lst, lst_tmp));

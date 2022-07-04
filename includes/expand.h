@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:07:13 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 22:47:55 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 23:31:47 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int			var_expand_wc(char ***tab);
 char		**split_var(const char *cmd);
 size_t		skip_quote(const char *line);
 int			get_var(const char *cmd, size_t *i, char **ret);
-char		**expand_var(const char *cmd);
+char		**var_expand(const char *cmd);
 int			var_expand_wc(char ***tab);
 char		*expand_var_quotes(const char *cmd);
 
