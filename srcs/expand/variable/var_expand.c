@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 16:05:10 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 02:46:41 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 13:47:43 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,51 +17,6 @@
 #include "g_minishell.h"
 
 static int	rec_var(const char *cmd, size_t i, char **ret);
-
-static int	var_expand_wc_content(char ***ret, char *tab)
-{
-	char	**tmp;
-
-	if (ft_strchr(tab, '*'))
-	{
-		tmp = expand_wc(tab);
-		if (!tmp)
-			return (free_tab(*ret), 1);
-		if (ft_join_tab(ret, size_tab(*ret), tmp, size_tab(tmp)))
-			return (free_tab(*ret), 1);
-	}
-	else
-	{
-		if (ft_join_tab(ret, size_tab(*ret), &tab, 1))
-			return (free_tab(*ret), 1);
-	}
-	return (0);
-}
-
-int	var_expand_wc(char ***tab)
-{
-	size_t	i;
-	char	**ret;
-
-	i = 0;
-	ret = NULL;
-	while ((*tab)[i])
-	{
-		if (var_expand_wc_content(&ret, (*tab)[i]))
-			return (1);
-		i++;
-	}
-	if (i == 0)
-	{
-		ret = ft_calloc(1, sizeof(char *));
-		if (!ret)
-			return (display_error("Error allocation\n", 0), 1);
-		ret[0] = NULL;
-	}
-	free_tab(*tab);
-	*tab = ret;
-	return (0);
-}
 
 static int	rec_var_content(const char *cmd, size_t i, char **ret)
 {
@@ -110,7 +65,18 @@ char	**expand_var(const char *cmd)
 
 	ret = NULL;
 	if (rec_var(cmd, 0, &ret))
-		return (NULL);
+		return (free(ret), NULL);
 	tab_ret = split_var(ret);
+	free(ret);
 	return (tab_ret);
+}
+
+char	*expand_var_quotes(const char *cmd)
+{
+	char	*ret;
+
+	ret = NULL;
+	if (rec_var(cmd, 0, &ret))
+		return (free(ret), NULL);
+	return (ret);
 }
