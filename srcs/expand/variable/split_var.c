@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 01:16:22 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 14:07:36 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 16:23:11 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ static size_t	count_line(const char *line)
 			count++;
 			while (line[i] == ' ')
 				i++;
-			if (!line[i])
-				count--;
 		}
 		else
 			i++;
@@ -56,19 +54,28 @@ static size_t	count_line(const char *line)
 	return (count);
 }
 
-static int	fill_split_content(const char *line,
+static const char	*fill_split_content(const char *line,
 				char ***ret, size_t *i, size_t *count)
 {
-	if (line[*i + 1] == '\0')
+	if (line[*i] == ' ')
 	{
-		(*i)++;
 		(*ret)[*count] = ft_substr(line, 0, *i);
 		if (!(*ret)[(*count)++])
-			return (free_tab((*ret)), 1);
+			return (free_tab((*ret)), NULL);
+		while (line[*i] == ' ')
+			(*i)++;
+		if (!line[*i])
+		{
+			(*ret)[*count] = ft_strdup("");
+			if (!(*ret)[(*count)++])
+				return (free_tab((*ret)), NULL);
+		}
+		line += *i;
+		*i = 0;
 	}
 	else
 		(*i)++;
-	return (0);
+	return (line);
 }
 
 static int	fill_split(const char *line, char ***ret)
@@ -80,18 +87,15 @@ static int	fill_split(const char *line, char ***ret)
 	count = 0;
 	while (line[i])
 	{
-		if (line[i] == ' ')
-		{
-			(*ret)[count] = ft_substr(line, 0, i);
-			if (!(*ret)[count++])
-				return (free_tab((*ret)), 1);
-			while (line[i] == ' ')
-				i++;
-			line += i;
-			i = 0;
-		}
-		else if (fill_split_content(line, ret, &i, &count))
+		line = fill_split_content(line, ret, &i, &count);
+		if (!line)
 			return (1);
+	}
+	if (line[i - 1] != ' ')
+	{
+		(*ret)[count] = ft_substr(line, 0, i);
+		if (!(*ret)[count++])
+			return (free_tab((*ret)), 1);
 	}
 	(*ret)[count] = NULL;
 	return (0);
