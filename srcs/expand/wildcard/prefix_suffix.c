@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 18:47:30 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 19:18:49 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 18:21:00 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ static t_wildcard	*prefix_suffix_content(t_wildcard *mywc,
 						char *found, size_t i, size_t i2)
 {
 	size_t	k;
-
+	if (i == 0 && found[i2] != mywc->suffix[i])
+		return (NULL);
 	while (found[i2])
 	{
 		k = 0;
@@ -39,6 +40,7 @@ t_wildcard	*prefix_suffix(t_wildcard *mywc, char *found)
 {
 	size_t		i;
 	size_t		i2;
+
 
 	i = last_char(mywc->prefix, '/');
 	i++;

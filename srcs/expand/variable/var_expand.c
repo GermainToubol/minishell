@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 16:05:10 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 16:05:13 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 17:42:38 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,13 @@ char	*expand_var_quotes(const char *cmd)
 	char	*ret;
 
 	ret = NULL;
-	if (rec_var_q(cmd, 0, &ret))
+	if (!ft_strchr(cmd, '$'))
+	{
+		ret = ft_strdup(cmd);
+		if (!ret)
+			display_error("Error allocation\n", 0);
+	}
+	else if (rec_var_q(cmd, 0, &ret))
 		return (free(ret), NULL);
 	return (ret);
 }
