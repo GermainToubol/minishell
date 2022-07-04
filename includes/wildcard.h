@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:56:54 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 21:21:04 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 01:46:37 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int			update_wildcard(t_wildcard *mywc, char *line);
 int			get_dir_match(t_wildcard *mywc, t_list **new_lst);
 int			wildcards(char *line, t_list **ret);
 int			check_found(t_wildcard *mywc, t_list **new_lst, char *dir_name);
+int			wildcards_wc(t_wildcard	*mywc, t_list **ret);
 
 void		del_node_wc(void *data);
 void		ft_list_remove_if(t_list **begin_list, void *data_ref,
@@ -50,5 +51,6 @@ t_wildcard	*new_wc2(t_wildcard *mywc, char *found, char *tmp, size_t i);
 t_wildcard	*new_wc(t_wildcard *mywc, char *found, size_t i, size_t i2);
 t_wildcard	*new_wc_path2(t_wildcard *mywc, char *tmp, size_t i);
 t_wildcard	*new_wc_path(t_wildcard *mywc, char *found, size_t i, size_t i2);
+t_wildcard	*init_wc_2(char *path, char *prefix, char *suffix);
 
 #endif

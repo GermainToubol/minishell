@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:56:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 21:21:04 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 01:06:03 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,21 @@ int	wildcards(char *line, t_list **ret)
 		return (1);
 	if (update_wildcard(mywc, line))
 		return (del_node_wc(mywc), 1);
+	*ret = ft_lstnew(mywc);
+	if (!*ret)
+	{
+		del_node_wc(mywc);
+		return (display_error("Error allocation\n", 0), 1);
+	}
+	if (wildcards_content(mywc, ret))
+		return (1);
+	return (0);
+}
+
+int	wildcards_wc(t_wildcard	*mywc, t_list **ret)
+{
+	if (!mywc)
+		return (1);
 	*ret = ft_lstnew(mywc);
 	if (!*ret)
 	{

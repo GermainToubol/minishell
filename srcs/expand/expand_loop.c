@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:47:46 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 00:10:21 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 00:59:38 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ size_t	to_next_index(const char *cmd)
 
 	i = 0;
 	while (cmd[i] && cmd[i] != '"' && cmd[i] != '\''
-		&& cmd[i] != '$')
+		&& cmd[i] != '$' && cmd[i] != '*')
 		i++;
 	return (i);
 }
@@ -56,7 +56,6 @@ static int	do_basic_lst(const char *cmd, t_list **lst_tmp, size_t *next)
 		return (1);
 	*next = to_next_index(cmd);
 	tmp = ft_substr(cmd, 0, *next);
-	ft_printf("tmp %s\nnext %i\n", tmp, *next);
 	if (!tmp)
 		return (display_error("Error allocation\n", 0), 1);
 	return (do_basic(tmp, lst_tmp));
@@ -121,6 +120,8 @@ int	expand_var(const char *cmd, t_list **lst, t_list **lst_tmp, size_t *next)
 	return (0);
 }
 
+
+
 int	expand_loop(const char *cmd, t_list **lst, t_list **lst_tmp)
 {
 	size_t	next;
@@ -135,6 +136,11 @@ int	expand_loop(const char *cmd, t_list **lst, t_list **lst_tmp)
 	else if (cmd[0] == '$')
 	{
 		if (expand_var(cmd, lst, lst_tmp, &next))
+			return (1);
+	}
+	else if (cmd[0] == '*')
+	{
+		if (expand_wc(cmd, lst_tmp, &next))
 			return (1);
 	}
 	else
