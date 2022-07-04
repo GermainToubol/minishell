@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 16:05:10 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 16:05:13 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 17:32:56 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static int	rec_var_content(const char *cmd, size_t i,
 		start = i;
 		i += (skip_quote(&cmd[i]));
 		tmp = ft_substr(cmd, start, i - start);
-		if (strjoin_custom(&(*ret)[*size], expand_quotes(tmp)))
+		if (strjoin_custom(&(*ret)[*size], quotes(tmp)))
 			return (free(tmp), 1);
 		free(tmp);
 	}

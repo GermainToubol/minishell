@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:07:13 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 13:46:01 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 17:12:47 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ int			var_expand_wc(char ***tab);
 char		*expand_var_quotes(const char *cmd);
 
 char		**expand_wc(char *cmd);
+char		*quotes(const char *cmd);
 
 #endif
