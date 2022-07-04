@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:07:13 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 21:12:47 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 22:09:49 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 # include <stdlib.h>
 # include "parser.h"
+# include "libft.h"
 
 char		**do_expand(char **cmd);
 char		**expand_loop_end(t_list **lst);
-char		**do_basic(char *cmd);
-int			expand_loop(char *cmd, t_list **lst, t_list **lst_tmp);
+int			expand_loop(const char *cmd, t_list **lst, t_list **lst_tmp);
 
 void		free_tab3(char ***tab);
 
