@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 16:18:11 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/28 10:41:58 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/07/04 12:24:43 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <signal.h>
@@ -42,8 +42,6 @@ int	wait_all(int n_processes, pid_t last_pid)
 		else if (WIFSIGNALED(status))
 			wait_signaled(status, pid, &exit_status, last_pid);
 		pid_remove_pid(pid);
-//		if (pid > 0)
-//			kill(pid, SIGTERM);
 		i++;
 	}
 	return (exit_status);

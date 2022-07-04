@@ -21,7 +21,7 @@ def main():
     ret = 0
     with subprocess.Popen(["make", "-C", ".."], stdout=subprocess.PIPE) as proc:
         print(proc.stdout.read().decode())
-        ret = proc.returncode
+        ret = proc.wait()
     print(colors_256(-1), end='')
     if (ret):
         return

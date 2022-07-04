@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 17:02:00 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/17 15:41:20 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/07/04 10:14:50 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -57,6 +57,7 @@ static int	show_export(t_list	**env)
 	int		status;
 
 	ft_lstsort(env, environment_var_compare);
+	environment_update(*env);
 	tmp = *env;
 	status = 0;
 	while (tmp != NULL && status >= 0)

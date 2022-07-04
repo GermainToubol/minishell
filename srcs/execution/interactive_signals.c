@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 10:13:48 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/07/04 02:40:42 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 12:28:19 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	init_signal_interactive(struct sigaction *sa)
 {
 	sa->sa_handler = NULL;
 	sigemptyset(&sa->sa_mask);
-	sigaddset(&sa->sa_mask, SIGQUIT);
 	sa->sa_flags = SA_SIGINFO | SA_RESTART;
 	sa->sa_sigaction = signal_handler;
 	sigaction(SIGINT, sa, NULL);
@@ -52,13 +51,11 @@ static void	signal_handler(int signum, siginfo_t *siginfo, void *context)
 		ft_fprintf(2, "%s %d\n", "unexpected signal catch:", signum);
 		return ;
 	}
-	if (signum == SIGQUIT)
+	if (signum == SIGQUIT || is_father() == 0)
 		return ;
-	if (is_father() == 0)
-		return ;
+	set_interupt();
 	size = pid_lstlen();
 	pid_signal_all();
-	set_interupt();
 	wait_all(size, 0);
 	if (rl_outstream == stderr)
 		write(2, "\n", 1);
@@ -70,5 +67,4 @@ static void	signal_handler(int signum, siginfo_t *siginfo, void *context)
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	(void)siginfo;
 }

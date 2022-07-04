@@ -84,11 +84,15 @@ cd /tmp ; cd $HOME/Documents
 cd /tmp ; cd $HOME/Documents ; /usr/bin/pwd
 cd /tmp ; unset HOME ; cd $HOME/Documents
 cd /tmp ; unset HOME ; cd $HOME/Documents ; /usr/bin/pwd
+cd /tmp ; rm -rf coucou ; mkdir coucou ; cd coucou ; rm -rf ../coucou ; cd ..
 ## pwd
 cd /tmp ; pwd
 cd ; unset PATH ; pwd
 cd /tmp ; pwd > /dev/full
 cd ; unset PATH ; pwd > /dev/full
+cd /tmp ; rm -rf coucou ; mkdir coucou ; cd coucou ; rm -rf ../coucou ; pwd
+cd /tmp ; rm -rf coucou ; mkdir coucou ; cd coucou ; rm -rf ../coucou ; unset PWD ; pwd
+cd /tmp ; rm -rf coucou ; mkdir coucou ; cd coucou ; rm -rf ../coucou ; unset PWD ; /usr/bin/pwd
 ## unset
 unset PATH
 unset PATH PWD OLDPWD

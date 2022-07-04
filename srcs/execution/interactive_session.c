@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 13:10:53 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/28 15:57:55 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/07/04 10:39:59 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <readline/readline.h>
@@ -52,6 +52,8 @@ static int	do_execution(t_list **env)
 {
 	char	*line;
 
+	if (get_status() == 130)
+		write(2, "\n", 1);
 	line = readline(PROMPT_NAME);
 	if (line == NULL || ft_strcmp(line, "exit") == 0)
 	{

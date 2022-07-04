@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 09:24:46 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/28 11:33:19 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/07/04 12:15:12 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <unistd.h>
@@ -43,7 +43,7 @@ pid_t	exec_process(t_parse *parse, t_clean *cleanable,
 	pid_t	pid;
 
 	if (parse->cmd == 0)
-		return (-17);
+		return (set_status(0), -17);
 	if (parse->cmd->cmd == NULL)
 		return (-17);
 	if (expand_parse(parse) != 0)
@@ -63,7 +63,6 @@ pid_t	exec_process(t_parse *parse, t_clean *cleanable,
 	}
 	if (pid_extend_list(pid))
 		return (set_status(-1), -1);
-	unset_father();
 	run_parent(pipe_in);
-	return (pid);
+	return (unset_father(), pid);
 }

@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:14:13 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/16 16:30:17 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/07/04 11:08:05 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <limits.h>
@@ -30,9 +30,11 @@ int	builtin_pwd(int argc, char **argv, t_list **env)
 	(void)argc;
 	(void)argv;
 	(void)env;
-	if (getcwd(path, PATH_MAX) == NULL)
+	if (getcwd(path, PATH_MAX) == NULL
+		&& (environment_get(*env, "PWD") == NULL
+			|| ft_strlcpy(path, environment_get(*env, "PWD"), PATH_MAX) == 0))
 	{
-		perror("minishell: pwd");
+		perror("minishell: pwd: .");
 		return (1);
 	}
 	if (ft_printf("%s\n", path) < 0)

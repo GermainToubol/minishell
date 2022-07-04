@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 09:54:00 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/22 12:01:58 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/07/04 12:14:42 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <errno.h>
@@ -27,6 +27,8 @@ int	get_exec_path(t_parse *parse, t_list **env)
 	char	*cmd_name;
 
 	cmd_name = parse->cmd->cmd[0];
+	if (cmd_name == NULL)
+		return (set_status(0), 1);
 	if (ft_strchr(cmd_name, '/') != NULL
 		|| environment_get(*env, "PATH") == NULL
 		|| environment_get(*env, "PATH")[0] == '\0')

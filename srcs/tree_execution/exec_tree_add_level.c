@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:59:39 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/07/04 02:41:52 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 12:23:27 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ pid_t	exec_tree_add_level(t_astree *node, int *pipe_in, int *pipe_out,
 {
 	pid_t				pid;
 	int					n;
-	struct sigaction	sa;
 
 	pid = fork();
 	if (pid < 0)
@@ -32,7 +31,6 @@ pid_t	exec_tree_add_level(t_astree *node, int *pipe_in, int *pipe_out,
 	if (pid == 0)
 	{
 		pid_clear_list();
-		init_signal_interactive(&sa);
 		unset_father();
 		cleanable->depth = node->depth;
 		cleanble_close_pipes(cleanable);
@@ -46,11 +44,9 @@ pid_t	exec_tree_add_level(t_astree *node, int *pipe_in, int *pipe_out,
 		clear_cleanable(cleanable);
 		exit(get_status());
 	}
-	unset_father();
-	close_pipes(pipe_in);
 	if (pid_extend_list(pid))
-		return (set_status(-1), -1);
-	return (pid);
+		return (close_pipes(pipe_in), unset_father(), set_status(-1), -1);
+	return (close_pipes(pipe_in), unset_father(), pid);
 }
 
 static void	close_pipes(int *pipe_fds)
