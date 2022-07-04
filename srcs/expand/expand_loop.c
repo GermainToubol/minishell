@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:47:46 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 00:00:30 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 00:10:21 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ int	expand_var(const char *cmd, t_list **lst, t_list **lst_tmp, size_t *next)
 	*next = 1;
 	if (get_var(cmd, next, &expand))
 		return (1);
-	ft_printf("expand %s\n", expand);
 	if (expand && !ft_strchr(expand, ' ') && do_basic(expand, lst_tmp))
 		return (1);
 	else if (expand && ft_strchr(expand, ' ') && var_tab(expand, lst, lst_tmp))

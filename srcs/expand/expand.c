@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 16:46:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 22:38:04 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 00:11:49 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	**do_expand(char **cmd)
 	*lst = NULL;
 	if (do_expand_loop(cmd, lst))
 		return (NULL);
-	if (!lst || !*lst)
+	if (!lst)
 		return (NULL);
 	ret = lst_to_tab_str(lst);
 	print_tab(ret);

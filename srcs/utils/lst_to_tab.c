@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:05:19 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 22:37:40 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 00:11:44 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	**lst_to_tab_str(t_list **lst)
 	t_list		*index;
 	size_t		i;
 
-	if (!lst || !*lst)
+	if (!lst)
 		return (NULL);
 	index = *lst;
 	ret = ft_calloc(ft_lstsize(*lst) + 1, sizeof(char *));
