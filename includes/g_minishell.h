@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:07:25 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/07/04 02:34:18 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 13:46:23 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void		reset_father(void);
 int			run_line(char *line, t_list **env);
 int			run_pipe_series(t_parse **parse, t_list **env);
 int			do_redirect(t_parse *parse);
+int			do_redirect_hdoc(char *filename, int target_fd);
 int			do_bind_pipe(int *pfd);
 int			get_exec_path(t_parse *parse, t_list **env);
 pid_t		exec_process(t_parse *parse, t_clean *cleanable,

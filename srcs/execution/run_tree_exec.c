@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/23 13:29:58 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/28 11:10:19 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/07/04 15:15:43 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stddef.h>
@@ -36,13 +36,13 @@ int	run_tree_exec(t_astree *root, t_parse **parse, t_list **env)
 	n = count_wait_tree(root, 0);
 	pid = exec_tree(root, pfd[0], pfd[1], &cleanable);
 	astree_apply_suffix(root, free_tree);
-	free_parse(parse);
 	if (pid == 0)
 	{
 		ft_lstclear(env, ft_freedico);
 		exit(EXIT_FAILURE);
 	}
 	wait_all(n, pid);
+	free_parse(parse);
 	return (0);
 }
 

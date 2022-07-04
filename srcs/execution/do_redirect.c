@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 15:13:16 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/22 11:28:09 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/07/04 13:55:29 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <errno.h>
@@ -15,6 +15,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include "parser.h"
+#include "expand.h"
 #include "libft.h"
 #include "minishell.h"
 #include "g_minishell.h"
@@ -35,11 +36,6 @@ int	do_redirect(t_parse *parse)
 	while (redirect != NULL && redirect[i] != NULL)
 	{
 		f = get_redirect_function(redirect[i]->io_r);
-		if (f == NULL)
-		{
-			i++;
-			continue ;
-		}
 		if (f(redirect[i]->file, redirect[i]->fd) != 0)
 			return (set_status(1), 1);
 		i++;
@@ -55,6 +51,8 @@ static void	*get_redirect_function(t_eio io_r)
 		return (redirect_out);
 	if (io_r == APP)
 		return (redirect_append);
+	if (io_r == HDOC)
+		return (do_redirect_hdoc);
 	return (NULL);
 }
 
