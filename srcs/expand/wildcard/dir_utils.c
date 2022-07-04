@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:01:02 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 18:21:27 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 21:21:04 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	check_found(t_wildcard *mywc, t_list **new_lst, char *dir_name)
 		node = ft_lstnew(new);
 		if (!node)
 		{
-			del_node(new);
+			del_node_wc(new);
 			return (display_error("Error allocation\n", 0), -1);
 		}
 		ft_lstadd_back(new_lst, node);
@@ -47,7 +47,7 @@ int	get_dir_match(t_wildcard *mywc, t_list **new_lst)
 		node = ft_lstnew(new);
 		if (!node)
 		{
-			del_node(new);
+			del_node_wc(new);
 			return (display_error("Error allocation\n", 0), -1);
 		}
 		ft_lstadd_back(new_lst, node);

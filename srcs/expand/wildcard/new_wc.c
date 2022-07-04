@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:59:12 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/22 16:57:56 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 21:21:04 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_wildcard	*new_wc2(t_wildcard *mywc, char *found, char *tmp, size_t i)
 	if (!new->dir_path || !new->prefix
 		|| (mywc->suffix[i] != '\0' && !new->suffix))
 	{
-		del_node(new);
+		del_node_wc(new);
 		return (display_error("Error allocation\n", 0), NULL);
 	}
 	return (new);
@@ -73,7 +73,7 @@ t_wildcard	*new_wc_path2(t_wildcard *mywc, char *tmp, size_t i)
 	new->found = NULL;
 	if (!new->dir_path || !new->prefix || !new->suffix)
 	{
-		del_node (new);
+		del_node_wc (new);
 		return (display_error("Error allocation\n", 0), NULL);
 	}
 	return (new);

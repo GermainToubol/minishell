@@ -6,13 +6,13 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 22:54:11 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/22 16:17:18 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 21:21:04 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wildcard.h"
 
-void	del_node(void *data)
+void	del_node_wc(void *data)
 {
 	t_wildcard	*s;
 

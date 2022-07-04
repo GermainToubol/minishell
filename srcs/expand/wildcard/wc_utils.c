@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 01:01:16 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/22 16:01:13 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 21:21:04 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_wildcard	*cpy_wc(t_wildcard *wc)
 	new->dir_path = ft_strdup(wc->dir_path);
 	if (!new->prefix || !new->dir_path)
 	{
-		del_node(new);
+		del_node_wc(new);
 		return (display_error("Error allocation\n", 0), NULL);
 	}
 	return (new);
@@ -63,7 +63,7 @@ t_wildcard	*init_wc(char *line)
 	new->prefix = ft_strdup("");
 	if (!new->dir_path || !new->prefix || !new->suffix)
 	{
-		del_node(new);
+		del_node_wc(new);
 		return (display_error("Error allocation\n", 0), NULL);
 	}
 	return (new);

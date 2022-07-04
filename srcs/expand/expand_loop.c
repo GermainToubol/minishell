@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:47:46 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 17:25:53 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 21:19:29 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,113 +15,26 @@
 #include "libft.h"
 #include "utils.h"
 
-char	**do_basic(char *cmd)
+static int	transfer_lst(t_list **dest, t_list **src)
 {
-	char	**ret;
+	t_list *index;
+	t_list *new;
 
+	if (!dest || !src)
+		return (1);
+	index = *src;
+	while (index)
+	{
+		ft_lstadd_back(dest, index);
+		index = index->next;
+	}
+	*src = NULL;
+	return (0);
+}
+
+int	expand_loop(char *cmd, t_list **lst, t_list **lst_tmp)
+{
 	if (!cmd)
-	{
-		ret = ft_calloc(1, sizeof(char *));
-		if (!ret)
-			return (display_error("Error allocation\n", 0), NULL);
-		ret[0] = NULL;
-		return (ret);
-	}
-	ret = ft_calloc(2, sizeof(char *));
-	if (!ret)
-		return (display_error("Error allocation\n", 0), NULL);
-	ret[0] = ft_strdup(cmd);
-	ret[1] = NULL;
-	if (!ret[0])
-	{
-		free(ret);
-		return (display_error("Error allcation\n", 0), NULL);
-	}
-	return (ret);
-}
-
-static int	fill_ret(char ***new_cmd, char **ret)
-{
-	size_t	i;
-	size_t	j;
-	size_t	count;
-
-	count = 0;
-	i = 0;
-	while (new_cmd[i])
-	{
-		j = 0;
-		while (new_cmd[i][j])
-		{
-			ret[count] = ft_strdup(new_cmd[i][j]);
-			if (!ret[count++])
-				return (display_error("Error allcation\n", 0), 1);
-			j++;
-		}
-		i++;
-	}
-	ret[count] = NULL;
+		return (transfer_lst(lst_tmp, lst));
 	return (0);
-}
-
-char	**expand_loop_end(char ***new_cmd)
-{
-	size_t	count;
-	char	**ret;
-
-	count = tab3_size(new_cmd);
-	ret = ft_calloc(count + 1, sizeof(char *));
-	if (!ret)
-		return (display_error("Error allcation\n", 0), NULL);
-	if (fill_ret(new_cmd, ret))
-		return (free_tab(ret), NULL);
-	return (ret);
-}
-
-static int	expand_loop2(char ***new_cmd, char *cmd, size_t i)
-{
-	if (ft_strchr(cmd, '*') != NULL)
-	{
-		new_cmd[i] = expand_wc(cmd);
-		if (!new_cmd[i])
-			return (1);
-	}
-	else
-	{
-		new_cmd[i] = do_basic(cmd);
-		if (!new_cmd[i])
-			return (1);
-	}
-	return (0);
-}
-
-int	expand_loop(char ***new_cmd, char *cmd, size_t i)
-{
-	char	**tmp2;
-
-	if (ft_strchr(cmd, '\'') || ft_strchr(cmd, '"') || ft_strchr(cmd, '$'))
-	{
-		tmp2 = expand_var(cmd);
-		if (tmp2 == NULL)
-			return (1);
-		if (var_expand_wc(&tmp2))
-			return (free_tab(tmp2), 1);
-		new_cmd[i] = tmp2;
-		if (!new_cmd[i])
-			return (1);
-		return (0);
-	}
-	// // else
-	// if (ft_strchr(cmd, '\'') || ft_strchr(cmd, '"') || ft_strchr(cmd, '$'))
-	// {
-	// 	tmp = expand_quotes(cmd);
-	// 	if (!tmp)
-	// 		return (1);
-	// 	new_cmd[i] = do_basic(tmp);
-	// 	free(tmp);
-	// 	if (!new_cmd[i])
-	// 		return (1);
-	// 	return (0);
-	// }
-	return (expand_loop2(new_cmd, cmd, i));
 }
