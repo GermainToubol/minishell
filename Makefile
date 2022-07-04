@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 10:59:36 by gtoubol           #+#    #+#              #
-#    Updated: 2022/07/04 02:06:24 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/07/04 02:43:39 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -109,6 +109,7 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 			$(addprefix quotes/,		expand_quotes.c)	\
 			$(addprefix hdoc/,			get_hdoc.c			\
 										set_hdoc.c			\
+										read_hdoc.c			\
 										quotes_hdoc.c		\
 										tmp_filename.c)		\
 										expand.c			\

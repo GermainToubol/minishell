@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   exec_tree_add_level.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:59:39 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/28 12:13:15 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/07/04 02:41:52 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdio.h>
+
 #include <unistd.h>
 #include "libft.h"
 #include "astree.h"
@@ -22,9 +22,9 @@ static int	set_pipes(int *pipe_in, int *pipe_out);
 pid_t	exec_tree_add_level(t_astree *node, int *pipe_in, int *pipe_out,
 			t_clean *cleanable)
 {
-	pid_t	pid;
-	int		n;
-	struct sigaction sa;
+	pid_t				pid;
+	int					n;
+	struct sigaction	sa;
 
 	pid = fork();
 	if (pid < 0)
