@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:07:13 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 22:09:49 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 22:47:55 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void		free_tab3(char ***tab);
 
 size_t		tab3_size(char ***new_cmd);
 
-char		*expand_quotes(const char *cmd);
 //HDOC
 int			dup_hdoc(char **env, t_parse *parse);
 int			close_hdoc(int fd, int fd_copy);

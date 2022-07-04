@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:50:17 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 22:37:47 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 23:20:01 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,14 @@ char	*ft_join3(char *s1, char *s2, char *s3);
 
 char	**lst_to_tab_wc(t_list **lst);
 char	**lst_to_tab_str(t_list **lst);
+int		transfer_lst(t_list **dest, t_list **src);
 
 size_t	size_tab(char **tab);
 int		cpy_tab(char **from, char **to, size_t size);
 
 int		ft_atoll(char *s, long long *n);
 int		strjoin_custom(char **dest, char *src);
+int		strjoin_custom_lst(void **dest, char *src);
 
 int		del_hdoc_token(t_tokens *tokens);
 int		del_hdoc_parse(t_parse **parse);

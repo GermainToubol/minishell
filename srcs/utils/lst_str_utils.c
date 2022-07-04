@@ -6,12 +6,28 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 22:15:47 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 22:17:49 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 22:42:02 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
+
+int	transfer_lst(t_list **dest, t_list **src)
+{
+	t_list *index;
+
+	if (!dest || !src)
+		return (1);
+	index = *src;
+	while (index)
+	{
+		ft_lstadd_back(dest, index);
+		index = index->next;
+	}
+	*src = NULL;
+	return (0);
+}
 
 void	del_node_str(void *data)
 {
