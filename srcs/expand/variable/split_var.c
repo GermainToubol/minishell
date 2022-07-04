@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 01:16:22 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 02:53:19 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 14:07:36 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ static size_t	count_line(const char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (line[i] == '\'' || line[i] == '"')
-			i += skip_quote(&line[i]);
 		if (line[i] == ' ')
 		{
 			count++;
@@ -82,8 +80,6 @@ static int	fill_split(const char *line, char ***ret)
 	count = 0;
 	while (line[i])
 	{
-		if (line[i] == '\'' || line[i] == '"')
-			i += skip_quote(&line[i]);
 		if (line[i] == ' ')
 		{
 			(*ret)[count] = ft_substr(line, 0, i);

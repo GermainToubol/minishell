@@ -6,52 +6,47 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/03 22:56:00 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 02:52:33 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/04 15:54:54 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "libft.h"
 
-void	ft_strnjoin_content(char *ret, char **tab, char sep)
+void	ft_strjoin_sep_content(char *ret, char *s1, char *s2, char sep)
 {
 	size_t	i;
-	size_t	j;
-	size_t	size;
+	size_t	size1;
+	size_t	size2;
 
-	size = 0;
+	size1 = ft_strlen(s1);
 	i = -1;
-	while (tab[++i])
-	{
-		j = -1;
-		while (tab[i][++j])
-		{
-			ret[size++] = tab[i][j];
-		}
-		if (tab[i + 1])
-			ret[size++] = sep;
-	}
-	ret[size++] = '\0';
+	while (++i < size1)
+		ret[i] = s1[i];
+	ret[i] = sep;
+	size2 = ft_strlen(s2);
+	i = -1;
+	while (++i < size2)
+		ret[i + size1 + 1] = s2[i];
+	ret[i + size1 + 1] = '\0';
 }
 
-char	*ft_strnjoin(char **tab, char sep)
+char	*ft_strjoin_sep(char *s1, char *s2, char sep)
 {
-	size_t	count;
 	size_t	len;
 	char	*ret;
 
-	count = -1;
-	len = 0;
-	if (!tab)
+	if (!s1 || !s2)
 		return (NULL);
-	while (tab[++count])
-		len += ft_strlen(tab[count]);
-	len += count - 1;
-	if (len == 0)
-		return (NULL);
+	len = ft_strlen(s1) + ft_strlen(s2);
+	if (len > 0)
+		len++;
 	ret = ft_calloc(len + 1, sizeof(char));
 	if (!ret)
 		return (NULL);
-	ft_strnjoin_content(ret, tab, sep);
+	if (len == 0)
+		ret[0] = '\0';
+	else
+		ft_strjoin_sep_content(ret, s1, s2, sep);
 	return (ret);
 }
