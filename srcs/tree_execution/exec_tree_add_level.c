@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 10:59:39 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/07/04 12:23:27 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/07/04 15:50:28 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ pid_t	exec_tree_add_level(t_astree *node, int *pipe_in, int *pipe_out,
 			return (0);
 		wait_all(n, pid);
 		clear_cleanable(cleanable);
+		close_pipes((int [2]){0, 1});
 		exit(get_status());
 	}
 	if (pid_extend_list(pid))
