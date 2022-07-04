@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 13:38:35 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/07/04 15:24:00 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/07/04 17:46:21 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <errno.h>
@@ -60,5 +60,14 @@ static int	redirect_hdoc(char *hdoc, int fd, int type)
 
 int	do_redirect_hdoc(char *filename, int target_fd)
 {
-	return (redirect_hdoc(filename, target_fd, 0));
+	int	ret;
+
+	ret = redirect_hdoc(filename, target_fd, 0);
+	if (ret != 0)
+	{
+		perror("minishell: heredoc");
+		set_status(1);
+		return (1);
+	}
+	return (0);
 }
