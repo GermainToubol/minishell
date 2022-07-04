@@ -30,6 +30,8 @@ def main():
 
     with open("minishell.test", "r") as testfile:
         for command_line in testfile.readlines():
+            if (command_line[:5] == '#####'):
+                break
             if (command_line[:2] == "##"):
                 cmd = command_line.strip()
                 summary[cmd] = [0, 0]
@@ -46,8 +48,8 @@ def main():
             with subprocess.Popen(["../minishell", '-c', command_line.strip()], stdout=subprocess.PIPE, stderr=subprocess.PIPE) as proc:
                 with open(f"log_minishell_{tmp_id}", "w") as logfile:
                     try:
-                        outs, errs = proc.communicate(timeout=15)
-                    except TimeoutExpired:
+                        outs, errs = proc.communicate(timeout=3)
+                    except subprocess.TimeoutExpired:
                         proc.kill()
                         outs, errs = proc.communicate()
                     logfile.write(f"## {command_line.strip()}\n")
@@ -58,8 +60,8 @@ def main():
             with subprocess.Popen(["bash", '-c', command_line.strip()], stdout=subprocess.PIPE, stderr=subprocess.PIPE) as proc:
                 with open(f"log_bash_{tmp_id}", "w") as logfile:
                     try:
-                        outs, errs = proc.communicate(timeout=15)
-                    except TimeoutExpired:
+                        outs, errs = proc.communicate(timeout=3)
+                    except subprocess.TimeoutExpired:
                         proc.kill()
                         outs, errs = proc.communicate()
                     logfile.write(f"## {command_line.strip()}\n")
