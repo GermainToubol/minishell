@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:33:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 18:21:30 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 19:02:01 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,9 @@ int expand_wc(const char *cmd, t_list **lst_tmp, size_t *next)
 	while (i < size && index)
 	{
 		*next = 0;
+		i++;
+		ft_printf("start\n");
+		ft_printf("index %s\n", (char *)index->content);
 		tmp = get_wc_line(cmd, index, next);
 		printf_wc(tmp);
 		if (!tmp)
@@ -211,12 +214,14 @@ int expand_wc(const char *cmd, t_list **lst_tmp, size_t *next)
 			return (1);
 		else if (r == 1)
 		{
-			ft_list_remove_at(lst_tmp, i, del_node_str);
+			index = index->next;
+			ft_list_remove_at(lst_tmp, i - 1, del_node_str);
 			i--;
 			size--;
 		}
-		index = index->next;
-		i++;
+		else
+			index = index->next;
+		ft_printf("\n\ni %i\nsize %i\n\n", i, size);
 	}
 	return (0);
 }
