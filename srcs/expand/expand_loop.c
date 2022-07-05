@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:47:46 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 02:51:52 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 04:34:21 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ size_t	to_next_index(const char *cmd)
 	return (i);
 }
 
-static int	do_basic(char *cmd, t_list **lst_tmp)
+int	do_basic(char *cmd, t_list **lst_tmp)
 {
 	t_list	*index;
 	t_list	*new;
@@ -48,13 +48,19 @@ static int	do_basic(char *cmd, t_list **lst_tmp)
 	return (0);
 }
 
-static int	do_basic_lst(const char *cmd, t_list **lst_tmp, size_t *next)
+int	do_basic_lst(const char *cmd, t_list **lst_tmp, size_t *next)
 {
 	char	*tmp;
 
 	if (!lst_tmp)
 		return (1);
-	*next = to_next_index(cmd);
+	if (cmd[0] == '*')
+	{
+		*next = to_next_index(&cmd[1]);
+		(*next)++;
+	}
+	else
+		*next = to_next_index(cmd);
 	tmp = ft_substr(cmd, 0, *next);
 	if (!tmp)
 		return (display_error("Error allocation\n", 0), 1);

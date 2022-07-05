@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:07:13 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 00:45:31 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 03:32:32 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 char		**do_expand(char **cmd);
 char		**expand_loop_end(t_list **lst);
 int			expand_loop(const char *cmd, t_list **lst, t_list **lst_tmp);
+int			do_basic(char *cmd, t_list **lst_tmp);
+int			do_basic_lst(const char *cmd, t_list **lst_tmp, size_t *next);
 
 void		free_tab3(char ***tab);
 

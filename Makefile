@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 10:59:36 by gtoubol           #+#    #+#              #
-#    Updated: 2022/07/05 03:20:13 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/07/05 04:50:15 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,7 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										split_in_lst.c		\
 										lst_str_utils.c		\
 										ft_list_at.c		\
+										ft_lst_remove_at.c	\
 										strjoin_custom.c	\
 										ft_join_tab.c		\
 										ft_strnjoin.c		\

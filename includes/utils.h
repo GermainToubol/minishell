@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:50:17 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 03:12:43 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 05:00:35 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ char	**lst_to_tab_str(t_list **lst);
 int		transfer_lst(t_list **dest, t_list **src);
 int		cat_lst(t_list **dest, t_list **src);
 t_list	*ft_list_at(t_list *begin_list, unsigned int nbr);
-
+void	ft_list_remove_at(t_list **begin_list, unsigned int nb,
+			void (*free_fct)(void *));
 size_t	size_tab(char **tab);
 int		cpy_tab(char **from, char **to, size_t size);
 
