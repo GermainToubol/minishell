@@ -6,11 +6,12 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 22:15:47 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 00:23:56 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 02:48:17 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "utils.h"
 #include <stdlib.h>
 
 int	transfer_lst(t_list **dest, t_list **src)
@@ -23,6 +24,30 @@ int	transfer_lst(t_list **dest, t_list **src)
 	while (index)
 	{
 		ft_lstadd_back(dest, index);
+		index = index->next;
+	}
+	*src = NULL;
+	return (0);
+}
+
+int	cat_lst(t_list **dest, t_list **src)
+{
+	t_list	*index;
+	t_list	*new;
+	char	*tmp;
+
+	if (!dest || !src)
+		return (1);
+	index = *src;
+	while (index)
+	{
+		tmp = ft_strdup((char *)index->content);
+		if (!tmp)
+			return (display_error("Error allocation\n", 0), 1);
+		new = ft_lstnew(tmp);
+		if (!new)
+			return (free(tmp), display_error("Error allocation\n", 0), 1);
+		ft_lstadd_back(dest, new);
 		index = index->next;
 	}
 	*src = NULL;

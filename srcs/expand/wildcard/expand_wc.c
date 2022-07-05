@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:33:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 01:47:37 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 03:22:32 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,30 +43,41 @@ static int	cpy_lst_wc_to_str(t_list **dest, t_list **src)
 	return (0);
 }
 
-t_wildcard	*get_wc_line(const char *cmd, t_list **lst_tmp, size_t *next)
+static int	get_prefix_path(t_list **lst_tmp, char **path, char **prefix)
 {
-	char	*str[3];
 	char	*line;
 	int		delimiter;
 
-	*next = 1;
-	str[0] = NULL;
-	str[1] = NULL;
 	if (lst_tmp && *lst_tmp)
 	{
 		line = (char *)ft_lstlast(*lst_tmp)->content;
 		delimiter = last_char(line, '/');
-		if (delimiter < 0 && strjoin_custom(&str[1], ft_strdup(line)))
-			return (NULL);
+		if (delimiter < 0 && strjoin_custom(prefix, ft_strdup(line)))
+			return (1);
 		else
 		{
-			if (strjoin_custom(&str[0], ft_substr(line, 0, delimiter + 1)))
-				return (NULL);
-			if (strjoin_custom(&str[1], ft_substr(line, delimiter + 1,
+			if (strjoin_custom(path, ft_substr(line, 0, delimiter + 1)))
+				return (1);
+			if (strjoin_custom(prefix, ft_substr(line, delimiter + 1,
 				ft_strlen(line) - delimiter - 1)))
-				return (free(str[0]), NULL);
+				return (free(*path), 1);
 		}
+
 	}
+	else if (strjoin_custom(prefix, ft_strdup("")))
+		return (1);
+	return (0);
+}
+
+t_wildcard	*get_wc_line(const char *cmd, t_list **lst_tmp, size_t *next)
+{
+	char	*str[3];
+
+	*next = 1;
+	str[0] = NULL;
+	str[1] = NULL;
+	if (get_prefix_path(lst_tmp, &str[0], &str[1]))
+		return (NULL);
 	*next = to_next_index(&cmd[*next]);
 	(*next)++;
 	str[2] = NULL;

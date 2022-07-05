@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:47:46 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 00:59:38 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 02:51:52 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ int	var_tab(char *expand, t_list **lst, t_list **lst_tmp)
 		{
 			if (do_basic(tmp2[tab_len], lst_tmp))
 				return (free_tab(tmp2), 1);
-			transfer_lst(lst, lst_tmp);
+			cat_lst(lst, lst_tmp);
+			ft_lstclear(lst_tmp, del_node_str);
 		}
 		else
 		{
@@ -125,9 +126,8 @@ int	expand_var(const char *cmd, t_list **lst, t_list **lst_tmp, size_t *next)
 int	expand_loop(const char *cmd, t_list **lst, t_list **lst_tmp)
 {
 	size_t	next;
-
 	if (!*cmd)
-		return (transfer_lst(lst, lst_tmp));
+		return (cat_lst(lst, lst_tmp));
 	else if (cmd[0] == '\'' || cmd[0] == '"')
 	{
 		if (expand_quotes(cmd, lst_tmp, &next))
