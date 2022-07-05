@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:47:46 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 04:34:21 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 16:31:44 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,11 @@ int	var_tab(char *expand, t_list **lst, t_list **lst_tmp)
 		{
 			if (do_basic(tmp2[tab_len], lst_tmp))
 				return (free_tab(tmp2), 1);
+			if (ft_strchr(tmp2[tab_len], '*'))
+			{
+				if (expand_wc(tmp2[tab_len], lst_tmp, 0))
+					return (1);
+			}
 			cat_lst(lst, lst_tmp);
 			ft_lstclear(lst_tmp, del_node_str);
 		}
@@ -104,6 +109,11 @@ int	var_tab(char *expand, t_list **lst, t_list **lst_tmp)
 		{
 			if (do_basic(tmp2[tab_len], lst_tmp))
 				return (free_tab(tmp2), 1);
+			if (ft_strchr(tmp2[tab_len], '*'))
+			{
+				if (expand_wc(tmp2[tab_len], lst_tmp, 0))
+					return (1);
+			}
 		}
 		tab_len++;
 	}
@@ -114,14 +124,24 @@ int	var_tab(char *expand, t_list **lst, t_list **lst_tmp)
 int	expand_var(const char *cmd, t_list **lst, t_list **lst_tmp, size_t *next)
 {
 	char	*expand;
+	size_t	useless;
 
 	if (!lst_tmp)
 		return (1);
 	*next = 1;
 	if (get_var(cmd, next, &expand))
 		return (1);
-	if (expand && !ft_strchr(expand, ' ') && do_basic(expand, lst_tmp))
-		return (1);
+	if (expand && !ft_strchr(expand, ' '))
+	{
+		if (ft_strchr(expand, '*'))
+		{
+			useless = 0;
+			if (expand_wc(expand, lst_tmp, &useless))
+				return (1);
+		}
+		else if (do_basic(expand, lst_tmp))
+			return (1);
+	}
 	else if (expand && ft_strchr(expand, ' ') && var_tab(expand, lst, lst_tmp))
 		return (1);
 	return (0);

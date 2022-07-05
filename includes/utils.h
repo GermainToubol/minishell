@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:50:17 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 05:00:35 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 17:50:20 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ int		ft_split_in_lst(char const *s, char c, t_list **lst);
 void	print_lst(void *data);
 void	free_lst_str(t_list **lst);
 void	del_node_str(void *data);
+char	*trim_c(char *s, char c);
 
 #endif

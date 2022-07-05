@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 01:01:16 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 01:46:29 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 18:05:16 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,10 @@ static int dir_path(char *path, t_wildcard *new)
 		new->dir_path = path;
 	else
 	{
-		if (strjoin_custom(&(new->dir_path),
-			ft_strdup(getcwd(cwd_dir, DIR_BUFFER))))
-			return (1);
 		tmp = ft_strjoin("/", path);
+		free(path);
 		if (strjoin_custom(&(new->dir_path), tmp))
 			return (1);
-		free(path);
 	}
 	return (0);
 }
@@ -96,6 +93,9 @@ t_wildcard	*init_wc_2(char *path, char *prefix, char *suffix)
 {
 	t_wildcard	*new;
 
+	suffix = trim_c(suffix, '/');
+	if (!suffix)
+		return (display_error("Error allocation\n", 0), NULL);
 	new = ft_calloc(1, sizeof(t_wildcard));
 	if (!new)
 		return (display_error("Error allocation\n", 0), NULL);
@@ -107,5 +107,6 @@ t_wildcard	*init_wc_2(char *path, char *prefix, char *suffix)
 	new->found = NULL;
 	new->suffix = suffix;
 	new->prefix = prefix;
+	printf_wc(new);
 	return (new);
 }

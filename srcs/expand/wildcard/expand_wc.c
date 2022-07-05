@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:33:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 16:08:08 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 18:10:10 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,31 +43,27 @@ static int	cpy_lst_wc_to_str(t_list **dest, t_list **src)
 	return (0);
 }
 
-static int	get_prefix_path(t_list *lst_tmp, char **path, char **prefix)
+static int	get_prefix_path(t_list *lst_tmp, char **path,
+				char **prefix, char *to_add)
 {
 	char	*line;
-	int		delimiter;
-	char	cwd_dir[DIR_BUFFER];
 
 	if (lst_tmp)
 	{
-		line = (char *)lst_tmp->content;
-		delimiter = last_char(line, '/');
-		if (delimiter < 0 && strjoin_custom(prefix, ft_strdup(line)))
+		line = NULL;
+		if (strjoin_custom(&line, ft_strdup((char *)lst_tmp->content)))
+			return (free(to_add), 1);
+		if (strjoin_custom(&line, to_add))
+			return (free(line), 1);
+		if (strjoin_custom(prefix, line))
 			return (1);
-		else if (delimiter >= 0)
-		{
-			if (strjoin_custom(path, ft_substr(line, 0, delimiter + 1)))
-				return (1);
-			if (strjoin_custom(prefix, ft_substr(line, delimiter + 1,
-				ft_strlen(line) - delimiter - 1)))
-				return (free(*path), 1);
-		}
-
+		if (line[0] == '/' && strjoin_custom(path, ft_strdup("/")))
+			return (free(prefix), 1);
+		return (0);
 	}
-	else if (strjoin_custom(prefix, ft_strdup("")))
-		return (1);
-	else if (strjoin_custom(path, ft_strdup(getcwd(cwd_dir, DIR_BUFFER))))
+	if (strjoin_custom(prefix, to_add))
+			return (1);
+	if (to_add[0] == '/' && strjoin_custom(path, ft_strdup(("/"))))
 		return (free(prefix), 1);
 	return (0);
 }
@@ -85,12 +81,20 @@ size_t	to_next_index_wc(const char *cmd)
 
 t_wildcard	*get_wc_line(const char *cmd, t_list *lst_tmp, size_t *next)
 {
-	char	*str[3];
+	char	*str[4];
+	size_t	i;
 
 	str[0] = NULL;
 	str[1] = NULL;
-	if (get_prefix_path(lst_tmp, &str[0], &str[1]))
-		return (NULL);
+	i = 0;
+	while (cmd[i] != '*')
+		i++;
+	str[3] = ft_substr(cmd, 0, i);
+	if (!str[3])
+		return (display_error("Error allocation\n", 0), NULL);
+	cmd = &cmd[i];
+	if (get_prefix_path(lst_tmp, &str[0], &str[1], str[3]))
+		return (free(str[3]), NULL);
 	*next = to_next_index_wc(cmd);
 	str[2] = NULL;
 	if (strjoin_custom(&str[2], ft_substr(cmd, 0, *next)))
@@ -98,13 +102,15 @@ t_wildcard	*get_wc_line(const char *cmd, t_list *lst_tmp, size_t *next)
 	return (init_wc_2(str[0], str[1], str[2]));
 }
 
-char	*str_get_parent(const char *s)
+char	*str_get_parent(const char *s, const char *s2)
 {
 	ssize_t	i;
 	char	*ret;
 
-	if (!s)
+	if (!s | !s2)
 		return (NULL);
+	if (s2[0] == '/')
+		return (ret = ft_strdup(s));
 	i = ft_strlen(s);
 	while (i-- > 0)
 		if (s[i] == '/')
@@ -118,22 +124,24 @@ char	*str_get_parent(const char *s)
 
 static int parent_wc(t_list **lst, t_list **lst_tmp, int i_parent)
 {
-	t_list	*index;
-	t_list	*parent;
-	char	*tmp;
+	// t_list	*index;
+	// t_list	*parent;
+	// char	*tmp;
 
-	index = *lst;
-	parent = ft_list_at(*lst_tmp, i_parent);
-	while (index)
-	{
-		tmp = NULL;
-		if (strjoin_custom(&tmp, str_get_parent((char *)parent->content)))
-			return (1);
-		if (strjoin_custom(&tmp, (char *)index->content))
-			return (free(tmp), 1);
-		index->content = (void *)tmp;
-		index = index->next;
-	}
+	// index = *lst;
+	// parent = ft_list_at(*lst_tmp, i_parent);
+	// while (index)
+	// {
+	// 	tmp = NULL;
+	// 	if (strjoin_custom(&tmp, str_get_parent((char *)parent->content,
+	// 			(char *)index->content)))
+	// 		return (1);
+	// 	if (strjoin_custom(&tmp, (char *)index->content))
+	// 		return (free(tmp), 1);
+	// 	index->content = (void *)tmp;
+	// 	index = index->next;
+	// }
+	(void)i_parent;
 	ft_printf("remove\n");
 	cat_lst(lst_tmp, lst);
 	ft_printf("catlst\n");
@@ -209,6 +217,7 @@ int expand_wc(const char *cmd, t_list **lst_tmp, size_t *next)
 	{
 		*next = 0;
 		tmp = get_wc_line(cmd, index, next);
+		printf_wc(tmp);
 		if (!tmp)
 			return (1);
 		r = expand_wc_content(tmp, lst_tmp, -1);
