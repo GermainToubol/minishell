@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:33:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 18:10:10 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 18:17:51 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,34 +122,7 @@ char	*str_get_parent(const char *s, const char *s2)
 	return (ret);
 }
 
-static int parent_wc(t_list **lst, t_list **lst_tmp, int i_parent)
-{
-	// t_list	*index;
-	// t_list	*parent;
-	// char	*tmp;
-
-	// index = *lst;
-	// parent = ft_list_at(*lst_tmp, i_parent);
-	// while (index)
-	// {
-	// 	tmp = NULL;
-	// 	if (strjoin_custom(&tmp, str_get_parent((char *)parent->content,
-	// 			(char *)index->content)))
-	// 		return (1);
-	// 	if (strjoin_custom(&tmp, (char *)index->content))
-	// 		return (free(tmp), 1);
-	// 	index->content = (void *)tmp;
-	// 	index = index->next;
-	// }
-	(void)i_parent;
-	ft_printf("remove\n");
-	cat_lst(lst_tmp, lst);
-	ft_printf("catlst\n");
-	ft_lstiter(*lst_tmp, print_lst);
-	return (0);
-}
-
-int	wc_found(t_list **lst_tmp, t_list **wc_lst, int parent)
+int	wc_found(t_list **lst_tmp, t_list **wc_lst)
 {
 	t_list	**lst;
 
@@ -163,19 +136,15 @@ int	wc_found(t_list **lst_tmp, t_list **wc_lst, int parent)
 		return (1);
 	}
 	sort_list(lst);
-	if (parent == -1 && cat_lst(lst_tmp, lst))
+	if (cat_lst(lst_tmp, lst))
 		return (free_lst_str(lst), 1);
-	else if (parent >= 0)
-	{
-		if (parent_wc(lst, lst_tmp, parent))
-			return (1);
-	}
+	ft_lstiter(*lst_tmp, print_lst);
 	free_lst_str(lst);
 	ft_printf("free\n");
 	return (0);
 }
 
-int	expand_wc_content(t_wildcard *wc, t_list **lst_tmp, int	parent)
+int	expand_wc_content(t_wildcard *wc, t_list **lst_tmp)
 {
 	t_list		**wc_lst;
 
@@ -189,7 +158,7 @@ int	expand_wc_content(t_wildcard *wc, t_list **lst_tmp, int	parent)
 	}
 	if (*wc_lst)
 	{
-		if (wc_found(lst_tmp, wc_lst, parent))
+		if (wc_found(lst_tmp, wc_lst))
 			return (ft_lstclear(wc_lst, del_node_wc), free(wc_lst), -1);
 		ft_lstclear(wc_lst, del_node_wc);
 		ft_printf("free\n");
@@ -220,7 +189,7 @@ int expand_wc(const char *cmd, t_list **lst_tmp, size_t *next)
 		printf_wc(tmp);
 		if (!tmp)
 			return (1);
-		r = expand_wc_content(tmp, lst_tmp, -1);
+		r = expand_wc_content(tmp, lst_tmp);
 		if (r == -1)
 			return (1);
 		else if (r == 0 && do_basic_lst(cmd, &index, next))
@@ -235,7 +204,7 @@ int expand_wc(const char *cmd, t_list **lst_tmp, size_t *next)
 		printf_wc(tmp);
 		if (!tmp)
 			return (1);
-		r = expand_wc_content(tmp, lst_tmp, i);
+		r = expand_wc_content(tmp, lst_tmp);
 		if (r == -1)
 			return (1);
 		else if (r == 0 && do_basic_lst(cmd, &index, next))
