@@ -102,7 +102,7 @@ static int	cd_change_dir(char *path, t_list **env)
 			|| environment_set(*env, "PWD", cwd_path) == -1)
 		{
 			ft_fprintf(2, "minishell: cd: memory allocation error\n");
-			return (1);
+			return (100);
 		}
 	}
 	re = chdir(path);
@@ -121,19 +121,19 @@ static int	cd_update_env(t_list **env)
 			|| environment_set(*env, "OLDPWD", environment_get(*env, "PWD")))
 		{
 			ft_fprintf(2, "minishell: cd: memory allocation error\n");
-			return (1);
+			return (100);
 		}
 	}
 	else if (environment_set(*env, "OLDPWD", environment_get(*env, "PWD")) != 0)
 	{
 		ft_fprintf(2, "minishell: cd: memory allocation error\n");
-		return (1);
+		return (100);
 	}
 	getcwd(cwd_path, PATH_MAX);
 	if (environment_set(*env, "PWD", cwd_path) == -1)
 	{
 		ft_fprintf(2, "minishell: cd: memory allocation error\n");
-		return (1);
+		return (100);
 	}
 	return (0);
 }

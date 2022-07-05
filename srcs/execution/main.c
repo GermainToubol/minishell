@@ -58,6 +58,7 @@ int	main(int argc, char **argv, char **env)
 int	environment_init(t_list	**env_lst)
 {
 	char	*shlvl;
+	int		ret;
 
 	shlvl = environment_get(*env_lst, "SHLVL");
 	if (shlvl == NULL)
@@ -70,8 +71,10 @@ int	environment_init(t_list	**env_lst)
 			ft_lstclear(env_lst, ft_freedico);
 			return (1);
 		}
-		environment_set(*env_lst, "SHLVL", shlvl);
+		ret = environment_set(*env_lst, "SHLVL", shlvl);
 		free(shlvl);
+		if (ret < 0)
+			return (ft_lstclear(env_lst, ft_freedico), 1);
 	}
 	return (0);
 }

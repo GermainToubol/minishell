@@ -24,6 +24,7 @@ void	print_tokens(t_tokens *tokens);
 void	print_lexer(char *line, t_tokens *tokens);
 void	free_lxm(t_lxm *lxm, size_t size);
 void	free_parse(t_parse **parse);
+void	free_parse_nohdoc(t_parse **parse);
 void	free_cmd(t_cmd	*tmp);
 void	free_red(t_redirect **tab);
 void	free_tab(char **tab);

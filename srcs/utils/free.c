@@ -82,3 +82,18 @@ void	free_parse(t_parse **parse)
 	}
 	free(parse);
 }
+
+void	free_parse_nohdoc(t_parse **parse)
+{
+	size_t	i;
+
+	i = 0;
+	if (!parse)
+		return ;
+	while (parse[i])
+	{
+		free_cmd(parse[i]->cmd);
+		free(parse[i++]);
+	}
+	free(parse);
+}

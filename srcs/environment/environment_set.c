@@ -29,7 +29,7 @@ int	environment_set(t_list *env, char *name, char *value)
 
 	value_str = ft_strdup(value);
 	if (value_str == NULL)
-		return (-1);
+		return (ft_fprintf(2, "minishell: memory allocation error"), -1);
 	while (env != NULL)
 	{
 		dico = (t_dico *)env->content;
