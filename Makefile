@@ -6,7 +6,11 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 10:59:36 by gtoubol           #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2022/07/05 04:50:15 by fmauguin         ###   ########.fr        #
+=======
+#    Updated: 2022/07/04 13:47:19 by gtoubol          ###   ########.fr        #
+>>>>>>> vogsphere/master
 #                                                                              #
 # **************************************************************************** #
 
@@ -77,6 +81,7 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										interactive_signals.c\
 										run_line.c			\
 										do_redirect.c		\
+										do_redirect_hdoc.c	\
 										do_bind_pipe.c		\
 										run_child.c			\
 										run_parent.c		\

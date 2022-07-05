@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 13:10:53 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/07/04 10:39:59 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/07/04 17:54:37 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <readline/readline.h>
@@ -28,6 +28,7 @@ int	interactive_session(t_list	**env)
 	is_done = 0;
 	if (isatty(2))
 		rl_outstream = stderr;
+	rl_catch_signals = 0;
 	if (init_signal_interactive(&sa) != 0)
 	{
 		perror("minishell: signal init");
