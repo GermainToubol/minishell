@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 01:01:16 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 18:47:55 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 23:43:08 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ t_wildcard	*init_wc_2(char *path, char *prefix, char *suffix)
 	if (dir_path(path, new))
 	{
 		del_node_wc(new);
+		free(suffix);
 		return (display_error("Error allocation\n", 0), NULL);
 	}
 	new->found = NULL;

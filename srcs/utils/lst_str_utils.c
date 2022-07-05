@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 22:15:47 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 15:15:20 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 23:56:55 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	cat_lst(t_list **dest, t_list **src)
 	if (!dest || !src)
 		return (1);
 	index = *src;
-	ft_printf("cat start\n");
 	while (index)
 	{
 		tmp = ft_strdup((char *)index->content);
@@ -51,7 +50,6 @@ int	cat_lst(t_list **dest, t_list **src)
 		ft_lstadd_back(dest, new);
 		index = index->next;
 	}
-	ft_printf("cat end\n");
 	*src = NULL;
 	return (0);
 }
