@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:47:46 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 02:27:30 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 04:34:21 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,114 +15,144 @@
 #include "libft.h"
 #include "utils.h"
 
-char	**do_basic(char *cmd)
-{
-	char	**ret;
-
-	if (!cmd)
-	{
-		ret = ft_calloc(1, sizeof(char *));
-		if (!ret)
-			return (display_error("Error allocation\n", 0), NULL);
-		ret[0] = NULL;
-		return (ret);
-	}
-	ret = ft_calloc(2, sizeof(char *));
-	if (!ret)
-		return (display_error("Error allocation\n", 0), NULL);
-	ret[0] = ft_strdup(cmd);
-	ret[1] = NULL;
-	if (!ret[0])
-	{
-		free(ret);
-		return (display_error("Error allcation\n", 0), NULL);
-	}
-	return (ret);
-}
-
-static int	fill_ret(char ***new_cmd, char **ret)
+size_t	to_next_index(const char *cmd)
 {
 	size_t	i;
-	size_t	j;
-	size_t	count;
 
-	count = 0;
 	i = 0;
-	while (new_cmd[i])
-	{
-		j = 0;
-		while (new_cmd[i][j])
-		{
-			ret[count] = ft_strdup(new_cmd[i][j]);
-			if (!ret[count++])
-				return (display_error("Error allcation\n", 0), 1);
-			j++;
-		}
+	while (cmd[i] && cmd[i] != '"' && cmd[i] != '\''
+		&& cmd[i] != '$' && cmd[i] != '*')
 		i++;
+	return (i);
+}
+
+int	do_basic(char *cmd, t_list **lst_tmp)
+{
+	t_list	*index;
+	t_list	*new;
+
+	index = *lst_tmp;
+	if (!index)
+	{
+		new = ft_lstnew(cmd);
+		if (!new)
+			return (display_error("Error allocation\n", 0), 1);
+		ft_lstadd_back(lst_tmp, new);
+		return (0);
 	}
-	ret[count] = NULL;
+	while (index && !strjoin_custom_lst(&(index->content), ft_strdup(cmd)))
+		index = index->next;
+	free(cmd);
+	if (index)
+		return (1);
 	return (0);
 }
 
-char	**expand_loop_end(char ***new_cmd)
+int	do_basic_lst(const char *cmd, t_list **lst_tmp, size_t *next)
 {
-	size_t	count;
-	char	**ret;
+	char	*tmp;
 
-	count = tab3_size(new_cmd);
-	ret = ft_calloc(count + 1, sizeof(char *));
-	if (!ret)
-		return (display_error("Error allcation\n", 0), NULL);
-	if (fill_ret(new_cmd, ret))
-		return (free_tab(ret), NULL);
-	return (ret);
+	if (!lst_tmp)
+		return (1);
+	if (cmd[0] == '*')
+	{
+		*next = to_next_index(&cmd[1]);
+		(*next)++;
+	}
+	else
+		*next = to_next_index(cmd);
+	tmp = ft_substr(cmd, 0, *next);
+	if (!tmp)
+		return (display_error("Error allocation\n", 0), 1);
+	return (do_basic(tmp, lst_tmp));
 }
 
-static int	expand_loop2(char ***new_cmd, char *cmd, size_t i)
+int	expand_quotes(const char *cmd, t_list **lst_tmp, size_t *next)
 {
-	if (!new_cmd[i])
+	char	*expand;
+
+	*next = skip_quote(cmd);
+	expand = quotes(cmd);
+	if (!expand)
+		return (1);
+	if (!lst_tmp)
+		return (1);
+	if (do_basic(expand, lst_tmp))
+		return (1);
+	return (0);
+}
+
+int	var_tab(char *expand, t_list **lst, t_list **lst_tmp)
+{
+	char	**tmp2;
+	size_t	tab_len;
+
+	tmp2 = split_var(expand);
+	if (!tmp2)
+		return (1);
+	tab_len = 0;
+	while (tmp2[tab_len])
 	{
-		if (ft_strchr(cmd, '*') != NULL)
+		if (tmp2[tab_len + 1])
 		{
-			new_cmd[i] = expand_wc(cmd);
-			if (!new_cmd[i])
-				return (1);
+			if (do_basic(tmp2[tab_len], lst_tmp))
+				return (free_tab(tmp2), 1);
+			cat_lst(lst, lst_tmp);
+			ft_lstclear(lst_tmp, del_node_str);
 		}
 		else
 		{
-			new_cmd[i] = do_basic(cmd);
-			if (!new_cmd[i])
-				return (1);
+			if (do_basic(tmp2[tab_len], lst_tmp))
+				return (free_tab(tmp2), 1);
 		}
+		tab_len++;
 	}
+	free(tmp2);
 	return (0);
 }
 
-int	expand_loop(char ***new_cmd, char *cmd, size_t i)
+int	expand_var(const char *cmd, t_list **lst, t_list **lst_tmp, size_t *next)
 {
-	char	*tmp;
-	char	**tmp2;
+	char	*expand;
 
-	if (ft_strchr(cmd, '\'') || ft_strchr(cmd, '"'))
+	if (!lst_tmp)
+		return (1);
+	*next = 1;
+	if (get_var(cmd, next, &expand))
+		return (1);
+	if (expand && !ft_strchr(expand, ' ') && do_basic(expand, lst_tmp))
+		return (1);
+	else if (expand && ft_strchr(expand, ' ') && var_tab(expand, lst, lst_tmp))
+		return (1);
+	return (0);
+}
+
+
+
+int	expand_loop(const char *cmd, t_list **lst, t_list **lst_tmp)
+{
+	size_t	next;
+	if (!*cmd)
+		return (cat_lst(lst, lst_tmp));
+	else if (cmd[0] == '\'' || cmd[0] == '"')
 	{
-		tmp = expand_quotes(cmd);
-		if (!tmp)
-			return (1);
-		new_cmd[i] = do_basic(tmp);
-		free(tmp);
-		if (!new_cmd[i])
+		if (expand_quotes(cmd, lst_tmp, &next))
 			return (1);
 	}
-	else if (ft_strchr(cmd, '$'))
+	else if (cmd[0] == '$')
 	{
-		tmp2 = expand_var(cmd);
-		if (tmp2 == NULL)
-			return (1);
-		if (var_expand_wc(&tmp2))
-			return (free_tab(tmp2), 1);
-		new_cmd[i] = tmp2;
-		if (!new_cmd[i])
+		if (expand_var(cmd, lst, lst_tmp, &next))
 			return (1);
 	}
-	return (expand_loop2(new_cmd, cmd, i));
+	else if (cmd[0] == '*')
+	{
+		if (expand_wc(cmd, lst_tmp, &next))
+			return (1);
+	}
+	else
+	{
+		if (do_basic_lst(cmd, lst_tmp, &next))
+			return (1);
+	}
+	return (expand_loop(&cmd[next], lst, lst_tmp));
 }

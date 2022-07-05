@@ -6,7 +6,11 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 10:59:36 by gtoubol           #+#    #+#              #
+<<<<<<< HEAD
+#    Updated: 2022/07/05 04:50:15 by fmauguin         ###   ########.fr        #
+=======
 #    Updated: 2022/07/04 13:47:19 by gtoubol          ###   ########.fr        #
+>>>>>>> vogsphere/master
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,6 +63,10 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										str_utils.c			\
 										quicksort.c			\
 										lst_to_tab.c		\
+										split_in_lst.c		\
+										lst_str_utils.c		\
+										ft_list_at.c		\
+										ft_lst_remove_at.c	\
 										strjoin_custom.c	\
 										ft_join_tab.c		\
 										ft_strnjoin.c		\
@@ -103,9 +111,11 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										lst_utils.c			\
 										dir_utils.c			\
 										wc_utils.c			\
+										sort_lst.c			\
 										expand_wc.c)		\
 			$(addprefix	variable/,		var_expand.c		\
 										split_var.c			\
+										var_expand_wc.c		\
 										get_var.c)			\
 			$(addprefix quotes/,		expand_quotes.c)	\
 			$(addprefix hdoc/,			get_hdoc.c			\

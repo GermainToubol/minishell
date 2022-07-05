@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 16:46:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 19:52:52 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 02:49:09 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,44 @@
 #include "libft.h"
 #include "utils.h"
 
-static char	**do_expand_loop(char **cmd, char ***new_cmd)
+static int do_expand_loop(char **cmd, t_list **lst)
 {
 	size_t	i;
+	t_list	**lst_tmp;
 
 	i = 0;
+	lst_tmp = ft_calloc(1, sizeof(t_list *));
+	if (!lst_tmp)
+		return (display_error("Error allocation\n", 0), 1);
+	*lst_tmp = NULL;
 	while (cmd[i])
 	{
-		if (expand_loop(new_cmd, cmd[i], i))
-			return (NULL);
-		else
+		if (expand_loop(cmd[i], lst, lst_tmp))
+			return (free_lst_str(lst_tmp), 1);
+		ft_lstclear(lst_tmp, del_node_str);
 		i++;
 	}
-	new_cmd[i] = NULL;
-	return (expand_loop_end(new_cmd));
+	free_lst_str(lst_tmp);
+	return (0);
 }
 
 char	**do_expand(char **cmd)
 {
-	char	***new_cmd;
+	t_list	**lst;
 	char	**ret;
 
-	new_cmd = ft_calloc(size_tab(cmd) + 1, sizeof(char **));
-	if (!new_cmd)
+	lst = ft_calloc(1, sizeof(t_list *));
+	if (!lst)
 		return (display_error("Error allocation\n", 0), NULL);
-	ret = do_expand_loop(cmd, new_cmd);
-	free_tab3(new_cmd);
+	*lst = NULL;
+	if (do_expand_loop(cmd, lst))
+	{
+		return (NULL);
+	}
+	if (!lst)
+		return (NULL);
+	ret = lst_to_tab_str(lst);
+	print_tab(ret);
+	free_lst_str(lst);
 	return (ret);
 }

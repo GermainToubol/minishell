@@ -1,39 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lst_remove_if.c                                 :+:      :+:    :+:   */
+/*   ft_lst_remove_at.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:49:21 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 04:40:50 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 05:00:38 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-void	ft_list_remove_if(t_list **begin_list, void *data_ref
-		, int (*cmp)(), void (*free_fct)(void *))
+static void	swap(t_list **prev, t_list **index, t_list **del, t_list **begin_list)
 {
-	t_list	*index;
-	t_list	*prev;
-	t_list	*del;
+	if (*prev)
+		(*prev)->next = (*index)->next;
+	else
+		*begin_list = (*index)->next;
+	(*del) = (*index);
+	(*index) = (*index)->next;
+}
+
+void	ft_list_remove_at(t_list **begin_list, unsigned int nb,
+			void (*free_fct)(void *))
+{
+	t_list			*index;
+	t_list			*prev;
+	t_list			*del;
+	unsigned int	i;
 
 	index = *begin_list;
 	prev = 0;
+	i = 0;
 	while (index)
 	{
-		if ((*cmp)(index->content, data_ref) != 0)
+		if (i++ == nb)
 		{
-			if (prev)
-				prev->next = index->next;
-			else
-				*begin_list = index->next;
-			del = index;
-			index = index->next;
+			swap(&prev, &index, &del, begin_list);
 			(*free_fct)(del->content);
 			free(del);
+			break ;
 		}
 		else
 		{

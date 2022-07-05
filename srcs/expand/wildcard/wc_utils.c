@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 01:01:16 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/22 16:01:13 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 01:46:29 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_wildcard	*cpy_wc(t_wildcard *wc)
 	new->dir_path = ft_strdup(wc->dir_path);
 	if (!new->prefix || !new->dir_path)
 	{
-		del_node(new);
+		del_node_wc(new);
 		return (display_error("Error allocation\n", 0), NULL);
 	}
 	return (new);
@@ -63,8 +63,49 @@ t_wildcard	*init_wc(char *line)
 	new->prefix = ft_strdup("");
 	if (!new->dir_path || !new->prefix || !new->suffix)
 	{
-		del_node(new);
+		del_node_wc(new);
 		return (display_error("Error allocation\n", 0), NULL);
 	}
+	return (new);
+}
+
+static int dir_path(char *path, t_wildcard *new)
+{
+	char		cwd_dir[DIR_BUFFER];
+	char		*tmp;
+
+	new->dir_path = NULL;
+	if (!path)
+		new->dir_path = ft_strdup(getcwd(cwd_dir, DIR_BUFFER));
+	else if (path[0] == '/')
+		new->dir_path = path;
+	else
+	{
+		if (strjoin_custom(&(new->dir_path),
+			ft_strdup(getcwd(cwd_dir, DIR_BUFFER))))
+			return (1);
+		tmp = ft_strjoin("/", path);
+		if (strjoin_custom(&(new->dir_path), tmp))
+			return (1);
+		free(path);
+	}
+	return (0);
+}
+
+t_wildcard	*init_wc_2(char *path, char *prefix, char *suffix)
+{
+	t_wildcard	*new;
+
+	new = ft_calloc(1, sizeof(t_wildcard));
+	if (!new)
+		return (display_error("Error allocation\n", 0), NULL);
+	if (dir_path(path, new))
+	{
+		del_node_wc(new);
+		return (display_error("Error allocation\n", 0), NULL);
+	}
+	new->found = NULL;
+	new->suffix = suffix;
+	new->prefix = prefix;
 	return (new);
 }

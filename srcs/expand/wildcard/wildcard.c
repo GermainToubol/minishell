@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:56:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 19:06:01 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 02:09:49 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	wildcards_content(t_wildcard *mywc, t_list **ret)
 			free(lst_odd);
 		if (lst_even)
 			free(lst_even);
-		del_node(mywc);
+		del_node_wc(mywc);
 		return (free(ret), 1);
 	}
 	t = wildcards_end(lst_odd, lst_even, ret);
@@ -69,11 +69,26 @@ int	wildcards(char *line, t_list **ret)
 	if (!mywc)
 		return (1);
 	if (update_wildcard(mywc, line))
-		return (del_node(mywc), 1);
+		return (del_node_wc(mywc), 1);
 	*ret = ft_lstnew(mywc);
 	if (!*ret)
 	{
-		del_node(mywc);
+		del_node_wc(mywc);
+		return (display_error("Error allocation\n", 0), 1);
+	}
+	if (wildcards_content(mywc, ret))
+		return (1);
+	return (0);
+}
+
+int	wildcards_wc(t_wildcard	*mywc, t_list **ret)
+{
+	if (!mywc)
+		return (1);
+	*ret = ft_lstnew(mywc);
+	if (!*ret)
+	{
+		del_node_wc(mywc);
 		return (display_error("Error allocation\n", 0), 1);
 	}
 	if (wildcards_content(mywc, ret))
