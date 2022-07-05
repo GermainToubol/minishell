@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:47:46 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 16:31:44 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 18:24:25 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int	var_tab(char *expand, t_list **lst, t_list **lst_tmp)
 int	expand_var(const char *cmd, t_list **lst, t_list **lst_tmp, size_t *next)
 {
 	char	*expand;
-	size_t	useless;
+	size_t	step;
 
 	if (!lst_tmp)
 		return (1);
@@ -135,9 +135,10 @@ int	expand_var(const char *cmd, t_list **lst, t_list **lst_tmp, size_t *next)
 	{
 		if (ft_strchr(expand, '*'))
 		{
-			useless = 0;
-			if (expand_wc(expand, lst_tmp, &useless))
+			step = 0;
+			if (expand_wc(ft_strjoin(expand, &cmd[*next]), lst_tmp, &step))
 				return (1);
+			*next += step;
 		}
 		else if (do_basic(expand, lst_tmp))
 			return (1);

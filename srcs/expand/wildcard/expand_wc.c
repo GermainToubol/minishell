@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:33:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 18:17:51 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 18:21:30 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,7 +178,7 @@ int expand_wc(const char *cmd, t_list **lst_tmp, size_t *next)
 	size_t		size;
 	int			r;
 
-	if (!lst_tmp)
+	if (!lst_tmp || !cmd)
 		return (1);
 	i = 0;
 	index = *lst_tmp;
