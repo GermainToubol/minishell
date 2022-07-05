@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:33:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 05:10:44 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 15:33:41 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,17 +72,26 @@ static int	get_prefix_path(t_list *lst_tmp, char **path, char **prefix)
 	return (0);
 }
 
+size_t	to_next_index_wc(const char *cmd)
+{
+	size_t	i;
+
+	i = 1;
+	while (cmd[i] && cmd[i] != '"' && cmd[i] != '\''
+		&& cmd[i] != '$')
+		i++;
+	return (i);
+}
+
 t_wildcard	*get_wc_line(const char *cmd, t_list *lst_tmp, size_t *next)
 {
 	char	*str[3];
 
-	*next = 1;
 	str[0] = NULL;
 	str[1] = NULL;
 	if (get_prefix_path(lst_tmp, &str[0], &str[1]))
 		return (NULL);
-	*next = to_next_index(&cmd[*next]);
-	(*next)++;
+	*next = to_next_index_wc(cmd);
 	str[2] = NULL;
 	if (strjoin_custom(&str[2], ft_substr(cmd, 0, *next)))
 		return (free(str[0]), free(str[1]), NULL);
@@ -107,8 +116,10 @@ static int parent_wc(t_list **lst, t_list **lst_tmp, int i_parent)
 		index->content = (void *)tmp;
 		index = index->next;
 	}
-	ft_list_remove_at(lst_tmp, i_parent, del_node_str);
+	ft_printf("remove\n");
 	cat_lst(lst_tmp, lst);
+	ft_printf("catlst\n");
+	ft_lstiter(*lst_tmp, print_lst);
 	return (0);
 }
 
@@ -134,6 +145,7 @@ int	wc_found(t_list **lst_tmp, t_list **wc_lst, int parent)
 			return (1);
 	}
 	free_lst_str(lst);
+	ft_printf("free\n");
 	return (0);
 }
 
@@ -154,7 +166,9 @@ int	expand_wc_content(t_wildcard *wc, t_list **lst_tmp, int	parent)
 		if (wc_found(lst_tmp, wc_lst, parent))
 			return (ft_lstclear(wc_lst, del_node_wc), free(wc_lst), -1);
 		ft_lstclear(wc_lst, del_node_wc);
+		ft_printf("free\n");
 		free(wc_lst);
+		ft_printf("free\n");
 		return (1);
 	}
 	free(wc_lst);
@@ -166,6 +180,7 @@ int expand_wc(const char *cmd, t_list **lst_tmp, size_t *next)
 	t_wildcard	*tmp;
 	t_list		*index;
 	size_t		i;
+	size_t		size;
 	int			r;
 
 	if (!lst_tmp)
@@ -174,6 +189,7 @@ int expand_wc(const char *cmd, t_list **lst_tmp, size_t *next)
 	index = *lst_tmp;
 	if (!index)
 	{
+		*next = 0;
 		tmp = get_wc_line(cmd, index, next);
 		if (!tmp)
 			return (1);
@@ -182,8 +198,10 @@ int expand_wc(const char *cmd, t_list **lst_tmp, size_t *next)
 			return (1);
 		else if (r == 0 && do_basic_lst(cmd, &index, next))
 			return (1);
+		return (0);
 	}
-	while (index)
+	size = ft_lstsize(*lst_tmp);
+	while (i < size && index)
 	{
 		*next = 0;
 		tmp = get_wc_line(cmd, index, next);
@@ -194,6 +212,12 @@ int expand_wc(const char *cmd, t_list **lst_tmp, size_t *next)
 			return (1);
 		else if (r == 0 && do_basic_lst(cmd, &index, next))
 			return (1);
+		else if (r == 1)
+		{
+			ft_list_remove_at(lst_tmp, i, del_node_str);
+			i--;
+			size--;
+		}
 		index = index->next;
 		i++;
 	}
