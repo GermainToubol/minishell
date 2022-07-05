@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:33:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 15:33:41 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/05 16:08:08 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static int	get_prefix_path(t_list *lst_tmp, char **path, char **prefix)
 		delimiter = last_char(line, '/');
 		if (delimiter < 0 && strjoin_custom(prefix, ft_strdup(line)))
 			return (1);
-		else
+		else if (delimiter >= 0)
 		{
 			if (strjoin_custom(path, ft_substr(line, 0, delimiter + 1)))
 				return (1);
@@ -98,6 +98,24 @@ t_wildcard	*get_wc_line(const char *cmd, t_list *lst_tmp, size_t *next)
 	return (init_wc_2(str[0], str[1], str[2]));
 }
 
+char	*str_get_parent(const char *s)
+{
+	ssize_t	i;
+	char	*ret;
+
+	if (!s)
+		return (NULL);
+	i = ft_strlen(s);
+	while (i-- > 0)
+		if (s[i] == '/')
+			break ;
+	if (i >= 0 && s[i] != '/')
+		ret = ft_strdup("");
+	else
+		ret = ft_substr(s, 0, i + 1);
+	return (ret);
+}
+
 static int parent_wc(t_list **lst, t_list **lst_tmp, int i_parent)
 {
 	t_list	*index;
@@ -109,7 +127,7 @@ static int parent_wc(t_list **lst, t_list **lst_tmp, int i_parent)
 	while (index)
 	{
 		tmp = NULL;
-		if (strjoin_custom(&tmp, ft_strdup((char *)parent->content)))
+		if (strjoin_custom(&tmp, str_get_parent((char *)parent->content)))
 			return (1);
 		if (strjoin_custom(&tmp, (char *)index->content))
 			return (free(tmp), 1);
@@ -205,6 +223,7 @@ int expand_wc(const char *cmd, t_list **lst_tmp, size_t *next)
 	{
 		*next = 0;
 		tmp = get_wc_line(cmd, index, next);
+		printf_wc(tmp);
 		if (!tmp)
 			return (1);
 		r = expand_wc_content(tmp, lst_tmp, i);
