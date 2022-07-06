@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 13:48:24 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/02 00:25:29 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 23:56:32 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "lexer.h"
 #include "parser.h"
 #include "libft.h"
+#include "utils.h"
 #include "minishell.h"
 
 static int	unlink_hdoc(char *name)
@@ -73,4 +74,19 @@ int	del_hdoc_parse(t_parse **parse)
 		i++;
 	}
 	return (0);
+}
+
+void	free_parse_nohdoc(t_parse **parse)
+{
+	size_t	i;
+
+	i = 0;
+	if (!parse)
+		return ;
+	while (parse[i])
+	{
+		free_cmd(parse[i]->cmd);
+		free(parse[i++]);
+	}
+	free(parse);
 }

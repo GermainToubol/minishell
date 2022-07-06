@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 00:38:09 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 15:00:37 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 23:56:14 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,21 +74,6 @@ void	free_parse(t_parse **parse)
 	if (!parse)
 		return ;
 	if (del_hdoc_parse(parse))
-		return ;
-	while (parse[i])
-	{
-		free_cmd(parse[i]->cmd);
-		free(parse[i++]);
-	}
-	free(parse);
-}
-
-void	free_parse_nohdoc(t_parse **parse)
-{
-	size_t	i;
-
-	i = 0;
-	if (!parse)
 		return ;
 	while (parse[i])
 	{

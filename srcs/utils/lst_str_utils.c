@@ -6,29 +6,13 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 22:15:47 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/06 20:51:28 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 23:47:58 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "utils.h"
 #include <stdlib.h>
-
-int	transfer_lst(t_list **dest, t_list **src)
-{
-	t_list *index;
-
-	if (!dest || !src)
-		return (1);
-	index = *src;
-	while (index)
-	{
-		ft_lstadd_back(dest, index);
-		index = index->next;
-	}
-	*src = NULL;
-	return (0);
-}
 
 int	cat_lst(t_list **dest, t_list **src)
 {
@@ -58,7 +42,7 @@ int	cat_lst(t_list **dest, t_list **src)
 
 void	del_node_str(void *data)
 {
-	char 	*tmp;
+	char	*tmp;
 
 	if (!data)
 		return ;
@@ -76,7 +60,7 @@ void	free_lst_str(t_list **lst)
 	free(lst);
 }
 
-void	print_lst(void *data)
+void	print_node_str(void *data)
 {
 	ft_printf("data: %s\n", (char *)data);
 }

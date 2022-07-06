@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 10:59:36 by gtoubol           #+#    #+#              #
-#    Updated: 2022/07/06 16:59:02 by gtoubol          ###   ########.fr        #
+#    Updated: 2022/07/06 23:58:24 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,19 +55,15 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										ft_strndup.c		\
 										print2.c			\
 										print.c				\
-										ft_lst_remove_if.c	\
 										str_utils.c			\
-										quicksort.c			\
 										lst_to_tab.c		\
-										split_in_lst.c		\
 										lst_str_utils.c		\
 										ft_list_at.c		\
 										ft_lst_remove_at.c	\
 										strjoin_custom.c	\
 										trim_c.c			\
+										sort_lst.c			\
 										debug_gnl.c			\
-										ft_join_tab.c		\
-										ft_strnjoin.c		\
 										clean_hdoc.c)		\
 			$(addprefix parser/astree/,	astree.c			\
 										astree_utils.c		\
@@ -103,14 +99,12 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										cleanable_close_pipes.c)\
 			$(addprefix expand/,							\
 			$(addprefix wildcard/,		wildcard.c			\
-										update_wc.c			\
 										prefix_suffix.c		\
 										new_wc.c			\
 										rec_wc.c			\
 										lst_utils.c			\
 										dir_utils.c			\
 										wc_utils.c			\
-										sort_lst.c			\
 										expand_wc.c)		\
 			$(addprefix	variable/,		var_expand.c		\
 										split_var.c			\

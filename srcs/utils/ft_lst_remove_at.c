@@ -6,22 +6,15 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:49:21 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 05:00:38 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 23:42:23 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include <stdlib.h>
 
-static void	swap(t_list **prev, t_list **index, t_list **del, t_list **begin_list)
-{
-	if (*prev)
-		(*prev)->next = (*index)->next;
-	else
-		*begin_list = (*index)->next;
-	(*del) = (*index);
-	(*index) = (*index)->next;
-}
+static void	swap_index(t_list **prev, t_list **index,
+				t_list **del, t_list **begin_list);
 
 void	ft_list_remove_at(t_list **begin_list, unsigned int nb,
 			void (*free_fct)(void *))
@@ -38,7 +31,7 @@ void	ft_list_remove_at(t_list **begin_list, unsigned int nb,
 	{
 		if (i++ == nb)
 		{
-			swap(&prev, &index, &del, begin_list);
+			swap_index(&prev, &index, &del, begin_list);
 			(*free_fct)(del->content);
 			free(del);
 			break ;
@@ -49,4 +42,15 @@ void	ft_list_remove_at(t_list **begin_list, unsigned int nb,
 			index = index->next;
 		}
 	}
+}
+
+static void	swap_index(t_list **prev, t_list **index,
+				t_list **del, t_list **begin_list)
+{
+	if (*prev)
+		(*prev)->next = (*index)->next;
+	else
+		*begin_list = (*index)->next;
+	(*del) = (*index);
+	(*index) = (*index)->next;
 }

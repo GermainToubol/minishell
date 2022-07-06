@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 01:01:16 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 23:43:08 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 23:35:39 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,32 +44,7 @@ t_wildcard	*cpy_wc(t_wildcard *wc)
 	return (new);
 }
 
-t_wildcard	*init_wc(char *line)
-{
-	t_wildcard	*new;
-	char		cwd_dir[DIR_BUFFER];
-
-	new = ft_calloc(1, sizeof(t_wildcard));
-	if (!new)
-		return (display_error("Error allocation\n", 0), NULL);
-	if (line[0] == '/')
-		new->dir_path = ft_strdup("");
-	else
-	{
-		new->dir_path = ft_strdup(getcwd(cwd_dir, DIR_BUFFER));
-	}
-	new->found = NULL;
-	new->suffix = ft_strdup("");
-	new->prefix = ft_strdup("");
-	if (!new->dir_path || !new->prefix || !new->suffix)
-	{
-		del_node_wc(new);
-		return (display_error("Error allocation\n", 0), NULL);
-	}
-	return (new);
-}
-
-static int dir_path(char *path, t_wildcard *new)
+static int	dir_path(char *path, t_wildcard *new)
 {
 	char		cwd_dir[DIR_BUFFER];
 	char		*tmp;
@@ -89,7 +64,7 @@ static int dir_path(char *path, t_wildcard *new)
 	return (0);
 }
 
-t_wildcard	*init_wc_2(char *path, char *prefix, char *suffix)
+t_wildcard	*init_wc(char *path, char *prefix, char *suffix)
 {
 	t_wildcard	*new;
 
