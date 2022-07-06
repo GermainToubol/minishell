@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:47:46 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 04:34:21 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 01:07:58 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,22 @@
 #include "expand.h"
 #include "libft.h"
 #include "utils.h"
+
+int	validate_lst(t_expand *expand)
+{
+	// debug_gnl(NULL, NULL, 0);
+	// if (expand->has_wc != 0)
+	// {
+	// 	if (validate_wc(expand))
+	// 		return (1);
+	// 	if (!*expand->tmp && do_basic(expand->origin, expand->tmp))
+	// 		return (1);
+	// }
+	if (cat_lst(expand->saved, expand->tmp))
+		return (1);
+	ft_lstclear(expand->tmp, del_node_str);
+	return (0);
+}
 
 size_t	to_next_index(const char *cmd)
 {
@@ -48,46 +64,87 @@ int	do_basic(char *cmd, t_list **lst_tmp)
 	return (0);
 }
 
-int	do_basic_lst(const char *cmd, t_list **lst_tmp, size_t *next)
+int	do_basic_lst(t_expand *expand)
+{
+	char	*tmp;
+	size_t	next;
+
+	next = to_next_index(&expand->line[expand->next]);
+	tmp = ft_substr(&expand->line[expand->next], 0, next);
+	if (!tmp)
+		return (display_error("Error allocation\n", 0), 1);
+	if (strjoin_custom(&expand->origin, ft_strdup(tmp)))
+		return (free(tmp), 1);
+	expand->next += next;
+	return (do_basic(tmp, expand->tmp));
+}
+
+int	no_match_lst(const char *line, size_t size, t_expand *expand)
 {
 	char	*tmp;
 
-	if (!lst_tmp)
-		return (1);
-	if (cmd[0] == '*')
-	{
-		*next = to_next_index(&cmd[1]);
-		(*next)++;
-	}
-	else
-		*next = to_next_index(cmd);
-	tmp = ft_substr(cmd, 0, *next);
+	tmp = ft_substr(line, 0, size);
 	if (!tmp)
 		return (display_error("Error allocation\n", 0), 1);
-	return (do_basic(tmp, lst_tmp));
+	if (strjoin_custom(&expand->origin, ft_strdup(tmp)))
+		return (free(tmp), 1);
+	return (do_basic(tmp, expand->tmp));
 }
 
-int	expand_quotes(const char *cmd, t_list **lst_tmp, size_t *next)
+int	expand_quotes(t_expand *expand)
 {
-	char	*expand;
+	char	*exp;
+	size_t	next;
 
-	*next = skip_quote(cmd);
-	expand = quotes(cmd);
-	if (!expand)
+	next = skip_quote(&expand->line[expand->next]);
+	exp = quotes(&expand->line[expand->next]);
+	if (!exp)
 		return (1);
-	if (!lst_tmp)
-		return (1);
-	if (do_basic(expand, lst_tmp))
-		return (1);
+	if (strjoin_custom(&expand->origin, ft_strdup(exp)))
+		return (free(exp), 1);
+	expand->next += next;
+	return (do_basic(exp, expand->tmp));
+}
+
+static int var_do_wc(t_expand *expand, char *exp)
+{
+	size_t	step;
+	char	*tmp;
+
+	if (ft_strchr(exp, '*'))
+	{
+		step = 0;
+		if (strjoin_custom(&exp, ft_strdup(&expand->line[expand->next])))
+			return (free(exp), 1);
+		if (expand_wc(exp, expand, &step))
+			return (free(exp), 1);
+		if (!*expand->tmp)
+		{
+			tmp = ft_substr(exp, 0, step + 1);
+			free(exp);
+			if (!tmp)
+				return (1);
+			if (do_basic(tmp, expand->tmp))
+				return (free(tmp), 1);
+		}
+		expand->next += step - 1;
+	}
+	else
+	{
+		if (strjoin_custom(&expand->origin, ft_strdup(exp)))
+			return (free(exp), 1);
+		if (do_basic(exp, expand->tmp))
+			return (1);
+	}
 	return (0);
 }
 
-int	var_tab(char *expand, t_list **lst, t_list **lst_tmp)
+int	var_tab(t_expand *expand, char *exp)
 {
 	char	**tmp2;
 	size_t	tab_len;
 
-	tmp2 = split_var(expand);
+	tmp2 = split_var(exp);
 	if (!tmp2)
 		return (1);
 	tab_len = 0;
@@ -95,64 +152,68 @@ int	var_tab(char *expand, t_list **lst, t_list **lst_tmp)
 	{
 		if (tmp2[tab_len + 1])
 		{
-			if (do_basic(tmp2[tab_len], lst_tmp))
-				return (free_tab(tmp2), 1);
-			cat_lst(lst, lst_tmp);
-			ft_lstclear(lst_tmp, del_node_str);
+			if (var_do_wc(expand, tmp2[tab_len + 1]))
+				return (1);
+			cat_lst(expand->saved, expand->tmp);
+			ft_printf("transfer done\n\n");
+			ft_lstclear(expand->tmp, del_node_str);
 		}
-		else
-		{
-			if (do_basic(tmp2[tab_len], lst_tmp))
-				return (free_tab(tmp2), 1);
-		}
+		else if (var_do_wc(expand, tmp2[tab_len]))
+			return (1);
 		tab_len++;
 	}
 	free(tmp2);
 	return (0);
 }
 
-int	expand_var(const char *cmd, t_list **lst, t_list **lst_tmp, size_t *next)
+int	expand_var(t_expand *expand)
 {
-	char	*expand;
+	char	*exp;
 
-	if (!lst_tmp)
+	exp = NULL;
+	expand->next++;
+	if (get_var(expand->line, &expand->next, &exp))
 		return (1);
-	*next = 1;
-	if (get_var(cmd, next, &expand))
-		return (1);
-	if (expand && !ft_strchr(expand, ' ') && do_basic(expand, lst_tmp))
-		return (1);
-	else if (expand && ft_strchr(expand, ' ') && var_tab(expand, lst, lst_tmp))
+	if (exp && !ft_strchr(exp, ' '))
+	{
+		if (var_do_wc(expand, exp))
+			return (1);
+	}
+	else if (exp && ft_strchr(exp, ' ') && var_tab(expand, exp))
 		return (1);
 	return (0);
 }
 
 
 
-int	expand_loop(const char *cmd, t_list **lst, t_list **lst_tmp)
+int	expand_loop(t_expand *expand)
 {
-	size_t	next;
-	if (!*cmd)
-		return (cat_lst(lst, lst_tmp));
-	else if (cmd[0] == '\'' || cmd[0] == '"')
+	size_t	step;
+
+//	debug_gnl(&expand->line[expand->next], expand->origin, (int)expand->next);
+	if (!expand->line[expand->next])
+		return (validate_lst(expand));
+	else if (expand->line[expand->next] == '\''
+		|| expand->line[expand->next] == '"')
 	{
-		if (expand_quotes(cmd, lst_tmp, &next))
+		if (expand_quotes(expand))
 			return (1);
 	}
-	else if (cmd[0] == '$')
+	else if (expand->line[expand->next]== '$')
 	{
-		if (expand_var(cmd, lst, lst_tmp, &next))
+		if (expand_var(expand))
 			return (1);
 	}
-	else if (cmd[0] == '*')
+	else if (expand->line[expand->next] == '*')
 	{
-		if (expand_wc(cmd, lst_tmp, &next))
+		if (expand_wc(&expand->line[expand->next], expand, &step))
 			return (1);
+		expand->next += step;
 	}
 	else
 	{
-		if (do_basic_lst(cmd, lst_tmp, &next))
+		if (do_basic_lst(expand))
 			return (1);
 	}
-	return (expand_loop(&cmd[next], lst, lst_tmp));
+	return (expand_loop(expand));
 }
