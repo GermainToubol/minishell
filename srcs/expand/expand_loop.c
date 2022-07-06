@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:47:46 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 00:53:19 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 01:06:16 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ int	do_basic_lst(t_expand *expand)
 	tmp = ft_substr(&expand->line[expand->next], 0, next);
 	if (!tmp)
 		return (display_error("Error allocation\n", 0), 1);
-	if (strjoin_custom(&expand->origin, ft_strdup(tmp)))
-		return (free(tmp), 1);
 	expand->next += next;
 	return (do_basic(tmp, expand->tmp));
 }

@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 16:46:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 00:58:42 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 01:06:30 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 static void	free_expand(t_expand *expand)
 {
 	free_lst_str(expand->tmp);
-	if (expand->origin)
-		free(expand->origin);
 }
 
 static int	do_expand_loop(char **cmd, t_list **lst)
@@ -38,10 +36,7 @@ static int	do_expand_loop(char **cmd, t_list **lst)
 	while (cmd[i])
 	{
 		expand.line = cmd[i];
-		expand.origin = NULL;
 		expand.next = 0;
-		expand.fixed = 0;
-		expand.has_wc = 0;
 		if (expand_loop(&expand))
 			return (free_expand(&expand), 1);
 		i++;

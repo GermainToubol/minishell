@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:07:13 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 00:59:39 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 01:06:10 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ typedef struct s_expand
 {
 	t_list		**saved;
 	t_list		**tmp;
-	int			has_wc;
 	char		*line;
-	char		*origin;
-	size_t		fixed;
 	size_t		next;
 }	t_expand;
 

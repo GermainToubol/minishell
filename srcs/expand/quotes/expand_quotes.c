@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 16:46:09 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 00:52:48 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 01:06:35 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ int	expand_quotes(t_expand *expand)
 	exp = quotes(&expand->line[expand->next]);
 	if (!exp)
 		return (1);
-	if (strjoin_custom(&expand->origin, ft_strdup(exp)))
-		return (free(exp), 1);
 	expand->next += next;
 	return (do_basic(exp, expand->tmp));
 }
