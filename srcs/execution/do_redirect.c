@@ -60,7 +60,7 @@ static int	redirect_in(char *filename, int target_fd)
 {
 	int	fd;
 
-	fd = open(filename, O_RDONLY, 0400);
+	fd = open(filename, O_RDONLY, 400);
 	if (fd < 0)
 	{
 		ft_fprintf(2, "%s: %s: %s\n", "minishell", filename, strerror(errno));
@@ -80,7 +80,7 @@ static int	redirect_out(char *filename, int target_fd)
 {
 	int	fd;
 
-	fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 644);
 	if (fd < 0)
 	{
 		ft_fprintf(2, "%s: %s: %s\n", "minishell", filename, strerror(errno));
@@ -100,7 +100,7 @@ static int	redirect_append(char *filename, int target_fd)
 {
 	int	fd;
 
-	fd = open(filename, O_CREAT | O_WRONLY | O_APPEND, 0644);
+	fd = open(filename, O_CREAT | O_WRONLY | O_APPEND, 644);
 	if (fd < 0)
 	{
 		ft_fprintf(2, "%s: %s: %s\n", "minishell", filename, strerror(errno));

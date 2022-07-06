@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 10:59:36 by gtoubol           #+#    #+#              #
-#    Updated: 2022/07/05 22:30:38 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/07/06 14:30:17 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -136,7 +136,7 @@ HEAD_DIR =	includes libft/includes
 
 # List of all compilation options
 # -------------------------------------------------------------------------
-CC = 		cc
+CC = 		clang
 CFLAGS =	-Wall -Wextra
 CDEBUG =	-g3
 CRELEASE =	-Werror
@@ -164,7 +164,7 @@ ifeq (debug, $(filter debug,$(MAKECMDGOALS)))
 else ifeq (profile, $(filter profile,$(MAKECMDGOALS)))
 	CFLAGS += $(CPROFILE) $(CRELEASE)
 else
-	CFLAGS += $(CRELEASE)
+	CFLAGS += $(CRELEASE) -g
 endif
 RM =		rm -f
 
@@ -192,7 +192,7 @@ re:			fclean all
 # Library rules
 # -----------------------------------------------------------------------
 $(LIBFT):	libft.h
-			$(MAKE) -C $(LIBFT_DIR)
+			$(MAKE) CC=clang -C $(LIBFT_DIR)
 
 libclean:
 			$(MAKE) -C $(LIBFT_DIR) clean

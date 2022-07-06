@@ -43,7 +43,7 @@ pid_t	exec_process(t_parse *parse, t_clean *cleanable,
 	pid_t	pid;
 
 	if (parse->cmd == 0)
-		return (set_status(0), -17);
+		return (set_status(get_status()), -17);
 	if (parse->cmd->cmd == NULL)
 		return (-17);
 	if (expand_parse(parse) != 0)

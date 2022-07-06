@@ -104,14 +104,14 @@ static t_list	*export_list(t_list **env, char *name_tmp, char *new_name)
 	{
 		tmp = environment_add(env, name_tmp);
 		if (tmp != NULL
-			&& environment_set(*env, name_tmp, new_name) == 1)
+			&& environment_set(*env, name_tmp, new_name) != 0)
 			tmp = NULL;
 	}
 	else
 	{
 		content = ft_strjoin(content, new_name);
 		if (content == NULL
-			|| environment_set(*env, name_tmp, content) == 1)
+			|| environment_set(*env, name_tmp, content) != 0)
 			tmp = NULL;
 		else
 			tmp = *env;

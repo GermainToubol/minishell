@@ -16,6 +16,9 @@
 
 int	count_wait_tree(t_astree *root, int depth)
 {
+	int	tmp1;
+	int	tmp2;
+
 	if (root->depth > depth)
 		return (1);
 	if (root->cmd->type == CMD && is_builtin(root->cmd))
@@ -25,7 +28,14 @@ int	count_wait_tree(t_astree *root, int depth)
 	if (root->cmd->type == AND || root->cmd->type == OR)
 		return (0);
 	else if (root->cmd->type == PIPE)
-		return (count_wait_tree(root->left, depth)
-			+ count_wait_tree(root->right, depth));
+	{
+		tmp1 = count_wait_tree(root->left, depth);
+		tmp2 = count_wait_tree(root->right, depth);
+		if (tmp1 == 0)
+			tmp1 = 1;
+		if (tmp2 == 0)
+			tmp2 = 1;
+		return (tmp1 + tmp2);
+	}
 	return (0);
 }

@@ -27,13 +27,13 @@ int	run_line(char *line, t_list **env)
 	t_astree	*root;
 
 	if (lexer(line, &tokens) != 0)
-		return (free(line), 1);
+		return (set_status(2), free(line), 1);
 	free(line);
 	parse = parser(&tokens);
 	if (parse == NULL)
 		return (1);
 	if (create_astree(parse, &root))
-		return (free_parse(parse), 1);
+		return (set_status(2), free_parse(parse), 1);
 	return (do_exec_run(root, parse, env));
 }
 

@@ -21,5 +21,10 @@ pid_t	exec_tree_cmd(t_parse *parse, int *pipe_in, int *pipe_out,
 	pid_t	pid;
 
 	pid = exec_process(parse, cleanable, pipe_in, pipe_out);
+	if (pid < -500)
+	{
+		clear_cleanable(cleanable);
+		exit(2);
+	}
 	return (pid);
 }

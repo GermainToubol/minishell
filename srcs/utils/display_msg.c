@@ -22,6 +22,7 @@ void	display_error(char *err, char c)
 	else
 		ft_fprintf(2, "minishell: syntax error"
 			" near unexpected token `%c'\n", c);
+
 }
 
 void	display_error_red(char *err, int i)
