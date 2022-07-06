@@ -145,7 +145,6 @@ int	wc_found(t_list **lst_tmp, t_list **wc_lst, int parent)
 			return (1);
 	}
 	free_lst_str(lst);
-	ft_printf("free\n");
 	return (0);
 }
 
@@ -166,9 +165,7 @@ int	expand_wc_content(t_wildcard *wc, t_list **lst_tmp, int	parent)
 		if (wc_found(lst_tmp, wc_lst, parent))
 			return (ft_lstclear(wc_lst, del_node_wc), free(wc_lst), -1);
 		ft_lstclear(wc_lst, del_node_wc);
-		ft_printf("free\n");
 		free(wc_lst);
-		ft_printf("free\n");
 		return (1);
 	}
 	free(wc_lst);

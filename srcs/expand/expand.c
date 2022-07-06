@@ -52,7 +52,6 @@ char	**do_expand(char **cmd)
 	if (!lst)
 		return (NULL);
 	ret = lst_to_tab_str(lst);
-	print_tab(ret);
 	free_lst_str(lst);
 	return (ret);
 }
