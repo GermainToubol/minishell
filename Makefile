@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 10:59:36 by gtoubol           #+#    #+#              #
-#    Updated: 2022/07/06 14:30:17 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/07/06 16:59:02 by gtoubol          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,6 +80,7 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										run_line.c			\
 										do_redirect.c		\
 										do_redirect_hdoc.c	\
+										redirect_name.c		\
 										do_bind_pipe.c		\
 										run_child.c			\
 										run_parent.c		\
@@ -136,7 +137,7 @@ HEAD_DIR =	includes libft/includes
 
 # List of all compilation options
 # -------------------------------------------------------------------------
-CC = 		clang
+CC = 		cc
 CFLAGS =	-Wall -Wextra
 CDEBUG =	-g3
 CRELEASE =	-Werror
@@ -192,7 +193,7 @@ re:			fclean all
 # Library rules
 # -----------------------------------------------------------------------
 $(LIBFT):	libft.h
-			$(MAKE) CC=clang -C $(LIBFT_DIR)
+			$(MAKE) -C $(LIBFT_DIR)
 
 libclean:
 			$(MAKE) -C $(LIBFT_DIR) clean

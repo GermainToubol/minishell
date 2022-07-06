@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 15:13:16 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/07/04 13:55:29 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/07/06 16:57:44 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <errno.h>
@@ -35,6 +35,8 @@ int	do_redirect(t_parse *parse)
 	redirect = parse->cmd->redirect;
 	while (redirect != NULL && redirect[i] != NULL)
 	{
+		if (redirect_name(redirect[i]) != 0)
+			return (1);
 		f = get_redirect_function(redirect[i]->io_r);
 		if (f(redirect[i]->file, redirect[i]->fd) != 0)
 			return (set_status(1), 1);
