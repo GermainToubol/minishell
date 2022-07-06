@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 16:46:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 22:56:12 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 01:12:25 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static int do_expand_loop(char **cmd, t_list **lst)
 		expand.line = cmd[i];
 		expand.origin = NULL;
 		expand.next = 0;
+		expand.fixed = 0;
 		expand.has_wc = 0;
 		if (expand_loop(&expand))
 			return (free_expand(&expand), 1);

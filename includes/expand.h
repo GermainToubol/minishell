@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:07:13 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 23:51:09 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 01:50:51 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ typedef struct s_expand
 	t_list		**saved;
 	t_list		**tmp;
 	int			has_wc;
-	const char	*line;
+	char		*line;
 	char		*origin;
+	size_t		fixed;
 	size_t		next;
 }	t_expand;
 
@@ -52,7 +53,7 @@ char		**var_expand(const char *cmd);
 int			var_expand_wc(char ***tab);
 char		*expand_var_quotes(const char *cmd);
 
-int 		expand_wc(const char *cmd, t_expand *expand, size_t *next);
+int 		expand_wc(char *cmd, t_expand *expand, size_t *next);
 char		*quotes(const char *cmd);
 size_t		to_next_index(const char *cmd);
 

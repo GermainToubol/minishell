@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:33:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 23:59:14 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 02:06:24 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ size_t	to_next_index_wc(const char *cmd)
 	return (i);
 }
 
-t_wildcard	*get_wc_line(const char *cmd, t_list *lst_tmp, size_t *next)
+t_wildcard	*get_wc_line(const char *cmd, t_list *lst_tmp)
 {
 	char	*str[4];
 	size_t	i;
@@ -97,9 +97,8 @@ t_wildcard	*get_wc_line(const char *cmd, t_list *lst_tmp, size_t *next)
 	cmd = &cmd[i];
 	if (get_prefix_path(lst_tmp, &str[0], &str[1], str[3]))
 		return (free(str[3]), NULL);
-	*next = to_next_index_wc(cmd);
 	str[2] = NULL;
-	if (strjoin_custom(&str[2], ft_substr(cmd, 0, *next)))
+	if (strjoin_custom(&str[2], ft_strdup(cmd)))
 		return (free(str[0]), free(str[1]), NULL);
 	return (init_wc_2(str[0], str[1], str[2]));
 }
@@ -187,25 +186,14 @@ int	expand_wc_content(t_wildcard *wc, t_list **lst_tmp)
 	return (0);
 }
 
-int	validate_wc_content(t_wildcard *wc)
+int	validate_wc_content(const char *to_test)
 {
-	t_list		**wc_lst;
-
-	wc_lst = ft_calloc(1, sizeof(t_list *));
-	if (!wc_lst)
-		return (display_error("Error allcation\n", 0), -1);
-	if (wildcards_wc(wc, wc_lst))
-	{
-		ft_lstclear(wc_lst, del_node_wc);
-		return (free(wc_lst), -1);
-	}
-	if (*wc_lst)
+	ft_printf("line %s\n", to_test);
+	if (!access(to_test, F_OK))
 	{
 		ft_printf("\nMATCH\n");
 		return (1);
 	}
-	ft_lstclear(wc_lst, del_node_wc);
-	free(wc_lst);
 	return (0);
 }
 
@@ -215,7 +203,6 @@ int	validate_wc(t_expand *expand)
 	size_t		i;
 	int			r;
 	size_t		size;
-	t_wildcard	*tmp;
 
 	if (!expand || !expand->tmp)
 		return (1);
@@ -224,12 +211,8 @@ int	validate_wc(t_expand *expand)
 	size = ft_lstsize(index);
 	while (index)
 	{
-		tmp = get_wc_line_check(index);
 		i++;
-		printf_wc(tmp);
-		if (!tmp)
-			return (1);
-		r = validate_wc_content(tmp);
+		r = validate_wc_content((char *)index->content);
 		if (r == -1)
 			return (1);
 		else if (r == 0)
@@ -246,7 +229,50 @@ int	validate_wc(t_expand *expand)
 	return (0);
 }
 
-int expand_wc(const char *cmd, t_expand *expand, size_t *next)
+int	is_not_fixed(t_expand *expand, char **cmd, size_t *next)
+{
+	char *ret;
+	ssize_t	i;
+
+	ret = NULL;
+	if (expand->fixed)
+	{
+		i = ft_strlen(expand->origin);
+		while (i > 0 && expand->origin[i - 1] != '*')
+			i--;
+		if (i < 0)
+			return (1);
+		if (strjoin_custom(&ret, ft_substr(expand->origin, 0,
+			i - expand->fixed)))
+			return (1);
+		ft_lstclear(expand->tmp, del_node_str);
+	}
+	*next = to_next_index_wc(*cmd);
+	ft_printf("ret: %s\n", ret);
+	if (strjoin_custom(&ret, ft_substr(*cmd, 0, *next)))
+		return (free(ret), 1);
+	ft_printf("ret: %s\n", ret);
+	*cmd = ret;
+	expand->fixed = 0;
+	return (0);
+}
+
+int	set_origin(t_expand *expand, char *cmd)
+{
+	size_t	next;
+
+	if (!cmd)
+		return (1);
+	if (strjoin_custom(&expand->origin, ft_strdup(cmd)))
+		return (1);
+	next = ft_strlen(cmd) - 1;
+	while (next >= expand->fixed
+		&& cmd[next - expand->fixed] == '*')
+		expand->fixed++;
+	return (0);
+}
+
+int expand_wc(char *cmd, t_expand *expand, size_t *next)
 {
 	t_wildcard	*tmp;
 	t_list		*index;
@@ -256,19 +282,26 @@ int expand_wc(const char *cmd, t_expand *expand, size_t *next)
 
 	if (!expand->tmp || !cmd)
 		return (1);
-	if (cmd[0] && strjoin_custom(&expand->origin,
-		ft_substr(cmd, 0, to_next_index_wc(cmd))))
+	// if (*expand->tmp && expand->has_wc)
+	// {
+	// 	if (validate_wc(expand))
+	// 		return (1);
+	// 	if (!*expand->tmp && do_basic(expand->origin, expand->tmp))
+	// 		return (1);
+	// }
+	if (is_not_fixed(expand, &cmd, next))
 		return (1);
+	if (set_origin(expand, cmd))
+		return (free(cmd), 1);
 	i = 0;
 	index = *expand->tmp;
+	expand->has_wc = 1;
 	if (!index)
 	{
-		*next = 0;
-		expand->has_wc = 1;
-		tmp = get_wc_line(cmd, index, next);
-		printf_wc(tmp);
+		tmp = get_wc_line(cmd, index);
 		if (!tmp)
 			return (1);
+		printf_wc(tmp);
 		r = expand_wc_content(tmp, expand->tmp);
 		if (r == -1)
 			return (1);
@@ -283,12 +316,10 @@ int expand_wc(const char *cmd, t_expand *expand, size_t *next)
 	size = ft_lstsize(*expand->tmp);
 	while (i < size && index)
 	{
-		*next = 0;
-		expand->has_wc = 1;
 		i++;
 		ft_printf("start\n");
 		ft_printf("index %s\n", (char *)index->content);
-		tmp = get_wc_line(cmd, index, next);
+		tmp = get_wc_line(cmd, index);
 		printf_wc(tmp);
 		if (!tmp)
 			return (1);
@@ -297,13 +328,6 @@ int expand_wc(const char *cmd, t_expand *expand, size_t *next)
 			return (1);
 		else if (r >= 0)
 		{
-			if (r == 0)
-			{
-				expand->has_wc = 0;
-				ft_printf("\nNO match\n");
-				if (no_match_lst(cmd, *next, expand))
-					return (1);
-			}
 			index = index->next;
 			ft_list_remove_at(expand->tmp, i - 1, del_node_str);
 			i--;
@@ -312,6 +336,12 @@ int expand_wc(const char *cmd, t_expand *expand, size_t *next)
 		else
 			index = index->next;
 		ft_printf("\n\ni %i\nsize %i\n\n", i, size);
+	}
+	if (!*expand->tmp)
+	{
+		if (no_match_lst(expand->origin, ft_strlen(expand->origin), expand))
+			return (1);
+		expand->has_wc = 0;
 	}
 	return (0);
 }

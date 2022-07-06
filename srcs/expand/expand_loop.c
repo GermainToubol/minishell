@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:47:46 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 23:54:15 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 01:07:58 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,14 @@
 
 int	validate_lst(t_expand *expand)
 {
-	debug_gnl(NULL, NULL, 0);
-	if (expand->has_wc != 0)
-	{
-		if (validate_wc(expand))
-			return (1);
-		if (!*expand->tmp && do_basic(expand->origin, expand->tmp))
-			return (1);
-	}
+	// debug_gnl(NULL, NULL, 0);
+	// if (expand->has_wc != 0)
+	// {
+	// 	if (validate_wc(expand))
+	// 		return (1);
+	// 	if (!*expand->tmp && do_basic(expand->origin, expand->tmp))
+	// 		return (1);
+	// }
 	if (cat_lst(expand->saved, expand->tmp))
 		return (1);
 	ft_lstclear(expand->tmp, del_node_str);
