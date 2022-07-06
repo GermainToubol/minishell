@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:47:46 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/06 14:52:17 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 15:26:36 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,37 @@
 #include "libft.h"
 #include "utils.h"
 
+int	check_valid_wc(char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == '*' && (i == 0 || s[i - 1] != '\\'))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	validate_lst(t_expand *expand)
 {
-	// debug_gnl(NULL, NULL, 0);
-	// if (expand->has_wc != 0)
-	// {
-	// 	if (validate_wc(expand))
-	// 		return (1);
-	// 	if (!*expand->tmp && do_basic(expand->origin, expand->tmp))
-	// 		return (1);
-	// }
+	//debug_gnl(NULL, NULL, 0);
+	char	*save;
+
+	if (!expand->tmp || !*expand->tmp)
+		return (1);
+	save = ft_strdup((char *)(*expand->tmp)->content);
+	if (!save)
+		return (display_error("Error allocation\n", 0), 1);
+	if (check_valid_wc(save))
+	{
+		if (expand_wc(save, expand))
+			return (1);
+		if (!*expand->tmp && do_basic(expand->origin, expand->tmp))
+			return (1);
+	}
 	if (cat_lst(expand->saved, expand->tmp))
 		return (1);
 	ft_lstclear(expand->tmp, del_node_str);
@@ -124,13 +145,14 @@ int	var_tab(t_expand *expand, char *exp)
 	if (!tmp2)
 		return (1);
 	tab_len = 0;
+	print_tab(tmp2);
 	while (tmp2[tab_len])
 	{
 		if (tmp2[tab_len + 1])
 		{
-			if (basic_var(expand, tmp2[tab_len + 1]))
+			if (basic_var(expand, tmp2[tab_len]))
 				return (1);
-			cat_lst(expand->saved, expand->tmp);
+			validate_lst(expand);
 			ft_printf("transfer done\n\n");
 			ft_lstclear(expand->tmp, del_node_str);
 		}
@@ -164,8 +186,6 @@ int	expand_var(t_expand *expand)
 
 int	expand_loop(t_expand *expand)
 {
-	size_t	step;
-
 //	debug_gnl(&expand->line[expand->next], expand->origin, (int)expand->next);
 	if (!expand->line[expand->next])
 		return (validate_lst(expand));
