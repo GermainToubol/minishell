@@ -6,12 +6,43 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 18:47:30 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/06 20:53:13 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 00:32:29 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wildcard.h"
 #include "utils.h"
+#include "libft.h"
+
+static t_wildcard	*prefix_suffix_content(t_wildcard *mywc,
+						char *found, size_t i, size_t i2);
+
+t_wildcard	*prefix_suffix(t_wildcard *mywc, char *found)
+{
+	size_t		i;
+	size_t		i2;
+
+	if (!found)
+		return (NULL);
+	if (match_prefix(mywc, found, &i2))
+		return (NULL);
+	i = 0;
+	if (mywc->suffix[i] == '/')
+	{
+		while (mywc->suffix[i] == '/')
+			i++;
+		return (new_wc_path(mywc, found, i, i2));
+	}
+	if (mywc->suffix[i] == '*'
+		&& (i == 0 || mywc->suffix[i - 1] != '\\'))
+	{
+		while (mywc->suffix[i] == '*')
+			i++;
+	}
+	if (mywc->suffix[i] == '\0' || mywc->suffix[i] == '/')
+		return (new_wc(mywc, found, i, ft_strlen(found)));
+	return (prefix_suffix_content(mywc, found, i, i2));
+}
 
 static t_wildcard	*prefix_suffix_content(t_wildcard *mywc,
 						char *found, size_t i, size_t i2)
@@ -47,38 +78,11 @@ int	match_prefix(t_wildcard *mywc, char *found,
 
 	start = last_char(mywc->prefix, '/');
 	if (ft_strncmp(&mywc->prefix[start], found,
-		ft_strlen(&mywc->prefix[start])))
+			ft_strlen(&mywc->prefix[start])))
 		return (1);
 	*i2 = 0;
 	while (mywc->prefix[start + *i2] != '\0'
 		&& mywc->prefix[start + *i2] == found[*i2])
 		(*i2)++;
 	return (0);
-}
-
-t_wildcard	*prefix_suffix(t_wildcard *mywc, char *found)
-{
-	size_t		i;
-	size_t		i2;
-
-	if (!found)
-		return (NULL);
-	if (match_prefix(mywc, found, &i2))
-		return (NULL);
-	i = 0;
-	if (mywc->suffix[i] == '/')
-	{
-		while (mywc->suffix[i] == '/')
-			i++;
-		return (new_wc_path(mywc, found, i, i2));
-	}
-	if (mywc->suffix[i] == '*'
-			&& (i == 0 || mywc->suffix[i - 1] != '\\'))
-	{
-		while (mywc->suffix[i] == '*')
-			i++;
-	}
-	if (mywc->suffix[i] == '\0' || mywc->suffix[i] == '/')
-		return (new_wc(mywc, found, i, ft_strlen(found)));
-	return (prefix_suffix_content(mywc, found, i, i2));
 }

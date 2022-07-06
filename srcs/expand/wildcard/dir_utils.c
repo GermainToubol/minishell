@@ -6,30 +6,22 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:01:02 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/06 20:53:02 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 00:32:15 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wildcard.h"
 #include "utils.h"
+#include "libft.h"
 
-int	check_found(t_wildcard *mywc, t_list **new_lst, char *dir_name, int first)
+int	check_found(t_wildcard *mywc, t_list **new_lst, char *dir_name)
 {
 	t_wildcard		*new;
 	t_list			*node;
 
 	if (dir_name[0] == '.')
 		return (0);
-	if (first)
-	{
-		dir_name = add_backslash_safe(dir_name);
-		if (!dir_name)
-			return (-1);
-		new = prefix_suffix(mywc, dir_name);
-		free(dir_name);
-	}
-	else
-		new = prefix_suffix(mywc, dir_name);
+	new = prefix_suffix(mywc, dir_name);
 	if (new)
 	{
 		node = ft_lstnew(new);

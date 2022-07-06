@@ -6,12 +6,11 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 02:22:00 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/06 20:54:03 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 00:32:55 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wildcard.h"
-#include "expand.h"
 #include "libft.h"
 #include "utils.h"
 
@@ -19,8 +18,9 @@ static int	get_match_indir_loop(t_list **new_lst, t_wildcard *mywc, DIR *d)
 {
 	int				t;
 	struct dirent	*dir;
+	char			*dir_name;
 
-	while (1)
+	while (42)
 	{
 		t = get_dir_match(mywc, new_lst);
 		if (t <= 0)
@@ -28,8 +28,10 @@ static int	get_match_indir_loop(t_list **new_lst, t_wildcard *mywc, DIR *d)
 		dir = readdir(d);
 		if (!dir)
 			break ;
-		if (check_found(mywc, new_lst, dir->d_name, 1) == -1)
-			return (-1);
+		dir_name = add_backslash_safe(dir->d_name);
+		if (check_found(mywc, new_lst, dir_name) == -1)
+			return (free(dir_name), -1);
+		free(dir_name);
 	}
 	return (0);
 }
@@ -71,7 +73,7 @@ static int	iter_lst(t_list **lst, t_list **new)
 				return (1);
 		}
 		else
-			if (check_found(wc, new, wc->found, 0) == -1)
+			if (check_found(wc, new, wc->found) == -1)
 				return (1);
 		index = index->next;
 	}

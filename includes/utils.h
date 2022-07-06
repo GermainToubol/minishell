@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:50:17 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 00:04:11 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 00:30:48 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ size_t	last_char(char *s, char c);
 size_t	size_tab(char **tab);
 
 //listes
+void	sort_list(t_list **lst);
 char	**lst_to_tab_str(t_list **lst);
 int		cat_lst(t_list **dest, t_list **src);
 int		clean_backslash_expand(char *s, t_list *index);

@@ -6,16 +6,16 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:59:12 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/06 20:24:32 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 00:26:22 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "wildcard.h"
-#include "expand.h"
 #include "utils.h"
 
-t_wildcard	*new_wc2(t_wildcard *mywc, char *found, char *tmp, size_t i)
+static t_wildcard	*new_wc2(t_wildcard *mywc, char *found,
+						char *tmp, size_t i)
 {
 	t_wildcard	*new;
 
@@ -35,8 +35,6 @@ t_wildcard	*new_wc2(t_wildcard *mywc, char *found, char *tmp, size_t i)
 		del_node_wc(new);
 		return (display_error("Error allocation\n", 0), NULL);
 	}
-	// if (clean_backslash(&new->prefix))
-	// 	return (del_node_wc(new), NULL);
 	return (new);
 }
 
@@ -56,7 +54,8 @@ t_wildcard	*new_wc(t_wildcard *mywc, char *found, size_t i, size_t i2)
 	return (new);
 }
 
-t_wildcard	*new_wc_path2(t_wildcard *mywc, char *tmp, size_t i)
+static t_wildcard	*new_wc_path2(t_wildcard *mywc, char *tmp,
+						size_t i)
 {
 	t_wildcard	*new;
 
@@ -75,8 +74,6 @@ t_wildcard	*new_wc_path2(t_wildcard *mywc, char *tmp, size_t i)
 		del_node_wc(new);
 		return (display_error("Error allocation\n", 0), NULL);
 	}
-	// if (clean_backslash(&new->prefix))
-	// 	return (free(tmp), del_node_wc(new), NULL);
 	return (new);
 }
 

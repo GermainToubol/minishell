@@ -6,12 +6,13 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 01:01:16 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/06 23:35:39 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 00:33:30 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wildcard.h"
 #include "utils.h"
+#include "libft.h"
 
 void	printf_wc(t_wildcard *mywc)
 {

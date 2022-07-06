@@ -6,12 +6,13 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:56:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/06 23:34:01 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 00:33:38 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wildcard.h"
 #include "utils.h"
+#include "libft.h"
 
 static int	wildcards_end(t_list **lst_odd, t_list **lst_even,
 				t_list **ret);
