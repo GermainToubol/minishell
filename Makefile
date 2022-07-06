@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 10:59:36 by gtoubol           #+#    #+#              #
-#    Updated: 2022/07/05 04:50:15 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/07/06 10:25:52 by gtoubol          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -134,7 +134,7 @@ HEAD_DIR =	includes libft/includes
 
 # List of all compilation options
 # -------------------------------------------------------------------------
-CC = 		clang
+CC = 		cc
 CFLAGS =	-Wall -Wextra
 CDEBUG =	-g3
 CRELEASE =	-Werror
@@ -190,7 +190,7 @@ re:			fclean all
 # Library rules
 # -----------------------------------------------------------------------
 $(LIBFT):	libft.h
-			$(MAKE) CC=clang -C $(LIBFT_DIR)
+			$(MAKE) -C $(LIBFT_DIR)
 
 libclean:
 			$(MAKE) -C $(LIBFT_DIR) clean
