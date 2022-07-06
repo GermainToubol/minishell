@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:33:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/06 20:53:05 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 20:54:29 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ int	wc_found(t_list **lst_tmp, t_list **wc_lst)
 	if (!lst)
 		return (display_error("Error allocation\n", 0), 1);
 	*lst = NULL;
-	ft_lstiter(*wc_lst, print_lst2);
 	if (cpy_lst_wc_to_str(lst, wc_lst))
 	{
 		free_lst_str(lst);
