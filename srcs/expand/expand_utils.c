@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 16:17:45 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/22 16:26:13 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 00:58:36 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,52 @@
 #include "libft.h"
 #include "utils.h"
 
-size_t	tab3_size(char ***new_cmd)
+size_t	to_next_index(const char *cmd)
 {
-	size_t	count;
 	size_t	i;
-	size_t	j;
 
-	count = 0;
 	i = 0;
-	while (new_cmd[i])
-	{
-		j = 0;
-		while (new_cmd[i][j])
-		{
-			count++;
-			j++;
-		}
+	while (cmd[i] && cmd[i] != '"' && cmd[i] != '\''
+		&& cmd[i] != '$')
 		i++;
-	}
-	return (count);
+	return (i);
 }
 
-void	free_tab3(char ***tab)
+int	check_valid_wc(char *s)
 {
 	size_t	i;
 
-	if (!tab)
-		return ;
-	if (!*tab)
-		return (free(tab));
 	i = 0;
-	while (tab[i])
-		free_tab(tab[i++]);
-	free(tab);
+	while (s[i])
+	{
+		if (s[i] == '*' && (i == 0 || s[i - 1] != '\\'))
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	validate_lst(t_expand *expand)
+{
+	char	*save;
+
+	if (!expand->tmp || !*expand->tmp)
+		return (1);
+	save = (char *)(*expand->tmp)->content;
+	if (check_valid_wc(save))
+	{
+		if (expand_wc(save, expand))
+			return (1);
+	}
+	if (ft_lstsize(*expand->tmp) == 1)
+	{
+		if (clean_backslash_expand(save, *expand->tmp))
+			return (1);
+	}
+	else
+		ft_list_remove_at(expand->tmp, 0, del_node_str);
+	if (cat_lst(expand->saved, expand->tmp))
+		return (1);
+	ft_lstclear(expand->tmp, del_node_str);
+	return (0);
 }

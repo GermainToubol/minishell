@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 16:46:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/06 14:30:15 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 00:58:42 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 #include "libft.h"
 #include "utils.h"
 
-static void free_expand(t_expand *expand)
+static void	free_expand(t_expand *expand)
 {
 	free_lst_str(expand->tmp);
 	if (expand->origin)
 		free(expand->origin);
 }
 
-static int do_expand_loop(char **cmd, t_list **lst)
+static int	do_expand_loop(char **cmd, t_list **lst)
 {
-	size_t	i;
-	t_list	**lst_tmp;
+	size_t		i;
+	t_list		**lst_tmp;
 	t_expand	expand;
 
 	i = 0;
@@ -64,9 +64,6 @@ char	**do_expand(char **cmd)
 	if (!lst)
 		return (NULL);
 	ret = lst_to_tab_str(lst);
-	ft_printf("\n\n====================\n\n");
-	print_tab(ret);
-	ft_printf("\n====================\n\n");
 	free_lst_str(lst);
 	return (ret);
 }

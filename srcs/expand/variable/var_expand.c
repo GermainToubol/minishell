@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 16:05:10 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 00:42:20 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 00:52:08 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,49 @@ static int	rec_var_q(const char *cmd, size_t i, char **ret)
 			return (1);
 	}
 	return (rec_var_q(cmd, i, ret));
+}
+
+static int	var_tab(t_expand *expand, char *exp)
+{
+	char	**tmp2;
+	size_t	tab_len;
+
+	tmp2 = split_var(exp);
+	if (!tmp2)
+		return (1);
+	tab_len = 0;
+	print_tab(tmp2);
+	while (tmp2[tab_len])
+	{
+		if (tmp2[tab_len + 1])
+		{
+			if (do_basic(tmp2[tab_len], expand->tmp))
+				return (1);
+			validate_lst(expand);
+			ft_printf("transfer done\n\n");
+		}
+		else if (do_basic(tmp2[tab_len], expand->tmp))
+			return (1);
+		tab_len++;
+	}
+	free(tmp2);
+	return (0);
+}
+
+int	expand_var(t_expand *expand)
+{
+	char	*exp;
+
+	exp = NULL;
+	expand->next++;
+	if (get_var(expand->line, &expand->next, &exp))
+		return (1);
+	if (exp && !ft_strchr(exp, ' '))
+	{
+		if (do_basic(exp, expand->tmp))
+			return (1);
+	}
+	else if (exp && ft_strchr(exp, ' ') && var_tab(expand, exp))
+		return (1);
+	return (0);
 }

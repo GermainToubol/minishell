@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:07:13 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 00:06:03 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 00:57:58 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,32 +28,28 @@ typedef struct s_expand
 	size_t		next;
 }	t_expand;
 
+//expand
 char		**do_expand(char **cmd);
-char		**expand_loop_end(t_list **lst);
+int			do_basic_lst(t_expand *expand);
+int			expand_wc(char *cmd, t_expand *expand);
+int			expand_quotes(t_expand *expand);
+int			expand_var(t_expand *expand);
+
+//core
 int			expand_loop(t_expand *expand);
 int			do_basic(char *cmd, t_list **lst_tmp);
-int			do_basic_lst(t_expand *expand);
-int			no_match_lst(const char *line, size_t size, t_expand *expand);
-int			validate_wc(t_expand *expand);
-
-void		free_tab3(char ***tab);
-
-size_t		tab3_size(char ***new_cmd);
+int			validate_lst(t_expand *expand);
 
 //HDOC
 int			dup_hdoc(char **env, t_parse *parse);
 int			close_hdoc(int fd, int fd_copy);
 int			read_hdoc(int hdoc_fd, int out_fd);
+
 //VAR
-int			var_expand_wc(char ***tab);
 char		**split_var(const char *cmd);
-size_t		skip_quote(const char *line);
 int			get_var(const char *cmd, size_t *i, char **ret);
-char		**var_expand(const char *cmd);
-int			var_expand_wc(char ***tab);
 char		*expand_var_quotes(const char *cmd);
 
-int			expand_wc(char *cmd, t_expand *expand);
-char		*quotes(const char *cmd);
+//utils
 size_t		to_next_index(const char *cmd);
 #endif
