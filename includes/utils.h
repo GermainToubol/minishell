@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:50:17 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 00:30:48 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 00:39:12 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ char	*ft_strndup(char *src, size_t len);
 char	*ft_join3(char *s1, char *s2, char *s3);
 char	*trim_c(char *s, char c);
 size_t	last_char(char *s, char c);
+size_t	skip_quote(const char *line);
 
 //tab
 size_t	size_tab(char **tab);
