@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 10:59:36 by gtoubol           #+#    #+#              #
-#    Updated: 2022/07/07 00:43:14 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/07/07 01:00:57 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,6 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										is_builtin.c)		\
 			$(addprefix parser/, 		parser.c 			\
 										parser2.c			\
-										path.c 				\
 										split_cmd.c 		\
 										split_redirect.c)	\
 			$(addprefix lexer/, 		is_prio.c 			\

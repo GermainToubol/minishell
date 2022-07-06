@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 07:13:19 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/03 16:03:22 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 01:00:02 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int			c_separator(char c);
 //ALLOC
 int			tokens_alloc(t_tokens *tokens);
 
+//HDOC
 int			set_hdoc(char **hdoc);
 char		*quotes_hdoc(const char *cmd);
 char		*tmp_filename(void);

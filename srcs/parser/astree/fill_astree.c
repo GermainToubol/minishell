@@ -6,29 +6,12 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 14:09:36 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/25 01:38:13 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 01:03:56 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "astree.h"
 #include "utils.h"
-
-int	start_p(t_parse **parse, t_int_help *i)
-{
-	int	index;
-	int	is_open;
-
-	is_open = 1;
-	index = i->i;
-	while (is_open && --index >= i->min)
-	{
-		if (parse[index]->type == P_END)
-			is_open++;
-		if (parse[index]->type == P_START)
-			is_open--;
-	}
-	return (index);
-}
 
 int	get_next_left(t_parse **parse, t_int_help *i, int type)
 {
