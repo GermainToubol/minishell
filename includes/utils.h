@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:50:17 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 22:33:19 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 18:37:31 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_list_remove_if(t_list **begin_list, void *data_ref,
 void	quicksort(char **tab, size_t len);
 
 int		ft_strcmp(const char *s1, const char *s2);
-int		last_char(char *s, char c);
+size_t	last_char(char *s, char c);
 char	**tab_realloc(char **tab, int i, size_t size,
 			size_t buffer_size);
 

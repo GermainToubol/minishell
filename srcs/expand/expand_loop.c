@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:47:46 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/06 17:08:49 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 19:39:06 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,16 @@
 #include "libft.h"
 #include "utils.h"
 
+size_t	to_next_index(const char *cmd)
+{
+	size_t	i;
+
+	i = 0;
+	while (cmd[i] && cmd[i] != '"' && cmd[i] != '\''
+		&& cmd[i] != '$')
+		i++;
+	return (i);
+}
 
 int	check_valid_wc(char *s)
 {
@@ -32,7 +42,6 @@ int	check_valid_wc(char *s)
 
 int	validate_lst(t_expand *expand)
 {
-	//debug_gnl(NULL, NULL, 0);
 	char	*save;
 
 	if (!expand->tmp || !*expand->tmp)
@@ -40,31 +49,20 @@ int	validate_lst(t_expand *expand)
 	save = (char *)(*expand->tmp)->content;
 	if (check_valid_wc(save))
 	{
-		save = ft_strdup(save);
-		if (!save)
-			return (display_error("Error allocation\n", 0), 1);
 		if (expand_wc(save, expand))
-			return (free(save), 1);
-		if (!*expand->tmp && do_basic(save, expand->tmp))
 			return (1);
 	}
-	if (clean_backslash(&save))
-		return (1);
+	if (ft_lstsize(*expand->tmp) == 1)
+	{
+		if (clean_backslash_expand(save, *expand->tmp))
+			return (1);
+	}
+	else
+		ft_list_remove_at(expand->tmp, 0, del_node_str);
 	if (cat_lst(expand->saved, expand->tmp))
 		return (1);
 	ft_lstclear(expand->tmp, del_node_str);
 	return (0);
-}
-
-size_t	to_next_index(const char *cmd)
-{
-	size_t	i;
-
-	i = 0;
-	while (cmd[i] && cmd[i] != '"' && cmd[i] != '\''
-		&& cmd[i] != '$')
-		i++;
-	return (i);
 }
 
 int	do_basic(char *cmd, t_list **lst_tmp)
@@ -104,18 +102,6 @@ int	do_basic_lst(t_expand *expand)
 	return (do_basic(tmp, expand->tmp));
 }
 
-int	no_match_lst(const char *line, size_t size, t_expand *expand)
-{
-	char	*tmp;
-
-	tmp = ft_substr(line, 0, size);
-	if (!tmp)
-		return (display_error("Error allocation\n", 0), 1);
-	if (strjoin_custom(&expand->origin, ft_strdup(tmp)))
-		return (free(tmp), 1);
-	return (do_basic(tmp, expand->tmp));
-}
-
 int	expand_quotes(t_expand *expand)
 {
 	char	*exp;
@@ -129,15 +115,6 @@ int	expand_quotes(t_expand *expand)
 		return (free(exp), 1);
 	expand->next += next;
 	return (do_basic(exp, expand->tmp));
-}
-
-static int basic_var(t_expand *expand, char *exp)
-{
-	if (strjoin_custom(&expand->origin, ft_strdup(exp)))
-		return (free(exp), 1);
-	if (do_basic(exp, expand->tmp))
-		return (1);
-	return (0);
 }
 
 int	var_tab(t_expand *expand, char *exp)
@@ -154,13 +131,12 @@ int	var_tab(t_expand *expand, char *exp)
 	{
 		if (tmp2[tab_len + 1])
 		{
-			if (basic_var(expand, tmp2[tab_len]))
+			if (do_basic(tmp2[tab_len], expand->tmp))
 				return (1);
 			validate_lst(expand);
 			ft_printf("transfer done\n\n");
-			ft_lstclear(expand->tmp, del_node_str);
 		}
-		else if (basic_var(expand, tmp2[tab_len]))
+		else if (do_basic(tmp2[tab_len], expand->tmp))
 			return (1);
 		tab_len++;
 	}
@@ -178,15 +154,13 @@ int	expand_var(t_expand *expand)
 		return (1);
 	if (exp && !ft_strchr(exp, ' '))
 	{
-		if (basic_var(expand, exp))
+		if (do_basic(exp, expand->tmp))
 			return (1);
 	}
 	else if (exp && ft_strchr(exp, ' ') && var_tab(expand, exp))
 		return (1);
 	return (0);
 }
-
-
 
 int	expand_loop(t_expand *expand)
 {

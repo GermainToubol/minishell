@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:07:13 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/06 16:39:10 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 18:16:28 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,6 @@ char		*quotes(const char *cmd);
 size_t		to_next_index(const char *cmd);
 int			clean_backslash(char **s);
 int			add_backslash(char **s);
+int			clean_backslash_expand(char *s, t_list *index);
 
 #endif

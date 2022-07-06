@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:33:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/06 16:44:50 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 17:46:55 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,6 @@ static int	cpy_lst_wc_to_str(t_list **dest, t_list **src)
 	return (0);
 }
 
-static int	get_prefix_path(char **path, char **prefix, char *to_add)
-{
-	if (to_add[0] == '/' && strjoin_custom(path, ft_strdup(("/"))))
-		return (1);
-	if (strjoin_custom(prefix, to_add))
-			return (free(*path), 1);
-	if (clean_backslash(prefix))
-		return (free(*prefix), free(*path), 1);
-	return (0);
-}
-
 size_t	to_next_wc(const char *s)
 {
 	size_t	i;
@@ -65,6 +54,17 @@ size_t	to_next_wc(const char *s)
 			return (i + 1);
 		i++;
 	}
+	return (0);
+}
+
+static int	get_prefix_path(char **path, char **prefix, char *to_add)
+{
+	if (to_add[0] == '/' && strjoin_custom(path, ft_strdup(("/"))))
+		return (1);
+	if (strjoin_custom(prefix, to_add))
+			return (free(*path), 1);
+	if (clean_backslash(prefix))
+		return (free(*prefix), free(*path), 1);
 	return (0);
 }
 
@@ -118,7 +118,7 @@ int	expand_wc_content(t_wildcard *wc, t_list **lst_tmp)
 
 	wc_lst = ft_calloc(1, sizeof(t_list *));
 	if (!wc_lst)
-		return (display_error("Error allcation\n", 0), -1);
+		return (display_error("Error allcation\n", 0), 1);
 	if (wildcards_wc(wc, wc_lst))
 	{
 		ft_lstclear(wc_lst, del_node_wc);
@@ -128,10 +128,10 @@ int	expand_wc_content(t_wildcard *wc, t_list **lst_tmp)
 	{
 		ft_printf("\nMATCH\n");
 		if (wc_found(lst_tmp, wc_lst))
-			return (ft_lstclear(wc_lst, del_node_wc), free(wc_lst), -1);
+			return (ft_lstclear(wc_lst, del_node_wc), free(wc_lst), 1);
 		ft_lstclear(wc_lst, del_node_wc);
 		free(wc_lst);
-		return (1);
+		return (0);
 	}
 	free(wc_lst);
 	return (0);
@@ -145,7 +145,7 @@ int expand_wc(char *cmd, t_expand *expand)
 	if (!wc)
 		return (1);
 	printf_wc(wc);
-	debug_gnl(cmd, NULL, -1);
-	expand_wc_content(wc, expand->tmp);
+	if (expand_wc_content(wc, expand->tmp))
+		return (1);
 	return (0);
 }

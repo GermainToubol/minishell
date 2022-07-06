@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:59:12 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 21:21:04 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 19:48:57 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,11 @@ t_wildcard	*new_wc(t_wildcard *mywc, char *found, size_t i, size_t i2)
 {
 	t_wildcard	*new;
 	char		*tmp;
-	size_t		k;
 	size_t		j;
 
-	k = last_char(mywc->prefix, '/');
-	k++;
-	j = 0;
-	while (mywc->prefix[k + j] != '\0' && mywc->prefix[k + j] == found[j])
-		j++;
-	tmp = ft_substr(found, j, i2);
+	if (match_prefix(mywc, found, &j))
+		return (NULL);
+	tmp = ft_substr(found, j, i2 - j);
 	if (!tmp)
 		return (display_error("Error allocation\n", 0), NULL);
 	new = new_wc2(mywc, found, tmp, i);
@@ -68,7 +64,7 @@ t_wildcard	*new_wc_path2(t_wildcard *mywc, char *tmp, size_t i)
 		return (display_error("Error allocation\n", 0), NULL);
 	}
 	new->prefix = tmp;
-	new->suffix = ft_strdup(&mywc->suffix[i + 1]);
+	new->suffix = ft_strdup(&mywc->suffix[i]);
 	new->dir_path = ft_strdup(mywc->dir_path);
 	new->found = NULL;
 	if (!new->dir_path || !new->prefix || !new->suffix)
@@ -83,15 +79,11 @@ t_wildcard	*new_wc_path(t_wildcard *mywc, char *found, size_t i, size_t i2)
 {
 	char		*tmp;
 	char		*tmp2;
-	size_t		k;
 	size_t		j;
 
-	k = last_char(mywc->prefix, '/');
-	k++;
-	j = 0;
-	while (mywc->prefix[k + j] != '\0' && mywc->prefix[k + j] == found[j])
-		j++;
-	tmp2 = ft_substr(found, j, i2);
+	if (match_prefix(mywc, found, &j))
+		return (NULL);
+	tmp2 = ft_substr(found, j, i2 - j);
 	if (!tmp2)
 		return (display_error("Error allocation\n", 0), NULL);
 	if (mywc->prefix[0] != '\0'

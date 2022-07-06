@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 19:42:57 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/03 18:47:22 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 19:10:14 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 #include "libft.h"
 #include "utils.h"
 
-int	last_char(char *s, char c)
+size_t	last_char(char *s, char c)
 {
 	size_t	i;
-	int		r;
+	size_t	r;
 
 	i = 0;
-	r = -1;
+	r = 0;
 	while (s[i])
 	{
 		if (s[i] == c)
-			r = (int)i;
+			r = i + 1;
 		i++;
 	}
 	return (r);
