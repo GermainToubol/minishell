@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:33:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/06 20:49:33 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 20:53:05 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,6 @@ int expand_wc(char *cmd, t_expand *expand)
 	wc = get_wc_line(cmd);
 	if (!wc)
 		return (1);
-	printf_wc(wc);
 	if (expand_wc_content(wc, expand->tmp))
 		return (1);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:01:02 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/06 20:48:03 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 20:53:02 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ int	check_found(t_wildcard *mywc, t_list **new_lst, char *dir_name, int first)
 		new = prefix_suffix(mywc, dir_name);
 	if (new)
 	{
-		printf_wc(new);
 		node = ft_lstnew(new);
 		if (!node)
 			return (del_node_wc(new),

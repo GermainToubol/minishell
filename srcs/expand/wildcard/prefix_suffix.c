@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 18:47:30 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/06 20:43:22 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 20:53:13 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	match_prefix(t_wildcard *mywc, char *found,
 	size_t	start;
 
 	start = last_char(mywc->prefix, '/');
-	ft_printf("prefix %s\nfound %s\n", &mywc->prefix[start], found);
 	if (ft_strncmp(&mywc->prefix[start], found,
 		ft_strlen(&mywc->prefix[start])))
 		return (1);
@@ -62,13 +61,10 @@ t_wildcard	*prefix_suffix(t_wildcard *mywc, char *found)
 	size_t		i;
 	size_t		i2;
 
-	printf_wc(mywc);
 	if (!found)
 		return (NULL);
-	ft_printf("check prefix\n");
 	if (match_prefix(mywc, found, &i2))
 		return (NULL);
-	ft_printf("prefix ok\n");
 	i = 0;
 	if (mywc->suffix[i] == '/')
 	{
@@ -79,7 +75,6 @@ t_wildcard	*prefix_suffix(t_wildcard *mywc, char *found)
 	if (mywc->suffix[i] == '*'
 			&& (i == 0 || mywc->suffix[i - 1] != '\\'))
 	{
-		ft_printf("* found\n");
 		while (mywc->suffix[i] == '*')
 			i++;
 	}
