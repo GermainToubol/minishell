@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 02:22:00 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 02:03:57 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 20:46:27 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	get_match_indir_loop(t_list **new_lst, t_wildcard *mywc, DIR *d)
 		dir = readdir(d);
 		if (!dir)
 			break ;
-		if (check_found(mywc, new_lst, dir->d_name) == -1)
+		if (check_found(mywc, new_lst, dir->d_name, 1) == -1)
 			return (-1);
 	}
 	return (0);
@@ -67,14 +67,20 @@ static int	iter_lst(t_list **lst, t_list **new)
 		wc = (t_wildcard *)index->content;
 		if (wc->found == NULL)
 		{
+			ft_printf("indir\n");
 			if (get_match_indir(index, new) == -1)
 				return (1);
 		}
 		else
-			if (check_found(wc, new, wc->found) == -1)
+			if (check_found(wc, new, wc->found, 0) == -1)
 				return (1);
 		index = index->next;
 	}
+	ft_printf("\n");
+	ft_lstiter(*lst, print_lst2);
+	ft_printf("\n");
+	ft_lstiter(*new, print_lst2);
+	ft_printf("\n");
 	ft_lstclear(lst, del_node_wc);
 	return (0);
 }

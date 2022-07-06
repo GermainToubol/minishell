@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:33:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/06 17:46:55 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 20:49:33 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ static int	get_prefix_path(char **path, char **prefix, char *to_add)
 		return (1);
 	if (strjoin_custom(prefix, to_add))
 			return (free(*path), 1);
-	if (clean_backslash(prefix))
-		return (free(*prefix), free(*path), 1);
+	// if (clean_backslash(prefix))
+	// 	return (free(*prefix), free(*path), 1);
 	return (0);
 }
 

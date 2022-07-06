@@ -6,30 +6,37 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:01:02 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/06 19:41:56 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 20:48:03 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wildcard.h"
 #include "utils.h"
 
-int	check_found(t_wildcard *mywc, t_list **new_lst, char *dir_name)
+int	check_found(t_wildcard *mywc, t_list **new_lst, char *dir_name, int first)
 {
 	t_wildcard		*new;
 	t_list			*node;
 
 	if (dir_name[0] == '.')
 		return (0);
-	new = prefix_suffix(mywc, dir_name);
+	if (first)
+	{
+		dir_name = add_backslash_safe(dir_name);
+		if (!dir_name)
+			return (-1);
+		new = prefix_suffix(mywc, dir_name);
+		free(dir_name);
+	}
+	else
+		new = prefix_suffix(mywc, dir_name);
 	if (new)
 	{
 		printf_wc(new);
 		node = ft_lstnew(new);
 		if (!node)
-		{
-			del_node_wc(new);
-			return (display_error("Error allocation\n", 0), -1);
-		}
+			return (del_node_wc(new),
+				display_error("Error allocation\n", 0), -1);
 		ft_lstadd_back(new_lst, node);
 	}
 	return (0);

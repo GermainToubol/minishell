@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 16:46:09 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/06 18:17:45 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 20:30:35 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,32 @@ int	add_backslash(char **s)
 	free(*s);
 	*s = ret;
 	return (0);
+}
+
+char	*add_backslash_safe(char *s)
+{
+	size_t	count;
+	size_t	i;
+	char	*ret;
+
+	count = 0;
+	i = -1;
+	while (s[++i])
+		if (s[i] == '*')
+			count++;
+	ret = ft_calloc(i + count + 1, sizeof(char));
+	if (!ret)
+		return (display_error("Error allocation\n", 0), NULL);
+	i = -1;
+	count = 0;
+	while (s[++i])
+	{
+		if (s[i] == '*')
+			ret[i + count++] = '\\';
+		ret[count + i] = s[i];
+	}
+	ret[count + i] = '\0';
+	return (ret);
 }
 
 char	*quotes(const char *cmd)
