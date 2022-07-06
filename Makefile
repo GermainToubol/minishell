@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 10:59:36 by gtoubol           #+#    #+#              #
-#    Updated: 2022/07/07 00:28:56 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/07/07 00:35:51 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,6 +63,7 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										strjoin_custom.c	\
 										trim_c.c			\
 										sort_lst.c			\
+										backslash.c			\
 										debug_gnl.c			\
 										clean_hdoc.c)		\
 			$(addprefix parser/astree/,	astree.c			\
