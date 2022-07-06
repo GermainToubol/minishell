@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:47:46 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/06 01:07:58 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 14:52:17 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ size_t	to_next_index(const char *cmd)
 
 	i = 0;
 	while (cmd[i] && cmd[i] != '"' && cmd[i] != '\''
-		&& cmd[i] != '$' && cmd[i] != '*')
+		&& cmd[i] != '$')
 		i++;
 	return (i);
 }
@@ -106,36 +106,12 @@ int	expand_quotes(t_expand *expand)
 	return (do_basic(exp, expand->tmp));
 }
 
-static int var_do_wc(t_expand *expand, char *exp)
+static int basic_var(t_expand *expand, char *exp)
 {
-	size_t	step;
-	char	*tmp;
-
-	if (ft_strchr(exp, '*'))
-	{
-		step = 0;
-		if (strjoin_custom(&exp, ft_strdup(&expand->line[expand->next])))
-			return (free(exp), 1);
-		if (expand_wc(exp, expand, &step))
-			return (free(exp), 1);
-		if (!*expand->tmp)
-		{
-			tmp = ft_substr(exp, 0, step + 1);
-			free(exp);
-			if (!tmp)
-				return (1);
-			if (do_basic(tmp, expand->tmp))
-				return (free(tmp), 1);
-		}
-		expand->next += step - 1;
-	}
-	else
-	{
-		if (strjoin_custom(&expand->origin, ft_strdup(exp)))
-			return (free(exp), 1);
-		if (do_basic(exp, expand->tmp))
-			return (1);
-	}
+	if (strjoin_custom(&expand->origin, ft_strdup(exp)))
+		return (free(exp), 1);
+	if (do_basic(exp, expand->tmp))
+		return (1);
 	return (0);
 }
 
@@ -152,13 +128,13 @@ int	var_tab(t_expand *expand, char *exp)
 	{
 		if (tmp2[tab_len + 1])
 		{
-			if (var_do_wc(expand, tmp2[tab_len + 1]))
+			if (basic_var(expand, tmp2[tab_len + 1]))
 				return (1);
 			cat_lst(expand->saved, expand->tmp);
 			ft_printf("transfer done\n\n");
 			ft_lstclear(expand->tmp, del_node_str);
 		}
-		else if (var_do_wc(expand, tmp2[tab_len]))
+		else if (basic_var(expand, tmp2[tab_len]))
 			return (1);
 		tab_len++;
 	}
@@ -176,7 +152,7 @@ int	expand_var(t_expand *expand)
 		return (1);
 	if (exp && !ft_strchr(exp, ' '))
 	{
-		if (var_do_wc(expand, exp))
+		if (basic_var(expand, exp))
 			return (1);
 	}
 	else if (exp && ft_strchr(exp, ' ') && var_tab(expand, exp))
@@ -203,12 +179,6 @@ int	expand_loop(t_expand *expand)
 	{
 		if (expand_var(expand))
 			return (1);
-	}
-	else if (expand->line[expand->next] == '*')
-	{
-		if (expand_wc(&expand->line[expand->next], expand, &step))
-			return (1);
-		expand->next += step;
 	}
 	else
 	{
