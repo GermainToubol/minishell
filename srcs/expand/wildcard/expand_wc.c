@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:33:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/06 15:56:56 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 16:44:50 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ static int	cpy_lst_wc_to_str(t_list **dest, t_list **src)
 
 static int	get_prefix_path(char **path, char **prefix, char *to_add)
 {
-	char	*line;
-
-	if (strjoin_custom(prefix, to_add))
-			return (1);
 	if (to_add[0] == '/' && strjoin_custom(path, ft_strdup(("/"))))
-		return (free(prefix), 1);
+		return (1);
+	if (strjoin_custom(prefix, to_add))
+			return (free(*path), 1);
+	if (clean_backslash(prefix))
+		return (free(*prefix), free(*path), 1);
 	return (0);
 }
 
@@ -144,7 +144,8 @@ int expand_wc(char *cmd, t_expand *expand)
 	wc = get_wc_line(cmd);
 	if (!wc)
 		return (1);
-		printf_wc(wc);
+	printf_wc(wc);
+	debug_gnl(cmd, NULL, -1);
 	expand_wc_content(wc, expand->tmp);
 	return (0);
 }

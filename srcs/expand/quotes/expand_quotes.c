@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 16:46:09 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/06 15:11:05 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 17:03:33 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,40 @@
 #include "libft.h"
 #include "utils.h"
 
+int	clean_backslash(char **s)
+{
+	size_t	count;
+	size_t	i;
+	char	*ret;
+
+	count = 0;
+	i = -1;
+	while ((*s)[++i])
+		if ((*s)[i] == '\\' && (*s)[i + 1] && (*s)[i + 1] == '*')
+			count++;
+	ret = ft_calloc(i - count + 1, sizeof(char));
+	if (!ret)
+		return (display_error("Error allocation\n", 0), 1);
+	i = -1;
+	count = 0;
+	while ((*s)[++i + count])
+	{
+		if ((*s)[i + count] == '\\'
+			&& (*s)[i + 1 + count] && (*s)[i + 1 + count] == '*')
+			count++;
+		ret[i] = (*s)[i + count];
+
+	}
+	ret[i] = '\0';
+	free(*s);
+	*s = ret;
+	return (0);
+}
+
 int	add_backslash(char **s)
 {
 	size_t	count;
-	ssize_t	i;
+	size_t	i;
 	char	*ret;
 
 	count = 0;

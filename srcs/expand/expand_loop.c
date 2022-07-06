@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:47:46 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/06 15:26:36 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/06 17:08:49 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "expand.h"
 #include "libft.h"
 #include "utils.h"
+
 
 int	check_valid_wc(char *s)
 {
@@ -36,16 +37,19 @@ int	validate_lst(t_expand *expand)
 
 	if (!expand->tmp || !*expand->tmp)
 		return (1);
-	save = ft_strdup((char *)(*expand->tmp)->content);
-	if (!save)
-		return (display_error("Error allocation\n", 0), 1);
+	save = (char *)(*expand->tmp)->content;
 	if (check_valid_wc(save))
 	{
+		save = ft_strdup(save);
+		if (!save)
+			return (display_error("Error allocation\n", 0), 1);
 		if (expand_wc(save, expand))
-			return (1);
-		if (!*expand->tmp && do_basic(expand->origin, expand->tmp))
+			return (free(save), 1);
+		if (!*expand->tmp && do_basic(save, expand->tmp))
 			return (1);
 	}
+	if (clean_backslash(&save))
+		return (1);
 	if (cat_lst(expand->saved, expand->tmp))
 		return (1);
 	ft_lstclear(expand->tmp, del_node_str);
