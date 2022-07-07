@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:03:47 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/27 15:49:39 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/07/07 12:55:14 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -16,10 +16,18 @@
 int	is_builtin(t_parse *parse)
 {
 	char	*name;
+	size_t	i;
 
 	if (parse->type != CMD || parse->cmd == NULL || parse->cmd->cmd == NULL
 		|| parse->cmd->cmd[0] == NULL)
 		return (0);
+	i = 0;
+	while (parse->cmd->cmd[i] != NULL && parse->cmd->cmd[i][0] == '\0')
+		i++;
+	if (parse->cmd->cmd[i] == NULL)
+		ft_tab_shift(parse->cmd->cmd, i - 1);
+	else
+		ft_tab_shift(parse->cmd->cmd, i);
 	name = parse->cmd->cmd[0];
 	if (ft_strcmp(name, "echo") == 0
 		|| ft_strcmp(name, "cd") == 0

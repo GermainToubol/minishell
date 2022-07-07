@@ -6,13 +6,14 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 17:18:36 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 22:17:06 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 23:06:46 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "libft.h"
 #include "utils.h"
+#include "g_minishell.h"
 
 static int	is_quote_content(char *line, size_t *i)
 {
@@ -111,9 +112,9 @@ int	is_word(char *line, t_lxm *lxm, t_tokens *tokens)
 	else if ((line[i] == '"' || line[i] == '\'')
 		&& is_quote(line, lxm, tokens, &i))
 		return (-1);
-	if (is_word != tokens->size && tokens->size > 1
-		&& tokens->tokens[tokens->size - 2].type == IO_HDOC
-		&& lxm->type == WORD && set_hdoc(&lxm->data))
+	if (is_interupted() || (is_word != tokens->size && tokens->size > 1
+			&& tokens->tokens[tokens->size - 2].type == IO_HDOC
+			&& lxm->type == WORD && set_hdoc(&lxm->data)))
 		return (-1);
 	return (i);
 }

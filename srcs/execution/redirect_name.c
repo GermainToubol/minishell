@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/06 16:49:38 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/07/06 16:59:45 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/07/07 09:57:16 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <stdlib.h>
@@ -34,14 +34,11 @@ int	redirect_name(t_redirect *redirect)
 
 	lst = ft_calloc(2, sizeof(*lst));
 	if (lst == NULL)
-		return (ft_fprintf(2, "minishell: menory allocation error"),
+		return (ft_fprintf(2, "minishell: menory allocation error\n"),
 			set_status(1), 1);
 	lst[0] = redirect->file;
 	new = do_expand(lst);
-	if (new == NULL)
-		return (ft_fprintf(2, "minishell: menory allocation error"),
-			set_status(1), 1);
-	if (ft_splitsize(new) != 1)
+	if (new == NULL || ft_splitsize(new) != 1)
 	{
 		free(lst);
 		ft_free_split(new);

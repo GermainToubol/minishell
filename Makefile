@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 10:59:36 by gtoubol           #+#    #+#              #
-#    Updated: 2022/07/07 14:07:20 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/07/07 23:06:49 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -122,7 +122,8 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 
 TMP =		$(addprefix tmp/,			ft_lstsort.c		\
 										astree_apply_infix.c\
-										ft_atoll_protected.c)
+										ft_atoll_protected.c\
+										ft_tab_shift.c)
 
 # List of the related directories
 # -------------------------------------------------------------------------

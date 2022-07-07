@@ -6,10 +6,11 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 09:24:46 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/07/07 23:00:38 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 23:06:37 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include "libft.h"
 #include "parser.h"
 #include "expand.h"
@@ -21,19 +22,15 @@ int	expand_parse(t_parse *parse)
 {
 	char	**lst;
 	char	**new;
-	int		i;
 
-	i = 0;
-	while (parse->cmd->cmd[i] != NULL)
-		i++;
 	lst = parse->cmd->cmd;
 	if (!lst)
 		return (1);
 	new = do_expand(lst);
-	ft_free_split(lst);
-	if (!new)
-		return (error_msg("Error\n", 1), 1);
 	parse->cmd->cmd = new;
+	ft_free_split(lst);
+	if (new == NULL && errno != 0)
+		return (1);
 	return (0);
 }
 
