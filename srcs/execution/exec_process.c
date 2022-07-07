@@ -6,11 +6,12 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 09:24:46 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/07/07 23:06:37 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 23:09:04 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <errno.h>
 #include "libft.h"
 #include "parser.h"
 #include "expand.h"
