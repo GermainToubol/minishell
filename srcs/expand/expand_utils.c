@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 16:17:45 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 14:22:25 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 14:41:53 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ int	validate_lst(t_expand *expand)
 {
 	char	*save;
 
-	if (!expand->tmp || !*expand->tmp)
+	if (!expand->tmp)
 		return (1);
+	if (!*expand->tmp)
+		return (0);
 	save = (char *)(*expand->tmp)->content;
 	if (check_valid_wc(save))
 	{

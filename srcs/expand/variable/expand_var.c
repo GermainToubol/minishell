@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 16:05:10 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 14:22:16 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 14:39:16 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,9 @@ int	expand_var(t_expand *expand)
 	expand->next++;
 	if (get_var(expand->line, &expand->next, &tmp))
 		return (1);
-	exp = add_backslash_var(tmp);
-	free(tmp);
+	if (!tmp)
+		return (0);
+	exp = add_backslash_var(&tmp);
 	if (exp && !ft_strchr(exp, ' '))
 	{
 		if (do_basic(exp, expand->tmp))

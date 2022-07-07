@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 00:34:48 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 14:21:32 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 14:28:37 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,26 +116,27 @@ char	*add_backslash(char *s)
 	return (ret);
 }
 
-char	*add_backslash_var(char *s)
+char	*add_backslash_var(char **s)
 {
 	size_t	count;
 	size_t	i;
 	char	*ret;
 
-	if (!s)
+	if (!s || !*s)
 		return (NULL);
-	count_c(s, &count, &i, 'q');
+	count_c(*s, &count, &i, 'q');
 	ret = ft_calloc(i + count + 1, sizeof(char));
 	if (!ret)
 		return (display_error("Error allocation\n", 0), NULL);
 	i = -1;
 	count = 0;
-	while (s[++i])
+	while ((*s)[++i])
 	{
-		if (s[i] == '*' && i > 0 && s[i - 1] == '\\')
+		if ((*s)[i] == '*' && i > 0 && (*s)[i - 1] == '\\')
 			ret[i + count++] = '\\';
-		ret[count + i] = s[i];
+		ret[count + i] = (*s)[i];
 	}
 	ret[count + i] = '\0';
+	free(*s);
 	return (ret);
 }
