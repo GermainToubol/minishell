@@ -6,12 +6,13 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 02:04:44 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 18:34:48 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 18:40:50 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "utils.h"
+#include "g_minishell.h"
 
 int	get_var(const char *cmd, size_t *i, char **ret)
 {
