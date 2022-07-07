@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 00:34:48 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 14:28:37 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 15:28:57 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 static void	count_c(char *s, size_t *count, size_t *i, char c)
 {
 	*count = 0;
-	*i = 0;
+	*i = -1;
 	if (c == '\\')
 	{
 		while (s[++(*i)])

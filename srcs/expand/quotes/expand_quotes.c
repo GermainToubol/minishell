@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 16:46:09 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 14:37:55 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 15:25:05 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,16 @@ static char	*quotes(const char *cmd)
 	else if (cmd[0] == '"')
 	{
 		if (strjoin_custom(&tmp, expand_var_quotes(ret)))
-			return (NULL);
+			return (free(ret), NULL);
+		free(ret);
 	}
-	ret = add_backslash(tmp);
-	free(tmp);
-	return (ret);
+	if (ft_strchr(tmp, '*'))
+	{
+		ret = add_backslash(tmp);
+		free(tmp);
+		return (ret);
+	}
+	return (tmp);
 }
 
 int	expand_quotes(t_expand *expand)

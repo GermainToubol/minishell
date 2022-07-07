@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 16:46:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 14:23:43 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 15:15:52 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,6 @@
 #include "expand.h"
 #include "libft.h"
 #include "utils.h"
-
-static void	free_expand(t_expand *expand)
-{
-	free_lst_str(expand->tmp);
-}
 
 static int	do_expand_loop(char **cmd, t_list **lst)
 {
@@ -38,10 +33,10 @@ static int	do_expand_loop(char **cmd, t_list **lst)
 		expand.line = cmd[i];
 		expand.next = 0;
 		if (expand_loop(&expand))
-			return (free_expand(&expand), 1);
+			return (free_lst_str(lst_tmp), 1);
 		i++;
 	}
-	free_expand(&expand);
+	free_lst_str(lst_tmp);
 	return (0);
 }
 
@@ -60,8 +55,5 @@ char	**do_expand(char **cmd)
 		return (NULL);
 	ret = lst_to_tab_str(lst);
 	free_lst_str(lst);
-	ft_printf("\n\n=========================\n\n");
-	print_tab(ret);
-	ft_printf("\n=========================\n\n");
 	return (ret);
 }

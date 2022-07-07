@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 16:17:45 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 14:41:53 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 15:29:03 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int	validate_lst(t_expand *expand)
 	}
 	if (ft_lstsize(*expand->tmp) == 1)
 	{
-		if (clean_backslash_expand(save, *expand->tmp))
+		if (ft_strchr((*expand->tmp)->content, '\\')
+			&& clean_backslash_expand(save, *expand->tmp))
 			return (1);
 	}
 	else
