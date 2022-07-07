@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 01:01:16 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 17:00:52 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 18:13:35 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	dir_path(char *path, t_wildcard *new)
 	if (!path)
 		new->dir_path = ft_strdup(getcwd(cwd_dir, DIR_BUFFER));
 	else if (path[0] == '/')
-		new->dir_path = path;
+		new->dir_path = ft_strdup(path);
 	else
 	{
 		tmp = ft_strjoin("/", path);
