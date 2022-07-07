@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 10:13:48 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/07/04 18:00:38 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/07/07 16:51:06 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	signal_handler(int signum, siginfo_t *siginfo, void *context)
 		write(2, "^C\n", 3);
 	else
 		write(1, "^C\n", 3);
-	rl_replace_line("", 0);
+	rl_replace_line("", 1);
 	rl_on_new_line();
 	rl_redisplay();
 }

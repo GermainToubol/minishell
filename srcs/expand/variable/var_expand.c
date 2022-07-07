@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 16:05:10 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 00:52:08 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 13:38:49 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ static int	var_tab(t_expand *expand, char *exp)
 	if (!tmp2)
 		return (1);
 	tab_len = 0;
-	print_tab(tmp2);
 	while (tmp2[tab_len])
 	{
 		if (tmp2[tab_len + 1])
@@ -73,7 +72,6 @@ static int	var_tab(t_expand *expand, char *exp)
 			if (do_basic(tmp2[tab_len], expand->tmp))
 				return (1);
 			validate_lst(expand);
-			ft_printf("transfer done\n\n");
 		}
 		else if (do_basic(tmp2[tab_len], expand->tmp))
 			return (1);

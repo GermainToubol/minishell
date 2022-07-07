@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 22:50:53 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/01 18:14:28 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 18:15:31 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,11 @@ static int	create_hdoc_loop(char *eof, int fd)
 {
 	char	*line;
 	int		len_line;
-
 	line = NULL;
 	while (1)
 	{
 		free(line);
-		line = get_next_line(0);
+		line = readline("> ");
 		if (!line)
 			return (0);
 		len_line = ft_strlen(line);

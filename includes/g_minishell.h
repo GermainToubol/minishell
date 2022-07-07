@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:07:25 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/07/06 16:58:41 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/07/07 12:34:02 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void		ft_lstpop(t_list **lst, void (*del)(void *));
 void		ft_lstsort(t_list **lst, int (*f)(void *, void *));
 void		astree_apply_infix(t_astree *root, void (*f)(t_astree *));
 long long	ft_atoll_protected(char *s);
+void		ft_tab_shift(char **tab, size_t n);
 
 /* SESSION MANAGEMENT */
 int			interactive_session(t_list **env);
