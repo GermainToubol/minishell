@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 16:46:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 01:06:30 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 14:23:43 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,8 @@ char	**do_expand(char **cmd)
 		return (NULL);
 	ret = lst_to_tab_str(lst);
 	free_lst_str(lst);
+	ft_printf("\n\n=========================\n\n");
+	print_tab(ret);
+	ft_printf("\n=========================\n\n");
 	return (ret);
 }

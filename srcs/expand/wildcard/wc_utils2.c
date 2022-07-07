@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 01:01:16 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 00:33:33 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 13:57:36 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	cpy_lst_wc_to_str(t_list **dest, t_list **src)
 	{
 		wc = (t_wildcard *)index->content;
 		tmp = ft_strdup(wc->prefix);
+		clean_backslash(&tmp);
 		if (!tmp)
 			return (display_error("Error allocation\n", 0), 1);
 		new = ft_lstnew(tmp);

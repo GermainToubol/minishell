@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 02:22:00 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 00:32:55 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 14:13:07 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	get_match_indir_loop(t_list **new_lst, t_wildcard *mywc, DIR *d)
 		dir = readdir(d);
 		if (!dir)
 			break ;
-		dir_name = add_backslash_safe(dir->d_name);
+		dir_name = add_backslash(dir->d_name);
 		if (check_found(mywc, new_lst, dir_name) == -1)
 			return (free(dir_name), -1);
 		free(dir_name);

@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 22:15:47 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/06 23:47:58 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 13:47:43 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ int	cat_lst(t_list **dest, t_list **src)
 		tmp = ft_strdup((char *)index->content);
 		if (!tmp)
 			return (display_error("Error allocation\n", 0), 1);
-		if (clean_backslash(&tmp))
-			return (1);
 		new = ft_lstnew(tmp);
 		if (!new)
 			return (free(tmp), display_error("Error allocation\n", 0), 1);

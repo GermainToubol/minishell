@@ -6,7 +6,7 @@
 #    By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/25 10:59:36 by gtoubol           #+#    #+#              #
-#    Updated: 2022/07/07 01:00:57 by fmauguin         ###   ########.fr        #
+#    Updated: 2022/07/07 14:07:20 by fmauguin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -107,7 +107,7 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 										wc_utils.c			\
 										wc_utils2.c			\
 										expand_wc.c)		\
-			$(addprefix	variable/,		var_expand.c		\
+			$(addprefix	variable/,		expand_var.c		\
 										split_var.c			\
 										get_var.c)			\
 			$(addprefix quotes/,		expand_quotes.c)	\
