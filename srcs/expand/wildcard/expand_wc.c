@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:33:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 18:34:40 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:12:46 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	expand_wc_content(t_wildcard *wc, t_list **lst_tmp)
 
 	wc_lst = ft_calloc(1, sizeof(t_list *));
 	if (!wc_lst)
-		return (del_node_wc(wc), display_error("Error allocation\n", 0), 1);
+		return (del_node_wc(wc), error_alloc(), 1);
 	if (wildcards(wc, wc_lst))
 	{
 		return (free(wc_lst), 1);
@@ -59,7 +59,7 @@ static int	wc_found(t_list **lst_tmp, t_list **wc_lst)
 
 	lst = ft_calloc(1, sizeof(t_list *));
 	if (!lst)
-		return (display_error("Error allocation\n", 0), 1);
+		return (error_alloc(), 1);
 	*lst = NULL;
 	if (cpy_lst_wc_to_str(lst, wc_lst))
 	{

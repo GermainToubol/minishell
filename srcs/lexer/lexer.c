@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 07:13:55 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 21:29:07 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:54:14 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static int	is_forbidden(char line)
 		|| line == '>' || line == '<' || line == '|' || line == '&'
 		|| line == '*' || line == '-' || line == '\0' || line == '"'
 		|| line == '\'' || line == '(' || line == ')' || line == '.'
-		|| line == '/')
+		|| line == '/' || line == '_')
 		return (1);
-	display_error(NULL, line);
+	error_syntax(line);
 	return (0);
 }
 
@@ -35,7 +35,7 @@ static int	is_end(char *line, t_tokens *tokens)
 	{
 		if (tokens->size > 0 && tokens->tokens[tokens->size - 1].type <= AND
 			&& tokens->tokens[tokens->size - 1].type >= IO_IN)
-			return (display_error(NULL, '\n'), 1);
+			return (error_syntax('\n'), 1);
 		is_open = 0;
 		i = 0;
 		while (i < tokens->size)
@@ -47,7 +47,7 @@ static int	is_end(char *line, t_tokens *tokens)
 			i++;
 		}
 		if (is_open > 0)
-			return (display_error(NULL, '('), 1);
+			return (error_syntax('('), 1);
 	}
 	return (0);
 }

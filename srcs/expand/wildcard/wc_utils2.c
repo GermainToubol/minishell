@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 01:01:16 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 16:57:57 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:12:46 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ int	cpy_lst_wc_to_str(t_list **dest, t_list **src)
 		if (tmp && ft_strchr(tmp, '\\'))
 			clean_backslash(&tmp);
 		if (!tmp)
-			return (display_error("Error allocation\n", 0), 1);
+			return (error_alloc(), 1);
 		new = ft_lstnew(tmp);
 		if (!new)
 		{
 			free(tmp);
-			return (display_error("Error allocation\n", 0), 1);
+			return (error_alloc(), 1);
 		}
 		ft_lstadd_back(dest, new);
 		index = index->next;
@@ -80,7 +80,7 @@ t_wildcard	*get_wc_line(const char *cmd)
 	i--;
 	str[3] = ft_substr(cmd, 0, i);
 	if (!str[3])
-		return (display_error("Error allocation\n", 0), NULL);
+		return (error_alloc(), NULL);
 	cmd = &cmd[i];
 	if (get_prefix_path(&str[0], &str[1], str[3]))
 		return (free(str[3]), NULL);

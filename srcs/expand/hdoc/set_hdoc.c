@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 22:50:53 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/01 18:14:28 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:12:46 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static int	create_hdoc(char **hdoc)
 		return (free(hdoc_name), -1);
 	eof = ft_strdup(*hdoc);
 	if (!eof)
-		return (display_error("Error allocation\n", 0), 1);
+		return (error_alloc(), 1);
 	free(*hdoc);
 	*hdoc = hdoc_name;
 	if (create_hdoc_loop(eof, hdoc_fd))

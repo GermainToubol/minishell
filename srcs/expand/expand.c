@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 16:46:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 15:15:52 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:12:46 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	do_expand_loop(char **cmd, t_list **lst)
 	i = 0;
 	lst_tmp = ft_calloc(1, sizeof(t_list *));
 	if (!lst_tmp)
-		return (display_error("Error allocation\n", 0), 1);
+		return (error_alloc(), 1);
 	*lst_tmp = NULL;
 	expand.saved = lst;
 	expand.tmp = lst_tmp;
@@ -47,7 +47,7 @@ char	**do_expand(char **cmd)
 
 	lst = ft_calloc(1, sizeof(t_list *));
 	if (!lst)
-		return (display_error("Error allocation\n", 0), NULL);
+		return (error_alloc(), NULL);
 	*lst = NULL;
 	if (do_expand_loop(cmd, lst))
 		return (free_lst_str(lst), NULL);

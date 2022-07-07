@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:04:22 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/25 15:55:32 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:19:26 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	check_next_token(char *line)
 		while (line[i] && line[i] != ' ' && line[i] != '\t'
 			&& line[i] != '\n')
 			i++;
-		return (display_error_red(line, i + 1), 1);
+		return (error_syntax_str(line, i + 1), 1);
 	}
 }
 
@@ -38,9 +38,9 @@ static int	is_p_end(char *line, t_lxm *lxm, t_tokens *tokens, int is_open)
 	size_t	i;
 
 	if (is_open <= 0)
-		return (display_error(NULL, *line), 1);
+		return (error_syntax(*line), 1);
 	if (tokens->size > 0 && tokens->tokens[tokens->size - 1].type == P_START)
-		return (display_error(NULL, *line), 1);
+		return (error_syntax(*line), 1);
 	if (tokens->size > 0 && tokens->tokens[tokens->size - 1].type == P_END)
 	{
 		i = 2;
@@ -49,11 +49,11 @@ static int	is_p_end(char *line, t_lxm *lxm, t_tokens *tokens, int is_open)
 			i++;
 		if (i < tokens->size && tokens->tokens[tokens->size - i].type == P_START
 			&& tokens->tokens[tokens->size - i - 1].type == P_START)
-			return (display_error_red("(())", 5), 1);
+			return (error_syntax_str("(())", 5), 1);
 	}
 	lxm->data = ft_strndup(")", 1);
 	if (!lxm->data)
-		return (display_error("Error allocation\n", 0), 1);
+		return (error_alloc(), 1);
 	lxm->type = P_END;
 	tokens->size++;
 	if (check_next_token(&line[1]))
@@ -74,10 +74,10 @@ static int	is_prio_content(char *line, t_lxm *lxm,
 		if (tokens->size > 0 && (tokens->tokens[tokens->size - 1].type == P_END
 				|| (tokens->tokens[tokens->size - 1].type >= WORD
 					&& tokens->tokens[tokens->size - 1].type <= IO_APP)))
-			return (display_error(NULL, *line), 1);
+			return (error_syntax(*line), 1);
 		lxm->data = ft_strndup("(", 1);
 		if (!lxm->data)
-			return (display_error("Error allocation\n", 0), 1);
+			return (error_alloc(), 1);
 		lxm->type = P_START;
 		tokens->size++;
 	}

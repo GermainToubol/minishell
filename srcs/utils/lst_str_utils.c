@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 22:15:47 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 15:15:45 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:12:46 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ int	cat_lst(t_list **dest, t_list **src)
 	{
 		tmp = ft_strdup((char *)index->content);
 		if (!tmp)
-			return (display_error("Error allocation\n", 0), 1);
+			return (error_alloc(), 1);
 		new = ft_lstnew(tmp);
 		if (!new)
-			return (free(tmp), display_error("Error allocation\n", 0), 1);
+			return (free(tmp), error_alloc(), 1);
 		ft_lstadd_back(dest, new);
 		index = index->next;
 	}

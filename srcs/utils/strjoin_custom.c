@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 01:00:43 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/06 23:38:19 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:12:46 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	strjoin_custom(char **dest, char *src)
 	char	*tmp;
 
 	if (!src)
-		return (display_error("Error allocation\n", 0), 1);
+		return (error_alloc(), 1);
 	if (!*dest)
 		*dest = src;
 	else
@@ -27,7 +27,7 @@ int	strjoin_custom(char **dest, char *src)
 		tmp = ft_strjoin(*dest, src);
 		free(src);
 		if (!tmp)
-			return (display_error("Error allocation\n", 0), 1);
+			return (error_alloc(), 1);
 		free(*dest);
 		*dest = tmp;
 	}
@@ -39,7 +39,7 @@ int	strjoin_custom_lst(void **dest, char *src)
 	char	*tmp;
 
 	if (!src)
-		return (display_error("Error allocation\n", 0), 1);
+		return (error_alloc(), 1);
 	if (!*dest)
 		*dest = src;
 	else
@@ -47,7 +47,7 @@ int	strjoin_custom_lst(void **dest, char *src)
 		tmp = ft_strjoin((char *)(*dest), src);
 		free(src);
 		if (!tmp)
-			return (display_error("Error allocation\n", 0), 1);
+			return (error_alloc(), 1);
 		free(*dest);
 		*dest = tmp;
 	}

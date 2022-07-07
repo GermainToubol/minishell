@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 16:46:09 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 18:05:20 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:12:46 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static char	*quotes_content(const char *cmd, char *src)
 	{
 		ret = ft_strdup(src);
 		if (!ret)
-			return (display_error("Error allocation\n", 0), NULL);
+			return (error_alloc(), NULL);
 	}
 	else if (cmd[0] == '"')
 	{
@@ -33,7 +33,7 @@ static char	*quotes_content(const char *cmd, char *src)
 		{
 			empty = ft_strdup("");
 			if (!empty)
-				return (display_error("Error allocation\n", 0), NULL);
+				return (error_alloc(), NULL);
 			return (empty);
 		}
 	}
@@ -47,7 +47,7 @@ static char	*quotes(const char *cmd)
 
 	ret = ft_substr(cmd, 1, skip_quote(cmd) - 2);
 	if (!ret)
-		return (display_error("Error allocation\n", 0), NULL);
+		return (error_alloc(), NULL);
 	tmp = quotes_content(cmd, ret);
 	free(ret);
 	if (!tmp)

@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 00:55:31 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/16 16:11:30 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:12:46 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	fill_cmdn2(t_tokens *tokens, size_t start,
 		{
 			cmdn[i] = ft_strdup(tokens->tokens[start].data);
 			if (!cmdn[i++])
-				return (display_error("Error allocation\n", 0), 1);
+				return (error_alloc(), 1);
 		}
 		start++;
 	}
@@ -65,7 +65,7 @@ char	**fill_cmdn(t_tokens *tokens, size_t start, size_t max, int *err)
 	if (!cmdn)
 	{
 		*err = -1;
-		return (display_error("Error allocation\n", 0), NULL);
+		return (error_alloc(), NULL);
 	}
 	if (fill_cmdn2(tokens, start, max, cmdn))
 	{

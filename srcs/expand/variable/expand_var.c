@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 16:05:10 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 18:05:18 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:12:46 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	expand_var_quotes(const char *cmd, char **ret)
 	{
 		*ret = ft_strdup(cmd);
 		if (!ret)
-			return (display_error("Error allocation\n", 0), 1);
+			return (error_alloc(), 1);
 	}
 	else if (rec_var_q(cmd, 0, ret))
 		return (free(*ret), 1);

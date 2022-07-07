@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/19 15:56:41 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 17:29:03 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:12:46 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	wildcards(t_wildcard *mywc, t_list **ret)
 	new = ft_lstnew(mywc);
 	if (!new)
 		return (del_node_wc(mywc), free(lst_even), free(lst_odd),
-			display_error("Error allocation\n", 0), 1);
+			error_alloc(), 1);
 	ft_lstadd_back(lst_odd, new);
 	r = wildcards_end(lst_odd, lst_even, ret);
 	free(lst_even);

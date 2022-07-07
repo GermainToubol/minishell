@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:50:17 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 14:27:56 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:57:24 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@
 # include "parser.h"
 
 //Display
-void	display_error_red(char *err, int i);
-void	display_error(char *err, char c);
+void	error_syntax_str(char *err, int i);
+void	error_alloc(void);
+void	error_syntax(char c);
+void	error_msg(char *err, int status);
 void	print_tokens(t_tokens *tokens);
 void	print_lexer(char *line, t_tokens *tokens);
 void	print_cmd_line(t_parse **parse);

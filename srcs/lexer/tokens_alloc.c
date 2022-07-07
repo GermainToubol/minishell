@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 22:53:12 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/15 21:50:16 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:12:46 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ static t_lxm	*transfer_tokens(t_lxm *from, size_t len, size_t max)
 	i = 0;
 	to = (t_lxm *)ft_calloc(max, sizeof(t_lxm));
 	if (!to)
-		return (display_error("Error Allocation\n", 0), NULL);
+		return (error_alloc(), NULL);
 	while (i < len)
 	{
 		to[i].data = ft_strdup(from[i].data);
 		if (!to[i].data)
-			return (display_error("Error Allocation\n", 0), NULL);
+			return (error_alloc(), NULL);
 		to[i].type = from[i].type;
 		i++;
 	}

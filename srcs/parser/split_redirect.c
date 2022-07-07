@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 23:11:07 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/16 13:51:17 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:12:46 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	get_fd(t_lxm *lxm)
 	else if (lxm->data[0] == '>')
 		return (1);
 	if (!n)
-		return (display_error("Error allocation\n", 0), -1);
+		return (error_alloc(), -1);
 	i = ft_atoi(n);
 	free(n);
 	return (i);
@@ -64,7 +64,7 @@ static int	fill_red2(t_tokens *tokens, size_t start,
 
 	red[*i] = ft_calloc(1, sizeof(t_redirect));
 	if (!red[*i])
-		return (display_error("Error allocation\n", 0), 1);
+		return (error_alloc(), 1);
 	type = tokens->tokens[start].type;
 	red[*i]->io_r = type - 1;
 	red[*i]->fd = get_fd(&tokens->tokens[start++]);
@@ -72,7 +72,7 @@ static int	fill_red2(t_tokens *tokens, size_t start,
 		return (1);
 	red[*i]->file = ft_strdup(tokens->tokens[start].data);
 	if (!red[*i]->file)
-		return (display_error("Error allocation\n", 0), 1);
+		return (error_alloc(), 1);
 	return (0);
 }
 
@@ -109,7 +109,7 @@ t_redirect	**fill_redirect(t_tokens *tokens, size_t start,
 	if (!red)
 	{
 		*err = -1;
-		return (display_error("Error allocation\n", 0), NULL);
+		return (error_alloc(), NULL);
 	}
 	if (fill_red(tokens, start, max, red))
 	{

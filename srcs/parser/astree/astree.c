@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 18:03:51 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/25 14:53:36 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:12:46 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_int_help	*fill_t_int(t_parse **parse, int depth, int start, int type)
 
 	i = ft_calloc(1, sizeof(t_int_help));
 	if (!i)
-		return (display_error("Error allocation\n", 0), NULL);
+		return (error_alloc(), NULL);
 	fill_t_content(parse, depth, start, &i);
 	while (i->i > i->min)
 	{

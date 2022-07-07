@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/30 01:26:33 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 11:41:37 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:12:46 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*tmp_filename(void)
 		return (NULL);
 	ret = ft_strdup(tmp_file);
 	if (!ret)
-		return (display_error("Error allocation\n", 0), NULL);
+		return (error_alloc(), NULL);
 	return (ret);
 }
 
@@ -63,6 +63,6 @@ char	*tmp_filename_q(void)
 		return (NULL);
 	ret = ft_strdup(tmp_file);
 	if (!ret)
-		return (display_error("Error allocation\n", 0), NULL);
+		return (error_alloc(), NULL);
 	return (ret);
 }

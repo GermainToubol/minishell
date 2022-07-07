@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 00:34:48 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 18:21:40 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:12:46 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	clean_backslash(char **s)
 	count_c(*s, &count, &i, '\\');
 	ret = ft_calloc(i - count + 1, sizeof(char));
 	if (!ret)
-		return (display_error("Error allocation\n", 0), 1);
+		return (error_alloc(), 1);
 	i = -1;
 	count = 0;
 	while ((*s)[++i + count])
@@ -76,7 +76,7 @@ int	clean_backslash_expand(char *s, t_list *index)
 	count_c(s, &count, &i, '\\');
 	ret = ft_calloc(i - count + 1, sizeof(char));
 	if (!ret)
-		return (display_error("Error allocation\n", 0), 1);
+		return (error_alloc(), 1);
 	i = -1;
 	count = 0;
 	while (s[++i + count])
@@ -103,7 +103,7 @@ char	*add_backslash(char *s)
 	count_c(s, &count, &i, '*');
 	ret = ft_calloc(i + count + 1, sizeof(char));
 	if (!ret)
-		return (display_error("Error allocation\n", 0), NULL);
+		return (error_alloc(), NULL);
 	i = -1;
 	count = 0;
 	while (s[++i])
@@ -127,7 +127,7 @@ char	*add_backslash_var(char **s)
 	count_c(*s, &count, &i, 'q');
 	ret = ft_calloc(i + count + 1, sizeof(char));
 	if (!ret)
-		return (display_error("Error allocation\n", 0), NULL);
+		return (error_alloc(), NULL);
 	i = -1;
 	count = 0;
 	while ((*s)[++i])

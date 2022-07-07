@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/04 01:16:22 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 16:23:11 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:12:46 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,10 @@ char	**split_var(const char *cmd)
 	line = count_line(cmd);
 	ret = ft_calloc(line + 1, sizeof(char *));
 	if (!ret)
-		return (display_error("Error allocation\n", 0), NULL);
+		return (error_alloc(), NULL);
 	if (!line)
 		ret[0] = NULL;
 	else if (fill_split(cmd, &ret))
-		return (display_error("Error allocation\n", 0), NULL);
+		return (error_alloc(), NULL);
 	return (ret);
 }

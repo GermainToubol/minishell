@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 14:49:47 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/03 18:12:44 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:12:46 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_parse	**create_cmd_line(t_tokens *tokens)
 	size = get_n_sep(tokens);
 	ret = ft_calloc(size + 1, sizeof(t_parse *));
 	if (!ret)
-		return (display_error("Error allocation\n", 0), NULL);
+		return (error_alloc(), NULL);
 	if (fill_cmd_line(tokens, ret, size))
 		return (free_parse(ret), NULL);
 	return (ret);

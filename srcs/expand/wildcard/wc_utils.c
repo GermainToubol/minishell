@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 01:01:16 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 18:13:35 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:12:46 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_wildcard	*cpy_wc(t_wildcard *wc)
 
 	new = ft_calloc(1, sizeof(t_wildcard));
 	if (!new)
-		return (display_error("Error allocation\n", 0), NULL);
+		return (error_alloc(), NULL);
 	new->suffix = NULL;
 	new->found = NULL;
 	new->prefix = ft_strdup(wc->prefix);
@@ -40,7 +40,7 @@ t_wildcard	*cpy_wc(t_wildcard *wc)
 	if (!new->prefix || !new->dir_path)
 	{
 		del_node_wc(new);
-		return (display_error("Error allocation\n", 0), NULL);
+		return (error_alloc(), NULL);
 	}
 	return (new);
 }
@@ -63,7 +63,7 @@ static int	dir_path(char *path, t_wildcard *new)
 			return (1);
 	}
 	if (!new->dir_path)
-		return (display_error("Error allocation\n", 0), 1);
+		return (error_alloc(), 1);
 	return (0);
 }
 
@@ -73,14 +73,14 @@ t_wildcard	*init_wc(char *path, char *prefix, char *suffix)
 
 	new = ft_calloc(1, sizeof(t_wildcard));
 	if (!new)
-		return (display_error("Error allocation\n", 0), NULL);
+		return (error_alloc(), NULL);
 	new->found = NULL;
 	new->prefix = ft_strdup(prefix);
 	new->suffix = trim_c(suffix, '/');
 	if (dir_path(path, new) || !new->suffix || !new->prefix)
 	{
 		del_node_wc(new);
-		return (display_error("Error allocation\n", 0), NULL);
+		return (error_alloc(), NULL);
 	}
 	return (new);
 }

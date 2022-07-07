@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 17:18:36 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/04 02:31:31 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:17:06 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ static int	is_quote_content(char *line, size_t *i)
 		(*i)++;
 	}
 	if (sq_open)
-		return (display_error(NULL, '\''), 1);
+		return (error_syntax('\''), 1);
 	if (dq_open)
-		return (display_error(NULL, '"'), 1);
+		return (error_syntax('"'), 1);
 	return (0);
 }
 
@@ -48,7 +48,7 @@ static int	is_quote(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i)
 		return (1);
 	lxm->data = ft_strndup(line, *i);
 	if (!lxm->data)
-		return (display_error("Error allocation\n", 0), 1);
+		return (error_alloc(), 1);
 	lxm->type = WORD;
 	tokens->size++;
 	return (0);
@@ -72,7 +72,7 @@ static int	word_redirect(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i)
 		return (1);
 	lxm->data = ft_strndup(line, *i);
 	if (!lxm->data)
-		return (display_error("Error allocation\n", 0), 1);
+		return (error_alloc(), 1);
 	lxm->type = WORD;
 	tokens->size++;
 	return (0);
@@ -90,7 +90,7 @@ static int	is_word_basic(char *line, t_lxm *lxm, t_tokens *tokens, size_t *i)
 		return (0);
 	lxm->data = ft_strndup(line, *i);
 	if (!lxm->data)
-		return (display_error("Error allocation\n", 0), 1);
+		return (error_alloc(), 1);
 	lxm->type = WORD;
 	tokens->size++;
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 18:05:19 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 00:03:47 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:56:14 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	**lst_to_tab_str(t_list **lst)
 	index = *lst;
 	ret = ft_calloc(ft_lstsize(*lst) + 1, sizeof(char *));
 	if (!ret)
-		return (display_error("Error allcation\n", 0), NULL);
+		return (error_alloc(), NULL);
 	i = 0;
 	while (index)
 	{
@@ -33,7 +33,7 @@ char	**lst_to_tab_str(t_list **lst)
 		if (!ret[i++])
 		{
 			free_tab(ret);
-			return (display_error("Error allcation\n", 0), NULL);
+			return (error_alloc(), NULL);
 		}
 		index = index->next;
 	}

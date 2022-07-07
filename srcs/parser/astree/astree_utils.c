@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 22:01:05 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/24 18:02:19 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:12:46 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_astree	*create_node(t_parse *node, int depth)
 		return (NULL);
 	new = ft_calloc(1, sizeof(t_astree));
 	if (!new)
-		return (display_error("Error allocation\n", 0), NULL);
+		return (error_alloc(), NULL);
 	new->cmd = node;
 	new->depth = depth;
 	new->left = NULL;

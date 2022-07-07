@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 00:58:06 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/30 14:56:42 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:59:15 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	main_content(void)
 int	main(int ac, char **av)
 {
 	if (ac > 1)
-		return (display_error("Error\nusage: ./minishell\n", 0), 1);
+		return (error_msg("Error\nusage: ./minishell\n", 1), 1);
 	ft_printf("\x1b[32mWelcome to Minishell\n\x1b[0m");
 	(void)av;
 	while (1)

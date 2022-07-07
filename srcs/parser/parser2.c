@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/18 16:36:58 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/06/25 15:06:38 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 22:12:46 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static t_parse	*create_parse(t_tokens *tokens, size_t *i)
 
 	new = ft_calloc(1, sizeof(t_parse));
 	if (!new)
-		return (display_error("Error allocation\n", 0), NULL);
+		return (error_alloc(), NULL);
 	if (tokens->tokens[*i].type >= PIPE && tokens->tokens[*i].type <= P_END)
 	{
 		new->cmd = NULL;
@@ -75,7 +75,7 @@ int	fill_cmd_line(t_tokens *tokens, t_parse **cmd_line, size_t size)
 	{
 		cmd_line[k] = ft_calloc(1, sizeof(t_parse));
 		if (!cmd_line[k])
-			return (display_error("Error allocation\n", 0), 1);
+			return (error_alloc(), 1);
 		cmd_line[k]->type = CMD;
 		cmd_line[k++]->cmd = NULL;
 	}
