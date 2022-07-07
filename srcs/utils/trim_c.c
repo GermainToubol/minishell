@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/05 17:49:32 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/05 17:50:03 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 15:45:23 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ char	*trim_c(char *s, char c)
 			while (s[i + j] == c)
 				j++;
 		}
-		i++;
+		else
+			i++;
 	}
 	ret = ft_calloc(i + 1, sizeof(char));
 	if (!ret)

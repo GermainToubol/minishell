@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 16:05:10 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 15:33:41 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 15:42:29 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@ static int	var_tab(t_expand *expand, char *exp)
 	size_t	tab_len;
 
 	tmp2 = split_var(exp);
+	free(exp);
 	if (!tmp2)
 		return (1);
 	tab_len = 0;
-	print_tab(tmp2);
 	while (tmp2[tab_len])
 	{
 		if (tmp2[tab_len + 1])
@@ -95,6 +95,8 @@ int	expand_var(t_expand *expand)
 	if (!tmp)
 		return (0);
 	exp = add_backslash_var(&tmp);
+	if (!exp)
+		return (free(tmp), 1);
 	if (exp && !ft_strchr(exp, ' '))
 	{
 		if (do_basic(exp, expand->tmp))
