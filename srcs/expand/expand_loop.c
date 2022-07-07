@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 03:47:46 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 01:06:16 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 16:34:56 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,26 @@ int	do_basic(char *cmd, t_list **lst_tmp)
 	t_list	*index;
 	t_list	*new;
 
+	if (!cmd)
+		return (display_error("Error allocation\n", 0), 1);
 	index = *lst_tmp;
 	if (!index)
 	{
 		new = ft_lstnew(cmd);
 		if (!new)
-			return (display_error("Error allocation\n", 0), 1);
+			return (free(cmd), display_error("Error allocation\n", 0), 1);
 		ft_lstadd_back(lst_tmp, new);
-		return (0);
 	}
-	while (index && !strjoin_custom_lst(&(index->content), ft_strdup(cmd)))
-		index = index->next;
-	free(cmd);
-	if (index)
-		return (1);
+	else
+	{
+		while (index)
+		{
+			if (strjoin_custom_lst(&(index->content), ft_strdup(cmd)))
+				return (free(cmd), 1);
+			index = index->next;
+		}
+		free(cmd);
+	}
 	return (0);
 }
 

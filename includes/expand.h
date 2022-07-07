@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 17:07:13 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 01:06:10 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 17:45:53 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int			read_hdoc(int hdoc_fd, int out_fd);
 //VAR
 char		**split_var(const char *cmd);
 int			get_var(const char *cmd, size_t *i, char **ret);
-char		*expand_var_quotes(const char *cmd);
+int			expand_var_quotes(const char *cmd, char **ret);
 
 //utils
 size_t		to_next_index(const char *cmd);

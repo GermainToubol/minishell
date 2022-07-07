@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 01:01:16 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 15:35:30 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 16:57:57 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ int	cpy_lst_wc_to_str(t_list **dest, t_list **src)
 	t_wildcard	*wc;
 	char		*tmp;
 
-	if (!dest || !src)
-		return (1);
 	index = *src;
 	while (index)
 	{
@@ -69,11 +67,13 @@ static int	get_prefix_path(char **path, char **prefix, char *to_add)
 
 t_wildcard	*get_wc_line(const char *cmd)
 {
-	char	*str[4];
-	size_t	i;
+	char		*str[4];
+	size_t		i;
+	t_wildcard	*new;
 
 	str[0] = NULL;
 	str[1] = NULL;
+	str[2] = NULL;
 	i = to_next_wc(cmd);
 	if (i == 0)
 		return (NULL);
@@ -84,8 +84,11 @@ t_wildcard	*get_wc_line(const char *cmd)
 	cmd = &cmd[i];
 	if (get_prefix_path(&str[0], &str[1], str[3]))
 		return (free(str[3]), NULL);
-	str[2] = NULL;
 	if (strjoin_custom(&str[2], ft_strdup(cmd)))
 		return (free(str[0]), free(str[1]), NULL);
-	return (init_wc(str[0], str[1], str[2]));
+	new = init_wc(str[0], str[1], str[2]);
+	free(str[0]);
+	free(str[1]);
+	free(str[2]);
+	return (new);
 }

@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 16:05:10 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 15:42:29 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 18:05:18 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,18 @@
 
 static int	rec_var_q(const char *cmd, size_t i, char **ret);
 
-char	*expand_var_quotes(const char *cmd)
+int	expand_var_quotes(const char *cmd, char **ret)
 {
-	char	*ret;
-
-	ret = NULL;
+	*ret = NULL;
 	if (!ft_strchr(cmd, '$'))
 	{
-		ret = ft_strdup(cmd);
+		*ret = ft_strdup(cmd);
 		if (!ret)
-			display_error("Error allocation\n", 0);
+			return (display_error("Error allocation\n", 0), 1);
 	}
-	else if (rec_var_q(cmd, 0, &ret))
-		return (free(ret), NULL);
-	return (ret);
+	else if (rec_var_q(cmd, 0, ret))
+		return (free(*ret), 1);
+	return (0);
 }
 
 static int	rec_var_q(const char *cmd, size_t i, char **ret)
@@ -70,18 +68,18 @@ static int	var_tab(t_expand *expand, char *exp)
 	{
 		if (tmp2[tab_len + 1])
 		{
-			if (do_basic(tmp2[tab_len], expand->tmp))
-				return (1);
-			validate_lst(expand);
+			if (do_basic(ft_strdup(tmp2[tab_len]), expand->tmp))
+				return (free_tab(tmp2), 1);
+			if (validate_lst(expand))
+				return (free_tab(tmp2), 1);
 		}
-		else if (do_basic(tmp2[tab_len], expand->tmp))
-			return (1);
+		else if (do_basic(ft_strdup(tmp2[tab_len]), expand->tmp))
+			return (free_tab(tmp2), 1);
 		tab_len++;
 	}
-	free(tmp2);
+	free_tab(tmp2);
 	return (0);
 }
-
 
 int	expand_var(t_expand *expand)
 {
@@ -98,11 +96,8 @@ int	expand_var(t_expand *expand)
 	if (!exp)
 		return (free(tmp), 1);
 	if (exp && !ft_strchr(exp, ' '))
-	{
-		if (do_basic(exp, expand->tmp))
-			return (1);
-	}
-	else if (exp && ft_strchr(exp, ' ') && var_tab(expand, exp))
-		return (1);
+		return (do_basic(exp, expand->tmp));
+	else if (exp && ft_strchr(exp, ' '))
+		return (var_tab(expand, exp));
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 16:46:09 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 15:25:05 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/07 18:05:20 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,44 @@
 #include "libft.h"
 #include "utils.h"
 
+static char	*quotes_content(const char *cmd, char *src)
+{
+	char	*ret;
+	char	*empty;
+
+	if (cmd[0] == '\'')
+	{
+		ret = ft_strdup(src);
+		if (!ret)
+			return (display_error("Error allocation\n", 0), NULL);
+	}
+	else if (cmd[0] == '"')
+	{
+		if (expand_var_quotes(src, &ret))
+			return (NULL);
+		if (!ret)
+		{
+			empty = ft_strdup("");
+			if (!empty)
+				return (display_error("Error allocation\n", 0), NULL);
+			return (empty);
+		}
+	}
+	return (ret);
+}
+
 static char	*quotes(const char *cmd)
 {
 	char	*ret;
 	char	*tmp;
 
-	tmp = NULL;
 	ret = ft_substr(cmd, 1, skip_quote(cmd) - 2);
-	if (cmd[0] == '\'')
-	{
-		if (strjoin_custom(&tmp, ret))
-			return (NULL);
-	}
-	else if (cmd[0] == '"')
-	{
-		if (strjoin_custom(&tmp, expand_var_quotes(ret)))
-			return (free(ret), NULL);
-		free(ret);
-	}
+	if (!ret)
+		return (display_error("Error allocation\n", 0), NULL);
+	tmp = quotes_content(cmd, ret);
+	free(ret);
+	if (!tmp)
+		return (NULL);
 	if (ft_strchr(tmp, '*'))
 	{
 		ret = add_backslash(tmp);
