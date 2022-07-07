@@ -16,6 +16,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <sys/ioctl.h>
 #include "minishell.h"
 #include "g_minishell.h"
 
@@ -58,11 +59,7 @@ static void	signal_handler(int signum, siginfo_t *siginfo, void *context)
 	size = pid_lstlen();
 	pid_signal_all();
 	wait_all(size, 0);
-	if (rl_outstream == stderr)
-		write(2, "^C\n", 3);
-	else
-		write(1, "^C\n", 3);
+	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	rl_replace_line("", 1);
 	rl_on_new_line();
-	rl_redisplay();
 }

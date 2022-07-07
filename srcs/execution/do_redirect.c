@@ -35,7 +35,8 @@ int	do_redirect(t_parse *parse)
 	redirect = parse->cmd->redirect;
 	while (redirect != NULL && redirect[i] != NULL)
 	{
-		if (redirect[i]->io_r != HDOC && (redirect_name(redirect[i]) != 0 || redirect[i]->file[0] == '\0'))
+		if (redirect[i]->io_r != HDOC && (redirect_name(redirect[i]) != 0
+				|| redirect[i]->file[0] == '\0'))
 			return (1);
 		f = get_redirect_function(redirect[i]->io_r);
 		if (f(redirect[i]->file, redirect[i]->fd) != 0)

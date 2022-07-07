@@ -113,8 +113,8 @@ int	is_word(char *line, t_lxm *lxm, t_tokens *tokens)
 		&& is_quote(line, lxm, tokens, &i))
 		return (-1);
 	if (is_interupted() || (is_word != tokens->size && tokens->size > 1
-		&& tokens->tokens[tokens->size - 2].type == IO_HDOC
-							&& lxm->type == WORD && set_hdoc(&lxm->data)))
+			&& tokens->tokens[tokens->size - 2].type == IO_HDOC
+			&& lxm->type == WORD && set_hdoc(&lxm->data)))
 		return (-1);
 	return (i);
 }

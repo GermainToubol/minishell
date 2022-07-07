@@ -19,28 +19,33 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include "g_minishell.h"
 
 static int	create_hdoc_loop(char *eof, int fd)
 {
 	char	*line;
 	int		len_line;
+	long	i;
+
 	line = NULL;
-	while (1)
+	i = -1;
+	while (1 && is_interupted() == 0 && (++i >= 0))
 	{
 		free(line);
 		line = readline("> ");
-		if (!line)
+		if (line == NULL)
+		{
+			ft_fprintf(2, "minishell: warning: here-document at line %i \
+delimited by end-of-file (wanted `%s')\n", i, eof);
 			return (0);
+		}
 		len_line = ft_strlen(line);
-		if (eof && !ft_strncmp(eof, line, len_line - 1)
-			&& !eof[len_line - 1])
+		if (eof && ft_strcmp(eof, line) == 0)
 			break ;
-		else if (!eof && line[0] == '\n')
-			break ;
-		write (fd, line, len_line);
+		write(fd, line, len_line);
+		write(fd, "\n", 1);
 	}
-	free(line);
-	return (0);
+	return (free(line), 0);
 }
 
 // static int	create_hdoc_loop(char *eof, int fd)
