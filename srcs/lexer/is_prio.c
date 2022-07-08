@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:04:22 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/08 16:31:03 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/08 16:50:14 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	is_p_end(char *line, t_lxm *lxm, t_tokens *tokens, int is_open)
 			i++;
 		if (i < tokens->size && tokens->tokens[tokens->size - i].type == P_START
 			&& tokens->tokens[tokens->size - i - 1].type == P_START)
-			return (error_syntax_str("(())", 5), 1);
+			return (error_syntax_str("(())", 0), 1);
 	}
 	else if (tokens->size > 0 && tokens->tokens[tokens->size - 1].type != WORD)
 		return (error_syntax(*line), 1);

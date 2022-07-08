@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 07:13:55 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 22:54:14 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/08 16:49:18 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,13 @@ static int	is_end(char *line, t_tokens *tokens)
 
 	if (*line == '\0')
 	{
-		if (tokens->size > 0 && tokens->tokens[tokens->size - 1].type <= AND
+		if (tokens->size > 0 && tokens->tokens[tokens->size - 1].type <= IO_APP
 			&& tokens->tokens[tokens->size - 1].type >= IO_IN)
 			return (error_syntax('\n'), 1);
+		if (tokens->size > 0 && tokens->tokens[tokens->size - 1].type <= AND
+			&& tokens->tokens[tokens->size - 1].type >= PIPE)
+			return (error_syntax_str("minishell: syntax error: \
+			unexpected end of file\n", 0), 1);
 		is_open = 0;
 		i = 0;
 		while (i < tokens->size)

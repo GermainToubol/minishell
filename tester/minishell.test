@@ -1,38 +1,37 @@
 # Basic syntax
-cd ; ||
-cd ; |
-cd ; |&
-cd ; &
-cd ; &&
-cd ; ls
-cd ; ls |
-cd ; ls &&
-cd ; ls ||
-cd ; ls >
-cd ; ls <
-cd ; ls > a ; rm -rf a
-cd ; ls >>a ; rm -rf a
-cd ; ls >>>a
-cd ; ls >><a
-cd ; ls ><a
-cd ; ls < |
-cd ; ls < &&
-cd ; ls < ||
-cd ; ls > |
-cd ; ls > ||
-cd ; ls > &&
-cd ; (ls) blabla
-cd ; (ls | )
-cd ; (ls && )
-cd ; (ls || )
-cd ; ls | (
-cd ; ls | ( |
-cd ; ls | ( ||
-cd ; ls | ( |&
-cd ; ls | ( &&
-cd ; ls | ( &
-cd ; ls | ( |ok
-cd ; ()
+||
+|
+|&
+&
+&&
+ls |
+ls &&
+ls ||
+ls >
+ls <
+ls >>>a
+ls >><a
+ls ><a
+ls < |
+ls < &&
+ls < ||
+ls > |
+ls > ||
+ls > &&
+(ls) bl-a"bla|"
+(ls) bl-a"bla|"|
+(ls) bl-a"bla|"&
+(ls | )
+(ls && )
+(ls || )
+ls | (
+ls | ( |
+ls | ( ||
+ls | ( |&
+ls | ( &&
+ls | ( &
+ls | ( |ok
+()
 # Basic commands and arguments
 cd ; ls
 cd ; ls -l
