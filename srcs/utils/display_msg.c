@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 16:13:15 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/08 16:52:58 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/08 17:08:28 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,6 @@ void	error_syntax_str(char *err, int i)
 		ft_putstr_fd(err, 2);
 	else if (err)
 	{
-		if (i > 1)
-			i--;
 		err_n = ft_substr(err, 0, i);
 		if (!err_n)
 			return (error_alloc());

@@ -18,6 +18,11 @@ ls < ||
 ls > |
 ls > ||
 ls > &&
+ls < <
+ls < 42<
+ls < -42<
+ls < 4352345643<
+ls < >
 (ls) bl-a"bla|"
 (ls) bl-a"bla|"|
 (ls) bl-a"bla|"&
