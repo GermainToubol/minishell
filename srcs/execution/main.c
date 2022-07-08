@@ -55,6 +55,22 @@ int	main(int argc, char **argv, char **env)
 	return (get_status());
 }
 
+int	new_get_lvl(char *shlvl)
+{
+	int	new_lvl;
+
+	new_lvl = 1 + ft_atoi(shlvl);
+	if (new_lvl <= 0)
+		return (0);
+	if (new_lvl >= 1000)
+	{
+		ft_fprintf(2, "minishell: warning: shell level (%d) too high,\
+ resetting to 1\n", new_lvl);
+		return (1);
+	}
+	return (new_lvl);
+}
+
 int	environment_init(t_list	**env_lst)
 {
 	char	*shlvl;
@@ -65,7 +81,7 @@ int	environment_init(t_list	**env_lst)
 		environment_add(env_lst, "SHLVL=1");
 	else
 	{
-		shlvl = ft_itoa(1 + ft_atoi(shlvl));
+		shlvl = ft_itoa(new_get_lvl(shlvl));
 		if (shlvl == NULL)
 		{
 			ft_lstclear(env_lst, ft_freedico);
