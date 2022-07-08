@@ -1,4 +1,9 @@
 # Basic syntax
+cd ; ||
+cd ; |
+cd ; |&
+cd ; &
+cd ; &&
 cd ; ls
 cd ; ls |
 cd ; ls &&
@@ -10,17 +15,24 @@ cd ; ls >>a ; rm -rf a
 cd ; ls >>>a
 cd ; ls >><a
 cd ; ls ><a
-cd ; ls <<<a
 cd ; ls < |
 cd ; ls < &&
 cd ; ls < ||
 cd ; ls > |
 cd ; ls > ||
 cd ; ls > &&
-cd ; (ls) echo
-cd ; (ls | ) cat
-cd ; (ls && ) cat
-cd ; (ls || ) cat
+cd ; (ls) blabla
+cd ; (ls | )
+cd ; (ls && )
+cd ; (ls || )
+cd ; ls | (
+cd ; ls | ( |
+cd ; ls | ( ||
+cd ; ls | ( |&
+cd ; ls | ( &&
+cd ; ls | ( &
+cd ; ls | ( |ok
+cd ; ()
 # Basic commands and arguments
 cd ; ls
 cd ; ls -l

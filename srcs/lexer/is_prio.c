@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:04:22 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/08 15:44:55 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/08 16:31:03 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,13 @@ static int	check_next_token(char *line)
 	i = 0;
 	while (*line == ' ' || *line == '\t' || *line == '\n')
 		line++;
-	if (*line == '|' || *line == '&' || *line == '\0' || *line == '('
-		|| *line == ')')
+	if (c_separator(line[i]))
 		return (0);
-	else
-	{
-		while (line[i] && line[i] != ' ' && line[i] != '\t'
-			&& line[i] != '\n')
-			i++;
-		return (error_syntax_str(line, i + 1), 1);
-	}
+	while (!c_separator(line[i]))
+		i++;
+	if ((line[i] == '"' || line[i] == '\'') && is_quote_content(line, &i))
+		return (1);
+	return (error_syntax_str(line, i + 1), 1);
 }
 
 static int	is_p_end(char *line, t_lxm *lxm, t_tokens *tokens, int is_open)
