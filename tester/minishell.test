@@ -6,6 +6,17 @@ cd ; ls ||
 cd ; ls >
 cd ; ls <
 cd ; ls > a ; rm -rf a
+cd ; ls >>a ; rm -rf a
+cd ; ls >>>a
+cd ; ls >><a
+cd ; ls ><a
+cd ; ls <<<a
+cd ; ls < |
+cd ; ls < &&
+cd ; ls < ||
+cd ; ls > |
+cd ; ls > ||
+cd ; ls > &&
 cd ; (ls) echo
 cd ; (ls | ) cat
 cd ; (ls && ) cat
