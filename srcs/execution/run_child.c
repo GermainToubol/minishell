@@ -40,6 +40,7 @@ void	run_child(t_parse *parse, t_list **env, int *pipe_in, int *pipe_out)
 	perror("minishell: execve");
 	child_close_fds(parse);
 	ft_free_split(envp);
+	set_status(1);
 }
 
 static void	child_set_pipe(int *pipe_in, int *pipe_out)
