@@ -32,8 +32,8 @@ int	builtin_echo(int argc, char **argv, t_list **env)
 	{
 		status = ft_printf("%s", argv[i]);
 		i++;
-		if (i < argc && argv[i][0] != '\0' && argv[i - 1][0] != '\0')
-			status = ft_printf(" ");
+		if (i != argc)
+			write(1, " ", 1);
 	}
 	if (n_arg == 0)
 		status = ft_printf("\n");

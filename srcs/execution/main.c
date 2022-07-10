@@ -42,7 +42,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		i = 0;
 		lines = ft_split(argv[2], ';');
-		while (lines[i] != NULL)
+		while (lines[i] != NULL && get_exit_state() == 0)
 		{
 			if (lines[i][ft_strlen(lines[i]) - 1] == '\n')
 				lines[i][ft_strlen(lines[i]) - 1] = '\0';
@@ -71,14 +71,36 @@ int	new_get_lvl(char *shlvl)
 	return (new_lvl);
 }
 
+int	init_pwd(t_list **env_lst)
+{
+	char	buffer[6000];
+
+	if (getcwd(buffer, 6000) == NULL)
+	{
+		perror("minishell: PWD");
+		return (1);
+	}
+	if (environment_get(*env_lst, "PWD") == NULL
+		&& environment_add(env_lst, "PWD") == NULL)
+		return (ft_fprintf(2, "minishell: PWD: Initialisation Error"), 1);
+	if (environment_set(*env_lst, "PWD", buffer) == -1)
+		return (ft_fprintf(2, "minishell: PWD: Initialisation Error"), 1);
+	return (0);
+}
+
 int	environment_init(t_list	**env_lst)
 {
 	char	*shlvl;
 	int		ret;
 
+	if (init_pwd(env_lst) == 1)
+		return (ft_lstclear(env_lst, ft_freedico), 1);
 	shlvl = environment_get(*env_lst, "SHLVL");
 	if (shlvl == NULL)
-		environment_add(env_lst, "SHLVL=1");
+	{
+		if (environment_add(env_lst, "SHLVL=1") == NULL)
+			return (1);
+	}
 	else
 	{
 		shlvl = ft_itoa(new_get_lvl(shlvl));

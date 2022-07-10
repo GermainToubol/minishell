@@ -63,9 +63,13 @@ static int	check_fullname(char **paths, char *cmd_name, t_parse *parse)
 	char	*tmp_path;
 
 	i = 0;
-	while (paths[i] != NULL)
+	tmp_path = NULL;
+	while (paths[i] != NULL || i == 0)
 	{
-		tmp_path = ft_join3(paths[i], "/", cmd_name);
+		if (paths[i] != NULL && paths[i][0] != '\0')
+			tmp_path = ft_join3(paths[i], "/", cmd_name);
+		else
+			tmp_path = ft_strjoin("./", cmd_name);
 		if (tmp_path == NULL)
 		{
 			ft_fprintf(2, "minishell: memory allocation error\n");
@@ -90,7 +94,7 @@ static int	check_path_env(char *cmd_name, t_parse *parse, t_list **env)
 	i = -1;
 	if (environment_get(*env, "PATH") != NULL)
 	{
-		paths = ft_split(environment_get(*env, "PATH"), ':');
+		paths = ft_pathsplit(environment_get(*env, "PATH"), ':');
 		if (paths == NULL)
 		{
 			ft_fprintf(2, "minishell: memory allocation error\n");

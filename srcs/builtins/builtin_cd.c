@@ -93,8 +93,6 @@ static int	cd_change_dir(char *path, t_list **env)
 	int		re;
 	char	cwd_path[PATH_MAX];
 
-	if (path[0] == '\0')
-		return (0);
 	if (environment_get(*env, "PWD") == NULL)
 	{
 		getcwd(cwd_path, PATH_MAX);
@@ -105,7 +103,10 @@ static int	cd_change_dir(char *path, t_list **env)
 			return (500);
 		}
 	}
-	re = chdir(path);
+	if (path[0] == '\0')
+		re = 0;
+	else
+		re = chdir(path);
 	if (re == 0)
 		return (cd_update_env(env));
 	return (1);

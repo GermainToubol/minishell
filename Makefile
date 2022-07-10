@@ -123,7 +123,8 @@ SRCS =		$(addprefix environment/,	environment_copy.c	\
 TMP =		$(addprefix tmp/,			ft_lstsort.c		\
 										astree_apply_infix.c\
 										ft_atoll_protected.c\
-										ft_tab_shift.c)
+										ft_tab_shift.c		\
+										ft_pathsplit.c)
 
 # List of the related directories
 # -------------------------------------------------------------------------

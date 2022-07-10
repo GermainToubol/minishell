@@ -29,7 +29,7 @@ int	builtin_env(int argc, char **argv, t_list **env)
 		dico = (t_dico *)tmp->content;
 		if (dico->value != NULL)
 		{
-			if (ft_printf("%s=\"%s\"\n", dico->key, dico->value) < 0)
+			if (ft_printf("%s=%s\n", dico->key, dico->value) < 0)
 				status = 125;
 		}
 		tmp = tmp->next;

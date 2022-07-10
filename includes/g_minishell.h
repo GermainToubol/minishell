@@ -45,6 +45,7 @@ void		ft_lstsort(t_list **lst, int (*f)(void *, void *));
 void		astree_apply_infix(t_astree *root, void (*f)(t_astree *));
 long long	ft_atoll_protected(char *s);
 void		ft_tab_shift(char **tab, size_t n);
+char		**ft_pathsplit(const char *str, char c);
 
 /* SESSION MANAGEMENT */
 int			interactive_session(t_list **env);

@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include "minishell.h"
 #include "g_minishell.h"
-#include <stdio.h>
 
 static int	exit_state(int i)
 {
@@ -59,42 +59,45 @@ static int	exit_check_number(char *str)
 
 	i = 0;
 	n = ft_atoll_protected(str);
+	set_status(n);
+	status = 1;
 	if (n == 0)
 	{
-		status = 1;
 		while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
 			i++;
 		if (str[i] == '+' || str[i] == '-')
 			i++;
-		while (str[i++] == '0')
+		while (str[i] == '0' && ++i)
 			status = 0;
 		while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
 			i++;
 	}
 	if (n != 0 || (n == 0 && (status == 0 && str[i] == '\0')))
-		return (set_status(n), 0);
+		return (0);
 	ft_fprintf(2, "minishell: exit: %s: numeric argument required\n", str);
-	return (set_status(2), 2);
+	return (set_status(255), 1);
 }
 
 int	builtin_exit(int argc, char **argv, t_list **env)
 {
 	(void)env;
-	exit_state(1);
+	if (isatty(0) && isatty(2))
+		write(2, "exit\n", 5);
 	if (argc == 1)
 	{
 		exit_state(1);
 		return (0);
 	}
 	if (exit_check_numeric(argv[1]) != 0)
-		return (2);
+		return (exit_state(1), set_status(2), 2);
 	if (exit_check_number(argv[1]) != 0)
-		return (2);
+		return (exit_state(1), get_status());
 	if (argc > 2)
 	{
 		ft_fprintf(2, "minishell: exit: too many arguments\n");
 		set_status(1);
 		return (1);
 	}
+	exit_state(1);
 	return (get_status());
 }
