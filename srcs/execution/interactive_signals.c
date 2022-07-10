@@ -20,7 +20,7 @@
 #include "minishell.h"
 #include "g_minishell.h"
 
-static void	signal_handler(int signum, siginfo_t *siginfo, void *context);
+static void	signal_handler(int signum);
 
 /**
  * Set the signal handler of the minishell in interactive session.
@@ -33,21 +33,18 @@ static void	signal_handler(int signum, siginfo_t *siginfo, void *context);
 
 int	init_signal_interactive(struct sigaction *sa)
 {
-	sa->sa_handler = NULL;
+	sa->sa_handler = signal_handler;
 	sigemptyset(&sa->sa_mask);
-	sa->sa_flags = SA_SIGINFO | SA_RESTART;
-	sa->sa_sigaction = signal_handler;
+	sa->sa_flags = SA_RESTART;
 	sigaction(SIGINT, sa, NULL);
 	sigaction(SIGQUIT, sa, NULL);
 	return (0);
 }
 
-static void	signal_handler(int signum, siginfo_t *siginfo, void *context)
+static void	signal_handler(int signum)
 {
 	int	size;
 
-	(void)siginfo;
-	(void)context;
 	if (signum != SIGINT && signum != SIGQUIT)
 	{
 		ft_fprintf(2, "%s %d\n", "unexpected signal catch:", signum);
@@ -55,10 +52,12 @@ static void	signal_handler(int signum, siginfo_t *siginfo, void *context)
 	}
 	if (signum == SIGQUIT || is_father() == 0)
 		return ;
+	set_status(130);
 	set_interupt();
 	size = pid_lstlen();
 	pid_signal_all();
 	wait_all(size, 0);
+	write(2, "^C\n", 3);
 	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	rl_replace_line("", 1);
 	rl_on_new_line();

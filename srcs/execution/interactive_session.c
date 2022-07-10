@@ -28,6 +28,7 @@ int	interactive_session(t_list	**env)
 	is_done = 0;
 	if (isatty(2))
 		rl_outstream = stderr;
+	rl_catch_signals = 0;
 	if (init_signal_interactive(&sa) != 0)
 	{
 		perror("minishell: signal init");
