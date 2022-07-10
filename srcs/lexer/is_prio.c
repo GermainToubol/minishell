@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/15 12:04:22 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 22:19:26 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/08 17:08:11 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,13 @@ static int	check_next_token(char *line)
 	i = 0;
 	while (*line == ' ' || *line == '\t' || *line == '\n')
 		line++;
-	if (*line == '|' || *line == '&' || *line == '\0' || *line == '('
-		|| *line == ')')
+	if (c_separator(line[i]))
 		return (0);
-	else
-	{
-		while (line[i] && line[i] != ' ' && line[i] != '\t'
-			&& line[i] != '\n')
-			i++;
-		return (error_syntax_str(line, i + 1), 1);
-	}
+	while (!c_separator(line[i]))
+		i++;
+	if ((line[i] == '"' || line[i] == '\'') && is_quote_content(line, &i))
+		return (1);
+	return (error_syntax_str(line, i), 1);
 }
 
 static int	is_p_end(char *line, t_lxm *lxm, t_tokens *tokens, int is_open)
@@ -38,8 +35,6 @@ static int	is_p_end(char *line, t_lxm *lxm, t_tokens *tokens, int is_open)
 	size_t	i;
 
 	if (is_open <= 0)
-		return (error_syntax(*line), 1);
-	if (tokens->size > 0 && tokens->tokens[tokens->size - 1].type == P_START)
 		return (error_syntax(*line), 1);
 	if (tokens->size > 0 && tokens->tokens[tokens->size - 1].type == P_END)
 	{
@@ -49,8 +44,10 @@ static int	is_p_end(char *line, t_lxm *lxm, t_tokens *tokens, int is_open)
 			i++;
 		if (i < tokens->size && tokens->tokens[tokens->size - i].type == P_START
 			&& tokens->tokens[tokens->size - i - 1].type == P_START)
-			return (error_syntax_str("(())", 5), 1);
+			return (error_syntax_str("(())", 0), 1);
 	}
+	else if (tokens->size > 0 && tokens->tokens[tokens->size - 1].type != WORD)
+		return (error_syntax(*line), 1);
 	lxm->data = ft_strndup(")", 1);
 	if (!lxm->data)
 		return (error_alloc(), 1);

@@ -1,3 +1,42 @@
+# Basic syntax
+||
+|
+|&
+&
+&&
+ls |
+ls &&
+ls ||
+ls >
+ls <
+ls >>>a
+ls >><a
+ls ><a
+ls < |
+ls < &&
+ls < ||
+ls > |
+ls > ||
+ls > &&
+ls < <
+ls < 42<
+ls < -42<
+ls < 4352345643<
+ls < >
+(ls) bl-a"bla|"
+(ls) bl-a"bla|"|
+(ls) bl-a"bla|"&
+(ls | )
+(ls && )
+(ls || )
+ls | (
+ls | ( |
+ls | ( ||
+ls | ( |&
+ls | ( &&
+ls | ( &
+ls | ( |ok
+()
 # Basic commands and arguments
 cd ; ls
 cd ; ls -l

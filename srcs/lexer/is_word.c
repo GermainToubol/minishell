@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 17:18:36 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 23:06:46 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/08 16:32:10 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "utils.h"
 #include "g_minishell.h"
 
-static int	is_quote_content(char *line, size_t *i)
+int	is_quote_content(char *line, size_t *i)
 {
 	int		sq_open;
 	int		dq_open;
