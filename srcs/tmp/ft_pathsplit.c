@@ -58,7 +58,7 @@ static int	split_count_words(char const *s, char c)
 		if (j == 0)
 			i++;
 		if (j == 0 && !(s[i] == '\0' || s[i] == c))
-			continue;
+			continue ;
 		n += 1;
 		i += j;
 	}
@@ -82,7 +82,7 @@ static void	split_get_words(char const *s, char c, char **strs)
 		if (j == 0)
 			i++;
 		if (j == 0 && !(s[i + 1] == '\0' || s[i + 1] == c))
-			continue;
+			continue ;
 		str = ft_substr(s, i, j);
 		strs[n] = str;
 		n++;

@@ -19,6 +19,7 @@ static char	*quotes_content(const char *cmd, char *src)
 	char	*ret;
 	char	*empty;
 
+	ret = NULL;
 	if (cmd[0] == '\'')
 	{
 		ret = ft_strdup(src);
