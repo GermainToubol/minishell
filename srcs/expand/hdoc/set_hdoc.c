@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 22:50:53 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/07 23:06:43 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/11 10:24:50 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ delimited by end-of-file (wanted `%s')\n", i, eof);
 		write(fd, line, len_line);
 		write(fd, "\n", 1);
 	}
+	if (is_interupted())
+		write(2, "\n", 1);
 	return (free(line), 0);
 }
 

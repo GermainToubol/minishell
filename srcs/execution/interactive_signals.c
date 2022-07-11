@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 10:13:48 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/07/07 16:51:06 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/07/11 10:23:48 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	signal_handler(int signum)
 	size = pid_lstlen();
 	pid_signal_all();
 	wait_all(size, 0);
-	write(2, "^C\n", 3);
+	write(2, "^C", 2);
 	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 	rl_replace_line("", 1);
 	rl_on_new_line();
