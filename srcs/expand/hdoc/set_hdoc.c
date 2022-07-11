@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr >         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 22:50:53 by fmauguin          #+#    #+#             */
-/*   Updated: 2022/07/11 10:24:50 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/07/11 10:32:31 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,30 +49,6 @@ delimited by end-of-file (wanted `%s')\n", i, eof);
 		write(2, "\n", 1);
 	return (free(line), 0);
 }
-
-// static int	create_hdoc_loop(char *eof, int fd)
-// {
-// 	char	*line;
-// 	int		len_line;
-
-// 	line = NULL;
-// 	while (1)
-// 	{
-// 		free(line);
-// 		line = readline("> ");
-// 		if (!line)
-// 			return (0);
-// 		len_line = ft_strlen(line);
-// 		if (eof && !ft_strcmp(eof, line))
-// 			break ;
-// 		else if (!eof && !line[0])
-// 			break ;
-// 		write (fd, line, len_line);
-// 		write (fd, "\n", 1);
-// 	}
-// 	free(line);
-// 	return (0);
-// }
 
 static int	clean_hdoc(char *name, void *ptr, int fd, int out)
 {

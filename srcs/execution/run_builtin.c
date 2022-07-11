@@ -6,7 +6,7 @@
 /*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 15:14:29 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/07/07 12:33:11 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/07/11 11:40:10 by gtoubol          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <errno.h>
@@ -33,13 +33,12 @@ int	run_builtin(t_parse *parse, t_list **env, int *pipe_in, int *pipe_out)
 	std_cpy[0] = dup(0);
 	std_cpy[1] = dup(1);
 	std_cpy[2] = dup(2);
+	if (std_cpy[0] < 0 || std_cpy[1] < 0 || std_cpy[2] < 0)
+		return (perror("dup"), set_status(1), 1);
 	status = 0;
 	builtin_set_pipe(pipe_in, pipe_out);
 	if (do_redirect(parse) != 0)
-	{
-		reset_fds(std_cpy);
-		return (1);
-	}
+		return (reset_fds(std_cpy), set_status(1), 1);
 	i = 0;
 	while (parse->cmd->cmd[i] != NULL)
 		i++;
@@ -74,17 +73,19 @@ static void	*get_builtin(t_parse *parse)
 static void	builtin_set_pipe(int *pipe_in, int *pipe_out)
 {
 	if (pipe_in[0] != -2)
+	{
 		close(pipe_in[1]);
-	if (pipe_out[0] != -2)
-		close(pipe_out[0]);
-	if (pipe_in[0] != -2)
-		dup2(pipe_in[0], STDIN_FILENO);
-	if (pipe_out[0] != -2)
-		dup2(pipe_out[1], STDOUT_FILENO);
-	if (pipe_in[0] != -2)
+		if (dup2(pipe_in[0], STDIN_FILENO) < 0)
+			perror("dup2");
 		close(pipe_in[0]);
+	}
 	if (pipe_out[0] != -2)
+	{
+		close(pipe_out[0]);
+		if (dup2(pipe_out[1], STDOUT_FILENO) < 0)
+			perror("dup2");
 		close(pipe_out[1]);
+	}
 }
 
 static void	builtin_close_fds(t_parse *parse)
@@ -103,9 +104,10 @@ static void	builtin_close_fds(t_parse *parse)
 
 static void	reset_fds(int *std_cpy)
 {
-	dup2(std_cpy[0], STDIN_FILENO);
-	dup2(std_cpy[1], STDOUT_FILENO);
-	dup2(std_cpy[2], STDERR_FILENO);
+	if (dup2(std_cpy[0], STDIN_FILENO) < 0
+		|| dup2(std_cpy[1], STDOUT_FILENO) < 0
+		|| dup2(std_cpy[2], STDERR_FILENO) < 0)
+		perror("dup2");
 	close(std_cpy[0]);
 	close(std_cpy[1]);
 	close(std_cpy[2]);
