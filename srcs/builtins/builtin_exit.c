@@ -75,7 +75,7 @@ static int	exit_check_number(char *str)
 	if (n != 0 || (n == 0 && (status == 0 && str[i] == '\0')))
 		return (0);
 	ft_fprintf(2, "minishell: exit: %s: numeric argument required\n", str);
-	return (set_status(255), 1);
+	return (set_status(2), 1);
 }
 
 int	builtin_exit(int argc, char **argv, t_list **env)
