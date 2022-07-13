@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gtoubol <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: fmauguin <fmauguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 11:27:29 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/06/28 14:15:53 by gtoubol          ###   ########.fr       */
+/*   Updated: 2022/07/13 10:35:30 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdlib.h>
+
 #include <unistd.h>
 #include "libft.h"
 #include "minishell.h"
@@ -37,20 +37,6 @@ int	main(int argc, char **argv, char **env)
 		return (1);
 	if (argc == 1 && isatty(0))
 		interactive_session(&env_lst);
-	// REMOVE -- TEST FEATURE
-	if (argc == 3)
-	{
-		i = 0;
-		lines = ft_split(argv[2], ';');
-		while (lines[i] != NULL && get_exit_state() == 0)
-		{
-			if (lines[i][ft_strlen(lines[i]) - 1] == '\n')
-				lines[i][ft_strlen(lines[i]) - 1] = '\0';
-			run_line(lines[i], &env_lst);
-			i++;
-		}
-		free(lines);
-	}
 	ft_lstclear(&env_lst, ft_freedico);
 	return (get_status());
 }
@@ -64,8 +50,8 @@ int	new_get_lvl(char *shlvl)
 		return (0);
 	if (new_lvl >= 1000)
 	{
-		ft_fprintf(2, "minishell: warning: shell level (%d) too high,\
- resetting to 1\n", new_lvl);
+		ft_fprintf(2, "minishell: warning: shell level (%d) too high,"
+			"resetting to 1\n", new_lvl);
 		return (1);
 	}
 	return (new_lvl);
