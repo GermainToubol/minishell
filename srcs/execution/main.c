@@ -6,7 +6,7 @@
 /*   By: fmauguin <fmauguin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 11:27:29 by gtoubol           #+#    #+#             */
-/*   Updated: 2022/07/13 10:35:30 by fmauguin         ###   ########.fr       */
+/*   Updated: 2022/07/13 10:42:23 by fmauguin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ int	environment_init(t_list	**env_lst);
 int	main(int argc, char **argv, char **env)
 {
 	t_list	*env_lst;
-	int		i;
-	char	**lines;
 
 	(void)argv;
 	env_lst = environment_copy(env);
